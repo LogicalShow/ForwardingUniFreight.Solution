@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="12/04/2019 19:31:18" ReportInfo.Modified="04/21/2022 00:17:46" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+
+   
+
+    
+  
+
+    private void Text19_AfterData(object sender, EventArgs e)
+    {
+      if (((String)Report.GetColumnValue(&quot;Rep_A_Payment_Allocation.currrencyCode&quot;)==&quot;EGP&quot;))
+      {
+        Text19.Visible=true;
+        Text75.Visible=true;
+
+      }
+      else
+      {
+        Text19.Visible=false;
+        Text75.Visible=true;
+  
+      }
+    }
+
+    private void Text75_AfterData(object sender, EventArgs e)
+    {
+      if (((String)Report.GetColumnValue(&quot;Rep_A_Payment_Allocation.currrencyCode&quot;)==&quot;EGP&quot;))
+      {
+        Text75.Text=&quot;&quot;;
+        Text19.Visible=true;
+        Text75.Visible=false;
+      }
+    }
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFQkBXSvDrpem3WTWsGm7Ah4EHpJoNJj6uLS9ZwJ5qZyNi9qDcgmUCnKHZbkysgpZ1W7FJVApTGxVTqgEyITMUO3lELEkdPXjmZ+aVESBLYZ7tqt3uK1EX8vAXo2QRcxZn">
+      <TableDataSource Name="Table" Alias="Rep_A_Payment_Allocation" DataType="System.Int32" Enabled="true" SelectCommand="exec Rep_A_Payment_Allocation @PaymentID">
+        <Column Name="RecivedBy" DataType="System.String"/>
+        <Column Name="clientName" DataType="System.String"/>
+        <Column Name="receiptNo" DataType="System.String"/>
+        <Column Name="invoiceNo" DataType="System.Int64"/>
+        <Column Name="currrencyCode" DataType="System.String"/>
+        <Column Name="TotalInv" DataType="System.Decimal"/>
+        <Column Name="InvoiceType" DataType="System.String"/>
+        <Column Name="Amount" DataType="System.Decimal"/>
+        <Column Name="Code" DataType="System.String"/>
+        <Column Name="Date" DataType="System.DateTime"/>
+        <Column Name="TotalPaid" DataType="System.Decimal"/>
+        <Column Name="InvoiceCurrency" DataType="System.String"/>
+        <Column Name="NewCurrency" DataType="System.String"/>
+        <CommandParameter Name="@PaymentID" Expression="[PaymentID]" DefaultValue="22"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="PaymentID" DataType="System.Int32"/>
+    <Total Name="Total" Expression="[Rep_A_Payment_Allocation.TotalInv]" Evaluator="Data1" PrintOn="GroupFooter1"/>
+  </Dictionary>
+  <ReportPage Name="Page1" RawPaperSize="9" FirstPageSource="15" OtherPagesSource="15">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2"/>
+    <PageHeaderBand Name="PageHeader1" Top="4" Width="718.2" Height="18.9"/>
+    <GroupHeaderBand Name="GroupHeader1" Top="26.9" Width="718.2" Height="364.76" StartNewPage="true" Condition="[Rep_A_Payment_Allocation.receiptNo]">
+      <ShapeObject Name="Shape1" Left="19.26" Top="191.27" Width="544.32" Height="95.24"/>
+      <TextObject Name="Text40" Left="21.55" Top="197.66" Width="98.66" Height="41.58" Text="Recived From" HorzAlign="Center" VertAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text5" Left="127.72" Top="197.26" Width="317.52" Height="41.97" Text="[Rep_A_Payment_Allocation.clientName]" VertAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text50" Left="237.39" Top="115" Width="114.91" Height="26.46" Border.Lines="Left, Top, Bottom" Fill.Color="Orange" Text="Date" HorzAlign="Center" VertAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text49" Left="124.41" Top="115" Width="113.73" Height="26.46" Border.Lines="Left, Top, Bottom" Text="[Rep_A_Payment_Allocation.Code]" HorzAlign="Center" VertAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text13" Left="352.3" Top="115" Width="97.52" Height="26.46" Border.Lines="All" Text="[Rep_A_Payment_Allocation.Date]" Format="Date" Format.Format="d" HorzAlign="Center" VertAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text66" Left="18.9" Top="115" Width="105.05" Height="26.46" Border.Lines="Left, Top, Bottom" Fill.Color="Orange" Text="Code" HorzAlign="Center" VertAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text67" Left="21.54" Top="242.62" Width="99.06" Height="41.58" Text="The sum of" HorzAlign="Center" VertAlign="Center" Font="Microsoft Sans Serif, 11pt"/>
+      <LineObject Name="Line8" Left="18.94" Top="240.72" Width="543.57" Height="0.39" Diagonal="true"/>
+      <LineObject Name="Line1" Left="124.74" Top="192.02" Height="93.36" Diagonal="true"/>
+      <TextObject Name="Text4" Left="18.9" Top="340" Width="113.4" Height="22.68" Border.Lines="All" Fill.Color="LightGray" Text="invoice No" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text11" Left="126.63" Top="340" Width="98.28" Height="22.68" Border.Lines="All" Fill.Color="LightGray" Text="Invoice Type" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text14" Left="224.91" Top="340" Width="94.5" Height="22.68" Border.Lines="All" Fill.Color="LightGray" Text="Paid Amount" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text18" Left="319.41" Top="340" Width="83.16" Height="22.68" Border.Lines="All" Fill.Color="LightGray" Text="currrency" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text19" Left="128.52" Top="246.08" Width="419.58" Height="34.02" AfterDataEvent="Text19_AfterData" Text="[ToWordsEnGb([Rep_A_Payment_Allocation.TotalPaid])]" VertAlign="Center"/>
+      <TextObject Name="Text75" Left="128.54" Top="245.67" Width="419.58" Height="34.02" AfterDataEvent="Text75_AfterData" Text="[ToWords([Rep_A_Payment_Allocation.TotalPaid],[Rep_A_Payment_Allocation.NewCurrency])]" VertAlign="Center"/>
+      <TextObject Name="Text76" Left="19.28" Top="150.81" Width="105.05" Height="26.46" Border.Lines="Left, Top, Bottom" Fill.Color="Orange" Text="ReceiptNo" HorzAlign="Center" VertAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text1" Left="124.36" Top="150.82" Width="324.68" Height="26.48" Border.Lines="All" Text="[Rep_A_Payment_Allocation.receiptNo]" VertAlign="Center"/>
+      <TextObject Name="Text85" Left="19.66" Top="301.65" Width="105.05" Height="21.92" Border.Lines="All" Fill.Color="Orange" Text="Total" HorzAlign="Center" VertAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text20" Left="125.12" Top="301.64" Width="105.84" Height="21.94" Border.Lines="All" Text="[Rep_A_Payment_Allocation.TotalPaid]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text6" Left="9.45" Top="18.9" Width="661.5" Height="47.25" Text="Allocation Invoices" HorzAlign="Center" VertAlign="Center" Font="Arial, 16pt, style=Bold, Underline"/>
+      <DataBand Name="Data1" Top="395.66" Width="718.2" Height="30.24" DataSource="Table">
+        <TextObject Name="Text2" Left="18.9" Width="113.4" Height="30.24" Border.Lines="Left, Top, Bottom" Text="[Rep_A_Payment_Allocation.invoiceNo]" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text10" Left="126.63" Width="98.28" Height="30.24" Border.Lines="Left, Top, Bottom" Text="[Rep_A_Payment_Allocation.InvoiceType]" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text12" Left="224.91" Width="94.5" Height="30.24" Border.Lines="Left, Top, Bottom" Text="[Rep_A_Payment_Allocation.Amount]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text17" Left="319.41" Width="83.16" Height="30.24" Border.Lines="All" Text="[Rep_A_Payment_Allocation.InvoiceCurrency]" HorzAlign="Center" VertAlign="Center"/>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter1" Top="429.9" Width="718.2" Height="57.85">
+        <TextObject Name="Text74" Left="20.04" Top="6.43" Width="98.66" Height="41.58" Text="Recived By" HorzAlign="Center" VertAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+        <TextObject Name="Text3" Left="117.18" Top="6.05" Width="502.37" Height="42.35" Text="[Rep_A_Payment_Allocation.RecivedBy]" VertAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+      </GroupFooterBand>
+    </GroupHeaderBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="491.75" Width="718.2" Height="0.38"/>
+    <PageFooterBand Name="PageFooter1" Top="496.13" Width="718.2"/>
+  </ReportPage>
+</Report>

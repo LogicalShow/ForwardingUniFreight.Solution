@@ -1,0 +1,371 @@
+﻿<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="liGroupName" href="javascript:void(0);" onclick="LoadViews('WarehousingTransactions')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.Warehousing
+        </a>
+    </li>
+    <li>
+        <a id="liTabName" href="javascript:void(0);" onclick="LoadViews('WarehousingTransactions')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.WarehousingTransactions
+        </a>
+    </li>
+    <li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.PDI</li>
+</ul>
+
+<div id="div-PDI">
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.PDI
+                </h3>
+            </header>
+            <!--Region the searh, delete, addnew-->
+            <div class="row text-sm wrapper hidden-print ">
+                <div id="div-main-options" class="col-sm-5 m-b-xs">
+                    <button id="btn-NewAdd-Rename" class="btn btn-warning btn-sm swapChildrenClass hide" data-toggle="modal" data-target="#ReceiveModal"><i class="fa fa-plus"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.New&nbsp;</b></button>
+                    <div id="div-option-buttons" class="btn-group hide">
+                        <button id="btn-Copy" type="button" class="btn btn-sm btn-default"><i class="fa fa-copy"></i>&nbsp;Copy </button>
+                        <button id="btn-Print" type="button" class="btn btn-sm btn-default"><i class="fa fa-print"></i>&nbsp;Print </button>
+                        <button id="btn-Send" type="button" class="btn btn-sm btn-default"><i class="fa fa-envelope-o"></i>&nbsp;Send </button>
+                    </div>
+                </div>
+                <div id="div-search-option" class="col-sm-7">
+                    <div id="div-search-controls" class="input-group col-sm-9">
+                        <input id="txt-Search" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="">
+                        <span class="input-group-btn">
+                            <button id="btn-search" class="btn btn-sm btn-primary" type="button" onclick="PDI_LoadingWithPaging();"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                    <div class="float-right col-sm-1">
+                        <button id="btn-Delete-Rename" type="button" class="float-right btn btn-sm btn-danger m-r-n swapChildrenClass hide"><i class="fa fa-trash-o"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete&nbsp;</b></button>
+                    </div>
+                </div>
+            </div>
+            <!--Region the searh, delete, addnew-->
+            <!--Region: table header-->
+            @*<div class="table-responsive" style="width:100%; height:300px; overflow:scroll;">*@
+            <div class="table-responsive" style="">
+                <table id="tblPDI" class="table table-striped b-t b-light text-sm  table-hover ">
+                    <thead>
+                        <tr>
+                            <th id="HeaderDeletePDIID" style="width:5%;" class="hide">
+                                <input id="cb-CheckAll-PDI" type="checkbox" />
+                            </th>
+                            <th class="">Customer</th>
+                            <th class="">Chassis</th>
+                            <th class="">Engine</th>
+                            <th class="">OCN</th>
+                            <th class="">Model</th>
+                            <th>Prod.Code</th>
+                            <th class="">Product Name</th>
+                            <th class="hide">@Forwarding.MvcApp.App_Resources.App_Resources.Qty</th>
+                            @*<th>Split.Qty</th>*@
+                            <th class="hide">Qty.Unit</th>
+                            <th class="hide">@Forwarding.MvcApp.App_Resources.App_Resources.Location</th>
+                            <th>Operation</th>
+                            <th class="hide">PalletID</th>
+                            <th class="hide">Rec.Date</th>
+                            <th class="hide">@Forwarding.MvcApp.App_Resources.App_Resources.Status</th>
+                            <th class="rounded-right"></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <!--Region: table header-->
+            <!--Region: footer-->
+            <footer class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-4 hidden-xs">
+                        <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                        <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                        </button>
+                    </div>
+                    <div id="div-Text-Total" class="col-sm-4 text-center">
+                        <small class="text-muted inline m-t-sm m-b-sm">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                            <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                            <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                        </small>
+                    </div>
+                    <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+                </div>
+            </footer>
+            <!--Region: footer-->
+        </section>
+    </div>
+</div>
+
+<!-- Add / Edit Region Modal -->
+<div class="modal fade" id="PickupPDIModal" tabindex="-1" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="PickupPDIModalabel" aria-hidden="true">
+    <div class="modal-dialog  modalwidth-100 m-t-n-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;</button>*@
+                <h3 class="m-b-none">
+                    PDI &nbsp;<label id="lblShownPickupPDI" purpose="dynamicLabel" class="static-text-primary"></label>
+                    <input type="hidden" id="hIsAdd" />
+                    <input type="hidden" id="hInvoiceHeaderID" />
+                    <input type="hidden" id="hInvoiceDetailID" />
+                    <input type="hidden" id="hCurrencyID" />
+                    <input type="hidden" id="hCurrencyCode" />
+                    <input type="hidden" id="hItemID" />
+                    <input type="hidden" id="hOldLocationID" />
+                    <input type="hidden" id="hPickupDetailsIDInit" />
+                    <input type="hidden" id="hDemandQuantity" />
+                    <input type="hidden" id="hWarehouseID" />
+                    <input type="hidden" id="hCustomerID" />
+                    <input type="hidden" id="hBillToID" />
+                </h3>
+            </div>
+            <!-- Region Add / Edit Region Form -->
+            <div class="modal-body">
+                <div class="span7 form vertical-mode" id="Pickup-form">
+                    <fieldset>
+                        <div class="form-group pull-in has-error clearfix">
+                        
+                            @*<div id="divBtns" class="col-sm-2 m-t-md">
+                                    <button id="btn-Finalize" class="btn btn-lightblue btn-sm m-t-xxs classDisableForFinalized" data-toggle="modal" data-target="" onclick="Pickup_Finalize();"><i class="fa fa-hand-o-right"></i>&nbsp;Finalize</button>
+                                    <button id="btn-PrintPickup" class="btn btn-primary btn-sm m-t-xxs" data-toggle="modal" data-target="" onclick="PickupDetails_Print();"><i class="fa fa-print"></i>&nbsp;Print</button>
+                                </div>*@
+                            <!--Details-->
+                            <div id="divPickupDetailsBtns" class="col-sm-12 m-t" style="clear:both;">
+                                <button id="btn-NewAdd" class="btn btn-warning btn-sm" data-toggle="modal" data-target="" onclick=""><i class="fa fa-plus"></i>&nbsp;New PDI</button>
+                                @*<button id="btn-Finalize" class="btn btn-lightblue btn-sm m-t-xxs classDisableForFinalized" data-toggle="modal" data-target="" onclick="Pickup_Finalize();"><i class="fa fa-hand-o-right"></i>&nbsp;Finalize</button>
+                                <button id="btn-PrintPickup" class="btn btn-primary btn-sm m-t-xxs" data-toggle="modal" data-target="" onclick="PickupDetails_Print();"><i class="fa fa-print"></i>&nbsp;Print</button>
+                                <button id="btn-DeletePickupDetails" title="Delete Details" type="button" class="float-right btn btn-sm btn-danger classDisableForFinalized" onclick="PickupDetails_DeleteList();"><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete</button>*@
+                            </div>
+
+                            <div id="divPickupPDI" class="col-sm-12 m-t-xs">
+                                <section class="panel panel-default">
+                                    <header class="panel-heading font-bold text-ul">PDI</header>
+                                    <!--Region: table header-->
+                                    <div class="table-responsive" style="width:100%; height:300px; overflow:scroll;">
+                                        <table id="tblPickup" class="table table-striped b-t b-light text-sm  table-hover ">
+                                            <thead>
+                                                <tr>
+                                                    <th id="ID" style="width:5%;">
+                                                        <input id="cb-CheckAll" type="checkbox" />
+                                                    </th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.Code</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.Customer</th>
+                                                    <th>Order Date</th>
+                                                    <th>Required Date</th>
+                                                    <th>Finalize Date</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.Status</th>
+                                                    <th class="rounded-right hide"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                    <!--Region: EOF table header-->
+                                    <!--Region: table footer-->
+                                    <footer class="panel-footer hide">
+                                        <div class="col-sm-12 m-t-n-sm swapChildrenClass">
+                                            <!--
+                                                <div class="col-sm-6 swapChildrenClass"><b>&emsp;Row Max Weight(KGM)</b><label id="lblRowMaxWeight" @*purpose="dynamicLabel"*@ class="static-text-blue"></label></div>
+                                                <div class="col-sm-6 text-right swapChildrenClass"><b>&emsp;Row Max Volume(CBM)</b><label id="lblRowMaxVolume" @*purpose="dynamicLabel"*@ class="static-text-blue"></label></div>
+                                            -->
+                                        </div>
+                                    </footer>
+                                    <!--Region: EOF table footer-->
+                                </section>
+                            </div>
+
+                            <!--EOF Details-->
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <!-- Endregion Add / Edit Region Form -->
+            <div class="modal-footer m-t-n-lg">
+                <button type="button" id="btnPrintPickupPDI" class="btn btn-info btn-sm hide" onclick="">
+                    <span class="fa fa-print"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Print
+                </button>
+                @*<button type="button" id="btnSaveAndAddNew" class="btn btn-primary btn-sm classDisableForFinalized" onclick="">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew
+                </button>*@
+                <button class="btnClose btn btn-link btn-sm" onclick="" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Region Options & Template  -->
+
+<!-- Add / Edit Region Modal -->
+<div class="modal fade" id="PickupModal" tabindex="-1" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="PickupModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modalwidth-100 m-t-n-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;</button>*@
+                <h3 class="m-b-none">
+                    PDI &nbsp;<label id="lblShown" purpose="dynamicLabel" class="static-text-primary"></label>
+            </h3>
+        </div>
+        <!-- Region Add / Edit Region Form -->
+        <div class="modal-body">
+            <div class="span7 form vertical-mode" id="Pickup-form">
+                <fieldset>
+                    <div class="form-group pull-in has-error clearfix">
+                        <input id="hPDIID" type="hidden" />
+                        <input type="hidden" id="hPDIReceiveDetailsID" />
+                        <input type="hidden" id="hOperationVehicleID" />
+                        <!-- start alert message region -->
+                        @*<div class="alert alert-danger div-error">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                            </div>*@
+                        <!-- end alert message region -->
+                        <!-- Region Add / Edit Region Form -->
+                        <div class="hide">
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Warehouse</label>
+                                <select id="slWarehouse" class="form-control m-b input-sm" data-required="true"></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Code</label>
+                                <input type="text" id="txtCode" autocomplete="off" disabled="disabled" class="form-control parsley-validated input-sm" data-required="false" maxlength="200" placeholder="Auto-Generated" style="text-transform:uppercase;" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Customer</label>
+                                <select id="slCustomerForClearWithItems" class="form-control m-b input-sm classDisableForDetails hide" data-required="false"></select>
+                                <select id="slCustomer" disabled="disabled" onchange="Pickup_slCustomerChanged();" class="form-control m-b input-sm classDisableForDetails" data-required="true"></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>Person in Charge</label>
+                                <select id="slPersonInCharge" class="form-control m-b input-sm" data-required="false"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.BillTo</label>
+                                <select id="slBillTo" class="form-control m-b input-sm" data-required="true"></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>End User</label>
+                                <select id="slEndUser" class="form-control m-b input-sm" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Operation</label>
+                                <select id="slOperation" class="form-control m-b input-sm" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>RMA No.</label>
+                                <input type="text" id="txtRMANumber" autocomplete="off" class="form-control parsley-validated input-sm" data-required="false" maxlength="200" placeholder="RMA No" style="text-transform:uppercase;" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>Order Date</label>
+                                <input id="txtOrderDate" type="text" readonly="readonly" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>Required Date</label>
+                                <input id="txtRequiredDate" type="text" readonly="readonly" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Status</label>
+                                <input type="text" id="txtStatus" autocomplete="off" disabled="disabled" class="form-control parsley-validated input-sm" data-required="false" maxlength="200" placeholder="InProgress" style="text-transform:uppercase;" />
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</label>
+                                <input type="text" id="txtNotes" autocomplete="off" class="form-control parsley-validated input-sm" data-required="false" maxlength="200" placeholder="Notes" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-1 m-t-27 hide">
+                                <label><input type="checkbox" id="cbIsFinalized">&nbsp;Finalized</label>
+                            </div>
+                        </div> <!----EOF <div class="hide">-->
+
+                        @*<div id="divBtns" class="col-sm-2 m-t-md">
+                                <button id="btn-Finalize" class="btn btn-lightblue btn-sm m-t-xxs classDisableForFinalized" data-toggle="modal" data-target="" onclick="Pickup_Finalize();"><i class="fa fa-hand-o-right"></i>&nbsp;Finalize</button>
+                                <button id="btn-PrintPickup" class="btn btn-primary btn-sm m-t-xxs" data-toggle="modal" data-target="" onclick="PickupDetails_Print();"><i class="fa fa-print"></i>&nbsp;Print</button>
+                            </div>*@
+                        <!--Details-->
+                        <div class="col-sm-1">
+                            <input id="txPickupDetailsPurchaseItemQuantity" autocomplete="off"  onkeypress="CheckValueIsInteger(id);" onfocus="CheckValueIsInteger(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Quantity">
+                        </div>
+                    
+                            <div class="form-group col-sm-3 input-group m-l-n">
+                            <select id="slPickupDetailsPurchaseItem" class="form-control m-b input-sm" data-required="true"></select>
+                            <span class="input-group-btn ">
+                                <button id="btn-AddPickupDetails" class="btn btn-sm btn-warning classDisableForFinalized" type="button" onclick="PDIDetails_Save();"><i class="fa fa-plus">Add</i></button>
+                            </span>
+                        </div>
+
+                        <div id="divPickupDetailsBtns" class="col-sm-8">
+                            <button id="btn-Finalize" class="btn btn-lightblue btn-sm m-t-xxs classDisableForFinalized hide" data-toggle="modal" data-target="" onclick="Pickup_Finalize();"><i class="fa fa-hand-o-right"></i>&nbsp;Finalize</button>
+                            <button id="btn-PrintPickup" class="btn btn-primary btn-sm m-t-xxs hide" data-toggle="modal" data-target="" onclick="PickupDetails_Print();"><i class="fa fa-print"></i>&nbsp;Print</button>
+                            <button id="btn-DeletePickupDetails" title="Delete Details" type="button" class="float-right btn btn-sm btn-danger classDisableForFinalized" onclick="PDIDetails_DeleteList();"><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete</button>
+                        </div>
+
+                        <div id="divPickupDetails" class="col-sm-12" style="clear:both;">
+                            <section class="panel panel-default">
+                                <header class="panel-heading font-bold text-ul">PDI Details</header>
+                                <!--Region: table header-->
+                                <div class="table-responsive" style="width:100%; height:500px; overflow:scroll;">
+                                    <table id="tblPickupDetails" class="table table-striped b-t b-light text-sm  table-hover ">
+                                        <thead>
+                                            <tr>
+                                                <th id="HeaderDeletePickupDetailsID" style="width:5%;">
+                                                    <input id="cb-CheckAll-PickupDetails" type="checkbox" />
+                                                </th>
+                                                <th>PDI Code</th>
+                                                <th>Prod.Code</th>
+                                                <th>Product Name</th>
+                                                @*<th>Receive Code</th>
+                                <th>@Forwarding.MvcApp.App_Resources.App_Resources.Location</th>*@
+                                                <th>Quantity</th>
+                                                <th>PDI Date</th>
+                                                <th class="hide">Notes</th>
+                                                <th class="rounded-right hide"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                                <!--Region: EOF table header-->
+                                <!--Region: table footer-->
+                                <footer class="panel-footer hide">
+                                    <div class="col-sm-12 m-t-n-sm swapChildrenClass">
+                                        <!--
+                        <div class="col-sm-6 swapChildrenClass"><b>&emsp;Row Max Weight(KGM)</b><label id="lblRowMaxWeight" @*purpose="dynamicLabel"*@ class="static-text-blue"></label></div>
+                        <div class="col-sm-6 text-right swapChildrenClass"><b>&emsp;Row Max Volume(CBM)</b><label id="lblRowMaxVolume" @*purpose="dynamicLabel"*@ class="static-text-blue"></label></div>
+                    -->
+                                    </div>
+                                </footer>
+                                <!--Region: EOF table footer-->
+                            </section>
+                        </div>
+
+                        <!--EOF Details-->
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <!-- Endregion Add / Edit Region Form -->
+        <div class="modal-footer m-t-n-lg">
+            <button type="button" id="btnSave" class="btn btn-primary btn-sm classDisableForFinalized" onclick="PDIDetails_Save();">
+                <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+            </button>
+            <button type="button" id="btnSaveAndAddNew" class="btn btn-primary btn-sm classDisableForFinalized hide" onclick="">
+                <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew
+            </button>
+            <button class="btnClose btn btn-link btn-sm" id="btnClose" onclick="" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+        </div>
+    </div>
+</div>
+</div>
+<!-- Region Options & Template  -->

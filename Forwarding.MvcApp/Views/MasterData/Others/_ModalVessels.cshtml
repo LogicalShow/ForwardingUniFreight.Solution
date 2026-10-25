@@ -1,0 +1,68 @@
+﻿    <!--VesselModal-->
+<div class="modal fade" id="VesselModal" tabindex="-1" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="VesselModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-50">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.Vessel &nbsp;<label id="lblShown" purpose="dynamicLabel" class="static-text-primary"></label>
+            </h3>
+        </div>
+        <!-- Region Add / Edit Region Form -->
+        <div class="modal-body">
+            <div class="span7 form vertical-mode" id="Vessel-form">
+                <fieldset>
+                    <div class="form-group pull-in  has-error clearfix">
+                        <input id="hID" type="hidden" />
+                        <!-- start alert message region -->
+                        <div class="alert alert-danger div-error">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                        </div>
+                        <!-- end alert message region -->
+                        <!-- Region Add / Edit Region Form -->
+                        <div class="form-group col-sm-6">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Code</label>
+                            <input type="text" id="txtCode" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated" data-required="true" data-minlength="1" maxlength="10" placeholder="" style="text-transform:uppercase" />
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Name</label>
+                            <input type="text" id="txtName" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated" data-required="true" maxlength="50" placeholder="" style="text-transform:uppercase" />
+                        </div>
+
+                        <div class="form-group col-sm-6">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.LocalName</label>
+                            <input type="text" id="txtLocalName" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated" data-required="false" maxlength="50" placeholder="" style="text-transform:uppercase" />
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label><b>  Flag - علم الدولة  </b></label>
+                            <input type="text" id="txtNotes" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated" data-required="false" maxlength="50" placeholder="" style="text-transform:uppercase" />
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.CallSign</label>
+                            <input type="text" id="txtCallSign" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated" data-required="false" data-minlength="5" maxlength="5" placeholder="5 digits" style="text-transform:uppercase" />
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.ShippingLine</label>
+                            <select id="slShippingLines" name="slShippingLines" class="form-control m-b" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                        </div>
+                        <div class="col-sm-6 m-t m-l">
+                            <label><input type="checkbox" id="cbIsInactive" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.IsInactive</label><br />
+                        </div>
+                        <!-- Region Add / Edit Region Form -->
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <!-- Endregion Add / Edit Region Form -->
+        <div class="modal-footer">
+            <button type="button" id="btnSave" class="btn btn-primary btn-sm" onclick="Vessels_Insert(false);">
+                <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+            </button>
+            <button type="button" id="btnSaveandNew" class="btn btn-primary btn-sm" onclick="Vessels_Insert(true);">
+                <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew
+            </button>
+            <button class="btnClose btn btn-link btn-sm" id="btnClose" onclick="Vessels_UnlockRecord();" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+        </div>
+    </div>
+</div>
+</div>
+<!--EOF VesselModal-->

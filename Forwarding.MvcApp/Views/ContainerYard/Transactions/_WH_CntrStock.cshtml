@@ -1,0 +1,331 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="ContainerFreightStation" href="javascript:void(0);" onclick="LoadViews('ContainerYard')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.ContainerYard1
+        </a>
+    </li>
+    <li>
+        <a id="ContainerFreightStationTariff" href="javascript:void(0);" onclick="LoadViews('ContainerYardTransactions')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.ContainerYardTransactions
+        </a>
+    </li>
+    <li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.WH_CntrStock</li>
+</ul>
+<!-- end breadcrumb  -->
+
+
+<div id="div-WH_CntrStock" class="col-sm-6">
+    <!-- Region Options & Template  -->
+    @*<div id="Flags" class="hidden">
+            <input id="IsXprt" type="hidden" />
+            <input id="IsStrg" type="hidden" />
+        </div>*@
+
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 id="StrgDmrTitle" class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.WH_CntrStock</h3>
+            </header>
+            <!--Region the search, delete, addnew-->
+            <div class="row text-sm wrapper hidden-print ">
+                <div id="div-main-options" class="col-sm-2 m-t-md">
+                    <button id="btn-NewAdd" class="btn btn-warning btn-sm swapChildrenClass hide" data-toggle="modal" data-target="WH_CntrStockModal"><i class="fa fa-plus"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.New&nbsp;</b></button>
+                    @*<div id="div-option-buttons" class="btn-group hide">
+                            <button id="btn-Copy" type="button" class="btn btn-sm btn-default"><i class="fa fa-copy"></i>&nbsp;Copy </button>
+                            <button id="btn-Print" type="button" class="btn btn-sm btn-default"><i class="fa fa-print"></i>&nbsp;Print </button>
+                            <button id="btn-Send" type="button" class="btn btn-sm btn-default"><i class="fa fa-envelope-o"></i>&nbsp;Send </button>
+                        </div>*@
+                </div>
+                <div id="div-search-option" class="col-sm-10 swapChildrenClass">
+
+                    <div id="div-search-controls" class="input-group col-sm-6 m-l-n-lg m-t-md">
+                        <input id="txt-Search" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search">
+                        <span class="input-group-btn">
+                            <button id="btn-search" title="Search" class="btn btn-sm btn-primary" type="button" onclick="WH_CntrStock_LoadingWithPaging();"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                    @*<div class="form-group input-group col-sm-2 m-t-xs swapChildrenClass">
+                            <label><input type="checkbox" checked="checked" id="cbHideApprovedPayments" onchange="WH_CntrStock_LoadingWithPaging();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Hide Approved</label>
+                        </div>*@
+
+                    <div class="float-right col-sm-2">
+                        <button id="btn-Delete" type="button" class="float-right btn btn-sm btn-danger m-r-n m-t-md swapChildrenClass hide"><i class="fa fa-trash-o"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete&nbsp;</b></button>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <!--EOF Region the searh, delete, addnew line-->
+            <!--Region: table header-->
+            <div class="table-responsive m-t-n-sm">
+                <table id="tblWH_CntrStock" class="table table-striped b-t b-light text-sm  table-hover">
+                    <thead>
+                        <tr>
+                            <th id="HeaderDeleteWH_CntrStockID">
+                                <input id="cbWH_CntrStockDeleteHeader" type="checkbox" />
+                            </th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.ContainerNumber</th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.ContainerType</th>
+                            @*<th>Confirmed</th>*@
+
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <!--Region: table header-->
+            <!--Region: footer-->
+            <footer class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-4 hidden-xs">
+                        <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                        <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                        </button>
+                    </div>
+                    <div id="div-Text-Total" class="col-sm-4 text-center">
+                        <small class="text-muted inline m-t-sm m-b-sm">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                            <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                            <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                        </small>
+                    </div>
+                    <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+                </div>
+            </footer>
+            <!--Region: footer-->
+        </section>
+    </div>
+</div>
+
+<div id="div-WH_Hire" class="col-sm-6">
+    <!-- Region Options & Template  -->
+    @*<div id="Flags" class="hidden">
+            <input id="IsXprt" type="hidden" />
+            <input id="IsStrg" type="hidden" />
+        </div>*@
+
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 id="StrgDmrTitleH" class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.WH_Hire</h3>
+            </header>
+            <!--Region the search, delete, addnew-->
+            <div class="row text-sm wrapper hidden-print ">
+                <div id="div-main-options" class="col-sm-2 m-t-md">
+                    <button id="btn-NewAddH" class="btn btn-warning btn-sm swapChildrenClass" data-toggle="modal" data-target="WH_HireModal" onclick="WH_Hire_ClearAllControls();"><i class="fa fa-plus"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.New&nbsp;</b></button>
+                    @*<div id="div-option-buttons" class="btn-group hide">
+                            <button id="btn-Copy" type="button" class="btn btn-sm btn-default"><i class="fa fa-copy"></i>&nbsp;Copy </button>
+                            <button id="btn-Print" type="button" class="btn btn-sm btn-default"><i class="fa fa-print"></i>&nbsp;Print </button>
+                            <button id="btn-Send" type="button" class="btn btn-sm btn-default"><i class="fa fa-envelope-o"></i>&nbsp;Send </button>
+                        </div>*@
+                </div>
+                <div id="div-search-optionH" class="col-sm-10 swapChildrenClass">
+
+                    <div id="div-search-controlsH" class="input-group col-sm-6 m-l-n-lg m-t-md">
+                        <input id="txt-SearchH" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search">
+                        <span class="input-group-btn">
+                            <button id="btn-searchH" title="Search" class="btn btn-sm btn-primary" type="button" onclick="WH_Hire_LoadingWithPaging();"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                    @*<div class="form-group input-group col-sm-2 m-t-xs swapChildrenClass">
+                            <label><input type="checkbox" checked="checked" id="cbHideApprovedPayments" onchange="WH_Hire_LoadingWithPaging();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Hide Approved</label>
+                        </div>*@
+
+                    <div class="float-right col-sm-2">
+                        <button id="btn-DeleteH" type="button" class="float-right btn btn-sm btn-danger m-r-n m-t-md swapChildrenClass"><i class="fa fa-trash-o"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete&nbsp;</b></button>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <!--EOF Region the searh, delete, addnew line-->
+            <!--Region: table header-->
+            <div class="table-responsive m-t-n-sm">
+                <table id="tblWH_Hire" class="table table-striped b-t b-light text-sm  table-hover">
+                    <thead>
+                        <tr>
+                            <th id="HeaderDeleteWH_HireID">
+                                <input id="cbWH_HireDeleteHeader" type="checkbox" />
+                            </th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.ContainerNumber</th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Date</th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Customer</th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Warehouse</th>
+
+                            @*<th>Confirmed</th>*@
+
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <!--Region: table header-->
+            <!--Region: footer-->
+            <footer class="panel-footerH">
+                <div class="row">
+                    <div class="col-sm-4 hidden-xs">
+                        <select id="select-page-sizeH" class="input-sm form-control input-s-sm inline">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                        <button id="btn-applypagingH" class="btn btn-sm btn-default" type="button">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                        </button>
+                    </div>
+                    <div id="div-Text-TotalH" class="col-sm-4 text-center">
+                        <small class="text-muted inline m-t-sm m-b-sm">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                            <span id="spn-first-page-rowH"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                            <span id="spn-total-countH"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                        </small>
+                    </div>
+                    <div id="div-PagerH" class="col-sm-4 text-right text-center-xs float-right"></div>
+                </div>
+            </footer>
+            <!--Region: footer-->
+        </section>
+    </div>
+</div>
+
+<!-- Add / Edit Region Modal to WH_CntrStock -->
+<div class="modal fade" id="WH_CntrStockModal" tabindex="-1" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="WH_CntrStockModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-100">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                <button type="button" title="Close" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="m-b-none" id="ModelHeader">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.WH_CntrStock &nbsp;<label id="lblShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <!-- Region Add / Edit Region Form -->
+            <div class="modal-body">
+                <div class="span7 form vertical-mode" id="WH_CntrStock-form">
+                    <fieldset>
+                        <div class="form-group pull-in has-error clearfix">
+                            <input id="hID" type="hidden" />
+
+
+
+
+
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ContainerNumber</label>
+                                <input id="txtContainerNumber" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated input-sm" data-required="true" data-minlength="1" maxlength="11" placeholder="Container Number" style="text-transform:uppercase" autocomplete="off" />
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ContainerTypes</label>
+                                <select id="slContainerTypesID" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control parsley-validated input-sm" data-required="true"></select>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Warehouse</label>
+                                <select id="slWH_WarehouseIDC" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control parsley-validated input-sm" data-required="true"></select>
+                            </div>
+                            <div class="form-group col-sm-8"><br /><br /><br /></div>
+
+
+
+
+
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <!-- Endegion Add / Edit Region Form -->
+            <div class="modal-footer m-t-n-lg">
+                <button type="button" id="btnSave" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                </button>
+                <button type="button" id="btnSaveandNew" class="btn btn-primary btn-sm hide">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew
+                </button>
+                <button class="btnClose btn btn-link btn-sm" id="btnClose" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add / Edit Region Modal to -->
+<div class="modal fade" id="WH_HireModal" tabindex="-1" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="WH_HireModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-100">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                <button type="button" title="Close" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="m-b-none" id="ModelHeader">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.WH_Hire &nbsp;<label id="lblShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <!-- Region Add / Edit Region Form -->
+            <div class="modal-body">
+                <div class="span7 form vertical-mode" id="WH_Hire-form">
+                    <fieldset>
+                        <div class="form-group pull-in has-error clearfix">
+                            <input id="hIDH" type="hidden" />
+
+
+
+
+
+                            <div class="form-group col-sm-4">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ContainerNumber</label>
+                                <select id="slWH_CntrStockID" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control parsley-validated input-sm" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Warehouse</label>
+                                <select id="slWH_WarehouseID" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control parsley-validated input-sm" data-required="fasle"></select>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Customer</label>
+                                <select id="slCustomerID" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control parsley-validated input-sm" data-required="fasle"></select>
+                            </div>
+                            <div class="form-group col-sm-12" style="clear:both;">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</label>
+                           @*     <input id="txtRemarks" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated input-sm" data-required="true" data-minlength="1" maxlength="10" placeholder="Note" style="text-transform:uppercase" />*@
+                                <textarea id="txtRemarks" maxlength="1500" class="form-control col-sm-12 textDivOperations input-sm" style="text-transform:uppercase;"></textarea>
+
+                            </div>
+
+                            <div class="form-group col-sm-8"><br /><br /><br /></div>
+
+
+
+
+
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <!-- Endegion Add / Edit Region Form -->
+            <div class="modal-footer m-t-n-lg">
+                <button type="button" id="btnSaveH" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                </button>
+                <button type="button" id="btnSaveandNewH" class="btn btn-primary btn-sm hide">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew
+                </button>
+                <button class="btnClose btn btn-link btn-sm" id="btnClose" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>

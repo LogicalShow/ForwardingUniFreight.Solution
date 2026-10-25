@@ -1,0 +1,35 @@
+﻿<!-- This modal is opened to map a house operation to a container -->
+<div class="modal fade" id="MapHouseToContainerModal" tabindex="-1" style="z-index: 4500;" data-keyboard="false" data-backdrop="false" role="dialog" aria-labelledby="MapHouseToContainerModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modalwidth-50">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;</button>*@
+                <h3 class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.HouseOperation &nbsp;<label id="lblMapHouseToContainerShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                    <button type="button" class="close" title="Close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region Add / Edit Country Form -->
+                <div class="span7 form vertical-mode" id="MapHouseToContainer-form">
+                    <fieldset>
+                        <input id="hHouseToMapID" type="hidden" />
+                        <div class="form-group col-sm-5 m-t-n-xs">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Container</label>
+                            <select id="slMappedContainers" name="slMappedContainers" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b" data-required="true"></select>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <!-- Endregion Add / Edit Region Form -->
+            <div class="modal-footer">
+                <button type="button" id="btnSaveMapHouseToContainer" class="btn btn-primary btn-sm" onclick="MapHouseToContainer_Update(1);">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save</button>
+                @*<button type="button" id="btnSaveandNewMapHouseToContainer" class="btn btn-primary btn-sm" onclick="MapHouseToContainer_Update(true);">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew</button>*@
+                <button class="btnMapHouseToContainerClose btn btn-link btn-sm" id="btnClose" title="Close" data-dismiss="modal" aria-hidden="true" >@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div> 
+        </div>
+    </div>
+</div>

@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="05/30/2023 14:16:22" ReportInfo.Modified="08/06/2023 12:02:15" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+
+    private void Text18_AfterData(object sender, EventArgs e)
+    {
+      if (((String)Report.GetParameterValue(&quot;category&quot;))==&quot;1&quot;)
+      {
+		    Text18.Text=&quot;ALL&quot;;
+      }  
+      else  if (((String)Report.GetParameterValue(&quot;category&quot;))==&quot;2&quot;)
+      {
+        Text18.Text=&quot;يومية&quot;;
+      }
+      else  if (((String)Report.GetParameterValue(&quot;category&quot;))==&quot;3&quot;)
+      {
+        Text18.Text=&quot;موسمية&quot;;
+      }
+      else  if (((String)Report.GetParameterValue(&quot;category&quot;))==&quot;3&quot;)
+      {
+        Text18.Text=&quot;ثابتة&quot;;
+      }
+    }
+
+    private void Text20_AfterData(object sender, EventArgs e)
+    {
+      if (((String)Report.GetParameterValue(&quot;shiftEmp&quot;))==&quot;1&quot;)
+      {
+        Text20.Text=&quot;ALL&quot;;
+      }  
+      else  if (((String)Report.GetParameterValue(&quot;shiftEmp&quot;))==&quot;2&quot;)
+      {
+        Text20.Text=&quot;صباحي&quot;;
+      }
+      else  if (((String)Report.GetParameterValue(&quot;shiftEmp&quot;))==&quot;3&quot;)
+      {
+        Text20.Text=&quot;مسائي&quot;;
+      }
+
+    }
+
+    private void Text24_AfterData(object sender, EventArgs e)
+    {
+      if (((String)Report.GetParameterValue(&quot;maritalstatus&quot;))==&quot;1&quot;)
+      {
+        Text24.Text=&quot;ALL&quot;;
+      }  
+      else  if (((String)Report.GetParameterValue(&quot;maritalstatus&quot;))==&quot;2&quot;)
+      {
+        Text24.Text=&quot;اعزب&quot;;
+      }
+      else  if (((String)Report.GetParameterValue(&quot;maritalstatus&quot;))==&quot;3&quot;)
+      {
+        Text24.Text=&quot;متزوج&quot;;
+      }  
+      else  if (((String)Report.GetParameterValue(&quot;maritalstatus&quot;))==&quot;4&quot;)
+      {
+        Text24.Text=&quot;ارمل&quot;;
+      }
+      else  if (((String)Report.GetParameterValue(&quot;maritalstatus&quot;))==&quot;5&quot;)
+      {
+        Text24.Text=&quot;مطلق&quot;;
+      }
+    }
+
+    private void Text22_AfterData(object sender, EventArgs e)
+    {
+      if (((String)Report.GetParameterValue(&quot;Section&quot;))==&quot;1&quot;)
+      {
+        Text22.Text=&quot;ALL&quot;;
+      }  
+      else  if (((String)Report.GetParameterValue(&quot;Section&quot;))==&quot;2&quot;)
+      {
+        Text22.Text=&quot;تعبئة&quot;;
+      }
+      else  if (((String)Report.GetParameterValue(&quot;Section&quot;))==&quot;3&quot;)
+      {
+        Text22.Text=&quot;اشراف جودة&quot;;
+      }  
+      else  if (((String)Report.GetParameterValue(&quot;Section&quot;))==&quot;4&quot;)
+      {
+        Text22.Text=&quot;عمال سير&quot;;
+      }
+      else  if (((String)Report.GetParameterValue(&quot;Section&quot;))==&quot;5&quot;)
+      {
+        Text22.Text=&quot;ادارى&quot;;
+      }
+      else  if (((String)Report.GetParameterValue(&quot;Section&quot;))==&quot;6&quot;)
+      {
+        Text22.Text=&quot;خدمات&quot;;
+      }
+    }
+
+    private void Text25_AfterData(object sender, EventArgs e)
+    {
+      if (((String)Report.GetParameterValue(&quot;NumberofChildren&quot;))==&quot;1&quot;)
+      {
+        Text25.Text=&quot;ALL&quot;;
+      }  
+      else  if (((String)Report.GetParameterValue(&quot;NumberofChildren&quot;))==&quot;2&quot;)
+      {
+        Text25.Text=&quot;يعول&quot;;
+      }
+      else  if (((String)Report.GetParameterValue(&quot;NumberofChildren&quot;))==&quot;3&quot;)
+      {
+        Text25.Text=&quot;لا يعول&quot;;
+      }  
+    }
+
+
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection1" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFSSxhiP6CTXC7kHqaWdA+92cnCOpUrEy9a4rjPETpQfsFDlo69vQpyLrltRBtE6+ZPzQDG7q+4eXGJ8RgLIvdh/pzLgxKsiZuxl4wCn6KmeyRhuHRe4bVK/jHmMmLwuwT">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="exec RepST_EmployeesTransaction @IDs,@From_Date,@Todate,@category,@shiftEmp,@Section,@maritalstatus,@NumberofChildren">
+        <Column Name="EmployeeName" DataType="System.String"/>
+        <Column Name="EmployeeID" DataType="System.Int32"/>
+        <Column Name="Salary" DataType="System.Decimal"/>
+        <Column Name="Average" DataType="System.Decimal"/>
+        <Column Name="ActualAverage" DataType="System.Decimal"/>
+        <Column Name="advances" DataType="System.Decimal"/>
+        <Column Name="Discount" DataType="System.Decimal"/>
+        <Column Name="Extra" DataType="System.Decimal"/>
+        <Column Name="Total" DataType="System.Decimal"/>
+        <Column Name="Addd" DataType="System.Decimal"/>
+        <Column Name="Disc" DataType="System.Decimal"/>
+        <Column Name="routeLine" DataType="System.String"/>
+        <Column Name="NumberDays" DataType="System.Int32"/>
+        <Column Name="TotalDays" DataType="System.Int32"/>
+        <CommandParameter Name="IDs" DataType="22" Expression="[IDs]"/>
+        <CommandParameter Name="From_Date" DataType="22" Expression="[From_Date]"/>
+        <CommandParameter Name="Todate" DataType="22" Expression="[Todate]"/>
+        <CommandParameter Name="category" DataType="22" Expression="[category]"/>
+        <CommandParameter Name="shiftEmp" DataType="22" Expression="[shiftEmp]"/>
+        <CommandParameter Name="Section" DataType="22" Expression="[Section]"/>
+        <CommandParameter Name="maritalstatus" DataType="22" Expression="[maritalstatus]"/>
+        <CommandParameter Name="NumberofChildren" DataType="22" Expression="[NumberofChildren]"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="IDs" DataType="System.String"/>
+    <Parameter Name="From_Date" DataType="System.String"/>
+    <Parameter Name="Todate" DataType="System.String"/>
+    <Parameter Name="category" DataType="System.String"/>
+    <Parameter Name="shiftEmp" DataType="System.String"/>
+    <Parameter Name="Section" DataType="System.String"/>
+    <Parameter Name="maritalstatus" DataType="System.String"/>
+    <Parameter Name="NumberofChildren" DataType="System.String"/>
+    <Total Name="Salary" Expression="[Table.Salary]" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="Extra" Expression="[Table.Extra]" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="Discount" Expression="[Table.Discount]" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="Addd" Expression="[Table.Addd]" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="advances" Expression="[Table.advances]" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="Total" Expression="[Table.Total]" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="Disc" Expression="[Table.Disc]" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="TotalSalary" Expression="[Table.Salary]" Evaluator="Data1" PrintOn="ColumnFooter1"/>
+    <Total Name="TotalExtra" Expression="[Table.Extra]" Evaluator="Data1" PrintOn="ColumnFooter1"/>
+    <Total Name="TotalDiscount" Expression="[Table.Discount]" Evaluator="Data1" PrintOn="ColumnFooter1"/>
+    <Total Name="TotalDisc" Expression="[Table.Disc]" Evaluator="Data1" PrintOn="ColumnFooter1"/>
+    <Total Name="TotalAddd" Expression="[Table.Addd]" Evaluator="Data1" PrintOn="ColumnFooter1"/>
+    <Total Name="Totaladvances" Expression="[Table.advances]" Evaluator="Data1" PrintOn="ColumnFooter1"/>
+    <Total Name="TotalTotal" Expression="[Table.Total]" Evaluator="Data1" PrintOn="ColumnFooter1"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9">
+    <ReportTitleBand Name="ReportTitle1" Width="1047.06"/>
+    <PageHeaderBand Name="PageHeader1" Top="4.3" Width="1047.06" Height="103.95">
+      <TextObject Name="Text2" Left="850.5" Top="85.05" Width="189" Height="18.9" Border.Lines="All" Text="الاسم" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text3" Left="481.95" Top="85.05" Width="94.5" Height="18.9" Border.Lines="Left, Top, Bottom" Text="مكافأة" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text4" Left="387.45" Top="85.05" Width="94.5" Height="18.9" Border.Lines="Left, Top, Bottom" Text="عجز" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text5" Left="103.95" Top="85.05" Width="94.5" Height="18.9" Border.Lines="Left, Top, Bottom" Text="سلفة" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text6" Left="652.05" Top="85.05" Width="94.5" Height="18.9" Border.Lines="Left, Top, Bottom" Text="المرتب" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text7" Left="9.45" Top="85.05" Width="94.5" Height="18.9" Border.Lines="Left, Top, Bottom" Text="الاجمالى" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text13" Left="737.1" Width="37.8" Height="18.9" Text="من" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text14" Left="642.6" Width="94.5" Height="18.9" Text="[From_Date]" HorzAlign="Right" VertAlign="Center"/>
+      <TextObject Name="Text15" Left="576.45" Width="37.8" Height="18.9" Text="الي" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text16" Left="481.95" Width="94.5" Height="18.9" Text="[Todate]" HorzAlign="Right" VertAlign="Center"/>
+      <TextObject Name="Text17" Left="926.1" Top="37.8" Width="103.95" Height="18.9" Text="category" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text18" Left="831.6" Top="37.8" Width="94.5" Height="18.9" AfterDataEvent="Text18_AfterData" Text="[category]" HorzAlign="Right" VertAlign="Center"/>
+      <TextObject Name="Text19" Left="727.65" Top="37.8" Width="75.6" Height="18.9" Text="Shift" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text20" Left="633.15" Top="37.8" Width="94.5" Height="18.9" AfterDataEvent="Text20_AfterData" Text="[shiftEmp]" HorzAlign="Right" VertAlign="Center"/>
+      <TextObject Name="Text21" Left="302.4" Top="37.8" Width="75.6" Height="18.9" Text="Section" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text22" Left="207.9" Top="37.8" Width="94.5" Height="18.9" AfterDataEvent="Text22_AfterData" Text="[Section]" HorzAlign="Right" VertAlign="Center"/>
+      <TextObject Name="Text23" Left="500.85" Top="37.8" Width="103.95" Height="18.9" Text="military status" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text24" Left="406.35" Top="37.8" Width="94.5" Height="18.9" AfterDataEvent="Text24_AfterData" Text="[maritalstatus]" HorzAlign="Right" VertAlign="Center"/>
+      <TextObject Name="Text25" Left="9.45" Top="37.8" Width="94.5" Height="18.9" AfterDataEvent="Text25_AfterData" Text="[NumberofChildren]" HorzAlign="Right" VertAlign="Center"/>
+      <TextObject Name="Text26" Left="103.95" Top="37.8" Width="103.95" Height="18.9" Text="الحالة" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text28" Left="292.95" Top="85.05" Width="94.5" Height="18.9" Border.Lines="Left, Top, Bottom" Text="خصم" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text30" Left="198.45" Top="85.05" Width="94.5" Height="18.9" Border.Lines="Left, Top, Bottom" Text="اضافي" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text32" Left="746.55" Top="85.05" Width="103.95" Height="18.9" Border.Lines="Left, Top, Bottom" Text="Route" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text41" Left="576.45" Top="85.05" Width="75.6" Height="18.9" Border.Lines="Left, Top, Bottom" Text="الايام" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text42" Left="387.45" Width="66.15" Height="18.9" Text="عدد الايام" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text43" Left="122.85" Width="264.6" Height="18.9" AfterDataEvent="Text43_AfterData" Text="[Table.TotalDays]" HorzAlign="Right" VertAlign="Center"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="112.55" Width="1047.06" Height="18.9" CanGrow="true" DataSource="Table">
+      <TextObject Name="Text1" Left="850.5" Width="189" Height="18.9" Border.Lines="All" CanGrow="true" GrowToBottom="true" Text="[Table.EmployeeName]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text8" Left="481.95" Width="94.5" Height="18.9" Border.Lines="Left, Top, Bottom" CanGrow="true" GrowToBottom="true" Text="[Table.Extra]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text9" Left="387.45" Width="94.5" Height="18.9" Border.Lines="Left, Top, Bottom" CanGrow="true" GrowToBottom="true" Text="([Table.Discount])" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text10" Left="103.95" Width="94.5" Height="18.9" Border.Lines="Left, Top, Bottom" CanGrow="true" GrowToBottom="true" Text="([Table.advances])" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text11" Left="652.05" Width="94.5" Height="18.9" Border.Lines="Left, Top, Bottom" CanGrow="true" GrowToBottom="true" Text="[Table.Salary]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text12" Left="9.45" Width="94.5" Height="18.9" Border.Lines="Left, Top, Bottom" CanGrow="true" GrowToBottom="true" Text="[Table.Total]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text27" Left="292.95" Width="94.5" Height="18.9" Border.Lines="Left, Top, Bottom" CanGrow="true" GrowToBottom="true" Text="[Table.Disc]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text29" Left="198.45" Width="94.5" Height="18.9" Border.Lines="Left, Top, Bottom" CanGrow="true" GrowToBottom="true" Text="[Table.Addd]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text31" Left="746.55" Width="103.95" Height="18.9" Border.Lines="Left, Top, Bottom" CanGrow="true" GrowToBottom="true" Text="[Table.routeLine]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text40" Left="576.45" Width="75.6" Height="18.9" Border.Lines="Left, Top, Bottom" CanGrow="true" GrowToBottom="true" Text="[Table.NumberDays]" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+    </DataBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="177.85" Width="1047.06" Height="18.9">
+      <TextObject Name="Text33" Left="652.05" Width="94.5" Height="18.9" Text="[Salary]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text34" Left="481.95" Width="94.5" Height="18.9" Text="[Extra]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text35" Left="387.45" Width="94.5" Height="18.9" Text="[Discount]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text36" Left="292.95" Width="94.5" Height="18.9" Text="[Disc]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text37" Left="198.45" Width="94.5" Height="18.9" Text="[Addd]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text38" Left="103.95" Width="94.5" Height="18.9" Text="[advances]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text39" Left="9.45" Width="94.5" Height="18.9" Text="[Total]" HorzAlign="Center" VertAlign="Center"/>
+    </ReportSummaryBand>
+    <ColumnFooterBand Name="ColumnFooter1" Top="135.75" Width="1047.06" Height="37.8">
+      <TextObject Name="Text44" Left="652.05" Top="9.45" Width="94.5" Height="18.9" Text="[TotalSalary]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text45" Left="481.95" Top="9.45" Width="94.5" Height="18.9" Text="[TotalExtra]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text46" Left="387.45" Top="9.45" Width="94.5" Height="18.9" Text="[TotalDiscount]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text47" Left="292.95" Top="9.45" Width="94.5" Height="18.9" Text="[TotalDisc]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text48" Left="198.45" Top="9.45" Width="94.5" Height="18.9" Text="[TotalAddd]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text49" Left="103.95" Top="9.45" Width="94.5" Height="18.9" Text="[Totaladvances]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text50" Left="9.45" Top="9.45" Width="94.5" Height="18.9" Text="[TotalTotal]" HorzAlign="Center" VertAlign="Center"/>
+    </ColumnFooterBand>
+    <PageFooterBand Name="PageFooter1" Top="201.06" Width="1047.06"/>
+  </ReportPage>
+</Report>

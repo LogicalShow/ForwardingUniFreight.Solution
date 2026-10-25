@@ -1,0 +1,305 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="Trucking" href="javascript:void(0);" onclick="LoadViews(id)">
+            @Forwarding.MvcApp.App_Resources.App_Resources.BillTracking
+        </a>
+    </li>
+
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-BillTracking">
+
+
+
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.BillTracking
+                </h3>
+            </header>
+            <!--Region of all Containers of the Bill-->
+
+            <div class="modal fade" id="BillTrackingModal" tabindex="-1" data-keyboard="false" data-backdrop="false" role="dialog" aria-labelledby="BillTrackingModalLabel" aria-hidden="true">
+                <div class="modal-dialog " style="width:100%">
+                    @*<div class="modal-content modalwidth-100">*@
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="m-b-none">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Containers&nbsp;<label id="lblShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                            </h3>
+                        </div>
+
+                        <div class="modal-body">
+
+                            <!-- Region Fields -->
+
+                            <div class="span7 form vertical-mode" id="Bills-form">
+                                <fieldset>
+                                    <div class="form-group pull-in  clearfix">
+                                        <input id="hID" type="hidden" />
+
+                                        @*<div class="row col-sm-12 m-b-sm swapChildrenClass">*@
+                                        <div style="display:flex; justify-content:center">
+
+
+                                            <div class="form-group col-sm-6" style="width: 20%">
+                                                <label> BillNumber </label>
+                                                <input type="text" id="txtBillNoModel" class="form-control parsley-validated input-sm" data-required="false" maxlength="100" placeholder="" style="text-transform: uppercase; text-align: center;" disabled />
+                                            </div>
+
+                                            <div class="form-group col-sm-6" style="width: 20%">
+                                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Code</label>
+                                                <input type="text" id="txtOperationCodeModel" class="form-control parsley-validated input-sm" data-required="false" maxlength="100" placeholder="" style="text-transform: uppercase; text-align: center;" disabled />
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+
+                                    <br />
+
+                                    <div class="row col-sm-12 m-b-sm swapChildrenClass">
+
+                                        <div class="form-group col-sm-1">
+
+                                            @*<div class="form-group col-sm-1">
+                                                    <button id="btn-PrintContainers-Summarized" type="button" class="btn btn-sm btn-lightblue" style="width:115%;" onclick=""><i class="fa fa-print"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Print</button>
+                                                </div>*@
+                                        </div>
+
+                                    </div>
+                                </fieldset>
+                            </div>
+
+
+                            <!-- Region Fields -->
+                            <!-- Region Table Content -->
+                            <div class="table-responsive m-t-n">
+                                <table id="tblBillTrackingContainersData" class="table table-striped b-t b-light text-sm  table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th class="th-sortable" data-toggle="class">
+                                                @Forwarding.MvcApp.App_Resources.App_Resources.No
+                                            </th>
+                                            <th>
+                                                ContainerNO
+                                            </th>
+                                            <th>
+                                                @Forwarding.MvcApp.App_Resources.App_Resources.Size
+                                            </th>
+                                            <th>
+                                                @Forwarding.MvcApp.App_Resources.App_Resources.ContainerTracking
+                                            </th>
+
+                                            <th>
+                                                GateOutDate
+                                            </th>
+                                            <th>
+                                                @Forwarding.MvcApp.App_Resources.App_Resources.ReturnDate
+                                            </th>
+                                            <th class="hide">
+                                               ActualReturnDate
+                                            </th>
+                                            <th>
+                                               FreeDays
+                                            </th>
+                                            <th>
+                                                RemainingFreeDays
+
+                                            </th>
+                                            <th>
+                                                ExceededFreeDays
+
+                                            </th>
+                                            <th class="rounded-right hide"></th>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- Endregion Table Content -->
+                        </div>
+
+                        <div class="modal-footer">
+                            @*<button type="button" id="btnPrint2" class="btn btn-lightblue btn-sm hide" onclick="">
+                                    <span class="fa fa-print"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Print
+                                </button>*@
+                            <button class="btnConfirm btn btn-link btn-sm hide" id="btnClose" onclick="" data-dismiss="modal" aria-hidden="true">Confirm</button>
+                            <button class="btnClose btn btn-link btn-sm" id="btnClose" onclick="" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Region of all Containers of the Bill-->
+            <!--Region the search, delete, addnew-->
+            <div class="modal fade" id="FilterCCModal" tabindex="-1" @*style="z-index: 3000;"*@ data-keyboard="false" data-backdrop="false" role="dialog" aria-labelledby="FilterCCModalLabel" aria-hidden="true">
+                <div class="modal-dialog modalwidth-100">
+                    <div class="modal-content m-t-n-lg">
+                        <div class="modal-header">
+                            <button id="FilterCCModalCloseButton" type="button" class="close" data-dismiss="modal" aria-hidden="true" title="خروج">
+                                &times;
+                            </button>
+
+                            <h3 class="m-b-none">
+                                <label id="lblShownFilterCCModal" purpose="dynamicLabel" class="static-text-primary">@Forwarding.MvcApp.App_Resources.App_Resources.FilterOptions</label>
+                            </h3>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Region FilterOperations Form -->
+                            <button id="btn-ClearAllFilterCCModal" type="button" class="btn btn-warning btn-sm m-l m-t-n-sm hide" onclick=""><i class="fa "></i><b>&nbsp;ContentEvacuation</b></button>
+
+                            <div class="span7 form vertical-mode m-t-sm" id="FilterCCModal-form">
+                                <fieldset>
+
+                                    <div id="divFilterCCModal" class="m-t-n ">
+
+                                        <div class="row swapChildrenClass">
+                                            <div class="form-group col-sm-6">
+                                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Code</label>
+                                                <input type="text" id="txtFilterOperationCodeCCModule" autocomplete="off" class="form-control input-sm" maxlength="200" placeholder="Op. Serial" style="text-transform:uppercase">
+                                            </div>
+                                        </div>
+
+                                        <div class="row swapChildrenClass">
+                                            <div class="form-group col-sm-6">
+                                                <label>BillNumber</label>
+                                                <input type="text" id="txtFilterBillNoCCModule" autocomplete="off" class="form-control input-sm" maxlength="200" placeholder="Master Bill of Lading Number" style="text-transform:uppercase">
+                                            </div>
+                                        </div>
+                                        <div class="row swapChildrenClass">
+
+                                            <div class="form-group col-sm-2"></div>
+                                            <div class="form-group col-sm-2"></div>
+                                            <div class="form-group col-sm-2"></div>
+                                            <div class="form-group col-sm-2"></div>
+                                            <div class="form-group col-sm-2"></div>
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+                            </div>
+                            <!-- Endegion FilterOperations Form -->
+                        </div>
+                        <div class="modal-footer m-t-n">
+                            <!--sherif-->
+                            <button type="button" data-dismiss="modal" onclick="BillTracking_LoadingWithPaging();" id="btnFilterOperationsApply" class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-search"></span>&nbsp;Serach
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row text-sm wrapper hidden-print ">
+                <div id="div-search-option" class="col-sm-12">
+                    <div class="form-group col-sm-11">
+                        <button id="btn-FilterOptions" class="btn btn-primary btn-sm" data-toggle="modal" onclick="" data-target="#FilterCCModal"><i class="fa fa-filter"></i> @Forwarding.MvcApp.App_Resources.App_Resources.FilterOptions</button>
+                    </div>
+                    <div id="div-search-controls" class="input-group col-sm-1">
+                        <input id="txt-Search" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control hide" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search">
+                        @*<span class="input-group-btn">
+                                <button id="btn-search" class="btn btn-sm btn-primary hide" type="button" onclick="BillTracking_LoadingWithPaging();"><i class="fa fa-search"></i></button>
+                                <button id="btn-test" class="btn btn-sm btn-primary " type="button" onclick="">@Forwarding.MvcApp.App_Resources.App_Resources.Update</button><br><br><br>
+                            </span>*@
+                    </div>
+
+
+                </div>
+            </div>
+            <!--Region the search, delete, addnew-->
+            <!--Region: table header-->
+            <div class="table-responsive m-t-n">
+                <table id="tblBillTrackingData" class="table table-striped b-t b-light text-sm  table-hover">
+                    <thead>
+                        <tr>
+                            <th class="th-sortable" data-toggle="class">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.No
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Code
+                            </th>
+                            <th>
+                                BillNumber
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.State
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.ShippingLine
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.POL
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.POD
+                            </th>
+                            <th>
+                                ContainersCount
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.ExpectedArrivalDate
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.ActualArrivalDate
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Statistics
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.BillTracking
+                            </th>
+                            <th>
+                                FreeDays
+                            </th>
+
+                            <th class="rounded-right hide"></th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <!--Region: table header-->
+            <!--Region: footer-->
+            <footer class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-4 hidden-xs">
+                        <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                        <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                        </button>
+                    </div>
+                    <div id="div-Text-Total" class="col-sm-4 text-center">
+                        <small class="text-muted inline m-t-sm m-b-sm">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                            <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                            <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                        </small>
+                    </div>
+                    <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+                </div>
+            </footer>
+            <!--Region: footer-->
+        </section>
+    </div>
+</div>

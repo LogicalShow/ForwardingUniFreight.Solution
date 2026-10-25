@@ -1,0 +1,315 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li><a id="hl-homepage" href="javascript:void(0);" onclick="LoadViews(id);"><i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+    </a></li>
+    <li><a id="Reports" href="javascript:void(0);" onclick="LoadViews('Statistics')">@Forwarding.MvcApp.App_Resources.App_Resources.Reports
+    </a></li>
+    <li><a id="Statistics" href="javascript:void(0);" onclick="LoadViews('Statistics');">@Forwarding.MvcApp.App_Resources.App_Resources.Statistics
+    </a></li>
+    <li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.ContainerTrackingReport</li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-ProfitStatistics">
+    <!-- Region Options & Template  -->
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <div id="hExportedTable" class="hide"></div>
+                <h3 class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.FilterBy</h3>
+                @*<h3 class="m-b-none">Best Print Using Internet Explorer</h3>*@
+            </header>
+            <!--Region the searh, delete, addnew-->
+            <div class="row text-sm wrapper hidden-print m-l">
+                <div id="div-main-options">
+                    <!--Region Filter-->
+                    @*<div id="divTransportFilter" class="btn-group" data-toggle="buttons"> 
+                        <label class="btn btn-sm btn-default active" id="lbl-filter-AllTransports" title="All Types"   > <input type="radio" name="options">   <i class="fa text-active"></i> @Forwarding.MvcApp.App_Resources.App_Resources.All</label>
+                        <label class="btn btn-sm btn-default       " id="lbl-filter-ocean"         title="Ocean" > <input type="radio" name="options"> <i class="fa text-active ">    </i> <i class="fa fa-anchor   "></i>    </label> 
+                        <label class="btn btn-sm btn-default       " id="lbl-filter-air"           title="Air"   > <input type="radio" name="options"> <i class="fa text-active ">  </i> <i class="fa fa-plane    "></i>    </label> 
+                        <label class="btn btn-sm btn-default       " id="lbl-filter-inland"        title="Inland"> <input type="radio" name="options"> <i class="fa text-active  "></i> <i class="fa fa-truck     "></i>    </label>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;
+                    <div id="divDirectionFilter" class="btn-group" data-toggle="buttons"> 
+                        <label class="btn btn-sm btn-default active" id="lbl-filter-AllDirections" title="All Directions"     > <input type="radio" name="options">   <i class="fa text-active"></i> @Forwarding.MvcApp.App_Resources.App_Resources.All</label>
+                        <label class="btn btn-sm btn-default       " id="lbl-filter-import"        title="Import"  > <input type="radio" name="options">   <i class="fa text-active"  >    </i> <i class="fa fa-arrow-circle-down"></i> </label> 
+                        <label class="btn btn-sm btn-default       " id="lbl-filter-export"        title="Export"  > <input type="radio" name="options">   <i class="fa text-active"  >  </i> <i class="fa fa-external-link      "></i> </label> 
+                        <label class="btn btn-sm btn-default       " id="lbl-filter-domestic"      title="Domestic"> <input type="radio" name="options">   <i class="fa text-active"></i> <i class="fa fa-home                   "></i> </label>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;
+                    <div id="divBLTypeFilter" class="btn-group" data-toggle="buttons"> 
+                        <label class="btn btn-sm btn-default active" id="lbl-filter-AllBLTypes" title="All B/L Types"     > <input type="radio" name="options">   <i class="fa text-active"></i> @Forwarding.MvcApp.App_Resources.App_Resources.All</label>
+                        <label class="btn btn-sm btn-default       " id="lbl-filter-direct"     title="Direct"> <input type="radio" name="options">   <i class="fa text-active"  >    </i> <i class="fa fa-indent"  ></i>    </label> 
+                        <label class="btn btn-sm btn-default       " id="lbl-filter-house"      title="House" > <input type="radio" name="options">   <i class="fa text-active"  >  </i> <i class="fa fa-link      "  ></i>  </label> 
+                        <label class="btn btn-sm btn-default       " id="lbl-filter-master"     title="Master"> <input type="radio" name="options">   <i class="fa text-active"></i> <i class="fa fa-book                   "></i> </label>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;*@
+                    @*<div class="btn-group m-r">
+                        <button data-toggle="dropdown" class="btn btn-sm btn-default dropdown-toggle"><span class="dropdown-label">@Forwarding.MvcApp.App_Resources.App_Resources.AllStages</span> <span class="caret"></span></button>
+                        <ul id="ulOperationStages" class="dropdown-menu dropdown-select">*@
+                            @*<li class="active" value="0"><a href="#"><input type="radio" name="d-s-r">ALL STAGES</a></li>
+                            <li class="" value="1"><a href="#"><input type="radio" name="d-s-r">CREATED</a></li>
+                            <li class="" value="2"><a href="#"><input type="radio" name="d-s-r">SENT</a></li>
+                            <li class="" value="3"><a href="#"><input type="radio" name="d-s-r">DRAFT</a></li>
+                            <li class="" value="5"><a href="#"><input type="radio" name="d-s-r">DECLINED</a></li>
+                            <li class="" value="4"><a href="#"><input type="radio" name="d-s-r">ACCEPTED</a></li>*@
+                            @*<li class="disabled"><a href="#"><input type="radio" name="d-s-r" disabled="">I'm disabled</a></li>*@
+                        @*</ul>
+                    </div>*@
+                    @*<br /><br />*@
+                    <div class="form-group col-sm-3 m-l-n">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Shipper</label>
+                        <select id="slCustomer" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.BookingParty</label>
+                        <select id="slBookingParty" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                    </div>
+                    @*<div class="form-group col-sm-3 m-l-n m-t-n-sm"><br><br><br><br></div>*@
+                    <div class="form-group col-sm-3">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.POL</label>
+                        <select id="slPOL" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.ShippingLine</label>
+                        <select id="slShippingLine" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                    </div>
+                    <div class="form-group col-sm-3 m-l-n">
+                        <label>Container No.</label>
+                        <input type="text" id="txtContainerNumber" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="" style="text-transform:uppercase">
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Status</label>
+                        <select id="slLoadedSearch" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm">
+                            <option value=""><--Select--></option>
+                            <option value="10">Loaded</option>
+                            <option value="20">Not Loaded</option>
+                        </select>
+                    </div>
+                    
+                    @*<div class="form-group col-sm-3">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.ShippingLine</label>
+                        <select id="slShippingLine" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                    </div>
+                    <div class="form-group col-sm-2 m-l-n" style="clear:both;">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.From</label>
+                        <input id="txtFromDate" readonly="readonly" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="input-sm datepicker-input form-control" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.To</label>
+                        <input id="txtToDate" readonly="readonly" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="input-sm datepicker-input form-control" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                    </div>*@
+                    @*<div class="col-sm-3 m-l-n-sm m-t-sm">
+                        <br />
+                        <label> <input type="checkbox" id="cbIncludeCurrenciesDetails" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"> Show Currencies Details</label>
+                        <br /><br />
+                    </div>*@
+                    
+                        @*<div class="btn-group m-t-n-xs m-r hide">
+                            <button data-toggle="dropdown" class="btn btn-sm btn-default dropdown-toggle"><span class="dropdown-label">PDF File</span> <span class="caret"></span></button>
+                            <ul id="ulReportTypes" class="dropdown-menu dropdown-select">
+                            </ul>
+                        </div>*@
+                    @*<div class="col-sm-2 m-t-27">
+                        <label> <input type="checkbox" id="cbIsWorkFlow" onchange="ContainerTrackingReport_cbIsWorkFlowChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp; Work Flow </label>
+                    </div>*@
+                    <div class="col-sm-6 m-t-md">
+                        <button id="btn-print" type="button" class="btn btn-lightblue btn-sm" onclick="ContainerTrackingReport_Print('Print');"><i class="fa fa-print"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Print</b></button>
+                        <button id="btn-ExportToExcel" type="button" onclick="ContainerTrackingReport_Print('Excel');" class="btn btn-sm btn-primary"><i class="fa fa-table"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.TraExportExcel&nbsp;</b></button>                
+                        <button id="btn-SelectOperations" type="button" class="btn btn-info btn-sm" onclick="ContainerTrackingReport_SelectOperations();"><i class="fa fa-check-square-o"></i><b>&nbsp;Select Operations</b></button>
+                        <button id="btn-SelectColumns" type="button" class="btn btn-warning btn-sm hide" onclick="ContainerTrackingReport_SelectColumns();"><i class="fa fa-print"></i><b>&nbsp;Add / Remove Columns</b></button>
+                    </div>
+                    <!--EOF Region Filter-->
+                </div>
+            </div>
+            <!--EOF Region the searh, delete, addnew line-->
+            
+            
+        </section>
+    </div>
+</div>
+
+<!--ModalSelectColumns-->
+<div class="modal fade" id="ModalSelectColumns" tabindex="-1" style="z-index: 3000;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="ModalSelectColumnsLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-90">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="m-b-none">&nbsp;<label id="lblShownItems" purpose="dynamicLabel" class="static-text-primary">Select columns to show:</label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region SelectColumns Form -->
+                <div class="span7 form vertical-mode" id="SelectColumns-form">
+                    <fieldset>
+                        @*<div class="row">
+                            <div id="div-search-controls" class="input-group m-l col-sm-5">
+                                <input id="txtSearchItems" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase"  type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search" />
+                                <span class="input-group-btn">
+                                    <button id="btn-SearchItems" class="btn btn-sm btn-primary" type="button"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div><br />*@
+
+                        <div id="divSelectColumns">
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbBranch" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Branch</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbIssueDate" checked="checked" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Issue Date</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbOperState" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Oper. State</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbBookingParty" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Booking Party</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbClient" checked onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Client</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbAgent" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Agent</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbCommodity" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Commodity</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbContainers" checked onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Containers</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbInvoices" checked onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Invoices</label>    
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbCustomerRef" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;CustomerRef</label>    
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbPONo" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;PO No</label>    
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbSupplierRef" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;SupplierRef</label>    
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbCarrier" checked onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Carrier</label>    
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbBookingNo" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;BookingNo</label>    
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbMBL" checked onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;M B/L</label>    
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbTEUs" checked onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;TEUs</label>    
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbVessel" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Vessel</label>    
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbVoy" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Voy</label>    
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbPOL" checked onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;POL</label>    
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbPOD" checked onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;POD</label>    
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbCutOffDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;CutOffDate</label>    
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbETAPOL" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;ETA POL</label>    
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbATS" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;ATS</label>    
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbETAPOD" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;ETA POD</label>    
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbATAPOD" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;ATA POD</label>    
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbTask" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Task</label>    
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbAllTask" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;All Tasks</label>    
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbNetwork" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Network</label>    
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbCreator" checked onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Created By</label>    
+                            </div>
+
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- Endegion SelectColumns Form -->
+            </div>
+            <div class="modal-footer"><!--sherif-->
+                @*<button type="button" id="btnSelectColumnsApply" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-save"></span>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Apply</button>*@
+                
+                <button id="btn-print-FromSelect" type="button" class="btn btn-lightblue btn-sm" onclick="ContainerTrackingReport_Print('Print');"><i class="fa fa-print"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Print</b></button>
+                <button id="btn-ExportToExcel-FromSelect" type="button" onclick="ContainerTrackingReport_Print('Excel');" class="btn btn-sm btn-primary"><i class="fa fa-table"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.TraExportExcel&nbsp;</b></button>
+                
+                <button class=" btn btn-link btn-sm " data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF ModalSelectColumns-->
+
+<!--CheckboxesListModal-->
+<div class="modal fade" id="CheckboxesListModal" tabindex="-1" @*style="z-index: 3000;"*@ data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="CheckboxesListModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-90">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" title="Close">
+                        &times;</button>
+                <h3 class="m-b-none"><label id="lblShownOperations" purpose="dynamicLabel" class="static-text-primary">Select Operations :</label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region CheckboxesList Form -->
+                <button id="btn-ClearAllOperations" type="button" class="btn btn-warning btn-sm m-l m-t-xs" onclick="OperationsStatistics_ClearAllOperations();"><i class="fa "></i><b>&nbsp;Clear All</b></button>
+                <div class="col-sm-3 float-right">
+                    <div id="div-search-controls" class="input-group m-t-xs">
+                        <input id="txtSearchItems" style="text-transform:uppercase"  type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Operation Code" />
+                        <span class="input-group-btn">
+                            <button id="btn-SearchItems" class="btn btn-sm btn-primary" type="button" onclick="OperationsStatistics_FilterOperationsModal();"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>    
+                </div>
+                
+                <div class="form-group col-sm-2 float-right m-t-n">
+                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.To</label>
+                    <input id="txtToDateSelectOperations" readonly="readonly" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="input-sm datepicker-input form-control" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                </div>
+                <div class="form-group col-sm-2 float-right m-t-n">
+                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.From</label>
+                    <input id="txtFromDateSelectOperations" readonly="readonly" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="input-sm datepicker-input form-control" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                </div>
+                    
+                <div style="clear:both;" class="span7 form vertical-mode m-t-sm" id="CheckboxesList-form">
+                    <fieldset>
+                        
+                        <div id="divCheckboxesList">
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- Endegion CheckboxesList Form -->
+            </div>
+            <div class="modal-footer m-t-n"><!--sherif-->
+                
+                <button id="btn-print-FromSelectOperations" type="button" class="btn btn-lightblue btn-sm" onclick="ContainerTrackingReport_Print('Print');"><i class="fa fa-print"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Print</b></button>
+                <button id="btn-ExportToExcel-FromSelectOperations" type="button" onclick="ContainerTrackingReport_Print('Excel');" class="btn btn-sm btn-primary"><i class="fa fa-table"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.TraExportExcel&nbsp;</b></button>
+                
+                <button class=" btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF CheckboxesListModal-->

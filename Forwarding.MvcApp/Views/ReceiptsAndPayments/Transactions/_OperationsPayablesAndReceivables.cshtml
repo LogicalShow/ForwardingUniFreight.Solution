@@ -1,0 +1,36 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="liGroupName" href="javascript:void(0);" onclick="LoadViews('ReceiptsAndPaymentsTransactions');">
+            @Forwarding.MvcApp.App_Resources.App_Resources.ReceiptsAndPaymentsGroup
+        </a>
+    </li>
+    <li>
+        <a id="liTabName" href="javascript:void(0);" onclick="LoadViews('ReceiptsAndPaymentsTransactions');">
+            @Forwarding.MvcApp.App_Resources.App_Resources.RecAndPayTransactions
+        </a>
+    </li>
+    @*<li id="li_InOrOut" class="active"></li>*@
+</ul>
+<!-- end breadcrumb  -->
+
+
+
+<div id="divHidden" class=""></div>
+
+
+
+<div class="form-group col-sm-2">
+    <label><u>Select Operation:</u></label>
+    <select id="slFilterOperation" class="form-control input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);"><option value=""><--Select--></option></select>
+</div>
+<div class="col-sm-2">
+    <button type="button" class="btn btn-primary btn-sm m-t-25" onclick="OperationCharges_FillModal();">
+        <span class="glyphicon glyphicon-save"></span>&nbsp;Edit&nbsp;
+    </button>
+</div>

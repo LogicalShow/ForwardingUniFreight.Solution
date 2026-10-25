@@ -1,0 +1,443 @@
+<title>UniFreight API Hub</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: single reading column (max 980px) with a container-plate header, section bands, wide tables/diagrams scroll inside their own frames */
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --ink:#17202b; --muted:#56616f; --line:#d9dee5;
+  --accent:#1d4f7c; --accent-soft:#e3ecf5; --signal:#c2571a; --signal-soft:#fbeadf;
+  --ok:#2f7a4f; --ok-soft:#e2f2e8; --code-bg:#eef1f5;
+  --f-display:"Archivo","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#10151c; --surface:#171e27; --ink:#e6ebf1; --muted:#9aa6b4; --line:#2a3440;
+  --accent:#7fb2e2; --accent-soft:#1c2d40; --signal:#f0915a; --signal-soft:#3a2418;
+  --ok:#6fc296; --ok-soft:#173226; --code-bg:#1d2530; color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#10151c; --surface:#171e27; --ink:#e6ebf1; --muted:#9aa6b4; --line:#2a3440;
+  --accent:#7fb2e2; --accent-soft:#1c2d40; --signal:#f0915a; --signal-soft:#3a2418;
+  --ok:#6fc296; --ok-soft:#173226; --code-bg:#1d2530; color-scheme:dark;}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+.wrap{max-width:980px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:clamp(2rem,5vw,3rem);font-weight:800;letter-spacing:-.01em}
+h2{font-size:1.6rem;font-weight:700;margin-bottom:.4em}
+h3{font-size:1.15rem;font-weight:700;margin:1.4em 0 .4em}
+p{margin:.5em 0;max-width:68ch}
+a{color:var(--accent)}
+code{font-family:var(--f-mono);font-size:.86em;background:var(--code-bg);padding:.1em .35em;border-radius:4px}
+pre.code{font-family:var(--f-mono);font-size:.82rem;line-height:1.5;background:var(--code-bg);border:1px solid var(--line);border-radius:8px;padding:14px 16px;overflow-x:auto;margin:1em 0}
+pre.code code{background:none;padding:0}
+header.plate{padding-block:40px 28px;border-bottom:3px solid var(--ink);margin-bottom:8px}
+.eyebrow{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.lede{font-size:1.15rem;color:var(--muted);max-width:62ch;margin-top:.7em}
+.manifest{display:flex;flex-wrap:wrap;gap:8px 24px;margin-top:20px;font-family:var(--f-mono);font-size:.78rem;color:var(--muted)}
+.manifest b{color:var(--ink);font-weight:600}
+nav.toc{display:flex;flex-wrap:wrap;gap:6px;padding-block:16px;border-bottom:1px solid var(--line)}
+nav.toc a{font-family:var(--f-display);font-size:.85rem;font-weight:500;text-decoration:none;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:4px 12px;background:var(--surface)}
+nav.toc a:hover,nav.toc a:focus-visible{border-color:var(--accent);color:var(--accent);outline:none}
+section{padding-block:40px 8px;border-bottom:1px solid var(--line)}
+section:last-of-type{border-bottom:0}
+.sec-no{font-family:var(--f-mono);font-size:.75rem;color:var(--signal);letter-spacing:.1em;display:block;margin-bottom:6px}
+.table{overflow-x:auto;margin:1em 0;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.93rem}
+th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{font-family:var(--f-display);font-weight:700;font-size:.8rem;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);background:var(--code-bg)}
+tr:last-child td{border-bottom:0}
+td.num{font-variant-numeric:tabular-nums;font-family:var(--f-mono);font-size:.85rem}
+.pill{display:inline-block;font-family:var(--f-mono);font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.chg{background:var(--accent-soft);color:var(--accent)}
+.pill.no{background:var(--signal-soft);color:var(--signal)}
+.verdict{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:16px 20px;margin:1.2em 0}
+.verdict p{max-width:none}
+.alert{background:var(--signal-soft);border:1px solid var(--signal);border-radius:8px;padding:16px 20px;margin:1em 0}
+.alert h3{margin-top:0;color:var(--signal)}
+.diagram{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px;overflow-x:auto;margin:1.2em 0}
+.diagram .cap{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+pre.mermaid{margin:0;background:none;text-align:center}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin:1em 0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px 18px;min-width:0}
+.card h3{margin-top:0}
+.card p{font-size:.95rem}
+ul{padding-left:1.2em;max-width:70ch}
+li{margin:.3em 0}
+.formula{font-family:var(--f-display);font-size:1.1rem;font-weight:700;padding:14px 18px;border:2px dashed var(--accent);border-radius:8px;color:var(--accent);margin:1em 0}
+footer{padding-block:28px 0;color:var(--muted);font-size:.85rem}
+@media (max-width:560px){body{font-size:16px}h2{font-size:1.35rem}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
+</style>
+
+<div class="wrap">
+<header class="plate">
+  <div class="eyebrow">Architecture decision · ForwardingUniFreight + future products</div>
+  <h1>Plan E: UniFreight API Hub</h1>
+  <p class="lede">How client companies get endpoint-only API access to Forwarding, Yard and later products: one platform for auth, subscriptions and limits, one adapter per product for the business logic, and scheduled snapshots so heavy queries never run while a client waits.</p>
+  <div class="manifest">
+    <span>Prepared <b>21 Oct 2026</b></span>
+    <span>Status <b>Recommended, design only</b></span>
+    <span>Stack <b>.NET 10 · SQL Server · IIS on-prem</b></span>
+    <span>Reviewed by <b>Codex (GPT-6.1-Sol, ultra)</b></span>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Sections">
+  <a href="#plans">Plans compared</a><a href="#debate">Codex debate</a><a href="#where">Where the API lives</a>
+  <a href="#pattern">Shared contract</a><a href="#auth">Auth &amp; onboarding</a><a href="#limits">Limits</a>
+  <a href="#cache">Caching</a><a href="#structure">Structure</a><a href="#roadmap">Roadmap</a><a href="#now">Act now</a>
+</nav>
+
+<section id="plans">
+  <span class="sec-no">01</span>
+  <h2>The four existing plans</h2>
+  <div class="table"><table>
+    <thead><tr><th>Name</th><th>Source file</th><th>Core idea</th><th>Verdict</th></tr></thead>
+    <tbody>
+    <tr><td><b>Plan A</b><br>Harden-in-Place</td><td><code>API_Integration_Plan.md</code></td><td>Secure and document the 437 existing controllers inside the .NET 4.8 app, then migrate. Adds a snapshot read model.</td><td><span class="pill no">Not for clients</span><br>The legacy API serves its own screens: raw <code>pWhereClause</code> SQL, JSON inside strings, one DB fixed at startup. Harden it as a separate internal project. Its snapshot design is reused.</td></tr>
+    <tr><td><b>Plan B</b><br>Federated Products</td><td><code>API-PLATFORM-FULL-PLAN.md</code></td><td>Central identity, gateway and refresh coordinator. Each product owns its API and snapshots in its own solution. Refresh per product.</td><td><span class="pill chg">Right ownership</span><br>But it bolts OWIN/JWT onto System.Web, and per-product refresh misses the per-client requirement.</td></tr>
+    <tr><td><b>Plan C</b><br>DataHub Central</td><td><code>DataHub-Architecture-Plan.md</code></td><td>One central API reaches every tenant DB. Raw JSON cached in FusionCache + Redis, refreshed per tenant and dataset.</td><td><span class="pill chg">Best caching ideas</span><br>Designed for foreign ERPs. Raw payloads can't be filtered by date range, and Redis adds infrastructure on day one.</td></tr>
+    <tr><td><b>Plan D</b><br>Integration Platform</td><td><code>UniFreight API Platform.md</code></td><td>New .NET 10 solution: Gateway, Identity, Catalog, Forwarding.Api. Tenant from token. An <code>api</code> schema of parameterized SPs.</td><td><span class="pill ok">Best foundation</span><br>Missing caching, refresh schedules, per-capability subscriptions and the shared-contract pattern.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="formula">Plan E = Plan D foundation + Plan B ownership rule + Plan A/C snapshot caching + refresh set per client</div>
+</section>
+
+<section id="debate">
+  <span class="sec-no">02</span>
+  <h2>Debate with Codex: what changed</h2>
+  <p>The first draft went to Codex with the request to argue against it. Its overall verdict was <b>agree with changes</b>: <i>"central hosting must not become central ownership of every product's business logic."</i> All nine changes were adopted.</p>
+  <div class="table"><table>
+    <thead><tr><th>#</th><th>Topic</th><th>Draft</th><th>Codex</th><th>Final decision</th></tr></thead>
+    <tbody>
+    <tr><td class="num">1</td><td>API location</td><td>Central platform, module per product</td><td><span class="pill chg">Change</span> Product teams should own logic and migrations</td><td>Platform owns the plumbing. Each product owns an adapter project in its own solution.</td></tr>
+    <tr><td class="num">2</td><td>Hosting</td><td>One host + one worker, no YARP</td><td><span class="pill ok">Agree</span> Only the worker holds DB credentials</td><td>The API host never touches company DBs for cached datasets.</td></tr>
+    <tr><td class="num">3</td><td>Shared business</td><td>Ports &amp; Adapters, keyed DI</td><td><span class="pill chg">Change</span> Semantics as executable examples</td><td>Shared acceptance tests. 404 unsupported, 403 unsubscribed, startup fails if misconfigured.</td></tr>
+    <tr><td class="num">4</td><td>Auth</td><td>OAuth2 client credentials</td><td><span class="pill chg">Change</span> Audience per product route</td><td>Check client, tenant, environment and grant on every call. Revocation within 60 s.</td></tr>
+    <tr><td class="num">5</td><td>Onboarding</td><td>Admin API + UI</td><td><span class="pill chg">Change</span> Resumable, idempotent states</td><td>Pending → DbVerified → Ready → Active. Rotation from day one.</td></tr>
+    <tr><td class="num">6</td><td>Rate limits</td><td>Per client_id</td><td><span class="pill chg">Change</span> A second app would double the quota</td><td>Burst per app. Quota per tenant subscription, reserved atomically.</td></tr>
+    <tr><td class="num">7</td><td>Cache storage</td><td>SQL blobs + memory</td><td><span class="pill chg">Change</span> Hashing parameters doesn't bound cardinality</td><td>Typed fact tables are the default. Blobs only for fixed reports.</td></tr>
+    <tr><td class="num">8</td><td>Refresh</td><td>Tenant override + Hangfire lock</td><td><span class="pill chg">Change</span> Locks alone aren't enough</td><td>A generation number fences every publish.</td></tr>
+    <tr><td class="num">9</td><td>Reads</td><td>200 + stale flag, 503 if none</td><td><span class="pill chg">Change</span> Enforce MaxAge, pin paging</td><td><code>?generation=N</code> paging, 410 when expired, refresh returns 202.</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="where">
+  <span class="sec-no">03</span>
+  <h2>Where the API lives</h2>
+  <p>Not "each solution has its own API", and not "one solution owns every database's logic". The platform owns everything that is the same for every product. Each product owns how its business works.</p>
+  <div class="table"><table>
+    <thead><tr><th>Concern</th><th>Lives in</th><th>Why</th></tr></thead>
+    <tbody>
+    <tr><td>Identity, client registration, subscriptions, limits, quotas, refresh scheduling, admin, docs portal</td><td>New <code>UniFreight.ApiHub.sln</code> (.NET 10)</td><td>The same for every product, written once.</td></tr>
+    <tr><td>Contracts: <code>IRevenueQuery</code>, DTOs, acceptance examples</td><td><code>ApiHub.Contracts</code> NuGet package</td><td>The shared language between the platform and the products.</td></tr>
+    <tr><td>Business logic: how Forwarding calculates revenue, its SQL, its snapshot builder</td><td>New .NET 10 library <code>Forwarding.ApiAdapter</code> inside <code>ForwardingUniFreight.Solution.sln</code></td><td>The team that knows the schema owns it, next to the <code>api</code> SP scripts it calls.</td></tr>
+    <tr><td>Hosting</td><td>The hub loads each adapter package as a module</td><td>One deployment to run. An adapter can move to its own host later without code changes.</td></tr>
+    </tbody>
+  </table></div>
+  <p>The legacy <code>Forwarding.MvcApp</code> (.NET 4.8) is not touched, and its <code>/api</code> routes are never published.</p>
+  <div class="diagram"><div class="cap">Architecture</div>
+<pre class="mermaid">
+flowchart TB
+    subgraph Clients["Client companies"]
+        CA["Client A backend<br/>client_id + secret"]
+        CB["Client B backend"]
+    end
+    subgraph Hub["UniFreight.ApiHub - one IIS site, .NET 10"]
+        ID["Identity<br/>OpenIddict /connect/token"]
+        GW["Request pipeline<br/>JWT, audience, tenant, subscription,<br/>rate limit, quota"]
+        EP["Capability endpoints<br/>/forwarding/v1/revenue<br/>/yard/v1/revenue"]
+        ADM["Admin + onboarding"]
+        L1[("L1 memory cache<br/>immutable versions")]
+        subgraph Mods["Product adapters - loaded as packages"]
+            FA["Forwarding.ApiAdapter"]
+            YA["Yard.ApiAdapter"]
+        end
+    end
+    subgraph Worker["ApiHub.Worker - Windows service, Hangfire"]
+        SCH["Due-work scheduler<br/>per tenant and dataset"]
+        BLD["Runs product snapshot builders"]
+    end
+    CAT[("Catalog DB<br/>tenants, clients, plans,<br/>subscriptions, refresh policies")]
+    SNAP[("Snapshot DB<br/>typed facts + report blobs<br/>versioned, per tenant")]
+    subgraph Sources["Company databases - unchanged + api schema"]
+        D1[("ForwardingUniFreight")]
+        D2[("ForwardingCPWorld")]
+        D3[("YardUniFreight")]
+    end
+    CA -->|"1 client credentials"| ID
+    ID -->|"2 JWT, 30 min"| CA
+    CA -->|"3 GET + Bearer"| GW
+    CB --> GW
+    GW --> EP
+    EP --> FA
+    EP --> YA
+    FA -->|"read published version"| L1
+    YA --> L1
+    L1 --> SNAP
+    ID --> CAT
+    GW --> CAT
+    ADM --> CAT
+    SCH --> CAT
+    SCH --> BLD
+    BLD -->|"read-only login, api.* SPs"| D1
+    BLD --> D2
+    BLD --> D3
+    BLD -->|"build, validate, fenced publish"| SNAP
+</pre>
+  </div>
+  <div class="verdict"><p><b>Who can reach what:</b> only the Worker has logins to company databases, read-only with <code>EXECUTE</code> on the <code>api</code> schema. The API host reads only the Catalog and Snapshot databases, so a bug in a request handler can't run a heavy query on a live company database.</p></div>
+</section>
+
+<section id="pattern">
+  <span class="sec-no">04</span>
+  <h2>Shared business, different implementation</h2>
+  <p><b>Ports &amp; Adapters</b> for the boundary, <b>Strategy</b> to choose the implementation per product, <b>Plugin</b> to load adapters, <b>Template Method</b> for snapshot builders.</p>
+<pre class="code"><code>// ApiHub.Contracts: one port per business capability
+public interface IRevenueQuery                       // read side, served from snapshots
+{
+    Task&lt;RevenueResult&gt; GetAsync(RevenueFilter filter, TenantScope scope, CancellationToken ct);
+}
+
+public interface ISnapshotBuilder                    // refresh side, run by the Worker only
+{
+    string DatasetCode { get; }                      // "forwarding.revenue.daily"
+    int SchemaVersion { get; }
+    Task&lt;BuildResult&gt; BuildAsync(BuildContext ctx, CancellationToken ct);
+}
+
+// Each product registers its adapters under its product key
+public sealed class ForwardingModule : IProductModule
+{
+    public string ProductCode =&gt; "forwarding";
+    public void Register(IServiceCollection s)
+    {
+        s.AddKeyedScoped&lt;IRevenueQuery, ForwardingRevenueQuery&gt;(ProductCode);
+        s.AddKeyedScoped&lt;ISnapshotBuilder, ForwardingRevenueDailyBuilder&gt;("forwarding.revenue.daily");
+    }
+}
+
+// The platform maps the capability once for every product that registered it
+app.MapCapability&lt;IRevenueQuery&gt;("revenue", "/{product}/v1/revenue")
+   .RequireAuthorization("capability:revenue.read");</code></pre>
+  <div class="grid2">
+    <div class="card"><h3>Agree on the meaning first</h3><p>For example, <code>revenue</code> = posted invoices, net of tax, minus credit notes, converted at the posting-date rate. The rules live in <code>Contracts/AcceptanceExamples/*.json</code>, and every adapter must pass them in CI.</p></div>
+    <div class="card"><h3>Clear failure modes</h3><p>Product doesn't offer it → <b>404</b>. Tenant not subscribed → <b>403</b>. Subscribed but no adapter registered → <b>the host refuses to start</b>.</p></div>
+    <div class="card"><h3>Different meaning, different capability</h3><p>If Yard's storage revenue means something else, it becomes <code>storage-revenue</code>, not a hidden variant of <code>revenue</code>.</p></div>
+  </div>
+</section>
+
+<section id="auth">
+  <span class="sec-no">05</span>
+  <h2>Authentication and automated onboarding</h2>
+  <p><b>Recommendation: OAuth 2.0 client credentials with OpenIddict, not raw API keys.</b></p>
+  <div class="table"><table>
+    <thead><tr><th></th><th>API key</th><th>Client credentials → JWT (chosen)</th></tr></thead>
+    <tbody>
+    <tr><td>Sent on every call</td><td>A long-lived secret</td><td>A short-lived token (30 min)</td></tr>
+    <tr><td>If it leaks</td><td>Valid until someone rotates it</td><td>Expires within minutes</td></tr>
+    <tr><td>Scopes and per-product audience</td><td>Custom work</td><td>Built in</td></tr>
+    <tr><td>Client tooling</td><td>A custom header</td><td>An OAuth library in every language, plus the "Authorize" button in the docs</td></tr>
+    <tr><td>Cost per call</td><td>A hash lookup</td><td>A signature check in memory</td></tr>
+    </tbody>
+  </table></div>
+  <p>Token claims: <code>client_id</code>, <code>tenant_id</code>, <code>env</code>, <code>aud</code> (one product per token) and <code>scope</code>. Subscriptions stay out of the token. They are checked on every call against the cached Catalog (60 s at most), so a suspension takes effect within a minute.</p>
+  <div class="diagram"><div class="cap">Onboarding: automated and resumable</div>
+<pre class="mermaid">
+sequenceDiagram
+    autonumber
+    participant Op as Operator
+    participant Adm as Admin API
+    participant Cat as Catalog DB
+    participant OI as OpenIddict
+    participant W as Worker
+    participant C as Client developer
+    Op->>Adm: Create tenant, pick plan (state Pending)
+    Adm->>Cat: Tenant + TenantProduct (DB server, DB name, env)
+    Adm->>W: Verify DB identity, api schema version, permissions
+    W-->>Adm: OK (state DbVerified)
+    Op->>Adm: Subscribe capabilities + refresh policy 24h / 12h / 48h
+    Adm->>W: Prewarm every subscribed dataset
+    W-->>Adm: Snapshots published (state Ready)
+    Op->>Adm: Create client for sandbox or production
+    Adm->>OI: Create client_id + generated 256-bit secret
+    Adm->>OI: Self-test: request a token, call /status
+    Adm-->>Op: client_id + secret, shown once (state Active)
+    Op->>C: Secure delivery + docs link
+    C->>OI: POST /connect/token (client_credentials)
+    OI-->>C: access_token, 30 min
+</pre>
+  </div>
+  <p>Each step records its state, so a failed onboarding resumes where it stopped. Operators can rotate and revoke secrets from day one, with two valid secrets during a switchover. A self-service portal for client admins comes later.</p>
+</section>
+
+<section id="limits">
+  <span class="sec-no">06</span>
+  <h2>Subscriptions, rate limits and quotas</h2>
+  <div class="table"><table>
+    <thead><tr><th>Limit</th><th>Keyed by</th><th>Implementation</th></tr></thead>
+    <tbody>
+    <tr><td>Burst (per second or minute)</td><td><code>client_id</code></td><td>ASP.NET Core <code>RateLimiter</code>, values taken from the plan. In memory while there is one node.</td></tr>
+    <tr><td>Concurrency</td><td><code>client_id</code></td><td>Concurrency limiter that protects the host.</td></tr>
+    <tr><td>Commercial quota (day or month)</td><td><b>Tenant subscription</b>, all its apps together</td><td>SQL <code>UsageLedger</code> with an atomic <code>UPDATE … WHERE Used + @n &lt;= Limit</code>. Resets at midnight in the tenant's time zone.</td></tr>
+    <tr><td>Token endpoint</td><td>IP + client_id</td><td>A separate strict limiter with lockout.</td></tr>
+    </tbody>
+  </table></div>
+  <p>The counting rules are documented: <code>304</code> counts as 0.1 units, <code>429</code> and <code>5xx</code> count as 0, and refresh requests use their own budget. Add Redis only with several nodes <i>and</i> a need for exact shared limits.</p>
+</section>
+
+<section id="cache">
+  <span class="sec-no">07</span>
+  <h2>Caching</h2>
+  <h3>Type: refresh-ahead snapshots in SQL, with an in-memory L1 on top</h3>
+  <div class="table"><table>
+    <thead><tr><th>Option</th><th>Assessment</th></tr></thead>
+    <tbody>
+    <tr><td>Cache-aside (compute on a miss)</td><td><span class="pill no">Rejected</span> The first caller after expiry waits for the heavy query and loads the live database.</td></tr>
+    <tr><td>Redis / FusionCache only</td><td><span class="pill no">Not alone</span> Bound by memory, another server to run on-prem, not durable enough for data kept 48 h, and it doesn't solve date ranges.</td></tr>
+    <tr><td>HTTP output cache</td><td><span class="pill no">Rejected</span> Same miss problem as cache-aside, and risky to key safely across tenants.</td></tr>
+    <tr><td><b>SQL snapshots built on a schedule + L1 memory</b></td><td><span class="pill ok">Chosen</span> Heavy queries run only on the schedule. The data survives restarts and company-DB outages. Uses the SQL Server you already run, and is easy to inspect.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="grid2">
+    <div class="card"><h3>Simple</h3><p>One Snapshot database, one generic publish step, one scheduler. Each product decides only <i>what</i> to build.</p></div>
+    <div class="card"><h3>Efficient</h3><p>Reads hit indexed tables or a gzip blob, then memory on repeat. Each company database sees one heavy query per dataset per refresh interval, however many API calls arrive.</p></div>
+  </div>
+
+  <h3>Two snapshot kinds: each product gets its own cache structure</h3>
+  <div class="table"><table>
+    <thead><tr><th>Kind</th><th>Use for</th><th>Storage</th><th>Example</th></tr></thead>
+    <tbody>
+    <tr><td><b>Fact snapshot</b> (default)</td><td>Anything filtered by date range, customer, branch or currency</td><td>A typed table per dataset in the product's own schema, e.g. <code>fwd.RevenueDaily</code>, indexed on <code>(TenantCode, Generation, Day)</code></td><td>Revenue for any range = SUM of daily rows. Two years ≈ 730 rows per currency.</td></tr>
+    <tr><td><b>Document snapshot</b></td><td>Fixed-shape reports returned whole</td><td><code>core.SnapshotDocument</code>: tenant, dataset, partition, generation, gzip payload, ETag</td><td>Open-shipments board, aging summary</td></tr>
+    </tbody>
+  </table></div>
+  <p>Arbitrary parameters are never a cache key. A product defines finite partitions (e.g. <code>month=2026-10</code>) or a daily grain. Non-additive metrics, such as distinct customers, get their own grain or become an async report.</p>
+<pre class="code"><code>core.DatasetGeneration (TenantCode, Env, Dataset, Generation BIGINT, Status, SourceAsOfUtc, BuiltAtUtc, RowCount, Error)
+core.DatasetCurrent    (TenantCode, Env, Dataset, Generation, PublishedAtUtc)   -- the pointer readers use
+core.RefreshPolicy     (TenantCode NULL, Env, Dataset, IntervalMinutes, MaxAgeMinutes, PreferredWindowUtc, Enabled)</code></pre>
+
+  <h3>Refresh interval per client</h3>
+  <p>A default row per dataset (<code>TenantCode = NULL</code>) plus tenant overrides. The plan caps how often a tenant can refresh (Basic ≥ 24 h, Premium ≥ 6 h), so freshness becomes part of what a plan sells.</p>
+  <div class="table"><table>
+    <thead><tr><th>Tenant</th><th>Dataset</th><th>Interval (min)</th><th>Max age (min)</th><th>Means</th></tr></thead>
+    <tbody>
+    <tr><td><i>default</i></td><td><code>forwarding.revenue.daily</code></td><td class="num">1440</td><td class="num">1560</td><td>every 24 h</td></tr>
+    <tr><td>UNF</td><td><code>forwarding.revenue.daily</code></td><td class="num">720</td><td class="num">840</td><td>every 12 h</td></tr>
+    <tr><td>CPW</td><td><code>forwarding.revenue.daily</code></td><td class="num">2880</td><td class="num">3000</td><td>every 2 days</td></tr>
+    </tbody>
+  </table></div>
+  <p>Each company has its own database, so "per client" means per tenant, and all apps of one tenant share its snapshots. Fact builders rebuild only a watermark window (the last 45 days, which covers late postings and credit notes). A monthly full rebuild catches anything older.</p>
+
+  <div class="diagram"><div class="cap">Refresh with a fenced publish</div>
+<pre class="mermaid">
+sequenceDiagram
+    autonumber
+    participant S as Scheduler, every minute
+    participant Q as Hangfire queue
+    participant B as Product builder
+    participant Src as Company DB, read-only
+    participant Sn as Snapshot DB
+    S->>Sn: Find due pairs: now - lastSourceAsOf >= interval
+    S->>Sn: Claim: insert Generation N+1, Building (unique key, no duplicates)
+    S->>Q: Enqueue tenant, env, dataset, N+1 (concurrency limit per source)
+    Q->>B: BuildAsync
+    B->>Src: api.* SPs, snapshot isolation, watermark window
+    Src-->>B: rows + source cutoff
+    B->>Sn: Write rows tagged Generation N+1
+    B->>B: Validate counts, totals, acceptance checks
+    B->>Sn: Move DatasetCurrent to N+1 only if it is still older
+    Note over B,Sn: The fence: a late or old worker can never replace a newer generation
+    B->>Sn: Published. Keep the last 3 generations
+    alt Build fails
+        B->>Sn: Failed. Pointer untouched. Retry with backoff, alert
+    end
+</pre>
+  </div>
+
+  <div class="diagram"><div class="cap">Read path</div>
+<pre class="mermaid">
+flowchart TD
+    R["GET /forwarding/v1/revenue?from&to"] --> A{"Token valid, audience forwarding-api?"}
+    A -- no --> E401["401"]
+    A -- yes --> B{"Client, tenant, env active, capability subscribed?"}
+    B -- no --> E403["403"]
+    B -- yes --> Q{"Rate limit and quota OK?"}
+    Q -- no --> E429["429 + Retry-After"]
+    Q -- yes --> P["Read DatasetCurrent: Generation N, cached 30 s"]
+    P --> X{"Any generation published?"}
+    X -- no --> E503["503 + Retry-After"]
+    X -- yes --> F{"Age within MaxAge?"}
+    F -- no --> E503b["503 DATA_NOT_FRESH, or 200 stale=true by policy"]
+    F -- yes --> L{"L1 has tenant:dataset:N:query?"}
+    L -- hit --> OK["200 data + asOf, generation, stale=false, ETag"]
+    L -- miss --> SQL["Query fact table for tenant, generation N, day range"] --> OK
+</pre>
+  </div>
+  <p>L1 entries are keyed by an <b>immutable generation</b>, so they never need invalidating: a new publish creates new keys, and old entries age out. Paging takes <code>?generation=N</code> so all pages of one sync come from the same version. An expired generation returns <code>410 Gone</code>. <code>POST /refresh</code> (premium plans) returns <code>202</code>, joins any build already running, and uses the refresh budget.</p>
+</section>
+
+<section id="structure">
+  <span class="sec-no">08</span>
+  <h2>Solution structure</h2>
+<pre class="code"><code>UniFreight.ApiHub.sln                    (new repo, .NET 10)
+  src/
+    ApiHub.Host/             Identity (OpenIddict), pipeline, capability endpoints, Admin API, OpenAPI
+    ApiHub.Worker/           Windows service: scheduler + Hangfire server + builder runner
+    ApiHub.Core/             tenancy, subscriptions, quotas, snapshot publish + fence, L1, module loader
+    ApiHub.Contracts/        NuGet: IRevenueQuery, ISnapshotBuilder, DTOs, AcceptanceExamples/
+    ApiHub.Persistence/      Catalog + core.* snapshot schema, migrations
+  tests/                     isolation, fence, concurrent quota, contract tests
+
+ForwardingUniFreight.Solution.sln        (existing)
+  Forwarding.MvcApp/         unchanged, .NET 4.8
+  Forwarding.ApiAdapter/     NEW .NET 10 library, NuGet: queries, builders, fwd.* migrations
+  db/api-schema/             api.* parameterized SPs, versioned, deployed to every company DB with DbUp
+
+Yard.Solution.sln
+  Yard.ApiAdapter/           same shape</code></pre>
+</section>
+
+<section id="roadmap">
+  <span class="sec-no">09</span>
+  <h2>Roadmap</h2>
+  <div class="table"><table>
+    <thead><tr><th>Phase</th><th>Weeks</th><th>Done when</th></tr></thead>
+    <tbody>
+    <tr><td>0. Contract</td><td class="num">1–2</td><td>Revenue meaning signed off. Acceptance examples with expected totals from real UNF data.</td></tr>
+    <tr><td>1. Platform core</td><td class="num">3–5</td><td>Host, OpenIddict, Catalog and onboarding states work. An automated test proves a UNF token can't read CPW data.</td></tr>
+    <tr><td>2. First adapter</td><td class="num">6–8</td><td><code>Forwarding.ApiAdapter</code> with <code>api.Revenue_Daily</code>, fact builder and fenced publish. Totals match the examples.</td></tr>
+    <tr><td>3. Scheduler + policies</td><td class="num">9–10</td><td>12 h, 24 h and 48 h tenants refresh correctly. A late worker can't overwrite newer data. Recovers after a restart.</td></tr>
+    <tr><td>4. Commercial</td><td class="num">11–12</td><td>Plans, per-tenant quotas, 429 behaviour, usage reports, docs portal and Postman collection.</td></tr>
+    <tr><td>5. Pilot</td><td class="num">13–14</td><td>One client in production, freshness alerts, runbook, key-rotation drill.</td></tr>
+    <tr><td>6. Second product</td><td class="num">after</td><td><code>Yard.ApiAdapter</code> plugs in with no change to platform code.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Must-haves Codex added</h3>
+  <ul>
+    <li><b>Source consistency:</b> build under SNAPSHOT isolation or from a replica, record the true source cutoff, and rebuild a watermark window for late corrections.</li>
+    <li><b>Fleet migrations:</b> version the <code>api.*</code> SPs and the <code>fwd.*</code> schema. The Worker refuses a tenant whose <code>api</code> schema is older than the adapter needs.</li>
+    <li><b>Tenant DB identity:</b> before each build, compare <code>Defaults.UnEditableCompanyName</code> with the tenant code, so a typo in a server name can't serve CPW data as UNF.</li>
+    <li><b>Operations:</b> signing-key rotation with overlap, Snapshot DB backups and restore drills, alerts on refresh lag and failed builds.</li>
+    <li><b>Tests that prove it:</b> cross-tenant and cross-environment isolation, stale-worker publish, concurrent quota reservation, load tests on reads and refreshes.</li>
+  </ul>
+</section>
+
+<section id="now">
+  <span class="sec-no">10</span>
+  <h2>Act now, whatever plan you choose</h2>
+  <div class="alert">
+    <h3>Credentials in source</h3>
+    <p><code>Forwarding.MvcApp/Web.config</code>, line 24, has a plain-text SQL login and password for a public IP inside a comment. Rotate the password and delete the line. It stays in TFS history, so deleting the line alone isn't enough.</p>
+    <p><code>Web.config</code>, lines 124–126, sends <code>Access-Control-Allow-Origin: *</code>. Replace it with an allow-list.</p>
+  </div>
+</section>
+
+<footer>Design only. No code in the solution was changed. Based on the four plans in <code>D:\API PLANS\</code>, a read of ForwardingUniFreight.Solution and a Codex review on 21 October 2026.</footer>
+</div>

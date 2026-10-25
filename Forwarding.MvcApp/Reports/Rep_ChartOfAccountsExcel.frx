@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="08/11/2025 14:50:30" ReportInfo.Modified="08/12/2025 11:24:27" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+
+    private void Text6_AfterData(object sender, EventArgs e)
+    {
+      int isMain = Convert.ToInt32(Report.GetColumnValue(&quot;Rep_ChartOfAccounts.IsMain&quot;));
+
+      TextObject textObj = (TextObject)sender;
+      if (isMain == 1)
+      {
+        textObj.Font = new System.Drawing.Font(&quot;Arial&quot;, 10, System.Drawing.FontStyle.Bold);
+      }
+      else
+      {
+        textObj.Font = new System.Drawing.Font(&quot;Arial&quot;, 10, System.Drawing.FontStyle.Regular);
+      }
+    }
+
+    private void Text8_AfterData(object sender, EventArgs e)
+    {
+      int isMain = Convert.ToInt32(Report.GetColumnValue(&quot;Rep_ChartOfAccounts.IsMain&quot;));
+
+      TextObject textObj = (TextObject)sender;
+      if (isMain == 1)
+      {
+        textObj.Font = new System.Drawing.Font(&quot;Arial&quot;, 10, System.Drawing.FontStyle.Bold);
+      }
+      else
+      {
+        textObj.Font = new System.Drawing.Font(&quot;Arial&quot;, 10, System.Drawing.FontStyle.Regular);
+      }
+    }
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFsw9b0kspEyGC+iACx9AnHion4ta/JRvUJ2KYvzJ2sHjwyvIiVB30z7N878n6Acw+Ucm0OIAbFUF6gz0QDwQ5FAnE6jLNJLGKncEP9qe1Qy1pl0yW9wcXtaXvT58TAlmW">
+      <TableDataSource Name="Table" Alias="Rep_ChartOfAccounts" DataType="System.Int32" Enabled="true" SelectCommand="exec Rep_ChartOfAccounts">
+        <Column Name="Account_Number" DataType="System.String"/>
+        <Column Name="Account_Name" DataType="System.String"/>
+        <Column Name="Account_EnName" DataType="System.String"/>
+        <Column Name="IsMain" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="AccLevel" DataType="System.Int32"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9">
+    <ReportTitleBand Name="ReportTitle1" Width="1047.06" Height="18.9">
+      <TextObject Name="Text7" Left="604.8" Width="444.15" Height="18.9" Text="رقم الحساب" HorzAlign="Right" VertAlign="Center" Font="Arial, 11pt, style=Bold"/>
+      <TextObject Name="Text9" Width="604.8" Height="18.9" Text="اسم الحساب" HorzAlign="Right" VertAlign="Center" Font="Arial, 11pt, style=Bold"/>
+    </ReportTitleBand>
+    <DataBand Name="Data1" Top="22.9" Width="1047.06" Height="18.9" DataSource="Table">
+      <TextObject Name="Text6" Left="604.8" Width="444.15" Height="18.9" Border.Lines="Right, Bottom" Border.Style="Dot" AfterDataEvent="Text6_AfterData" Text="[Rep_ChartOfAccounts.Account_Number]" HorzAlign="Right"/>
+      <TextObject Name="Text8" Width="604.8" Height="18.9" Border.Lines="Left, Right, Bottom" Border.Style="Dot" AfterDataEvent="Text8_AfterData" Text="[Rep_ChartOfAccounts.Account_Name]" HorzAlign="Right"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="45.8" Width="1047.06"/>
+  </ReportPage>
+</Report>

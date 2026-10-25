@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="09/20/2023 14:33:35" ReportInfo.Modified="12/27/2023 12:23:48" ReportInfo.CreatorVersion="2018.3.14.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFtvdH3m3xJw0oxVjbxQa7aBoPLbNe1xAGoIRY5MprIvGd7s/fojmYOjmpWKtcyQo4949jT5X4fIh8xtHfGN3YJL6byi2hWnteaYxUHL8rUiMmgd6il61gVExPLv26RrLH">
+      <TableDataSource Name="Table" Alias="Rep_TRMReleaseLetter" DataType="System.Int32" Enabled="true" SelectCommand="exec (@query)">
+        <Column Name="ReleaseDate" DataType="System.DateTime"/>
+        <Column Name="LineName" DataType="System.String"/>
+        <Column Name="ConsigneeName" DataType="System.String"/>
+        <Column Name="MasterBL" DataType="System.String"/>
+        <Column Name="HouseNumber" DataType="System.String"/>
+        <Column Name="GrossWeightSum" DataType="System.Decimal"/>
+        <Column Name="VesselName" DataType="System.String"/>
+        <Column Name="VoyageOrTruckNumber" DataType="System.String"/>
+        <Column Name="ContainerTypes" DataType="System.String"/>
+        <Column Name="AgentName" DataType="System.String"/>
+        <Column Name="TankNumbers" DataType="System.String"/>
+        <Column Name="Logo" DataType="System.String" PropName="Column" Calculated="true" Expression="[Logo]"/>
+        <Column Name="POLName" DataType="System.String"/>
+        <Column Name="BranchLocalName" DataType="System.String"/>
+        <Column Name="Logo1" DataType="System.String" PropName="Column" Calculated="true" Expression="[Logo1]"/>
+        <CommandParameter Name="query" DataType="12" Expression="[query]" DefaultValue="Rep_TRMReleaseLetter ' WHERE 1=1'"/>
+        <CommandParameter Name="Parameter" DataType="22"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="Logo" DataType="System.String" Expression="[Logo]"/>
+    <Parameter Name="Logo1" DataType="System.String" Expression="[Logo1]"/>
+  </Dictionary>
+  <ReportPage Name="Page1" FirstPageSource="15" OtherPagesSource="15">
+    <PageHeaderBand Name="PageHeader1" Width="718.2" Height="1096.2">
+      <TextObject Name="Text1" Left="9.45" Top="94.5" Width="699.3" Height="28.35" Text="[IIf(FormatDateTime([Rep_TRMReleaseLetter.ReleaseDate],&quot;dd/MM/yyyy&quot;) == &quot;01/01/0001&quot;,&quot;&quot;,FormatDateTime([Rep_TRMReleaseLetter.ReleaseDate],&quot;dd/MM/yyyy&quot;))] : [Rep_TRMReleaseLetter.BranchLocalName] فى" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text2" Left="311.85" Top="132.3" Width="396.9" Height="18.9" Text="[Rep_TRMReleaseLetter.LineName]  : السادة" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text3" Left="485.85" Top="169.8" Width="151.2" Height="28.35" Text=",,,,    تحية طيبة و بعد" HorzAlign="Right" Font="Arial, 18pt"/>
+      <TextObject Name="Text4" Left="127.05" Top="214" Width="576.45" Height="28.35" Text="[Rep_TRMReleaseLetter.ConsigneeName] / برجاء التكرم بتسليم السادة" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text5" Left="495.05" Top="255.2" Width="207.9" Height="28.35" Text=" : مشمول الرسالة التالى بياناتها " HorzAlign="Right" Font="Arial, 18pt"/>
+      <TextObject Name="Text6" Left="264.6" Top="311.85" Width="387.45" Height="18.9" Text="[Rep_TRMReleaseLetter.MasterBL] : رقم البوليصة الكلية" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text7" Left="245.7" Top="349.65" Width="406.35" Height="18.9" Text="[Rep_TRMReleaseLetter.HouseNumber] : رقم البوليصة الفرعية " HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text8" Left="236.25" Top="378" Width="415.8" Height="18.9" Text="[Rep_TRMReleaseLetter.GrossWeightSum] KG :  وزن اجمالى " HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text9" Left="321.3" Top="406.35" Width="330.75" Height="18.9" Text="[Rep_TRMReleaseLetter.POLName] : وارد من ميناء " HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text10" Left="425.25" Top="434.7" Width="226.8" Height="18.9" Text="[Rep_TRMReleaseLetter.VesselName] : على باخرة " HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text11" Left="292.95" Top="472.5" Width="359.1" Height="18.9" Text="[Rep_TRMReleaseLetter.ContainerTypes] : عدد" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text12" Left="179.55" Top="434.7" Width="189" Height="18.9" Text="[Rep_TRMReleaseLetter.VoyageOrTruckNumber] : رحلة" Font="Arial, 12pt"/>
+      <TextObject Name="Text13" Left="8.3" Top="522.55" Width="652.05" Height="37.8" Text="حيث ان مشمول هذه الرسالة لا تخصنا و انما تخص العميل المذكور مع تحصيل كافة مستحقاتكم من العميل دون الرجوع علينا بأدنى مسؤلية " HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text14" Left="-18.9" Top="585.9" Width="680.4" Height="37.8" Text="[Rep_TRMReleaseLetter.AgentName] : و نحيط سيادتكم علما بان هذا التانك الاتى رقمه ملك لموكلنا" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text15" Left="9.45" Top="661.5" Width="661.5" Height="47.25" CanGrow="true" Text="[Rep_TRMReleaseLetter.TankNumbers]&#13;&#10;" HorzAlign="Center" Font="Arial, 12pt"/>
+      <TextObject Name="Text16" Left="18.9" Top="727.65" Width="652.05" Height="28.35" Text="و سوف يتم صرف التانكات بمعرفة المستلمين بكشف اسنخلاص و رجوع التنكات داخل الدائرة الجمركية بمعرفة المستلمين " HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text17" Left="47.25" Top="774.9" Width="604.8" Height="37.8" Text="على ان يتم تحصيل الغرامات اللازمة عند انتهاء فترة السماح المذكورة على البوليصة الفرعية بمعرفة ترانز مصر " HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text18" Left="89.6" Top="859.75" Width="491.4" Height="37.8" Text=" .......و تفضلوا سيادتكم بقبول فائق التحية و الاحترام" HorzAlign="Center" Font="Arial, 12pt"/>
+      <TextObject Name="Text19" Top="935.55" Width="330.75" Height="28.35" Text="ترانز مصر شیبنج كلیرنج أند تریدنج" HorzAlign="Center" Font="Arial, 12pt"/>
+      <PictureObject Name="Picture1" Left="9.45" Width="699.3" Height="85.05" DataColumn="Rep_TRMReleaseLetter.Logo"/>
+      <PictureObject Name="Picture2" Left="9.45" Top="973.35" Width="699.3" Height="122.85" SizeMode="StretchImage" DataColumn="Rep_TRMReleaseLetter.Logo1"/>
+    </PageHeaderBand>
+  </ReportPage>
+</Report>

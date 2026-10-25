@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 5.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="InfoSysTech [IST], Developed By Sherif Anwar Abdelaziz and Mohamed Ahmed Abd El-mougood">
+    <meta name="description" content="Forwarding System , HMS , InfoSysTech , IST " />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    <!-- [CSS Files] -->
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/CSS/font-awesome.css")" type="text/css" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/CSS/app.v2.css")" type="text/css" />
+    @*<link rel="stylesheet" href="@Url.Content("~/Content/CSS/app.v2 - NewColour.css")" type="text/css" />*@
+    @*<link rel="stylesheet" href="@Url.Content("~/Content/CSS/"+@Forwarding.MvcApp.App_Resources.App_Resources.CSSFile)" type="text/css" />*@<!--the arabic file will be nearer so it will apply-->
+    <link rel="stylesheet" href="@Url.Content("~/Content/CSS/datepicker.css")" type="text/css" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/CSS/jquery.contextMenu.css")" type="text/css" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/CSS/sweet-alert.css")" type="text/css" />
+    <link rel="stylesheet" href="@Url.Content("~/Scripts/nestable/nestable.css")" type="text/css" />
+    <link rel="stylesheet" href="@Url.Content("~/Scripts/fuelux/fuelux.css")" type="text/css" />
+    <link rel="stylesheet" href="@Url.Content("~/Scripts/utilities/bootstrap-datetimepicker.min.css")" type="text/css" />
+    <link href="~/Content/CSS/barchart.css" rel="stylesheet" />
+    @*<link rel="stylesheet" href="@Forwarding.MvcApp.App_Resources.App_Resources.CSSFile" type="text/css" />*@
+    <!--/ [CSS Files] -->
+    <!-- [Java Script Files] -->
+    <script src="@Url.Content("~/Scripts/utilities/jquery-1.10.2.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/utilities/jquery.scrollTo.min.js")" type="text/javascript"></script>
+
+    <link rel="stylesheet" href="@Url.Content("~/Scripts/utilities/TextSearch/select2.css")" type="text/css" />
+    <script src="~/Scripts/utilities/TextSearch/select2.js"></script>
+    <script src="~/Scripts/utilities/TextSearch/jquery-editable-select.js"></script>
+    <script src="~/Scripts/utilities/TextSearch/jquery-1.10.2.intellisense.js"></script>
+
+    <script src="@Url.Content("~/Scripts/utilities/bootstrap-paginator.js")" type="text/javascript"></script>
+    @*<script src="~/Scripts/AutoMail/mainappForAutoMail.js"></script>*@
+    <script src="~/Scripts/GlobalReports/mainappForGlobalReports.js"></script>
+    <script src="@Url.Content("~/Scripts/utilities/bootstrap-datepicker.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/utilities/bootstrap-hijri-datepicker.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/utilities/jquery.tableToExcel.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/utilities/jquery.table2excel.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/utilities/jquery.contextMenu.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/utilities/sweet-alert.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/utilities/jquery.highlight-5.js")" type="text/javascript"></script>
+
+    <script src="~/Scripts/PlugIns/MostaaTextArea.js"></script>
+    <script src="~/Scripts/utilities/Inputmask/inputmask.js"></script>
+    <script src="~/Scripts/utilities/Inputmask/jquery.inputmask.js"></script>
+    <script src="~/Scripts/utilities/Inputmask/bindings/inputmask.binding.js"></script>
+    <script src="~/Scripts/utilities/xlsx/xlsx.core.min.js"></script>
+    <script src="~/Scripts/utilities/xlsx/jszip.min.js"></script>
+
+
+    @*for wizard*@
+    <script src="@Url.Content("~/Scripts/fuelux/fuelux.js")" type="text/javascript"></script>
+    @* for reading Excel *@
+    <script src="@Url.Content("~/Scripts/utilities/xls.js")" type="text/javascript"></script>
+
+
+
+
+</head>
+<body>
+
+
+
+    <input id="hf_ChangeLanguage" type="hidden" value="" />
+    <input id="hf_CanAdd" type="hidden" value="" />
+    <input id="hf_CanEdit" type="hidden" value="" />
+    <input id="hf_CanDelete" type="hidden" value="" />
+    <input id="hDefaultCompanyName" type="hidden" />
+    <input id="hDefaultCountryID" type="hidden" />
+    <input id="hDefaultCountryName" type="hidden" />
+    <input id="hDefaultCurrencyID" type="hidden" />
+    <input id="hDefaultForeignCurrencyID" type="hidden" />
+    <input id="hDefaultBranchID" type="hidden" />
+    <input id="hDefaultCurrencyCode" type="hidden" />
+    <input id="hLoggedUserID" type="hidden" />
+    <input id="hLoggedUserNameNotLogin" type="hidden" />
+    <input id="hUserBranchID" type="hidden" />
+    <input id="hIsCreditlimitexceptionperiod" type="hidden" />
+
+    <input id="hDefaultImportOceanDays" type="hidden" />
+    <input id="hDefaultImportAirDays" type="hidden" />
+    <input id="hDefaultImportInlandDays" type="hidden" />
+    <input id="hDefaultExportOceanDays" type="hidden" />
+    <input id="hDefaultExportAirDays" type="hidden" />
+    <input id="hDefaultExportInlandDays" type="hidden" />
+    <input id="hDefaultDomesticOceanDays" type="hidden" />
+    <input id="hDefaultDomesticAirDays" type="hidden" />
+    <input id="hDefaultDomesticInlandDays" type="hidden" />
+    <input id="hDefaultUnEditableCompanyName" type="hidden" />
+    <input id="hCashAccountID" type="hidden" />
+    <input id="hCashSubAccountID" type="hidden" />
+    <select id="hReadySlBranches" class="hide"></select>
+    <select id="hReadySlCustomers" class="hide"></select>
+    <select id="hReadySlCurrencies" class="hide"></select>
+    <select id="hReadySlOptions" class="hide"></select>
+
+
+
+
+
+
+
+    @RenderBody()
+</body>
+</html>

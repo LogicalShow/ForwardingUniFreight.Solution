@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="12/26/2019 10:03:36" ReportInfo.Modified="07/20/2020 05:27:13" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+
+    private void Text15_AfterData(object sender, EventArgs e)
+    {
+      decimal total=0;
+      total= ((Decimal)Report.GetColumnValue(&quot;Rep_A_SupplierAccountStatement_Summary.OpeningBalance&quot;))+(((Decimal)Report.GetColumnValue(&quot;Rep_A_SupplierAccountStatement_Summary.LocalDebit&quot;))-((Decimal)Report.GetColumnValue(&quot;Rep_A_SupplierAccountStatement_Summary.LocalCredit&quot;)));
+      Text15.Text=total.ToString();
+    }
+
+    private void Text16_AfterData(object sender, EventArgs e)
+    {
+      Decimal TotalGrand=0;
+             TotalGrand=(Report.GetTotalValue(&quot;TotalOpeiningBalance&quot;)) + ((Report.GetTotalValue(&quot;TotalDepit&quot;))-(Report.GetTotalValue(&quot;TotalCredit&quot;)));
+               Text16.Text=TotalGrand.ToString();
+    }
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFm9QdbZ6tmf6IbWjL5Fqbnv8VKAcJ5fiZ/l6GxwTkYfT6yX1dHakMLfUWWVNRtJQ9yJY3I6xgndvAeQdVl5hURsuxenm3L5dnEIEZT3V814/AhnA1C62QDrGKN7okcY3PeqBLVaiAO7zFuBt+uOKUzQ==">
+      <TableDataSource Name="Table" Alias="Rep_A_SupplierAccountStatement_Summary" DataType="System.Int32" Enabled="true" SelectCommand="exec Rep_A_SupplierAccountStatement_Summary @SubAccount_IDs,@AccountIDs,@From_Date,@To_Date">
+        <Column Name="SubAccount_Name" DataType="System.String"/>
+        <Column Name="OpeningBalance" DataType="System.Decimal"/>
+        <Column Name="LocalDebit" DataType="System.Decimal"/>
+        <Column Name="LocalCredit" DataType="System.Decimal"/>
+        <CommandParameter Name="@SubAccount_IDs" DataType="22" Expression="[SubAccount_IDs]"/>
+        <CommandParameter Name="@AccountIDs" DataType="22" Expression="[AccountIDs]"/>
+        <CommandParameter Name="@From_Date" DataType="22" Expression="[From_Date]"/>
+        <CommandParameter Name="@To_Date" DataType="22" Expression="[To_Date]"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="SubAccount_IDs" DataType="System.String"/>
+    <Parameter Name="AccountIDs" DataType="System.String"/>
+    <Parameter Name="From_Date" DataType="System.String"/>
+    <Parameter Name="To_Date" DataType="System.String"/>
+    <Total Name="TotalOpeiningBalance" Expression="[Rep_A_SupplierAccountStatement_Summary.OpeningBalance]" Evaluator="Data1"/>
+    <Total Name="TotalDepit" Expression="[Rep_A_SupplierAccountStatement_Summary.LocalDebit]" Evaluator="Data1"/>
+    <Total Name="TotalCredit" Expression="[Rep_A_SupplierAccountStatement_Summary.LocalCredit]" Evaluator="Data1"/>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="37.8"/>
+    <PageHeaderBand Name="PageHeader1" Top="41.8" Width="718.2" Height="113.45">
+      <TextObject Name="Text2" Left="491.79" Top="85.05" Width="217.35" Height="28.35" Border.Lines="All" Fill.Color="MediumBlue" Text="إسم المورد" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text4" Left="368.96" Top="85.06" Width="122.85" Height="28.35" Border.Lines="All" Fill.Color="MediumBlue" Text="الرصيد الإفتتاحي" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text6" Left="255.15" Top="85.05" Width="113.4" Height="28.35" Border.Lines="All" Fill.Color="MediumBlue" Text="مدين" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text8" Left="141.71" Top="85.1" Width="113.4" Height="28.35" Border.Lines="All" Fill.Color="MediumBlue" Text="دائن" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text9" Left="9.45" Top="9.45" Width="699.3" Height="28.35" Border.Lines="All" Fill.Color="MediumBlue" Text="كشف حساب المورد - الإجمالي" HorzAlign="Center" VertAlign="Center" Font="Arial, 18pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text10" Left="453.96" Top="47.24" Width="47.25" Height="18.9" Text="من" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="MediumBlue"/>
+      <TextObject Name="Text11" Left="299.76" Top="47.25" Width="47.25" Height="18.9" Text="إلي" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="MediumBlue"/>
+      <TextObject Name="Text12" Left="9.5" Top="85.06" Width="132.3" Height="28.35" Border.Lines="All" Fill.Color="MediumBlue" Text="الرصيد" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text13" Left="347.76" Top="47.24" Width="103.95" Height="18.9" Text="[From_Date]" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text14" Left="195.1" Top="47.25" Width="103.95" Height="18.9" Text="[To_Date]" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="159.25" Width="718.2" Height="27.6" DataSource="Table">
+      <TextObject Name="Text3" Left="370.47" Top="-0.76" Width="122.85" Height="28.35" Border.Lines="All" Text="[Rep_A_SupplierAccountStatement_Summary.OpeningBalance]" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text5" Left="256.59" Top="-0.78" Width="113.4" Height="28.35" Border.Lines="All" Text="[Rep_A_SupplierAccountStatement_Summary.LocalDebit]" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text15" Left="9.25" Top="-0.76" Width="132.3" Height="28.35" Border.Lines="All" AfterDataEvent="Text15_AfterData" HorzAlign="Center" VertAlign="Center" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text1" Left="492.65" Top="-0.75" Width="217.35" Height="28.35" Border.Lines="All" Text="[Rep_A_SupplierAccountStatement_Summary.SubAccount_Name]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text7" Left="143.22" Top="-0.75" Width="113.4" Height="28.35" Border.Lines="All" Text="[Rep_A_SupplierAccountStatement_Summary.LocalCredit]" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+    </DataBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="190.85" Width="718.2" Height="21.94">
+      <TextObject Name="Text17" Left="370.47" Top="-0.76" Width="122.85" Height="22.68" Border.Lines="All" Border.LeftLine.Color="Navy" Border.TopLine.Color="Navy" Border.TopLine.Style="Dash" Border.RightLine.Color="Navy" Border.RightLine.Width="1.5" Border.BottomLine.Color="Navy" Border.BottomLine.Width="1.5" Fill.Color="CornflowerBlue" Text="[TotalOpeiningBalance]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="Navy"/>
+      <TextObject Name="Text18" Left="256.59" Top="-0.78" Width="113.4" Height="22.68" Border.Lines="All" Border.LeftLine.Color="Navy" Border.TopLine.Color="Navy" Border.TopLine.Style="Dash" Border.RightLine.Color="Navy" Border.RightLine.Width="1.5" Border.BottomLine.Color="Navy" Border.BottomLine.Width="1.5" Fill.Color="CornflowerBlue" Text="[TotalDepit]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="Navy"/>
+      <TextObject Name="Text16" Left="9.25" Top="-0.76" Width="132.3" Height="22.68" Border.Lines="All" Border.LeftLine.Color="Navy" Border.TopLine.Color="Navy" Border.TopLine.Style="Dash" Border.RightLine.Color="Navy" Border.RightLine.Width="1.5" Border.BottomLine.Color="Navy" Border.BottomLine.Width="1.5" Fill.Color="CornflowerBlue" AfterDataEvent="Text16_AfterData" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="Navy"/>
+      <TextObject Name="Text32" Left="492.65" Top="-0.74" Width="217.35" Height="22.68" Border.Lines="All" Border.LeftLine.Color="Navy" Border.TopLine.Color="Navy" Border.TopLine.Style="Dash" Border.RightLine.Color="Navy" Border.RightLine.Width="1.5" Border.BottomLine.Color="Navy" Border.BottomLine.Width="1.5" Fill.Color="CornflowerBlue" Text="الإجمالي" HorzAlign="Right" VertAlign="Center" Font="Arial, 12pt, style=Bold" TextFill.Color="Navy"/>
+      <TextObject Name="Text19" Left="143.22" Top="-0.75" Width="113.4" Height="22.68" Border.Lines="All" Border.LeftLine.Color="Navy" Border.TopLine.Color="Navy" Border.TopLine.Style="Dash" Border.RightLine.Color="Navy" Border.RightLine.Width="1.5" Border.BottomLine.Color="Navy" Border.BottomLine.Width="1.5" Fill.Color="CornflowerBlue" Text="[TotalCredit]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="Navy"/>
+    </ReportSummaryBand>
+    <PageFooterBand Name="PageFooter1" Top="216.79" Width="718.2" Height="18.9">
+      <TextObject Name="Text20" Left="9.45" Width="160.65" Height="18.9" Text="[Date]" VertAlign="Center"/>
+      <TextObject Name="Text21" Left="614.25" Width="94.5" Height="18.9" Text="[PageN]" VertAlign="Center"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

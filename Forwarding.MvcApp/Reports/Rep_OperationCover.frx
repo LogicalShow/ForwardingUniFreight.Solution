@@ -1,0 +1,468 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/03/2022 13:02:22" ReportInfo.Modified="05/31/2022 13:57:54" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+
+   
+   
+
+    private void Text4_AfterData(object sender, EventArgs e)
+    {
+      if (((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.TransportType&quot;))==1)
+      {
+        Text4.Visible=true;	
+        Text22.Visible=true;	
+        Text9.Visible=true;	
+        Text27.Visible=true;		  
+
+
+
+        Text49.Visible=false;
+        Text50.Visible=false;
+        Text51.Visible=false;
+        Text52.Visible=false;
+
+      }
+      else if (((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.TransportType&quot;))==3)
+      {
+        Text4.Visible=true;	
+        Text22.Visible=true;	
+        Text9.Visible=true;	
+        Text27.Visible=true;		  
+
+
+
+        Text49.Visible=false;
+        Text50.Visible=false;
+        Text51.Visible=false;
+        Text52.Visible=false;
+
+
+      }
+      else
+      {
+        Text22.Visible=false;		  
+        Text9.Visible=false;		  
+        Text27.Visible=false;		  
+
+        Text4.Visible=false;		  
+        Text49.Visible=true; 
+        Text50.Visible=true;
+        Text51.Visible=true;
+        Text52.Visible=true;
+
+      }
+    }
+
+    private void Text53_AfterData(object sender, EventArgs e)
+    {
+      if (((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.ShipmentType&quot;))==1 &amp;&amp; ((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.TransportType&quot;))==1)
+      {
+		     Text53.Visible=false;
+        Text54.Visible=false;
+
+      }
+      else  if (((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.ShipmentType&quot;))==3 &amp;&amp; ((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.TransportType&quot;))==3)
+      {
+        Text53.Visible=false;
+        Text54.Visible=false;
+
+      }
+      else
+      {
+        Text53.Visible=true;
+        Text54.Visible=true;
+
+    
+      }
+    }
+
+
+
+    private void Text17_AfterData(object sender, EventArgs e)
+    {
+      if (((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.TransportType&quot;))==2)
+      {
+		    Text17.Visible=true;
+        Text35.Visible=true;
+
+      }
+      else if (((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.TransportType&quot;))==1 &amp;&amp; ((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.ShipmentType&quot;))==2)
+      {
+        Text17.Visible=true;
+        Text35.Visible=true;
+
+
+      }
+     
+      
+      else
+      {
+        Text17.Visible=false;
+        Text35.Visible=false;
+
+      }
+    }
+
+   
+
+   
+
+    private void Text59_AfterData(object sender, EventArgs e)
+    {
+      if (((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.TransportType&quot;))==1 &amp;&amp; ((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.ShipmentType&quot;))==2)
+      {
+		    Text61.Visible=true;
+        Text62.Visible=true;
+
+        Text59.Visible=false;
+        Text60.Visible=false;
+      }
+      else  if (((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.TransportType&quot;))==1 &amp;&amp; ((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.ShipmentType&quot;))==5)
+      {
+        Text61.Visible=true;
+        Text62.Visible=true;
+
+        Text59.Visible=false;
+        Text60.Visible=false;
+      }
+      else
+      {
+        Text61.Visible=false;
+        Text62.Visible=false;
+
+        Text59.Visible=true;
+        Text60.Visible=true;    
+      }
+    }
+
+    private void Text64_AfterData(object sender, EventArgs e)
+    {
+      if (((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.TransportType&quot;))==1 &amp;&amp; ((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.ShipmentType&quot;))==1)
+      {
+      Text64.Text=((String)Report.GetColumnValue(&quot;Rep_DocsOut.SupplierReference&quot;));
+      }
+      else  if (((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.TransportType&quot;))==3 &amp;&amp; ((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.ShipmentType&quot;))==3)
+      {
+        Text64.Text=((String)Report.GetColumnValue(&quot;Rep_DocsOut.SupplierReference&quot;));
+      }
+      else
+      {
+        Text64.Text=&quot;NA&quot;;
+     
+      }
+    }
+
+    private void Text39_AfterData(object sender, EventArgs e)
+    {
+      if (((String)Report.GetColumnValue(&quot;Rep_DocsOut.ContainerNumbers&quot;))==&quot;&quot;)
+      {
+        Text39.Text=&quot;NA&quot;;
+
+      }
+    }
+
+    private void Text40_AfterData(object sender, EventArgs e)
+    {
+      if (((String)Report.GetColumnValue(&quot;Rep_DocsOut.CarrierSeal&quot;))==&quot;&quot;)
+      {
+        Text40.Text=&quot;NA&quot;;
+
+      }
+    }
+
+    private void Text38_AfterData(object sender, EventArgs e)
+    {
+      if (((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.TransportType&quot;))==1 &amp;&amp; ((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.ShipmentType&quot;))==1)
+      {
+        Text38.Visible=true;
+        Text42.Visible=true;
+
+        Text69.Visible=false;
+        Text70.Visible=false;
+      }
+      else if (((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.TransportType&quot;))==3 &amp;&amp; ((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.ShipmentType&quot;))==3)
+      {
+        Text38.Visible=true;
+        Text42.Visible=true;
+
+        Text69.Visible=false;
+        Text70.Visible=false;
+      }
+      else
+      {
+        Text38.Visible=false;
+        Text42.Visible=false;
+
+        Text69.Visible=true;
+        Text70.Visible=true;   
+      }
+    }
+
+    private void Text13_AfterData(object sender, EventArgs e)
+    {
+      if (((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.TransportType&quot;))==1)
+      {
+		     Text13.Text=&quot;POD&quot;;
+        Text14.Text=&quot;POL&quot;;
+
+      }
+      else if (((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.TransportType&quot;))==2)
+      {
+        Text13.Text=&quot;AOD&quot;;
+        Text14.Text=&quot;AOL&quot;; 
+      }
+    }
+
+    private void Text36_AfterData(object sender, EventArgs e)
+    {
+      if (((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.TransportType&quot;))==1 &amp;&amp;((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.ShipmentType&quot;))==1 )
+      {
+		    Text36.Visible=true;
+        Text37.Visible=true;
+        Text39.Visible=true;
+        Text40.Visible=true;
+        
+        Text8.Visible=false;
+        Text53.Visible=false;
+        Text26.Visible=false;
+        Text54.Visible=false;
+      }
+      if (((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.TransportType&quot;))==3 &amp;&amp;((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.ShipmentType&quot;))==3 )
+      {
+        Text36.Visible=true;
+        Text37.Visible=true;
+        Text39.Visible=true;
+        Text40.Visible=true;
+        
+        Text8.Visible=false;
+        Text53.Visible=false;
+        Text26.Visible=false;
+        Text54.Visible=false;
+      }
+      else if (((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.TransportType&quot;))==1 &amp;&amp;((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.ShipmentType&quot;))==2 )
+      {
+        Text36.Visible=false;
+        Text37.Visible=false;
+        Text39.Visible=false;
+        Text40.Visible=false;
+        
+        Text8.Visible=true;
+        Text53.Visible=true;
+        Text26.Visible=true;
+        Text54.Visible=true;
+      }
+      else if (((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.TransportType&quot;))==2 )
+      {
+        Text36.Visible=false;
+        Text37.Visible=false;
+        Text39.Visible=false;
+        Text40.Visible=false;
+        
+        Text8.Visible=true;
+        Text53.Visible=true;
+        Text26.Visible=true;
+        Text54.Visible=true;
+      }
+    }
+
+    private void Text21_AfterData(object sender, EventArgs e)
+    {
+      if (((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.BLType&quot;))==1)
+      {
+		    Text21.Text=((String)Report.GetColumnValue(&quot;Rep_DocsOut.HouseNumber&quot;));
+      }
+      else
+      {
+        Text21.Text=((String)Report.GetColumnValue(&quot;Rep_DocsOut.HouseBLs&quot;));
+   
+      }
+    }
+
+    
+
+    private void Text56_AfterData(object sender, EventArgs e)
+    {
+      if (((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.TransportType&quot;))==1 &amp;&amp; ((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.ShipmentType&quot;))==1)
+      {
+        Text56.Visible=true;
+        Text55.Visible=true;
+
+      }
+      else if (((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.TransportType&quot;))==3 &amp;&amp; ((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.ShipmentType&quot;))==3)
+      {
+        Text56.Visible=true;
+        Text55.Visible=true;
+
+      }
+      else  if (((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.TransportType&quot;))==1 &amp;&amp; ((Int32)Report.GetColumnValue(&quot;Rep_DocsOut.ShipmentType&quot;))==5)
+      {
+        Text56.Visible=true;
+        Text55.Visible=true;
+
+      }
+        
+     
+      else
+      {
+        Text56.Visible=false;
+        Text55.Visible=false;
+
+      }
+      
+    }
+
+  
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFcprtaVHUEEAazxZnD2sC23nbdShReaLEpqZVlj9ksKPPGbd/vCFGduAah4HeRGDWMivX44BE+vLGJrdxPkEHe1f4o1Lsj7sQ7Blsf6YMvky8dzUCIyDbWR2kVhbxjW5z">
+      <TableDataSource Name="Table" Alias="Rep_DocsOut" DataType="System.Int32" Enabled="true" SelectCommand="exec Rep_DocsOutCover @ID">
+        <Column Name="ConsigneeName" DataType="System.String"/>
+        <Column Name="MasterBL" DataType="System.String"/>
+        <Column Name="HouseBLs" DataType="System.String"/>
+        <Column Name="GrossWeightSum" DataType="System.Decimal"/>
+        <Column Name="CommodityName" DataType="System.String"/>
+        <Column Name="ACIDNumber" DataType="System.String"/>
+        <Column Name="POLName" DataType="System.String"/>
+        <Column Name="PODName" DataType="System.String"/>
+        <Column Name="ContainerNumbers" DataType="System.String"/>
+        <Column Name="OpenDate" DataType="System.DateTime"/>
+        <Column Name="ShippingLineName" DataType="System.String"/>
+        <Column Name="ShipperName" DataType="System.String"/>
+        <Column Name="IncotermName" DataType="System.String"/>
+        <Column Name="CertificateNumber" DataType="System.String"/>
+        <Column Name="AirlineName" DataType="System.String"/>
+        <Column Name="ContainerNumber" DataType="System.String"/>
+        <Column Name="ContainerTypes" DataType="System.String"/>
+        <Column Name="CarrierSeal" DataType="System.String"/>
+        <Column Name="PackageTypes" DataType="System.String"/>
+        <Column Name="ShipmentType" DataType="System.Int32"/>
+        <Column Name="TransportType" DataType="System.Int32"/>
+        <Column Name="ChargeableWeightSum" DataType="System.Decimal"/>
+        <Column Name="ExpectedDeparture" DataType="System.DateTime"/>
+        <Column Name="AgentName" DataType="System.String"/>
+        <Column Name="ReferenceNumber" DataType="System.String"/>
+        <Column Name="ShippingAgent" DataType="System.String"/>
+        <Column Name="HouseNumberHouse" DataType="System.String"/>
+        <Column Name="ExpectedArrival" DataType="System.DateTime"/>
+        <Column Name="VolumeSum" DataType="System.Decimal"/>
+        <Column Name="BookingNumbers" DataType="System.String"/>
+        <Column Name="ContainerTypeName" DataType="System.String"/>
+        <Column Name="NumberOfPackages" DataType="System.Int32"/>
+        <Column Name="PackageTypeName" DataType="System.String"/>
+        <Column Name="HouseNumber" DataType="System.String"/>
+        <Column Name="PickupCityName" DataType="System.String"/>
+        <Column Name="FinalDistination" DataType="System.String"/>
+        <Column Name="SupplierReference" DataType="System.String"/>
+        <Column Name="CustomerReference" DataType="System.String"/>
+        <Column Name="Notify1Name" DataType="System.String"/>
+        <Column Name="POLCountryName" DataType="System.String"/>
+        <Column Name="PODCountryName" DataType="System.String"/>
+        <Column Name="BLType" DataType="System.Int32"/>
+        <CommandParameter Name="ID" DataType="22" Expression="[ID]"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="ID" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <PageHeaderBand Name="PageHeader1" Width="718.2" Height="444.15">
+      <TextObject Name="Text2" Left="283.5" Width="151.2" Height="28.35" Text="Cover File" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold" TextFill.Color="CornflowerBlue"/>
+      <TextObject Name="Text1" Left="9.45" Top="37.8" Width="132.3" Height="18.9" Border.Lines="All" Border.Color="RoyalBlue" Text="Date" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text3" Left="9.45" Top="56.7" Width="132.3" Height="18.9" Border.Lines="Left, Right, Bottom" Border.Color="RoyalBlue" Text="JOB NO." Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text4" Left="9.45" Top="75.6" Width="132.3" Height="18.9" Border.Lines="Left, Right, Bottom" Border.Color="RoyalBlue" AfterDataEvent="Text4_AfterData" Text="MBL" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text5" Left="9.45" Top="113.4" Width="132.3" Height="18.9" Border.Lines="Left, Right, Bottom" Border.Color="RoyalBlue" Text="BOOKING" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text6" Left="9.45" Top="160.65" Width="132.3" Height="28.35" Border.Lines="Left, Right, Bottom" Border.Color="RoyalBlue" Text="ETA " Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text7" Left="9.45" Top="189" Width="132.3" Height="28.35" Border.Lines="Left, Right, Bottom" Border.Color="RoyalBlue" Text="ACID Number" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text9" Left="9.45" Top="245.7" Width="132.3" Height="37.8" Border.Lines="Left, Right, Bottom" Border.Color="RoyalBlue" Text="Shipping Line" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text10" Left="387.45" Top="37.8" Width="103.95" Height="18.9" Border.Lines="Left, Right, Top" Border.Color="RoyalBlue" Text="SHIPPER" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text11" Left="387.45" Top="122.85" Width="103.95" Height="18.9" Border.Lines="Left, Right, Top" Border.Color="RoyalBlue" Text="CONSIGNEE" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text12" Left="9.45" Top="321.3" Width="85.05" Height="37.8" Border.Lines="Left, Top, Bottom" Border.Color="RoyalBlue" Text="DELIVERY TERMS" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text13" Left="207.9" Top="321.3" Width="113.4" Height="37.8" Border.Lines="Left, Top, Bottom" Border.Color="RoyalBlue" AfterDataEvent="Text13_AfterData" Text="POD" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text14" Left="94.5" Top="321.3" Width="113.4" Height="37.8" Border.Lines="Left, Top, Bottom" Border.Color="RoyalBlue" Text="POL" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text15" Left="321.3" Top="321.3" Width="103.95" Height="37.8" Border.Lines="Left, Top, Bottom" Border.Color="RoyalBlue" Text="CERTIFICATE" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text16" Left="425.25" Top="321.3" Width="132.3" Height="37.8" Border.Lines="All" Border.Color="RoyalBlue" Text="Goods Description" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text17" Left="557.55" Top="321.3" Width="151.2" Height="37.8" Border.Lines="All" Border.Color="RoyalBlue" AfterDataEvent="Text17_AfterData" Text="Package" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text18" Left="141.75" Top="37.8" Width="236.25" Height="18.9" Border.Lines="Right, Top, Bottom" Border.Color="RoyalBlue" Text="[Rep_DocsOut.OpenDate]" Format="Date" Format.Format="d" VertAlign="Center"/>
+      <TextObject Name="Text19" Left="141.75" Top="56.7" Width="236.25" Height="18.9" Border.Lines="Right, Top, Bottom" Border.Color="RoyalBlue" Text="[Rep_DocsOut.ReferenceNumber]" VertAlign="Center"/>
+      <TextObject Name="Text20" Left="141.75" Top="75.6" Width="236.25" Height="18.9" Border.Lines="Right, Top, Bottom" Border.Color="RoyalBlue" Text="[Rep_DocsOut.MasterBL]" VertAlign="Center"/>
+      <TextObject Name="Text21" Left="141.75" Top="94.5" Width="236.25" Height="18.9" Border.Lines="Right, Top, Bottom" Border.Color="RoyalBlue" AfterDataEvent="Text21_AfterData" Text="[Rep_DocsOut.HouseBLs]" VertAlign="Center"/>
+      <TextObject Name="Text22" Left="9.45" Top="94.5" Width="132.3" Height="18.9" Border.Lines="Left, Right, Bottom" Border.Color="RoyalBlue" Text="HBL" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text23" Left="141.75" Top="113.4" Width="236.25" Height="18.9" Border.Lines="Right, Top, Bottom" Border.Color="RoyalBlue" Text="[Rep_DocsOut.BookingNumbers]" VertAlign="Center"/>
+      <TextObject Name="Text24" Left="141.75" Top="160.65" Width="236.25" Height="28.35" Border.Lines="Right, Top, Bottom" Border.Color="RoyalBlue" Text="[Rep_DocsOut.ExpectedArrival]" Format="Date" Format.Format="MMMM dd, yyyy" VertAlign="Center"/>
+      <TextObject Name="Text25" Left="141.75" Top="189" Width="236.25" Height="28.35" Border.Lines="Right, Bottom" Border.Color="RoyalBlue" Text="[Rep_DocsOut.ACIDNumber]" VertAlign="Center"/>
+      <TextObject Name="Text27" Left="141.75" Top="245.7" Width="236.25" Height="37.8" Border.Lines="Right, Top, Bottom" Border.Color="RoyalBlue" Text="[Rep_DocsOut.ShippingLineName]" VertAlign="Center"/>
+      <TextObject Name="Text28" Left="387.45" Top="56.7" Width="321.3" Height="56.7" Border.Lines="All" Border.Color="RoyalBlue" Text="[Rep_DocsOut.ShipperName]"/>
+      <TextObject Name="Text29" Left="387.45" Top="141.75" Width="321.3" Height="47.25" Border.Lines="All" Border.Color="RoyalBlue" Text="[Rep_DocsOut.ConsigneeName]"/>
+      <TextObject Name="Text30" Left="9.45" Top="359.1" Width="85.05" Height="37.8" Border.Lines="Left, Top, Bottom" Border.Color="RoyalBlue" Text="[Rep_DocsOut.IncotermName]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text31" Left="207.9" Top="359.1" Width="113.4" Height="37.8" Border.Lines="Left, Top, Bottom" Border.Color="RoyalBlue" Text="[Rep_DocsOut.PODName]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text32" Left="94.5" Top="359.1" Width="113.4" Height="37.8" Border.Lines="Left, Top, Bottom" Border.Color="RoyalBlue" Text="[Rep_DocsOut.POLName]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text33" Left="321.3" Top="359.1" Width="103.95" Height="37.8" Border.Lines="Left, Top, Bottom" Border.Color="RoyalBlue" Text="[Rep_DocsOut.CertificateNumber]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text34" Left="425.25" Top="359.1" Width="132.3" Height="37.8" Border.Lines="All" Border.Color="RoyalBlue" Text="[Rep_DocsOut.CommodityName]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text35" Left="557.55" Top="359.1" Width="151.2" Height="37.8" Border.Lines="All" Border.Color="RoyalBlue" Text="[Rep_DocsOut.NumberOfPackages] [Rep_DocsOut.PackageTypeName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text36" Left="9.45" Top="425.25" Width="255.15" Height="18.9" Border.Lines="Left, Top, Bottom" Border.Color="LightGreen" Fill.Color="RoyalBlue" AfterDataEvent="Text36_AfterData" Text="Containers#" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text37" Left="264.6" Top="425.25" Width="217.35" Height="18.9" Border.Lines="Left, Top, Bottom" Border.Color="LightGreen" Fill.Color="RoyalBlue" Text="Seal#" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text38" Left="481.95" Top="425.25" Width="226.8" Height="18.9" Border.Lines="Left, Top, Bottom" Border.Color="LightGreen" Fill.Color="RoyalBlue" AfterDataEvent="Text38_AfterData" Text="Container Type" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text49" Left="9.45" Top="75.6" Width="132.3" Height="18.9" Border.Lines="Left, Right, Bottom" Border.Color="RoyalBlue" Text="MAWB" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text50" Left="9.45" Top="94.5" Width="132.3" Height="18.9" Border.Lines="Left, Right, Bottom" Border.Color="RoyalBlue" Text="HAWB" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text51" Left="9.45" Top="245.7" Width="132.3" Height="37.8" Border.Lines="Left, Right, Bottom" Border.Color="RoyalBlue" Text="Air Line" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text52" Left="141.75" Top="245.7" Width="236.25" Height="37.8" Border.Lines="Right, Top, Bottom" Border.Color="RoyalBlue" Text="[Rep_DocsOut.AirlineName]" VertAlign="Center"/>
+      <TextObject Name="Text55" Left="557.55" Top="359.1" Width="151.2" Height="37.8" Border.Lines="All" Border.Color="RoyalBlue" Text="[Rep_DocsOut.ContainerTypes]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text56" Left="557.55" Top="321.3" Width="151.2" Height="37.8" Border.Lines="All" Border.Color="RoyalBlue" AfterDataEvent="Text56_AfterData" Text="Container" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text57" Left="9.45" Top="132.3" Width="132.3" Height="28.35" Border.Lines="Left, Right, Bottom" Border.Color="RoyalBlue" Text="ETD" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text58" Left="141.75" Top="132.3" Width="236.25" Height="28.35" Border.Lines="Right, Top, Bottom" Border.Color="RoyalBlue" Text="[Rep_DocsOut.ExpectedDeparture]" Format="Date" Format.Format="MMMM dd, yyyy" VertAlign="Center"/>
+      <TextObject Name="Text59" Left="387.45" Top="198.45" Width="132.3" Height="18.9" Border.Lines="Left, Right, Top" Border.Color="RoyalBlue" AfterDataEvent="Text59_AfterData" Text="ILS Agent" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text60" Left="387.45" Top="217.35" Width="321.3" Height="66.15" Border.Lines="All" Border.Color="RoyalBlue" Text="[Rep_DocsOut.AgentName]"/>
+      <TextObject Name="Text61" Left="387.45" Top="198.45" Width="132.3" Height="18.9" Border.Lines="Left, Right, Top" Border.Color="RoyalBlue" Text="Shipping Agent" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text62" Left="387.45" Top="217.35" Width="321.3" Height="66.15" Border.Lines="All" Border.Color="RoyalBlue" Text="[Rep_DocsOut.ShippingAgent]"/>
+      <TextObject Name="Text63" Left="9.45" Top="217.35" Width="132.3" Height="28.35" Border.Lines="Left, Right, Bottom" Border.Color="RoyalBlue" Text="ACID House Number" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text64" Left="141.75" Top="217.35" Width="236.25" Height="28.35" Border.Lines="Right, Bottom" Border.Color="RoyalBlue" AfterDataEvent="Text64_AfterData" Text="[Rep_DocsOut.SupplierReference]" VertAlign="Center"/>
+      <TextObject Name="Text70" Left="481.95" Top="425.25" Width="226.8" Height="18.9" Border.Lines="All" Border.Color="LightGreen" Fill.Color="CornflowerBlue" AfterDataEvent="Text38_AfterData" Text="Volume" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text8" Left="9.45" Top="425.25" Width="255.15" Height="18.9" Border.Lines="Left, Top, Bottom" Border.Color="LightGreen" Fill.Color="CornflowerBlue" Text="G.W" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text53" Left="264.6" Top="425.25" Width="217.35" Height="18.9" Border.Lines="Left, Top, Bottom" Border.Color="LightGreen" Fill.Color="CornflowerBlue" AfterDataEvent="Text53_AfterData" Text="Chg W" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="447.85" Width="718.2" Height="28.35" DataSource="Table">
+      <TextObject Name="Text39" Left="9.45" Width="255.15" Height="28.35" Border.Lines="All" Border.Color="RoyalBlue" AfterDataEvent="Text39_AfterData" Text="[Rep_DocsOut.ContainerNumber]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text40" Left="264.6" Width="217.35" Height="28.35" Border.Lines="All" Border.Color="RoyalBlue" AfterDataEvent="Text40_AfterData" Text="[Rep_DocsOut.CarrierSeal]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text42" Left="481.95" Width="226.8" Height="28.35" Border.Lines="All" Border.Color="RoyalBlue" Text="[Rep_DocsOut.ContainerTypeName]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text69" Left="481.95" Width="226.8" Height="28.35" Border.Lines="All" Border.Color="RoyalBlue" Text="[Rep_DocsOut.VolumeSum] CBM" Format="Number" Format.UseLocale="false" Format.DecimalDigits="0" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="0" HorzAlign="Center" VertAlign="Center" WordWrap="false"/>
+      <TextObject Name="Text26" Left="9.45" Width="255.15" Height="28.35" Border.Lines="All" Border.Color="RoyalBlue" Text="[Rep_DocsOut.GrossWeightSum] KG" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false"/>
+      <TextObject Name="Text54" Left="264.6" Width="217.35" Height="28.35" Border.Lines="All" Border.Color="RoyalBlue" Text="[Rep_DocsOut.ChargeableWeightSum] KG" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false"/>
+    </DataBand>
+    <ColumnFooterBand Name="ColumnFooter1" Top="479.91" Width="718.2" Height="330.75">
+      <TextObject Name="Text44" Left="9.45" Top="28.35" Width="359.1" Height="37.8" Border.Lines="All" Border.Color="RoyalBlue" Text="Follow UP" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text45" Left="9.45" Top="66.15" Width="359.1" Height="37.8" Border.Lines="Left, Right, Bottom" Border.Color="RoyalBlue" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text46" Left="9.45" Top="103.95" Width="359.1" Height="37.8" Border.Lines="Left, Right, Bottom" Border.Color="RoyalBlue" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text47" Left="9.45" Top="179.55" Width="359.1" Height="37.8" Border.Lines="Left, Right, Bottom" Border.Color="RoyalBlue" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text48" Left="9.45" Top="292.95" Width="359.1" Height="37.8" Border.Lines="Left, Right, Bottom" Border.Color="RoyalBlue" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text66" Left="9.45" Top="217.35" Width="359.1" Height="37.8" Border.Lines="Left, Right, Bottom" Border.Color="RoyalBlue" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text67" Left="9.45" Top="255.15" Width="359.1" Height="37.8" Border.Lines="Left, Right, Bottom" Border.Color="RoyalBlue" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text68" Left="9.45" Top="141.75" Width="359.1" Height="37.8" Border.Lines="Left, Right, Bottom" Border.Color="RoyalBlue" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text41" Left="368.55" Top="28.35" Width="340.2" Height="37.8" Border.Lines="Right, Top, Bottom" Border.Color="RoyalBlue" Text="Missing Docs" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text71" Left="368.55" Top="66.15" Width="340.2" Height="37.8" Border.Lines="Right, Bottom" Border.Color="RoyalBlue" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text72" Left="368.55" Top="103.95" Width="340.2" Height="37.8" Border.Lines="Right, Bottom" Border.Color="RoyalBlue" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text73" Left="368.55" Top="141.75" Width="340.2" Height="37.8" Border.Lines="Right, Bottom" Border.Color="RoyalBlue" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text74" Left="368.55" Top="179.55" Width="340.2" Height="37.8" Border.Lines="Right, Bottom" Border.Color="RoyalBlue" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text75" Left="368.55" Top="217.35" Width="340.2" Height="37.8" Border.Lines="Right, Bottom" Border.Color="RoyalBlue" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text76" Left="368.55" Top="255.15" Width="340.2" Height="37.8" Border.Lines="Right, Bottom" Border.Color="RoyalBlue" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text77" Left="368.55" Top="292.95" Width="340.2" Height="37.8" Border.Lines="Right, Bottom" Border.Color="RoyalBlue" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+    </ColumnFooterBand>
+  </ReportPage>
+</Report>

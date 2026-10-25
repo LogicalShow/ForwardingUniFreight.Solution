@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="10/29/2022 11:28:05" ReportInfo.Modified="10/29/2022 11:48:38" ReportInfo.CreatorVersion="2018.3.14.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFocfDxzrctQFI3XQadoDyjEjPrwxJQy/GwBFiPGcHom2Ig560ZhDzlFH231fPWXgo/OO/qf6hJzN/rJuX5IWIF4eJwLBO/czuIvJVGeZAxB/bWkv1Wn40MIhjFoATbUj0dSdN8U5j8rwI0At5+N2oug==">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="SELECT V.ID, V.Code, V.CustomerID, V.CustomerName, V.OperationID, V.OperationCode, V.ComplaintName, V.ComplaintDetails, V.Notes, V.CreatorUserID, V.CreationDate, V.ModificatorUserID, V.ModificationDate&#13;&#10;FROM &quot;vwCRM_Complaint&quot; V&#13;&#10;WHERE V.ID=@pID&#13;&#10;">
+        <Column Name="ID" DataType="System.Int32"/>
+        <Column Name="Code" DataType="System.Int32"/>
+        <Column Name="CustomerID" DataType="System.Int32"/>
+        <Column Name="CustomerName" DataType="System.String"/>
+        <Column Name="OperationID" DataType="System.Int64"/>
+        <Column Name="OperationCode" DataType="System.String"/>
+        <Column Name="ComplaintName" DataType="System.String"/>
+        <Column Name="ComplaintDetails" DataType="System.String"/>
+        <Column Name="Notes" DataType="System.String"/>
+        <Column Name="CreatorUserID" DataType="System.Int32"/>
+        <Column Name="CreationDate" DataType="System.DateTime"/>
+        <Column Name="ModificatorUserID" DataType="System.Int32"/>
+        <Column Name="ModificationDate" DataType="System.DateTime"/>
+        <CommandParameter Name="@pID" DataType="22" Expression="[pID]"/>
+      </TableDataSource>
+      <TableDataSource Name="Table1" Alias="TableDetails" DataType="System.Int32" Enabled="true" SelectCommand="SELECT V.ID, V.CRM_ComplaintID, V.StatusID, V.StatueCode, V.OperationID, V.OperationCode, V.Complaint, V.ComplaintDescription, V.ComplaintDate, V.SalesRepID, V.SalesRepName, V.ResponseDescription, V.ResponseDate, V.SalesRepID2, V.SalesRepName2, V.ComplaintNameID, V.ComplaintName, V.CreatorUserID, V.CreationDate, V.ModificatorUserID, V.ModificationDate&#13;&#10;FROM &quot;vwCRM_ComplaintDetails&quot; V&#13;&#10;WHERE V.CRM_ComplaintID=@pID&#13;&#10;">
+        <Column Name="ID" DataType="System.Int32"/>
+        <Column Name="CRM_ComplaintID" DataType="System.Int32"/>
+        <Column Name="StatusID" DataType="System.Int32"/>
+        <Column Name="StatueCode" DataType="System.String"/>
+        <Column Name="OperationID" DataType="System.Int32"/>
+        <Column Name="OperationCode" DataType="System.String"/>
+        <Column Name="Complaint" DataType="System.String"/>
+        <Column Name="ComplaintDescription" DataType="System.String"/>
+        <Column Name="ComplaintDate" DataType="System.DateTime"/>
+        <Column Name="SalesRepID" DataType="System.Int32"/>
+        <Column Name="SalesRepName" DataType="System.String"/>
+        <Column Name="ResponseDescription" DataType="System.String"/>
+        <Column Name="ResponseDate" DataType="System.DateTime"/>
+        <Column Name="SalesRepID2" DataType="System.Int32"/>
+        <Column Name="SalesRepName2" DataType="System.String"/>
+        <Column Name="ComplaintNameID" DataType="System.Int32"/>
+        <Column Name="ComplaintName" DataType="System.String"/>
+        <Column Name="CreatorUserID" DataType="System.Int32"/>
+        <Column Name="CreationDate" DataType="System.DateTime"/>
+        <Column Name="ModificatorUserID" DataType="System.Int32"/>
+        <Column Name="ModificationDate" DataType="System.DateTime"/>
+        <CommandParameter Name="@pID" DataType="22" Expression="[pID]"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="113.4">
+      <TextObject Name="Text1" Left="179.55" Top="37.8" Width="340.2" Height="56.7" Text="Complaint Report" HorzAlign="Center" VertAlign="Center" Font="Arial, 26pt, style=Bold"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="118.73" Width="718.2" Height="160.65">
+      <TextObject Name="Text2" Left="18.9" Top="28.35" Width="66.15" Height="28.35" Text="Code" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text3" Left="18.9" Top="56.7" Width="132.3" Height="28.35" Border.Lines="All" Text="[Table.Code]" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text4" Top="132.3" Width="122.85" Height="28.35" Border.Lines="All" Text="Operation" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text5" Left="122.85" Top="132.3" Width="198.45" Height="28.35" Border.Lines="All" Text="Complaint Name" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text8" Left="198.45" Top="28.35" Width="179.55" Height="28.35" Text="Customer" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text9" Left="198.45" Top="56.7" Width="245.7" Height="28.35" Border.Lines="All" Text="[Table.CustomerName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text10" Left="491.4" Top="28.35" Width="132.3" Height="28.35" Text="Operation" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text11" Left="491.4" Top="56.7" Width="198.45" Height="28.35" Border.Lines="All" Text="[Table.OperationCode]" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text12" Left="321.3" Top="132.3" Width="198.45" Height="28.35" Border.Lines="All" Text="Complaint Date" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text14" Left="519.75" Top="132.3" Width="198.45" Height="28.35" Border.Lines="All" Text="Sales Rep" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="284.72" Width="718.2" Height="37.8" DataSource="Table1">
+      <TextObject Name="Text6" Width="122.85" Height="37.8" Border.Lines="All" Text="[TableDetails.OperationCode]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text7" Left="122.85" Width="198.45" Height="37.8" Border.Lines="All" Text="[TableDetails.ComplaintName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text13" Left="321.3" Width="198.45" Height="37.8" Border.Lines="All" Text="[TableDetails.ComplaintDate]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text15" Left="519.75" Width="198.45" Height="37.8" Border.Lines="All" Text="[TableDetails.SalesRepName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="327.85" Width="718.2" Height="56.7"/>
+  </ReportPage>
+</Report>

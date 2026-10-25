@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" DoublePass="true" ReportInfo.Created="08/08/2024 00:49:02" ReportInfo.Modified="02/20/2025 13:17:51" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+
+  
+
+  
+    
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFbC7kYc19fUbK/+gNUi2Y3iChDUjt0LnYlJyguLoUWjWwrAH+fut1cWWyb/Px6STGi6wj1k5/qQPRQI9uhT7qjPDm9brby5oEFrBRTqDAK7tGt32YAPqpGTWVaqN8nHWa">
+      <TableDataSource Name="Table7" Alias="houses" DataType="System.Int32" Enabled="true" SelectCommand="select RoadNumber,VesselName,HouseNumber,NumberOfPackages from vwoperations where MasterOperationID=@OPID">
+        <Column Name="RoadNumber" DataType="System.String"/>
+        <Column Name="VesselName" DataType="System.String"/>
+        <Column Name="HouseNumber" DataType="System.String"/>
+        <Column Name="NumberOfPackages" DataType="System.Int32"/>
+        <CommandParameter Name="OPID" DataType="22" Expression="[OPID]"/>
+      </TableDataSource>
+      <TableDataSource Name="Table8" Alias="master operation" DataType="System.Int32" Enabled="true" SelectCommand="select code ,BranchName ,VesselName from vwoperations where id= @OPID&#13;&#10;">
+        <Column Name="code" DataType="System.String"/>
+        <Column Name="BranchName" DataType="System.String"/>
+        <Column Name="VesselName" DataType="System.String"/>
+        <CommandParameter Name="OPID" DataType="22" Expression="[OPID]"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="OPID" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9">
+    <DataBand Name="Data1" Width="1047.06" Height="718.2" DataSource="Table7">
+      <TextObject Name="Text1" Left="633.15" Top="28.35" Width="406.35" Height="113.4" Text=": اسم الفرع" HorzAlign="Right" VertAlign="Center" Font="Arial, 55pt, style=Bold"/>
+      <TextObject Name="Text2" Left="9.45" Top="28.35" Width="670.95" Height="113.4" Text="[master operation.BranchName]" HorzAlign="Right" VertAlign="Center" Font="Arial, 32pt, style=Bold"/>
+      <TextObject Name="Text3" Left="633.15" Top="141.75" Width="406.35" Height="113.4" Text=": رقم الطريق" HorzAlign="Right" VertAlign="Center" Font="Arial, 55pt, style=Bold"/>
+      <TextObject Name="Text4" Left="9.45" Top="141.75" Width="670.95" Height="113.4" Text="[houses.RoadNumber]" HorzAlign="Right" VertAlign="Center" Font="Arial, 32pt, style=Bold"/>
+      <TextObject Name="Text5" Left="633.15" Top="264.6" Width="406.35" Height="113.4" Text=": اسم الباخرة" HorzAlign="Right" VertAlign="Center" Font="Arial, 55pt, style=Bold"/>
+      <TextObject Name="Text6" Left="9.45" Top="264.6" Width="670.95" Height="113.4" Text="[master operation.VesselName]" HorzAlign="Right" VertAlign="Center" Font="Arial, 32pt, style=Bold"/>
+      <TextObject Name="Text7" Left="633.15" Top="368.55" Width="406.35" Height="113.4" Text=": رقم البوليصة" HorzAlign="Right" VertAlign="Center" Font="Arial, 55pt, style=Bold"/>
+      <TextObject Name="Text8" Left="9.45" Top="368.55" Width="670.95" Height="113.4" Text="[houses.HouseNumber]" HorzAlign="Right" VertAlign="Center" Font="Arial, 32pt, style=Bold"/>
+      <TextObject Name="Text9" Left="633.15" Top="481.95" Width="406.35" Height="113.4" Text=": رقم العملية" HorzAlign="Right" VertAlign="Center" Font="Arial, 55pt, style=Bold"/>
+      <TextObject Name="Text10" Left="9.45" Top="481.95" Width="670.95" Height="113.4" Text="[master operation.code]" HorzAlign="Right" VertAlign="Center" Font="Arial, 32pt, style=Bold"/>
+      <TextObject Name="Text11" Left="633.15" Top="604.8" Width="406.35" Height="113.4" Text=": عدد الطرود" HorzAlign="Right" VertAlign="Center" Font="Arial, 55pt, style=Bold"/>
+      <TextObject Name="Text12" Left="9.45" Top="604.8" Width="670.95" Height="113.4" Text="[houses.NumberOfPackages]" HorzAlign="Right" VertAlign="Center" Font="Arial, 32pt, style=Bold"/>
+    </DataBand>
+  </ReportPage>
+</Report>

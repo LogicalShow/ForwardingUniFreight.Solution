@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/03/2022 13:02:22" ReportInfo.Modified="12/19/2024 17:03:50" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+    
+
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVF5h8yQRhuBl3O7wH1X/kevuTi1AbUsSAqHefaqnj4ysKs85sAtwiG9e0tmTtXpnGgK+cqkDUHK3pzf5gf/+QqSgpYCeOuNbevJA8rvasCRJtz6mWxkCtlGLeyMF3RUopi">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="exec (@query)">
+        <Column Name="Logo" DataType="System.String" PropName="Column" Calculated="true" Expression="[Logo]"/>
+        <Column Name="LocationCode" DataType="System.String"/>
+        <Column Name="ID" DataType="System.Int64"/>
+        <Column Name="PurchaseItemID" DataType="System.Int32"/>
+        <Column Name="PurchaseItemCode" DataType="System.String"/>
+        <Column Name="PurchaseItemName" DataType="System.String"/>
+        <Column Name="PackageTypeID" DataType="System.Int32"/>
+        <Column Name="PackageTypeCode" DataType="System.String"/>
+        <Column Name="PackageTypeName" DataType="System.String"/>
+        <Column Name="Quantity" DataType="System.Decimal"/>
+        <Column Name="PDL_DemandedQuantity" DataType="System.Decimal"/>
+        <Column Name="LocationID" DataType="System.Int32"/>
+        <Column Name="LocationTypeID" DataType="System.Int32"/>
+        <Column Name="PalletID" DataType="System.String"/>
+        <Column Name="PalletStatusID" DataType="System.Int32"/>
+        <Column Name="PalletClassID" DataType="System.Int32"/>
+        <Column Name="IsPalletHeld" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="BatchNumber" DataType="System.String"/>
+        <Column Name="BatchStatusID" DataType="System.Int32"/>
+        <Column Name="IsBatchHeld" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="ReceiveDate" DataType="System.DateTime"/>
+        <Column Name="ProductionDate" DataType="System.DateTime"/>
+        <Column Name="ExpirationDate" DataType="System.DateTime"/>
+        <Column Name="CustomerID" DataType="System.Int32"/>
+        <Column Name="OwnerID" DataType="System.Int32"/>
+        <Column Name="WarehouseID" DataType="System.Int32"/>
+        <Column Name="IsPicked" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="ByExpireDate" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="BySerialNo" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="DiffDays" DataType="System.Int32"/>
+        <CommandParameter Name="@query" DataType="12" Expression="[query]" DefaultValue="select *, 0 DiffDays from vwWH_ItemBalance"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="Logo" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9" ExtraDesignWidth="true">
+    <DataBand Name="Data1" Top="145.75" Width="1047.06" Height="36.14" CanGrow="true" DataSource="Table">
+      <DataHeaderBand Name="DataHeader1" Width="1047.06" Height="141.75" RepeatOnEveryPage="true">
+        <PictureObject Name="Picture1" Left="6.92" Top="3.67" Width="1029.65" Height="50.42" DataColumn="Rep_3PLPickList.Logo"/>
+        <TextObject Name="Text1" Left="403.52" Top="55.2" Width="236.45" Height="18.9" Text="Near Expiry" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+        <TextObject Name="Text15" Left="9.45" Top="103.95" Width="94.5" Height="37.8" Border.Lines="All" Fill.Color="141, 180, 226" Text="SKU" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text16" Left="103.95" Top="103.95" Width="189" Height="37.8" Border.Lines="All" Fill.Color="141, 180, 226" Text="SKU DESCRIPTION" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text17" Left="292.95" Top="103.95" Width="94.5" Height="37.8" Border.Lines="All" Fill.Color="141, 180, 226" Text="Location" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text18" Left="387.45" Top="103.95" Width="94.5" Height="37.8" Border.Lines="All" Fill.Color="141, 180, 226" Text="P ID" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text19" Left="481.95" Top="103.95" Width="94.5" Height="37.8" Border.Lines="All" Fill.Color="141, 180, 226" Text="UOM" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text20" Left="576.45" Top="103.95" Width="94.5" Height="37.8" Border.Lines="All" Fill.Color="141, 180, 226" Text="Pallet Status" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text21" Left="670.95" Top="103.95" Width="94.5" Height="37.8" Border.Lines="All" Fill.Color="141, 180, 226" Text="Batch" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text22" Left="765.45" Top="103.95" Width="94.5" Height="37.8" Border.Lines="All" Fill.Color="141, 180, 226" Text="Qty" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text52" Left="859.95" Top="103.95" Width="113.4" Height="37.8" Border.Lines="All" Fill.Color="141, 180, 226" Text="Manufacturing" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text54" Left="973.35" Top="103.95" Width="113.4" Height="37.8" Border.Lines="All" Fill.Color="141, 180, 226" Text="Expiration" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text55" Left="1086.75" Top="103.95" Width="113.4" Height="37.8" Border.Lines="All" Fill.Color="141, 180, 226" Text="Receive" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text56" Left="1200.15" Top="103.95" Width="94.5" Height="37.8" Border.Lines="All" Fill.Color="141, 180, 226" Text="Day" HorzAlign="Center" VertAlign="Center"/>
+      </DataHeaderBand>
+    </DataBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="185.89" Width="1047.06" Height="66.15">
+      <TextObject Name="Text3" Left="75.6" Top="18.9" Width="151.2" Height="47.25" Text="Created By&#13;&#10;&#13;&#10;................" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text4" Left="321.3" Top="18.9" Width="151.2" Height="47.25" Text="Picked By&#13;&#10;&#13;&#10;..............." HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text5" Left="567" Top="18.9" Width="151.2" Height="47.25" Text="Checked By&#13;&#10;&#13;&#10;................." HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text6" Left="812.7" Top="18.9" Width="151.2" Height="47.25" Text="Received By&#13;&#10;&#13;&#10;.................." HorzAlign="Center" VertAlign="Center"/>
+    </ReportSummaryBand>
+  </ReportPage>
+</Report>

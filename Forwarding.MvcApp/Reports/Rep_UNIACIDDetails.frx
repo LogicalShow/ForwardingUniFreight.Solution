@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="09/20/2023 14:33:35" ReportInfo.Modified="05/28/2024 12:24:41" ReportInfo.CreatorVersion="2018.3.14.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFbC7kYc19fUbK/+gNUi2Y3iChDUjt0LnYlJyguLoUWjWwrAH+fut1cWWyb/Px6STGi6wj1k5/qQPRQI9uhT7qjPDm9brby5oEFrBRTqDAK7tMqJmAn+WHOm+FDIdg0j+G">
+      <TableDataSource Name="Table" Alias="Rep_UNIACIDDetails" DataType="System.Int32" Enabled="true" SelectCommand="exec (@query)">
+        <Column Name="Logo" DataType="System.String" PropName="Column" Calculated="true" Expression="[Logo]"/>
+        <Column Name="Logo1" DataType="System.String" PropName="Column" Calculated="true" Expression="[Logo1]"/>
+        <Column Name="ID" DataType="System.Int32"/>
+        <Column Name="OperationID" DataType="System.Int64"/>
+        <Column Name="ReImportApproval" DataType="System.String"/>
+        <Column Name="ReImportApprovalNumber" DataType="System.String"/>
+        <Column Name="SurveyRequest" DataType="System.String"/>
+        <Column Name="BankNomination" DataType="System.String"/>
+        <Column Name="TransactionMethod" DataType="System.String"/>
+        <Column Name="BankNominationOpenedBy" DataType="System.String"/>
+        <Column Name="CustomsCertificateNo" DataType="System.String"/>
+        <Column Name="ExpirationDate" DataType="System.DateTime"/>
+        <Column Name="SurveyDate" DataType="System.DateTime"/>
+        <Column Name="UploadCargoDate" DataType="System.DateTime"/>
+        <Column Name="OperationHouseNumber" DataType="System.String"/>
+        <Column Name="OperationBLType" DataType="System.Int32"/>
+        <Column Name="OperationCodeSerial" DataType="System.Int32"/>
+        <Column Name="OperationCode" DataType="System.String"/>
+        <Column Name="OperationACIDNumber" DataType="System.String"/>
+        <Column Name="OperationACIDDetails" DataType="System.String"/>
+        <Column Name="OperationCreatorUserID" DataType="System.Int32"/>
+        <Column Name="OperationOpenedBy" DataType="System.String"/>
+        <Column Name="OperationOperationManID" DataType="System.Int32"/>
+        <Column Name="OperationOperationManName" DataType="System.String"/>
+        <Column Name="OperationMasterBL" DataType="System.String"/>
+        <Column Name="OperationHouseBLs" DataType="System.String"/>
+        <Column Name="OperationNotes" DataType="System.String"/>
+        <Column Name="ConsigneeID" DataType="System.Int32"/>
+        <Column Name="ConsigneeID2" DataType="System.Int32"/>
+        <Column Name="OperationConsigneeName" DataType="System.String"/>
+        <Column Name="OperationConsignee2Name" DataType="System.String"/>
+        <Column Name="OperationQuantity" DataType="System.String"/>
+        <Column Name="Name" DataType="System.String"/>
+        <Column Name="VATNumber" DataType="System.String"/>
+        <Column Name="GrossWeight" DataType="System.Decimal"/>
+        <Column Name="Description" DataType="System.String"/>
+        <Column Name="HouseContainerNumber" DataType="System.String"/>
+        <Column Name="ContainerNumber" DataType="System.String"/>
+        <Column Name="CarrierSeal" DataType="System.String"/>
+        <CommandParameter Name="query" DataType="12" Expression="[query]" DefaultValue=" Rep_UNIACIDDetails ' WHERE 1=1'"/>
+        <CommandParameter Name="Parameter" DataType="22"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="Logo" DataType="System.String" Expression="[Logo]"/>
+    <Parameter Name="Logo1" DataType="System.String" Expression="[Logo1]"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9" FirstPageSource="15" OtherPagesSource="15">
+    <PageHeaderBand Name="PageHeader1" Width="1047.06" Height="47.25">
+      <TableObject Name="Table1" Width="1039.83" Height="47.25" Border.Lines="All">
+        <TableColumn Name="Column1" Width="94.53"/>
+        <TableColumn Name="Column2" Width="94.53"/>
+        <TableColumn Name="Column3" Width="94.53"/>
+        <TableColumn Name="Column4" Width="94.53"/>
+        <TableColumn Name="Column5" Width="94.53"/>
+        <TableColumn Name="Column6" Width="94.53"/>
+        <TableColumn Name="Column7" Width="94.53"/>
+        <TableColumn Name="Column8" Width="94.53"/>
+        <TableColumn Name="Column9" Width="94.53"/>
+        <TableColumn Name="Column10" Width="94.53"/>
+        <TableColumn Name="Column11" Width="94.53"/>
+        <TableRow Name="Row1" Height="47.25">
+          <TableCell Name="Cell1" Border.Lines="Right" Text="ACID Number" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell2" Border.Lines="Right" Text="Shipper Name" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell3" Border.Lines="Right" Text="Shipper VAT Number" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell4" Border.Lines="Right" Text="Desc. of Goods" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell5" Border.Lines="Right" Text="Consignee Name" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell26" Border.Lines="Right" Text="Consignee Name 2 " HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell27" Border.Lines="Right" Text="G.W" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell28" Border.Lines="Right" Text="HBL" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell29" Border.Lines="Right" Text="Quantity" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell30" Border.Lines="Right" Text="Cont.No." HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell31" Border.Lines="Right" Text="Seal No." HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        </TableRow>
+      </TableObject>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="52.58" Width="1047.06" Height="85.05" DataSource="Table">
+      <TableObject Name="Table1" Width="1039.83" Height="85.05" Border.Lines="All">
+        <TableColumn Name="Column12" Width="94.53"/>
+        <TableColumn Name="Column13" Width="94.53"/>
+        <TableColumn Name="Column14" Width="94.53"/>
+        <TableColumn Name="Column15" Width="94.53"/>
+        <TableColumn Name="Column16" Width="94.53"/>
+        <TableColumn Name="Column17" Width="94.53"/>
+        <TableColumn Name="Column18" Width="94.53"/>
+        <TableColumn Name="Column19" Width="94.53"/>
+        <TableColumn Name="Column20" Width="94.53"/>
+        <TableColumn Name="Column21" Width="94.53"/>
+        <TableColumn Name="Column22" Width="94.53"/>
+        <TableRow Name="Row2" Height="85.05">
+          <TableCell Name="Cell32" Border.Lines="Right" Text="[Rep_UNIACIDDetails.OperationACIDNumber]" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell33" Border.Lines="Right" Text="[Rep_UNIACIDDetails.Name]" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell34" Border.Lines="Right" Text="[Rep_UNIACIDDetails.VATNumber]" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell35" Border.Lines="Right" Text="[Rep_UNIACIDDetails.Description]" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell36" Border.Lines="Right" Text="[Rep_UNIACIDDetails.OperationConsigneeName]" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell37" Border.Lines="Right" Text="[Rep_UNIACIDDetails.OperationConsignee2Name]" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell38" Border.Lines="Right" Text="[Rep_UNIACIDDetails.GrossWeight]" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell39" Border.Lines="Right" Text="[Rep_UNIACIDDetails.OperationHouseNumber]" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell40" Border.Lines="Right" Text="[Rep_UNIACIDDetails.OperationQuantity]" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell41" Border.Lines="Right" Text="[Rep_UNIACIDDetails.ContainerNumber]" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell42" Text="[Rep_UNIACIDDetails.CarrierSeal]" HorzAlign="Center" VertAlign="Center"/>
+        </TableRow>
+      </TableObject>
+    </DataBand>
+  </ReportPage>
+</Report>

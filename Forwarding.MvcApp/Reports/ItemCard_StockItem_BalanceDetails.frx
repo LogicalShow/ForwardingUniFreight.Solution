@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="03/03/2020 15:06:51" ReportInfo.Modified="06/02/2022 16:44:59" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+                // ((Decimal)Report.GetColumnValue(&quot;Table.TotalQuantity&quot;))
+  } 
+}  
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqM7gJFg/iaLrqMhRfGy5lGlKv8Z9FYU6PwBQ+6iDxzFmcyM8v2zG95dE4JjV93ToewIH4YbWjrLrQYnl1iFu6aNMhbvsp2dGe3f09uXG609gaqfO9fcJqw5/ZH55WsFY9S8BJRVz0ZGVTFTbdH+qPlXcN1vxylVMTwdj0xybvYb/mEorzjEcKvhjN/c08xjRUFvos1MHPa9K1aXLLKRk3R1qqHL5WS5E/Ejn6rgPy7M0=">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="exec [dbo].[SC_GetTransactionsStockBalanceWithTransactionTypesIDs]  @ItemIDs  , @StoreIDs  , @TransactionTypesIDs , @PartnerSupAccountIDs ,  @FromDate  ,  @ToDate">
+        <Column Name="ItemName" DataType="System.String"/>
+        <Column Name="ItemID" DataType="System.Int64"/>
+        <Column Name="ItemCode" DataType="System.String"/>
+        <Column Name="QtyBalance" DataType="System.Decimal"/>
+        <Column Name="PriceBalance" DataType="System.Decimal"/>
+        <Column Name="TotalOpeningQuantity" DataType="System.Decimal"/>
+        <Column Name="TotalOpeningPrice" DataType="System.Decimal"/>
+        <Column Name="TotalExportQty" DataType="System.Decimal"/>
+        <Column Name="TotalExportPrice" DataType="System.Decimal"/>
+        <Column Name="TotalImportQty" DataType="System.Decimal"/>
+        <Column Name="TotalImportPrice" DataType="System.Decimal"/>
+        <Column Name="AverageRate" DataType="System.Decimal"/>
+        <Column Name="StoreID" DataType="System.Int32"/>
+        <Column Name="StoreName" DataType="System.String"/>
+        <CommandParameter Name="@FromDate" DataType="22" Expression="[FromDate]"/>
+        <CommandParameter Name="@ToDate" DataType="22" Expression="[ToDate]"/>
+        <CommandParameter Name="@ItemIDs" DataType="22" Expression="[ItemIDs]"/>
+        <CommandParameter Name="@StoreIDs" DataType="22" Expression="[StoreIDs]"/>
+        <CommandParameter Name="@TransactionTypesIDs" DataType="22" Expression="[TransactionTypesIDs]"/>
+        <CommandParameter Name="@PartnerSupAccountIDs " DataType="22" Expression="[PartnerSupAccountIDs]"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="FromDate" DataType="System.String"/>
+    <Parameter Name="ToDate" DataType="System.String"/>
+    <Parameter Name="ItemIDs" DataType="System.String"/>
+    <Parameter Name="StoreIDs" DataType="System.String"/>
+    <Parameter Name="TransactionTypesIDs" DataType="System.String"/>
+    <Parameter Name="PartnerSupAccountIDs" DataType="System.String"/>
+    <Total Name="TotalAllOpeningQty" Expression="[Table.TotalOpeningQuantity]" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="TotalAllOpeningPrice" Expression="[Table.TotalOpeningPrice]" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="TotalAllImportQty" Expression="[Table.TotalImportQty]" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="TotalAllImportPrice" Expression="[Table.TotalImportPrice]" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="TotalAllExportQty" Expression="[Table.TotalExportQty]" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="TotalAllExportPrice" Expression="[Table.TotalExportPrice]" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="TotalAllBalanceQty" Expression="[Table.QtyBalance]" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="TotalAllBalancePrice" Expression="[Table.PriceBalance]" Evaluator="Data1" PrintOn="ReportSummary1"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9" FirstPageSource="15" OtherPagesSource="15">
+    <ReportTitleBand Name="ReportTitle1" Width="1047.06" Height="37.8">
+      <TextObject Name="Text109" Left="982.8" Width="66.15" Height="37.8" Border.Lines="All" Fill.Color="DarkGray" Text="Avj. &#13;&#10;Rate" Format="Currency" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text99" Width="56.7" Height="37.8" Border.Lines="All" Fill.Color="DarkGray" Text="Code" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text100" Left="56.7" Width="132.3" Height="37.8" Border.Lines="All" Fill.Color="DarkGray" Text="Product" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text101" Left="274.05" Width="85.05" Height="37.8" Border.Lines="All" Fill.Color="DarkGray" Text="Opening&#13;&#10; Qty" Format="Currency" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text102" Left="359.1" Width="103.95" Height="37.8" Border.Lines="All" Fill.Color="DarkGray" Text="Opening&#13;&#10; Value" Format="Currency" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text103" Left="463.05" Width="85.05" Height="37.8" Border.Lines="All" Fill.Color="DarkGray" Text="Received &#13;&#10;Qty" Format="Currency" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text104" Left="548.1" Width="94.5" Height="37.8" Border.Lines="All" Fill.Color="DarkGray" Text="Received&#13;&#10; Value" Format="Currency" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text105" Left="642.6" Width="85.05" Height="37.8" Border.Lines="All" Fill.Color="DarkGray" Text="Issued&#13;&#10; Qty" Format="Currency" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text106" Left="727.65" Width="85.05" Height="37.8" Border.Lines="All" Fill.Color="DarkGray" Text="Issued&#13;&#10; Value " Format="Currency" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text107" Left="812.7" Width="85.05" Height="37.8" Border.Lines="All" Fill.Color="DarkGray" Text="Balance&#13;&#10; Qty" Format="Currency" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text108" Left="897.75" Width="85.05" Height="37.8" Border.Lines="All" Fill.Color="DarkGray" Text="Balance&#13;&#10; Value" Format="Currency" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text122" Left="189" Width="85.05" Height="37.8" Border.Lines="All" Fill.Color="DarkGray" Text="Stock" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="41.8" Width="1047.06"/>
+    <DataBand Name="Data1" Top="45.8" Width="1047.06" Height="37.8" DataSource="Table">
+      <TextObject Name="Text1" Width="56.7" Height="37.8" Border.Lines="All" Text="[Table.ItemCode]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text2" Left="56.7" Width="132.3" Height="37.8" Border.Lines="All" Text="[Table.ItemName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text3" Left="274.05" Width="85.05" Height="37.8" Border.Lines="All" Text="[Table.TotalOpeningQuantity]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="5" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text4" Left="359.1" Width="103.95" Height="37.8" Border.Lines="All" Text="[Table.TotalOpeningPrice]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="5" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text5" Left="463.05" Width="85.05" Height="37.8" Border.Lines="All" Text="[Table.TotalImportQty]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="5" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text6" Left="548.1" Width="94.5" Height="37.8" Border.Lines="All" Text="[Table.TotalImportPrice]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="5" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text7" Left="642.6" Width="85.05" Height="37.8" Border.Lines="All" Text="[Table.TotalExportQty]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="5" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text8" Left="727.65" Width="85.05" Height="37.8" Border.Lines="All" Text="[Table.TotalExportPrice]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="5" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text9" Left="812.7" Width="85.05" Height="37.8" Border.Lines="All" Text="[Table.QtyBalance]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="5" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text10" Left="897.75" Width="85.05" Height="37.8" Border.Lines="All" Text="[Table.PriceBalance]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="5" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text110" Left="982.8" Width="66.15" Height="37.8" Border.Lines="All" Text="[Table.AverageRate]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="5" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text123" Left="189" Width="85.05" Height="37.8" Border.Lines="All" Text="[Table.StoreName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <Sort>
+        <Sort Expression="[Table.ItemName]"/>
+        <Sort Expression="[Table.StoreName]"/>
+      </Sort>
+    </DataBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="87.6" Width="1047.06" Height="37.8">
+      <TextObject Name="Text111" Left="274.05" Width="85.05" Height="37.8" Border.Lines="All" Fill.Color="DarkGray" Text="[TotalAllOpeningQty]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="5" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt, style=Bold" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text112" Left="359.1" Width="103.95" Height="37.8" Border.Lines="All" Fill.Color="DarkGray" Text="[TotalAllOpeningPrice]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="5" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt, style=Bold" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text113" Left="463.05" Width="85.05" Height="37.8" Border.Lines="All" Fill.Color="DarkGray" Text="[TotalAllImportQty]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="5" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt, style=Bold" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text114" Left="548.1" Width="94.5" Height="37.8" Border.Lines="All" Fill.Color="DarkGray" Text="[TotalAllImportPrice]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="5" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt, style=Bold" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text115" Left="642.6" Width="85.05" Height="37.8" Border.Lines="All" Fill.Color="DarkGray" Text="[TotalAllExportQty]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="5" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt, style=Bold" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text116" Left="727.65" Width="85.05" Height="37.8" Border.Lines="All" Fill.Color="DarkGray" Text="[TotalAllExportPrice]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="5" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt, style=Bold" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text117" Left="812.7" Width="85.05" Height="37.8" Border.Lines="All" Fill.Color="DarkGray" Text="[TotalAllBalanceQty]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="5" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt, style=Bold" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text118" Left="897.75" Width="85.05" Height="37.8" Border.Lines="All" Fill.Color="DarkGray" Text="[TotalAllBalancePrice]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="5" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt, style=Bold" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text119" Left="982.8" Width="66.15" Height="37.8" Border.Lines="All" Fill.Color="DarkGray" Format="Number" Format.UseLocale="false" Format.DecimalDigits="5" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt, style=Bold" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text120" Width="56.7" Height="37.8" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text121" Left="56.7" Width="132.3" Height="37.8" Border.Lines="All" Text="Total" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text124" Left="189" Width="85.05" Height="37.8" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+    </ReportSummaryBand>
+    <PageFooterBand Name="PageFooter1" Top="129.4" Width="1047.06"/>
+  </ReportPage>
+</Report>

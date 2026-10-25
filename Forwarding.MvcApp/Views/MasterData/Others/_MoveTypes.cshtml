@@ -1,0 +1,378 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li><a id="hl-homepage" href="javascript:void(0);"><i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+    </a></li>
+    <li><a id="liGroupName" href="javascript:void(0);">@Forwarding.MvcApp.App_Resources.App_Resources.MasterData
+    </a></li>
+    <li><a id="liTabName" href="javascript:void(0);">@Forwarding.MvcApp.App_Resources.App_Resources.Others
+    </a></li>
+    <li id="liFormName" class="active">@Forwarding.MvcApp.App_Resources.App_Resources.MoveTypes</li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-MoveTypes">
+    
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 id="h3Label" class="m-b-none">
+                </h3>
+            </header>
+            <!--Region the searh, delete, addnew-->
+            <div class="row text-sm wrapper hidden-print ">
+                <div id="div-main-options" class="col-sm-5 m-b-xs">
+                    <button id="btn-NewAdd" class="btn btn-warning btn-sm hide" data-toggle="modal" data-target="#MoveTypeModal"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.New</button>
+                    <div id="div-option-buttons" class="btn-group hide">
+                        <button id="btn-Copy" type="button" class="btn btn-sm btn-default"><i class="fa fa-copy"></i>Copy </button>
+                        <button id="btn-Print" type="button" class="btn btn-sm btn-default"><i class="fa fa-print"></i>Print </button>
+                        <button id="btn-Send" type="button" class="btn btn-sm btn-default"><i class="fa fa-envelope-o"></i>Send </button>
+                    </div>
+                </div>
+                <div id="div-search-option" class="col-sm-7">
+                    <div id="div-search-controls" class="input-group col-sm-9">
+                        <input id="txt-Search" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase"  type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search Code / Name / Local Name">
+                        <span class="input-group-btn">
+                            <button id="btn-search" class="btn btn-sm btn-primary" type="button" onclick="MoveTypes_LoadingWithPaging();"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                    <div class="float-right col-sm-1">
+                        <button id="btn-Delete" type="button" class="float-right btn btn-sm btn-danger m-r-n hide"><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete</button>
+                    </div>
+                </div>
+            </div>
+            <!--Region the searh, delete, addnew-->
+
+            <!--Region: table header-->
+            <div class="table-responsive">
+                <table id="tblMoveTypes" class="table table-striped b-t b-light text-sm  table-hover">
+                    <thead>
+                        <tr>
+                            <th id="ID">
+                                <input id="cb-CheckAll" type="checkbox" />
+                            </th>
+                            <th class="th-sortable" data-toggle="class">@Forwarding.MvcApp.App_Resources.App_Resources.Code
+                            </th>
+                            @*<th><i class="fa fa-road fa-2x" style="color:#ffc333;"></i>
+                            </th>*@
+                            <th class="hide">@Forwarding.MvcApp.App_Resources.App_Resources.TransportModeAbbrev
+                            </th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Name
+                            </th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.LocalName
+                            </th>
+                            <th style='display:none;'>@Forwarding.MvcApp.App_Resources.App_Resources.IsOcean
+                            </th>
+                            <th style='display:none;'>@Forwarding.MvcApp.App_Resources.App_Resources.IsAir
+                            </th>
+                            <th style='display:none;'>@Forwarding.MvcApp.App_Resources.App_Resources.IsInland
+                            </th>
+                            <th style='display:none;'>CustomsClearance
+                            </th>
+                            <th style='display:none;'>Warehousing
+                            </th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.IsInactive
+                            </th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Notes
+                            </th>
+                            <th class="rounded-right hide"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <!--Region: table header-->
+
+            <!--Region: footer-->
+            <footer class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-4 hidden-xs">
+                        <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                        <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                        </button>
+                    </div>
+                    <div id="div-Text-Total" class="col-sm-4 text-center">
+                        <small class="text-muted inline m-t-sm m-b-sm"> @Forwarding.MvcApp.App_Resources.App_Resources.Showing 
+                            <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                            <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                        </small>
+                    </div>
+                    <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+                </div>
+            </footer>
+            <!--Region: footer-->
+        </section>
+    </div>
+</div>
+
+<!-- Add / Edit Region Modal -->
+<div class="modal fade" id="MoveTypeModal" tabindex="-1" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="MoveTypeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-70 m-t-n-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        &times;</button>*@
+                <h3 class="m-b-none MainLabelTitle">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.ServiceDepartmentBinding
+                </h3>
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.MoveType &nbsp;<label id="lblShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+        <!-- Region Add / Edit Region Form -->
+            <div class="modal-body">
+                <div class="span7 form vertical-mode" id="MoveType-form">
+                    <fieldset>
+                        <div class="form-group pull-in  has-error clearfix">
+                            <input id="hID" type="hidden" />
+                            <input id="hTransportIconName" type="hidden" />
+                            <input id="hTransportIconStyle" type="hidden" />
+                            <!-- start alert message region -->
+                            @*<div class="alert alert-danger div-error">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                            </div>*@
+                            <!-- end alert message region -->
+                            <!-- Region Add / Edit Region Form -->
+                        <div class="col-sm-9 m-t-n">
+                            <div class="form-group col-sm-6">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Code</label>
+                                <input id="txtCode" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated input-sm" data-required="true" @*data-minlength="3"*@ maxlength="20" placeholder="ex. WTW" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Name</label>
+                                <input type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" id="txtName" class="form-control parsley-validated input-sm" data-required="true" maxlength="50" placeholder="ex. Warehouse to Warehouse" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.LocalName</label>
+                                <input type="text" id="txtLocalName" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="true" maxlength="50" placeholder="ex. Warehouse to Warehouse" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</label>
+                                <input type="text" id="txtNotes" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="ex. Warehouse to Warehouse" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-6 hide">
+                                <label>CRM Code</label>
+                                <input type="text" id="txtcrmCode" class="form-control parsley-validated" data-required="false" maxlength="100" style="text-transform:uppercase" disabled="disabled">
+                            </div>
+                        </div>
+                            <div class="col-sm-3 m-t-n">
+                                <br />
+                                <label><input type="checkbox" id="cbIsOcean" onchange="TransportType_SetIconNameAndStyle();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbMoveType" value="Ocean">&nbsp;<i class='fa fa-anchor ocean-icon-style' />&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.IsOcean</label><br />
+                                <label><input type="checkbox" id="cbIsAir" onchange="TransportType_SetIconNameAndStyle();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbMoveType" value="Air">&nbsp;<i class='fa fa-plane air-icon-style' />&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.IsAir</label><br />
+                                <label><input type="checkbox" id="cbIsInland" onchange="TransportType_SetIconNameAndStyle();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbMoveType" value="Inland">&nbsp;<i class='fa fa-truck inland-icon-style' />&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.IsInland</label><br />
+                                <label><input type="checkbox" id="cbIsCustomsClearance" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.CustomsClearance</label><br />
+                                <label><input type="checkbox" id="cbIsWarehousing" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Warehousing</label><br />
+                                <label><input type="checkbox" id="cbIsInactive" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.IsInactive</label>
+                            </div>
+                            <!-- Region Add / Edit Region Form -->
+
+
+
+                            <!--ServiceDetails-->
+                            <div class="classHideForMoveTypes hide">
+                                <div id="divDetailsBtns" class="col-sm-12 m-t" style="clear:both;">
+                                    <button id="btn-AddDetails" class="btn btn-warning btn-sm classDisableForFinalized" data-toggle="modal" data-target="" onclick="Details_ClearAllControls();"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.AddDetails</button>
+                                    <button id="btn-DeleteDetails" title="Delete" type="button" class="float-right btn btn-sm btn-danger classDisableForFinalized" onclick="Details_DeleteList();"><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete</button>
+                                </div>
+
+                                <div id="divDetails" class="col-sm-12 m-t-xs">
+                                    <section class="panel panel-default">
+                                        <header class="panel-heading font-bold text-ul">Departments Role Sequence</header>
+                                        <!--Region: table header-->
+                                        <div class="table-responsive" style="width:100%; height:300px; overflow:scroll;">
+                                            <table id="tblDetails" class="table table-striped b-t b-light text-sm  table-hover ">
+                                                <thead>
+                                                    <tr>
+                                                        <th id="HeaderDeleteDetailsID" style="width:5%;">
+                                                            <input id="cb-CheckAll-Details" type="checkbox" />
+                                                        </th>
+                                                        <th>@Forwarding.MvcApp.App_Resources.App_Resources.Department</th>
+                                                        <th>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</th>
+                                                        <th class="hide">@Forwarding.MvcApp.App_Resources.App_Resources.Order</th>
+                                                        <th class="rounded-right hide"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                        <!--Region: EOF table header-->
+                                        <!--Region: table footer-->
+                                        <footer class="panel-footer hide">
+                                            <div class="col-sm-12 m-t-n-sm swapChildrenClass">
+                                                <!--
+                                                    <div class="col-sm-6 swapChildrenClass"><b>&emsp;Row Max Weight(KGM)</b><label id="lblRowMaxWeight" @*purpose="dynamicLabel"*@ class="static-text-blue"></label></div>
+                                                    <div class="col-sm-6 text-right swapChildrenClass"><b>&emsp;Row Max Volume(CBM)</b><label id="lblRowMaxVolume" @*purpose="dynamicLabel"*@ class="static-text-blue"></label></div>
+                                                -->
+                                            </div>
+                                        </footer>
+                                        <!--Region: EOF table footer-->
+                                    </section>
+                                </div>
+                            </div>
+                            <!--EOF ServiceDetails-->
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <!-- Endegion Add / Edit Region Form -->
+            <div class="modal-footer m-t-n">
+                <button type="button" id="btnSave" class="btn btn-primary btn-sm" onclick="MoveTypes_Insert(false);">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                </button>
+                <button type="button" id="btnSaveandNew" class="btn btn-primary btn-sm" onclick="MoveTypes_Insert(true);">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew
+                </button>
+                <button class="btnClose btn btn-link btn-sm" id="btnClose" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Region Options & Template  -->
+
+<!--DetailsModal-->
+<div class="modal fade" id="DetailsModal" tabindex="-1" style="z-index: 1050;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="DetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-60">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        &times;</button>*@
+                <h3 class="m-b-none MainLabelTitle">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.ServiceDepartmentBinding
+                </h3>
+                <h3 class="m-b-none">
+                    Service Details&nbsp;<label id="lblDetailsShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region Add / Edit Details Form -->
+                <div class="span7 form vertical-mode" id="Details-form">
+                    <fieldset>
+                        <div class="form-group pull-in  has-error clearfix">
+                            <input id="hDetailsID" type="hidden" />
+                            <!-- start alert message region -->
+                            @*<div class="alert alert-danger div-error">
+                                    @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                </div>*@
+                            <!-- end alert message region -->
+                            <div class="form-group col-sm-6">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Department</label>
+                                <select id="slDetailsDepartment" class="form-control m-b input-sm" data-required="true"></select>
+                            </div>
+                            <!--
+                                <div class="form-group col-sm-6">
+                                <label>Notification Event</label>
+                                <select id="slNotificationDateOption" class="form-control m-b input-sm" data-required="true">
+                                    <option value="10">Oper.Open Date</option>
+                                    <option value="20">Oper.Close Date</option>
+                                    <option value="30">Cut-off Date</option>
+                                    <option value="40">PO Date</option>
+                                    <option value="50">Release Date</option>
+                                    @* from vwOperations *@
+                                    <option value="60">ETA POL</option>
+                                    <option value="70">ATA POL</option>
+                                    <option value="80">ETD POL (Expected Departure)</option>
+                                    <option value="90">ATD POL (Actual Departure)</option>
+                                    <option value="100">ETA POD (Expected Arrival)</option>
+                                    <option value="110">ATA POD (Actual Arrival)</option>
+                                    @* TruckingOrder Routing *@
+                                    <option value="120">Gate-In Date</option>
+                                    <option value="130">Gate-Out Date</option>
+                                    <option value="140">Stuffing Date</option>
+                                    <option value="150">Delivery Date</option>
+                                    @* from vwOperations (Actually in CustomsClearance Routing) *@
+                                    <option value="160">Certificate Date</option>
+                                    <option value="170">Qasima Date</option>
+                                </select>
+                            </div>
+                                -->
+                            <div class="form-group col-sm-6">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</label>
+                                <input type="text" id="txtDetailsNotes" autocomplete="off" class="form-control parsley-validated input-sm" data-required="false" maxlength="200" placeholder="" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-3 hide">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Order</label>
+                                <input type="text" id="txtDetailsViewOrder" autocomplete="off" onkeypress="CheckValueIsInteger(id);" onfocus="CheckValueIsInteger(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="11" placeholder="" />
+                            </div>
+
+                            <div class="col-sm-11 m-t">
+                                <h4><u>Notifications Options:</u></h4>
+                            </div>
+                            <div class="col-sm-2" style="clear:both;">
+                                <label><input type="checkbox" id="cbOpenDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.OpenDate</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbCloseDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.CloseDate</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbCutOffDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.CutOffDate</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbPODate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;PO Date</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbReleaseDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.ReleaseDate</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbETAPOLDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;ETA POL</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbATAPOLDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;ATA POL</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbExpectedDeparture" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;ETD POL</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbActualDeparture" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;ATD POL</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbExpectedArrival" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;ETA POD</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbActualArrival" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;ATA POD</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbGateInDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Gate-In Date</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbGateOutDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Gate-Out Date</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbStuffingDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Stuffing Date</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbDeliveryDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Delivery Date</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbCertificateDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Certificate Date</label>
+                            </div>
+                            <div class="col-sm-2">
+                                <label><input type="checkbox" id="cbQasimaDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Qasima Date</label>
+                            </div>
+
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- End Region Add / Edit EditCharge Form -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSaveDetails" class="btn btn-primary btn-sm classDisableForFinalized" onclick="Details_Save(false);">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                </button>
+                <button type="button" id="btnSaveAndNewDetails" class="btn btn-primary btn-sm classDisableForFinalized" onclick="Details_Save(true);">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew
+                </button>
+                <button class="btnClose btn btn-link btn-sm" id="btnDetailsClose" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF DetailsModal-->

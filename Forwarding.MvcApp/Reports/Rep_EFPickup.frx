@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="09/20/2023 14:33:35" ReportInfo.Modified="09/22/2024 09:02:50" ReportInfo.CreatorVersion="2018.3.14.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFbs5IEtawbusAJPoNmYwPU8umgIwKUjYK1ZKi3w19k/hC3+3QNwNrY7ELsoC+tr0oJn0hcKQdWSN2tl0ByGXD5ApZR0E7xkyLl5SfDQxWvwNEDktspbEEy3DzcyH2053f">
+      <TableDataSource Name="Table1" Alias="Rep_EFPickList" DataType="System.Int32" Enabled="true" SelectCommand="exec(@query)">
+        <Column Name="ID" DataType="System.Int64"/>
+        <Column Name="CustomerName" DataType="System.String"/>
+        <Column Name="Code" DataType="System.String"/>
+        <Column Name="WarehouseName" DataType="System.String"/>
+        <Column Name="Notes" DataType="System.String"/>
+        <Column Name="CreationDate" DataType="System.DateTime"/>
+        <Column Name="CreatorName" DataType="System.String"/>
+        <Column Name="PurchaseItemCode" DataType="System.String"/>
+        <Column Name="PurchaseItemName" DataType="System.String"/>
+        <Column Name="PackageTypeName" DataType="System.String"/>
+        <Column Name="PickedQuantity" DataType="System.Decimal"/>
+        <Column Name="LocationCode" DataType="System.String"/>
+        <Column Name="PalletID" DataType="System.String"/>
+        <Column Name="BatchNumber" DataType="System.String"/>
+        <Column Name="ExpirationDate" DataType="System.DateTime"/>
+        <Column Name="ProductionDate" DataType="System.DateTime"/>
+        <Column Name="LotNo" DataType="System.String"/>
+        <Column Name="SerialNumber" DataType="System.String"/>
+        <CommandParameter Name="query" DataType="12" Expression="[query]" DefaultValue="Rep_EFPickList ' WHERE 1=1'"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="Logo" DataType="System.String" Expression="[Logo]"/>
+    <Parameter Name="Logo1" DataType="System.String" Expression="[Logo1]"/>
+    <Parameter Name="query" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" PaperWidth="260" FirstPageSource="15" OtherPagesSource="15">
+    <DataBand Name="Data1" Top="165.98" Width="907.2" Height="18.9" DataSource="Table1">
+      <TableObject Name="Table2" Left="9.45" Width="876.96" Height="18.9" Border.Lines="All">
+        <TableColumn Name="Column1" Width="76.68"/>
+        <TableColumn Name="Column2" Width="105.03"/>
+        <TableColumn Name="Column3" Width="95.58"/>
+        <TableColumn Name="Column4" Width="95.58"/>
+        <TableColumn Name="Column5" Width="95.58"/>
+        <TableColumn Name="Column6" Width="114.48"/>
+        <TableColumn Name="Column7" Width="95.58"/>
+        <TableColumn Name="Column21"/>
+        <TableColumn Name="Column22"/>
+        <TableColumn Name="Column23"/>
+        <TableRow Name="Row1">
+          <TableCell Name="Cell1" Border.Lines="Right" Text="[Row#]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="0" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center"/>
+          <TableCell Name="Cell2" Border.Lines="Right" Text="[Rep_EFPickList.PurchaseItemCode]" HorzAlign="Center"/>
+          <TableCell Name="Cell3" Border.Lines="Right" Text="[Rep_EFPickList.PurchaseItemName]" HorzAlign="Center"/>
+          <TableCell Name="Cell4" Border.Lines="Right" Text="[Rep_EFPickList.PackageTypeName]" HorzAlign="Center"/>
+          <TableCell Name="Cell5" Border.Lines="Right" Text="[Rep_EFPickList.PickedQuantity]" HorzAlign="Center"/>
+          <TableCell Name="Cell26" Border.Lines="Right" Text="[Rep_EFPickList.ProductionDate]" HorzAlign="Center"/>
+          <TableCell Name="Cell27" Border.Lines="Right" Text="[Rep_EFPickList.ExpirationDate]" HorzAlign="Center"/>
+          <TableCell Name="Cell46" Border.Lines="Right" Text="[Rep_EFPickList.BatchNumber]" HorzAlign="Center"/>
+          <TableCell Name="Cell47" Border.Lines="Right" Text="[Rep_EFPickList.LotNo]" HorzAlign="Center"/>
+          <TableCell Name="Cell48" Border.Lines="Right" Text="[Rep_EFPickList.SerialNumber]" HorzAlign="Center"/>
+        </TableRow>
+      </TableObject>
+      <DataHeaderBand Name="DataHeader1" Width="907.2" Height="160.65">
+        <TextObject Name="Text1" Left="160.65" Width="396.9" Height="37.8" Text="Outbound Shipment  Report " HorzAlign="Center" VertAlign="Center" Font="Arial, 20pt"/>
+        <TextObject Name="Text2" Left="18.9" Top="56.7" Width="75.6" Height="18.9" Text="shipment" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text3" Left="113.4" Top="56.7" Width="170.1" Height="18.9" Text=": [Rep_EFPickList.Code]" VertAlign="Center"/>
+        <TextObject Name="Text4" Left="18.9" Top="85.05" Width="56.7" Height="18.9" Text="Owner" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text5" Left="113.4" Top="85.05" Width="226.8" Height="18.9" Text=": [Rep_EFPickList.CustomerName]" VertAlign="Center"/>
+        <TextObject Name="Text6" Left="18.9" Top="113.4" Width="85.05" Height="18.9" Text="WareHouse" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text7" Left="113.4" Top="113.4" Width="236.25" Height="18.9" Text=": [Rep_EFPickList.WarehouseName]" VertAlign="Center"/>
+        <TextObject Name="Text8" Left="387.45" Top="56.7" Width="94.5" Height="18.9" Text="Order Note " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text9" Left="491.4" Top="56.7" Width="217.35" Height="18.9" Text=": [Rep_EFPickList.Notes]" VertAlign="Center"/>
+        <TextObject Name="Text10" Left="387.45" Top="85.05" Width="94.5" Height="18.9" Text="Created Date " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text11" Left="491.4" Top="85.05" Width="217.35" Height="18.9" Text=": [Rep_EFPickList.CreationDate]" VertAlign="Center"/>
+        <TextObject Name="Text12" Left="387.45" Top="113.4" Width="94.5" Height="18.9" Text="Created by" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text13" Left="491.4" Top="113.4" Width="217.35" Height="18.9" Text=": [Rep_EFPickList.CreatorName]" VertAlign="Center"/>
+        <TableObject Name="Table3" Left="9.45" Top="141.75" Width="876.96" Height="18.9" Border.Lines="All">
+          <TableColumn Name="Column11" Width="76.68"/>
+          <TableColumn Name="Column12" Width="105.03"/>
+          <TableColumn Name="Column13" Width="95.58"/>
+          <TableColumn Name="Column14" Width="95.58"/>
+          <TableColumn Name="Column15" Width="95.58"/>
+          <TableColumn Name="Column16" Width="114.48"/>
+          <TableColumn Name="Column17" Width="95.58"/>
+          <TableColumn Name="Column18"/>
+          <TableColumn Name="Column19"/>
+          <TableColumn Name="Column20"/>
+          <TableRow Name="Row3">
+            <TableCell Name="Cell36" Border.Lines="Right" Text="Ser" HorzAlign="Center"/>
+            <TableCell Name="Cell37" Border.Lines="Right" Text="SKU" HorzAlign="Center"/>
+            <TableCell Name="Cell38" Border.Lines="Right" Text="SKU Des."/>
+            <TableCell Name="Cell39" Border.Lines="Right" Text="UOM" HorzAlign="Center"/>
+            <TableCell Name="Cell40" Border.Lines="Right" Text="Qty" HorzAlign="Center"/>
+            <TableCell Name="Cell41" Border.Lines="Right" Text="Manu.Date" HorzAlign="Center"/>
+            <TableCell Name="Cell42" Border.Lines="Right" Text="Exp.Date" HorzAlign="Center"/>
+            <TableCell Name="Cell43" Border.Lines="Right" Text="Patch.No&#13;&#10;" HorzAlign="Center"/>
+            <TableCell Name="Cell44" Border.Lines="Right" Text="Lot. No" HorzAlign="Center"/>
+            <TableCell Name="Cell45" Border.Lines="Right" Text="Serial. No" HorzAlign="Center"/>
+          </TableRow>
+        </TableObject>
+      </DataHeaderBand>
+      <DataFooterBand Name="DataFooter1" Top="190.22" Width="907.2" Height="160.65">
+        <TextObject Name="Text14" Left="9.45" Top="9.45" Width="113.4" Height="18.9" Text="Pallet Building :" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text15" Left="9.45" Top="37.8" Width="132.3" Height="18.9" Text="Pallet Shrinking :&#13;&#10;" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text16" Left="9.45" Top="66.15" Width="113.4" Height="18.9" Text="Segregation :&#13;&#10;" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text17" Left="255.15" Top="9.45" Width="94.5" Height="18.9" Text="Loading 20 :&#13;&#10;" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text18" Left="255.15" Top="37.8" Width="94.5" Height="18.9" Text="Loading 40 :&#13;&#10;" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text19" Left="255.15" Top="66.15" Width="132.3" Height="18.9" Text="Loading Jumbo :&#13;&#10;" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text20" Left="481.95" Top="9.45" Width="94.5" Height="18.9" Text="Open Shift :&#13;&#10;" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text21" Left="481.95" Top="37.8" Width="94.5" Height="18.9" Text="Coding :&#13;&#10;" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text22" Left="9.45" Top="113.4" Width="113.4" Height="18.9" Text="OP Signature&#13;&#10;" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text23" Left="444.15" Top="132.3" Width="94.5" Height="18.9" Text="Printed Date: &#13;&#10;" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text24" Left="538.65" Top="132.3" Width="160.65" Height="18.9" Text="[Date]" VertAlign="Center"/>
+      </DataFooterBand>
+    </DataBand>
+  </ReportPage>
+</Report>

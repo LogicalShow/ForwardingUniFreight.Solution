@@ -1,0 +1,739 @@
+﻿
+<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="Accounting" href="javascript:void(0);" onclick="LoadViews('AccountingTransactions')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.Accounting
+        </a>
+    </li>
+    <li>
+        <a id="AccountingTransactions" href="javascript:void(0);" onclick="LoadViews('AccountingTransactions')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.AccountingTransactions
+        </a>
+    </li>
+    <li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.JournalVouchers</li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-JournalVouchers">
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.JournalVouchers
+                </h3>
+            </header>
+            <!--Region the searh, delete, addnew-->
+            <div class="row text-sm wrapper hidden-print m-t-n-sm swapChildrenClass">
+                <div class="col-sm-2 hide">
+                    <select id="slAccount" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                </div>
+                <div class="col-sm-2 hide">
+                    <select id="slCostCenter" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                </div>
+                <div class="col-sm-2 hide">
+                    <select id="slActivity" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                </div>
+                <div class="col-sm-2 hide">
+                    <select id="slBranch" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                </div>
+                <div class="col-sm-2 hide">
+                    <select id="slOperation" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                </div>
+                <div class="col-sm-2">
+                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.JVNo</label>
+                    <input id="txtSearchJVNo" tabindex="10" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" maxlength="50" placeholder="" style="text-transform:uppercase" />
+                </div>
+                <div class="col-sm-2">
+                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.JVNoFixed </label>
+                    <input id="txtSearchJVNoFixed" tabindex="20" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" maxlength="50" placeholder="" style="text-transform:uppercase" />
+                </div>
+                <div class="col-sm-2">
+                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.From</label>
+                    <input id="txtSearchFrom" tabindex="30" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" readonly="readonly" style="background-color:white; cursor:text;" class="form-control datepicker-input input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="@Forwarding.MvcApp.App_Resources.App_Resources.SelectFromMenu" />
+                </div>
+                <div class="col-sm-2">
+                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.To</label>
+                    <input id="txtSearchTo" tabindex="40" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" readonly="readonly" style="background-color:white; cursor:text;" class="form-control datepicker-input input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="@Forwarding.MvcApp.App_Resources.App_Resources.SelectFromMenu" />
+                </div>
+                <div class="col-sm-2">
+                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.JournalType</label>
+                    <select id="slSearchJournalType" tabindex="50" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                </div>
+                <div class="col-sm-2">
+                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.JVType</label>
+                    <select id="slSearchJVType" tabindex="60" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                </div>
+
+            </div>
+            <div class="row text-sm wrapper hidden-print m-t-n-sm swapChildrenClass" style="padding-top:15px; padding-left:15px;">
+                <div class="swapChildrenClass m-t-n">
+                    <div class="col-sm-2">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.ReceiptNo</label>
+                        <input id="txtSearchReceiptNo" tabindex="70" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" maxlength="50" placeholder="" data-required="false" style="text-transform:uppercase">
+                    </div>
+                    <div class="col-sm-2">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Value</label>
+                        <input id="txtSearchValue" tabindex="80" type="text" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="11">
+                    </div>
+                    <div class="col-sm-2">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</label>
+                        <input id="txtSearchRemarksHeader" tabindex="90" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" maxlength="100" placeholder="" data-required="false" style="text-transform:uppercase">
+                    </div>
+                    <div class="col-sm-2">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Status</label>
+                        <select id="slSearchStatus" tabindex="100" class="form-control input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false">
+                            <option value="0">@Forwarding.MvcApp.App_Resources.App_Resources.SelectFromMenu</option>
+                            <option value="10">Posted</option>
+                            <option value="20">UnPosted</option>
+                        </select>
+                    </div>
+
+                    <div class=" col-sm-4 swapChildrenClass m-t-md">
+                        <button id="btn-Search" type="button" class="btn btn-lightblue btn-sm swapChildrenClass" onclick="JournalVouchers_LoadingWithPaging();"><i class="fa fa-search"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Search&nbsp;</b></button>
+                        <button id="btn-NewAdd" type="button" class="btn btn-warning btn-sm swapChildrenClass" data-toggle="modal"><i class="fa fa-plus"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.New&nbsp;</b></button>
+                        <button id="btn-Delete" type="button" class="btn btn-sm btn-danger swapChildrenClass"><i class="fa fa-trash-o"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete&nbsp;</b></button>
+                        <button id="btn-PermanentDelete" type="button" onclick="JournalVouchers_DeleteList('D');" class="btn btn-sm btn-info swapChildrenClass"><i class="fa fa-ban"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.PermanentDelete&nbsp;</b></button>
+                    </div>
+                    @*<div class="col-sm-2"></div>*@
+                </div>
+            </div>
+            <div class="col-sm-12"><hr></div>
+
+            <div class="row text-sm wrapper hidden-print m-t-n-sm swapChildrenClass">
+                <div class="swapChildrenClass m-t-n">
+                    <div class="form-group col-sm-2">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.From</label> @*class="control-label col-sm-2 m-t-xs" for="txtFromDate"*@
+                        <div>
+                            @*class="col-sm-10"*@
+                            <input id="txtFromDate" tabindex="30" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" readonly="readonly" style="background-color:white; cursor:text;" class="form-control datepicker-input input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="@Forwarding.MvcApp.App_Resources.App_Resources.SelectFromMenu">
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.To</label>  @*class="control-label col-sm-2 m-t-xs" for="txtToDate"*@
+                        <div>
+                            @*class="col-sm-10"*@
+                            <input id="txtToDate" tabindex="30" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" readonly="readonly" style="background-color:white; cursor:text;" class="form-control datepicker-input input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="@Forwarding.MvcApp.App_Resources.App_Resources.SelectFromMenu">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-sm-2">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.JournalTypes</label>  @*class="control-label col-sm-2 m-t-xs" for="slSearchJournalTypePrint"*@
+                        <div>
+                            @*class="col-sm-7"*@
+                            <select id="slSearchJournalTypePrint" tabindex="50" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                        </div>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.JVType</label>  @*class="control-label col-sm-2 m-t-xs" for="slSearchJournalTypePrint"*@
+                        <div>
+                            @*class="col-sm-10"*@
+                            <select id="slSearchJVTypePrint" tabindex="50" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                        </div>
+                    </div>
+                    <div class=" col-sm-3 swapChildrenClass ">
+                    </div>
+                    <div class="col-sm-2"></div>
+                </div>
+            </div>
+            <div class="row text-sm wrapper hidden-print m-t-n-sm swapChildrenClass" style="padding-top:1px; padding-left:15px;">
+                <div class=" col-sm-5 swapChildrenClass ">
+                    <button id="btn-Print" type="button" onclick="JournalVoucher_PrintTotals('Print');" class="btn btn-lightblue btn-sm swapChildrenClass m-t-md"><i class="fa fa-print"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.PrintTotal&nbsp;</b></button>
+                    <button id="btn-Print" type="button" onclick="JVsPrinting();" class="btn btn-lightblue btn-sm swapChildrenClass m-t-md"><i class="fa fa-print"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.PrintJVs&nbsp;</b></button>
+                    <button id="btn-PrintSelected" type="button" onclick="JVsPrintingSelected();" class="btn btn-lightblue btn-sm swapChildrenClass m-t-md"><i class="fa fa-print"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.PrintJVsSelected&nbsp;</b></button>
+                    <button id="btn-ExportTotal" type="button" onclick="JournalVoucher_PrintTotals('Excel');" class="btn btn-lightblue btn-sm swapChildrenClass m-t-md"><i class="fa fa-table"></i><b>&nbsp;Export Total</b></button>
+                </div>
+                <div class="form-group swapChildrenClass col-sm-1 m-t-27">
+                    <label class="swapChildrenClass"><input type="checkbox" id="cbJvsTotals" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><span>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Total&nbsp;</span></label>
+                </div>
+            </div>
+
+            <div class="row text-sm wrapper hidden-print hide ShowClassForMescoCompany swapChildrenClass m-t-n-lg">
+                <div class="col-sm-2">
+                    <input id="txtExportFromDate" tabindex="20" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" readonly="readonly" style="background-color:white; cursor:text;" class="form-control datepicker-input input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Export Date" />
+                </div>
+                <div class="col-sm-2">
+                    <input id="txtExportToDate" tabindex="20" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" readonly="readonly" style="background-color:white; cursor:text;" class="form-control datepicker-input input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Export Date" />
+                </div>
+                <div class="col-sm-2">
+                    <button id="btn-ExportToExcel_Dynamic" type="button" onclick="Dynamic_Export();" class="btn btn-sm btn-lightblue"><i class="fa fa-table"></i><b>&nbsp;Export Excel To Dynamic</b></button>
+                </div>
+            </div>
+            <!--Region the searh, delete, addnew-->
+            <!--Region: table header-->
+            <div class="table-responsive m-t-n-sm" style="font-size:80%;">
+                <table id="tblJournalVouchers" class="table table-striped b-t b-light text-sm  table-hover">
+                    <thead>
+                        <tr>
+                            <th id="ID">
+                                <input id="cb-CheckAll" type="checkbox" />
+                            </th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.JVNo</th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Date</th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Value</th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.JournalType</th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.JVType</th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.ReceiptNo</th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Posted</th>
+                            <th class="JournalVoucherCopy rounded-right hide "></th>
+                            <th class="rounded-right"></th>
+                            <th class="rounded-right"></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <!--Region: table header-->
+            <!--Region: footer-->
+            <footer class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-4 hidden-xs">
+                        <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                        </select>
+                        <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                        </button>
+                    </div>
+                    <div id="div-Text-Total" class="col-sm-4 text-center">
+                        <small class="text-muted inline m-t-sm m-b-sm">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                            <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                            <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                        </small>
+                    </div>
+                    <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+                </div>
+            </footer>
+            <!--Region: footer-->
+        </section>
+    </div>
+</div>
+
+
+
+<!-- JournalVouchersModal  -->
+<div class="modal fade" id="JournalVouchersModal" tabindex="-1" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="JournalVouchersModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-100">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <div id="hExportedTable" class="hide"></div>
+                <h3 class="m-b-none swapChildrenClass">
+                    <span>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.JournalVouchers&nbsp;</span><label id="lblShown" purpose="dynamicLabel" @*to be cleared*@ class="static-text-primary"></label>
+                </h3>
+            </div>
+            <!-- Region Add / Edit Region Form -->
+            <div class="modal-body">
+                <div class="span7 form vertical-mode" id="JournalVouchers-form">
+                    <fieldset>
+                        <div class="form-group pull-in  has-error clearfix">
+                            <input id="hID" type="hidden" />
+                            <!-- start alert message region -->
+                            @*<div class="alert alert-danger div-error">
+                                    @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                </div>*@
+                            <!-- end alert message region -->
+                            <div class="col-sm-2 hide">
+                                <select id="slCurrencyDetails" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                            </div>
+                            <!-- Region Add / Edit Region Form -->
+                            <div class="swapChildrenClass m-t-n">
+                                <div class="col-sm-2">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.JVNo</label>
+                                    <input id="txtJVNo" tabindex="100" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="true" maxlength="50" placeholder="Auto-Generated" style="text-transform:uppercase;" />
+                                </div>
+                                <div class="col-sm-2">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.JVDate</label>
+                                    <input id="txtJVDate" tabindex="200" type="text" @*onchange="JournalVouchers_JVDateChanged();"*@ onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" readonly="readonly" @*style="background-color:white; cursor:text;"*@ class="form-control datepicker-input input-sm" data-required="true" data-date-format="dd/mm/yyyy" placeholder="@Forwarding.MvcApp.App_Resources.App_Resources.Select" />
+                                </div>
+                                <div class="col-sm-2">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.JournalType</label>
+                                    <select id="slJournalType" tabindex="400" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="JournalVouchers_GetCode();" data-required="true"></select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.JVType</label>
+                                    <select id="slJVType" tabindex="500" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="true"></select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.ReceiptNo</label>
+                                    <input id="txtReceiptNo" tabindex="600" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" maxlength="50" placeholder="" data-required="false" style="text-transform:uppercase" />
+                                </div>
+                                <div class="col-sm-2">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.UpdatedBy</label>
+                                    <input id="txtUsername" tabindex="700" disabled="disabled" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" maxlength="" placeholder="" data-required="false" style="text-transform:uppercase" />
+                                </div>
+                            </div>
+                            @*<div class=" m-t-n">
+                                    <div class="col-sm-4">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</label>
+                                        <input id="txtRemarksHeader" tabindex="800" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" maxlength="1000" placeholder="" data-required="false" style="text-transform:uppercase"/>
+                                    </div>
+                                    <div class="col-sm-6"></div>
+                                </div>*@
+
+                            <div class="row">
+                                @*This div is to make the buttons clickable*@
+                                <div id="divDetailsBtns" class="col-sm-12 swapChildrenClass" style="">
+                                    <div class="col-sm-4">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</label>
+                                        <input id="txtRemarksHeader" tabindex="800" type="text" oninput="Details_txtRemarksChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" maxlength="1000" placeholder="" data-required="false" style="text-transform:uppercase" />
+                                    </div>
+                                    @*<div class="col-sm-2 m-t-27">
+                                            <input id="cbRemarks" type="checkbox" name="cbRemarks" /><b>&nbsp;Add Remarks to Details&nbsp;</b>
+                                        </div>*@
+                                    <div class="form-group col-sm-1 m-t-27">
+                                        <label class="swapChildrenClass"><input type="checkbox" id="cbRemarks" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><span>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.AddRemarkstoDetails&nbsp;</span></label>
+                                    </div>
+                                    <div class="form-group col-sm-2 m-t-27 hide">
+                                        <label class="swapChildrenClass"><input type="checkbox" id="cbIsPosted" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><span>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Posted&nbsp;</span></label>
+                                    </div>
+                                    <div class="col-sm-2 m-t-27">
+                                        <button id="btn-AddDetails" disabled="disabled" class="form-control btn btn-lightblue btn-sm m-t-n-xs swapChildrenClass" data-toggle="modal" @*data-target="#DetailsModal"*@ onclick="Details_NewRow();"><i class="fa fa-plus"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.AddDetails&nbsp;</b></button>
+                                    </div>
+                                    <div class="col-sm-1 m-t-27">
+                                        <button id="btn-DeleteDetails" disabled="disabled" type="button" class="form-control btn btn-sm btn-danger m-t-n-xs swapChildrenClass" onclick="Details_DeleteList();"><i class="fa fa-trash-o"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.DeleteDetails&nbsp;</b></button>
+                                    </div>
+                                    <div class="col-sm-1 m-t-27">
+                                        <button id="btn-Print" type="button" onclick="JournalVoucher_Print();" class="form-control btn btn-sm btn-info m-t-n-xs swapChildrenClass"><i class="fa fa-print"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Print&nbsp;</b></button>
+                                    </div>
+                                    <div class="col-sm-1 m-t-27">
+                                        <button id="btn-ExportToExcel" type="button" onclick="JournalVoucher_PrintEXcel();" class="form-control btn btn-sm btn-lightblue m-t-n-xs swapChildrenClass"><i class="fa fa-table"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Excel&nbsp;</b></button>
+                                    </div>
+                                    <div class="col-sm-1 m-t-27">
+                                        <button id="btn-NewExcel" onclick="ValidateType();" class="form-control btn btn-sm btn-lightblue m-t-n-xs swapChildrenClass" data-toggle="modal"><i class="fa fa-table"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.UploadExcel</button>
+                                    </div>
+                                    <div class="col-sm-1 m-t-27">
+                                        <button id="btn-OpenChargeModal" class="form-control btn btn-primary btn-sm m-t-n-xs swapChildrenClass" data-toggle="modal" onclick="OpenChargeModal();"><i class="fa fa-table"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Charges &nbsp;</b></button>
+                                    </div>
+                                    <div class="col-sm-1 m-t-27 hide ShowClassForShipping">
+                                        <button id="btn-Job" onclick="ValidateJob();" class="form-control btn btn-sm btn-lightblue m-t-n-xs swapChildrenClass" data-toggle="modal"><i class="fa fa-table"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Job</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 m-t-sm">
+                                <section id="secDetails" class="panel panel-default" style="clear:both;">
+                                    <div class="table-responsive" style="width:100%; height:370px; font-size:70%; overflow:scroll;">
+                                        <table id="tblDetails" class="table table-striped b-t b-light text-sm table-hover">
+                                            <thead>
+                                                <tr class="">
+                                                    <th id="HeaderDeleteDetailsID">
+                                                        <input id="cbDetailsDeleteHeader" type="checkbox" />
+                                                    </th>
+                                                    <th class="IsActivityOption hide">@Forwarding.MvcApp.App_Resources.App_Resources.Activity</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.Account</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.LinkingAccount</th>
+                                                    <th class="isBranch">@Forwarding.MvcApp.App_Resources.App_Resources.Branch</th>
+                                                    <th class="isDepartement">@Forwarding.MvcApp.App_Resources.App_Resources.Department</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.Operation</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.CostCenter</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.Debit</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.Credit</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.Cur</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.ExchangeRateAbbrev</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.LocalDebit</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.LocalCredit</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.Description</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.Documented</th>
+
+                                                    <th class="rounded-right hide"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                    <footer class="panel-footer">
+                                        <div class="col-sm-12 m-t-n-sm swapChildrenClass">
+                                            <div class="col-sm-3 swapChildrenClass"><b>&emsp;@Forwarding.MvcApp.App_Resources.App_Resources.DebitTotal</b><label id="lblDebitTotal" @*purpose="dynamicLabel"*@ class="static-text-blue"></label></div>
+                                            <div class="col-sm-3 swapChildrenClass"><b>&emsp;@Forwarding.MvcApp.App_Resources.App_Resources.CreditTotal</b><label id="lblCreditTotal" @*purpose="dynamicLabel"*@ class="static-text-blue"></label></div>
+                                            <div class="col-sm-3 swapChildrenClass"><b>&emsp;@Forwarding.MvcApp.App_Resources.App_Resources.DebitCreditDifference</b><label id="lblDebitCreditDifference" @*purpose="dynamicLabel"*@ class="static-text-danger"></label></div>
+                                            <div class="col-sm-3"></div>
+
+                                        </div>
+                                    </footer>
+                                </section>
+                            </div>
+                            <!-- Region Add / Edit Region Form -->
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <!-- Endregion Add / Edit Region Form -->
+            <div class="modal-footer m-t-n-lg">
+                <button type="button" id="btnSave" disabled="disabled" class="btn btn-primary btn-sm swapChildrenClass" onclick="JournalVouchers_Save();">
+                    <span class="glyphicon glyphicon-save"></span><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Save&nbsp;</b>
+                </button>
+                <button type="button" id="btnSaveandNew" disabled="disabled" class="btn btn-primary btn-sm swapChildrenClass hide" onclick="JournalVouchers_Insert(true);">
+                    <span class="glyphicon glyphicon-save"></span><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew&nbsp;</b>
+                </button>
+                <button class="btnClose btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true"><b>@Forwarding.MvcApp.App_Resources.App_Resources.Close</b></button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- EOF JournalVouchersModal  -->
+<!-- Region Options & Template  -->
+<!-- Add / Edit Region Modal --> <!--data-keyboard="false" data-backdrop="false" to prevent modal closure on pressing escape and pressing outside the modal-->
+<div class="modal fade" id="I_ExcelModal" tabindex="-1" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="ExcelModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-100">
+        @*<div class="modal-content modalwidth-100">*@
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.Import&nbsp;<label id="lblShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <!-- Region Add / Edit Region Form -->
+            <div class="modal-body">
+                <div class="span7 form vertical-mode" id="I_PriceList-form">
+                    <fieldset>
+                        <div class="form-group pull-in  clearfix">
+                            <input id="hID" type="hidden" />
+                            <div id="Reportbody" class="hide"></div>
+                            <!-- start alert message region -->
+                            <div class="alert alert-danger div-error">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                            </div>
+                            <!-- end alert message region -->
+                            <!-- Region Add / Edit Region Form -->
+                            <div class="form-group has-error clearfix col-sm-12">
+                                <div class="col-sm-12">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.ExcelFile</label>
+                                    <input type="file" class="input-sm form-control" name="ImportExcel" title="Select File" id="excelfile" accept=".xls,.xlsx" onclick="this.value=null;" />
+                                    <a id="btnImportExcel" class="btn btn-primary btn-sm" onclick="ImportExcel('#excelfile' , '#tblExcel' );">
+                                        <span class=fa fa-table"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Import
+                                    </a>
+                                </div>
+                            </div>
+                            <div id="tblExcelContainer" class="table-responsive col-sm-12" style="max-height:500px; overflow:scroll;">
+                                <table id="tblExcel" class="table table-striped"></table>
+                                <table id="tblFromExcel" class="table table-striped ">
+
+                                    <thead>
+                                        <tr>
+
+                                            <th>Code</th>
+                                            <th>Date</th>
+                                            <th>AccountName</th>
+                                            <th>SubAccount</th>
+
+                                            <th>CostCenter</th>
+                                            <th>Debit</th>
+                                            <th>Credit</th>
+                                            <th>Cur</th>
+                                            <th>Ex.Rate</th>
+                                            <th>LocalDebit</th>
+                                            <th>LocalCredit</th>
+                                            <th>Description</th>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody></tbody>
+
+                                </table>
+                                <table id="tblI_PriceList"></table>
+
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <!-- Endregion Add / Edit Region Form -->
+            <div class="modal-footer">
+                <a id="btnSaveExcel" class="btn btn-primary btn-sm" onclick="UploadExcel();">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                </a>
+
+                <button class="btnClose btn btn-link btn-sm" id="btnClose" onclick="" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--UploadFiles-->
+<div class="modal fade" id="UploadFilesModal" tabindex="-1" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="bUploadFilesLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-80">
+        <div class="modal-content m-t-n-lg">
+            <div class="step-pane" id="tabUploadFiles">
+                <!--Upload Region Controls-->
+                <input id="inputFileUpload_JournalVouchers" type="file" multiple="multiple" class="btn-primary btn-sm " />
+                <div id="divUpload" class="m-t">
+                    <input id="btnUploadFile" onclick="GeneralUpload_UploadFile();" class="btn btn-warning btn-sm" type="button" value="Upload Files" />
+                    <progress></progress>
+                </div>
+                <button id="btn-DeleteDocsIn" type="button" class="float-right btn btn-sm btn-danger m-t-n-lg swapChildrenClass" onclick="GeneralUpload_DeleteList();"><i class="fa fa-trash-o"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete&nbsp;</b></button>
+
+                <!--End Upload Region Controls-->
+
+                <section class="panel panel-default m-t">
+                    <!--Region: table header-->
+                    <div class="table-responsive">
+                        <table id="tblUploadedFiles_JournalVouchers" class="table table-striped b-t b-light text-sm  table-hover">
+                            <thead>
+                                <tr class="swapChildrenClass">
+                                    <th id="HeaderDeleteUploadedFiles_JournalVouchers" style="width:5%;">
+                                        <input id="cb-CheckAll-UploadedFiles_JournalVouchers" type="checkbox" />
+                                    </th>
+                                    <th>
+                                        @Forwarding.MvcApp.App_Resources.App_Resources.Serial
+                                    </th>
+                                    <th>
+                                        @Forwarding.MvcApp.App_Resources.App_Resources.FileName
+                                    </th>
+                                    <th class="rounded-right"></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <!--Region: table footer-->
+                    <footer class="panel-footer">
+                        <div class="modal-footer m-t-n-lg">
+
+                            <button class="btnClose btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true"><b>@Forwarding.MvcApp.App_Resources.App_Resources.Close</b></button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+                        </div>
+
+                    </footer>
+                    <!--Region: EOF table footer-->
+                    <!--Region: EOF table header-->
+                </section>
+            </div>
+            <!-- Endregion Add / Edit Region Form -->
+
+        </div>
+    </div>
+</div>
+<!--EOFUploadFiles-->
+<!-- Region Options & Template  -->
+<!-- jOB Modal -->
+<div class="modal fade" id="JVJobModal" tabindex="-1" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="JVJobModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-50">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="m-b-none swapChildrenClass">
+                    <span>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Job &nbsp;</span><label id="lblShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <!-- Region Add / Edit Region Form -->
+            <div class="modal-body">
+                <div class="span7 form vertical-mode" id="JVTypes-form">
+                    <fieldset>
+                        <div class="form-group pull-in  has-error clearfix">
+                            <input id="hID" type="hidden" />
+                            <!-- start alert message region -->
+                            @*<div class="alert alert-danger div-error">
+                                    @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                </div>*@
+                            <!-- end alert message region -->
+                            <!-- Region Add / Edit Region Form -->
+                            <div class="row text-sm wrapper hidden-print m-t-n-md">
+
+                                <div class="col-sm-2 swapChildrenClass m-t-xs">
+                                    <input tabindex="" type="radio" name="nameRdGroup" id="cbIsLiner" checked="checked" onclick="setVesselCreate(1);" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><b>&nbsp;Liner&nbsp;</b>
+                                </div>
+                                <div class="col-sm-2 swapChildrenClass m-t-xs">
+                                    <input tabindex="" type="radio" name="nameRdGroup" id="cbIsTramp" onclick="setVesselCreate(1);" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><b>&nbsp;Tramp&nbsp;</b>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-4">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Vessel</label>
+                                <select id="slVessel" tabindex="50" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onchange="setVesselCreate(2);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                            </div>
+                            <div class="col-sm-4">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Job</label>
+                                <select id="slJob" tabindex="50" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-6"></div>
+                            @*<div class="col-sm-6 m-t-27 ">
+                                    <label><input type="checkbox" id="cbIsReligional" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Religional</label><br />
+                                </div>*@
+                            <!-- Region Add / Edit Region Form -->
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <!-- Endregion Add / Edit Region Form -->
+            <div class="modal-footer">
+                <button type="button" id="btnSave" class="btn btn-primary btn-sm swapChildrenClass hidden" onclick="JVTypes_Insert(false);">
+                    <span class="glyphicon glyphicon-save"></span><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Save&nbsp;</b>
+                </button>
+                <button type="button" id="btnSaveandNew" class="btn btn-primary btn-sm swapChildrenClass hidden" onclick="JVTypes_Insert(true);">
+                    <span class="glyphicon glyphicon-save"></span><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew&nbsp;</b>
+                </button>
+                <button class="btnClose btn btn-link btn-sm" id="btnClose" onclick="" data-dismiss="modal" aria-hidden="true"><b>@Forwarding.MvcApp.App_Resources.App_Resources.Close</b></button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Region Options & Template  -->
+<!--Charge Modal-->
+<div class="modal fade" id="ChargeModal" tabindex="-1" style="z-index:1050;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="ChargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-100">
+        <div class="modal-content m-t-n-lg">
+
+            <div class="modal-header">
+                <h3 id="h3ModalLblAllocationType" class="m-b-none swapChildrenClass">
+                    Link Charges &nbsp;<label id="lblAllocationShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <!-- Region Add / Edit Region Form -->
+            <div class="modal-body">
+                @*<h2>Select Charge</h2>
+                    <div id="divCbInvoices" class="m-b-sm" style="overflow:scroll; border:solid; padding:5px;">
+
+
+                    </div>*@
+
+                <div id="div-search-option-Charge" class="col-sm-12 swapChildrenClass">
+
+                    <div class="form-group input-group col-sm-12 swapChildrenClass">
+
+                        <div class="col-sm-2">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.OperationCode</label>
+                            <input id="txtOperationCode" tabindex="10" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" maxlength="50" placeholder="" style="text-transform:uppercase" />
+                        </div>
+                        <div class="col-sm-1">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Year</label>
+                            <input id="txtOperationYear" tabindex="10" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" minlenght="4" maxlength="4" placeholder="" style="text-transform:uppercase" />
+                        </div>
+                        <div class="col-sm-2 ">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.ChargeType</label>
+                            <select id="slChargeType" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false">
+
+                            </select>
+                        </div>
+                        <div class="col-sm-1 hide">
+                            <label>Debit/Credit</label>
+                            <select id="slDebitCredit" class="form-control m-b input-sm hide" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false">
+                                <option value="0">Debit</option>
+                                <option value="1">Crdit</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-1 ">
+                            <label>Payable/Rec</label>
+                            <select id="slPayableRec" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false">
+                                <option value="0">Receivable</option>
+                                <option value="1">Payable</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-1">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Amount</label>
+                            <input id="txtChargeAmount" tabindex="50" type="text" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="11" @*placeholder="value from 0.00001 to 99999.99999"*@ />
+                        </div>
+                        <div class="col-sm-3">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</label>
+                            <input id="txtChargeTypeNotes" tabindex="10" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" maxlength="2000" placeholder="" style="text-transform:uppercase" />
+                        </div>
+                        <div class="col-sm-1">
+                            <button type="button" id="btnAddChargeTotbl" class="btn btn-primary btn-sm m-t-25" onclick="A_ChargeChanged();">
+                                <span class="glyphicon glyphicon-save"></span> Add Details
+                            </button>
+                        </div>
+                        <div class="col-sm-2">
+                            <button id="btn-DeleteChargeDetails" type="button" class="btn btn-sm btn-danger m-t-25" onclick="Details_ChargeDeleteList();"><i class="fa fa-trash-o"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.DeleteDetails&nbsp;</b></button>
+                        </div>
+                    </div>
+                    @*<div id="div-search-controls" class="input-group col-sm-4 hide">
+                                <input id="txt-Search" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="">
+                                <span class="input-group-btn">
+                                    <button id="btn-search" title="Search" class="btn btn-sm btn-primary" type="button" onclick="ARAllocation_Partners_LoadingWithPaging();"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        <div class="float-right col-sm-2 hide">
+                            <button id="btn-Delete-Remove" type="button" class="float-right btn btn-sm btn-danger m-r-n swapChildrenClass hide"><i class="fa fa-trash-o"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete&nbsp;</b></button>
+                        </div>*@
+                </div>
+
+
+
+                <br />
+                <h4>&nbsp;</h4>
+                <div class="span7 form vertical-mode" id="Allocation-form">
+                    <fieldset>
+                        <div class="form-group  has-error clearfix">
+                            @*<input id="hAllocationPartnerID" type="hidden" />
+                                <input id="hAllocationPartnerTypeID" type="hidden" />*@
+
+                            <div class="m-t-n-sm">
+                                <section class="panel panel-default" style="clear:both;">
+                                    <header class="panel-heading font-bold text-ul">
+                                        @Forwarding.MvcApp.App_Resources.App_Resources.Charge
+                                        @*<div class="input-group col-sm-4 m-t-n-xs float-right">
+                                                <input id="txtSearchAllocationItems" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search">
+                                                <span class="input-group-btn">
+                                                    <button id="btn-searchAllocationItems" title="Search" class="btn btn-sm btn-warning" type="button"><i class="fa fa-search"></i></button>
+                                                </span>
+                                            </div>*@
+                                    </header>
+                                    <!--Region: table header-->
+                                    <div class="table-responsive" style="width:100%; height:220px; overflow:scroll;">
+                                        <table id="tblCharge" class="table table-striped b-t b-light text-sm  table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th id="HeaderDeleteChargeID">
+                                                        <input id="cb-CheckAllCharges" type="checkbox" />
+                                                    </th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.OperationCode</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.Year</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.ChargeType</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.Amount</th>
+                                                    <th class="hide">Debit/Credit</th>
+                                                    <th>Payable/Receivable</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</th>
+                                                    <th class="rounded-right hide"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+
+                                    </div>
+                                    <!--Region: EOF table header-->
+                                    <!--Region: table footer-->
+                                    <footer class="panel-footer">
+                                        <span id="spanNoAllocationItem" class="hide">No unpaid Allocation Items for this partner.</span>
+                                    </footer>
+                                    <!--Region: EOF table footer-->
+                                </section>
+
+                            </div>
+
+
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <!-- Endregion Add / Edit Region Form -->
+            <div class="modal-footer m-t-n-lg">
+                <button type="button" id="btnSaveCharge" class="btn btn-primary btn-sm" onclick="Charge_Save(false);">
+                    <span class="glyphicon glyphicon-save"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Save
+                </button>
+                <button type="button" id="btnSaveChargeAndPrint" class="btn btn-info btn-sm hide" onclick="Charge_Save(true);">
+                    <span class="glyphicon glyphicon-print"></span> @Forwarding.MvcApp.App_Resources.App_Resources.SaveAndPrint
+                </button>
+                <button class="btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF Charge Modal-->

@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="09/20/2023 14:33:35" ReportInfo.Modified="11/06/2023 14:58:04" ReportInfo.CreatorVersion="2018.3.14.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection1" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFtvdH3m3xJw0oxVjbxQa7aBoPLbNe1xAGoIRY5MprIvGd7s/fojmYOjmpWKtcyQo4949jT5X4fIh8xtHfGN3YJL6byi2hWnteaYxUHL8rUiPLHi4g1Ilrr+OL8yuuJkmS">
+      <TableDataSource Name="Table1" Alias="Rep_TRMTruckingOrder" DataType="System.Int32" Enabled="true" SelectCommand="exec(@query)">
+        <Column Name="Code" DataType="System.String"/>
+        <Column Name="ShippingLineName" DataType="System.String"/>
+        <Column Name="MasterBL" DataType="System.String"/>
+        <Column Name="ClientName" DataType="System.String"/>
+        <Column Name="DeliveryAddress" DataType="System.String"/>
+        <Column Name="CustomerWarehouseManagerPhone" DataType="System.String"/>
+        <Column Name="Notes" DataType="System.String"/>
+        <Column Name="ContactPerson" DataType="System.String"/>
+        <Column Name="ContactPersonPhones" DataType="System.String"/>
+        <Column Name="PickupAddress" DataType="System.String"/>
+        <Column Name="TrackingStageName" DataType="System.String"/>
+        <Column Name="LoadingDate" DataType="System.DateTime"/>
+        <Column Name="TruckerName" DataType="System.String"/>
+        <Column Name="CustomerWarehouseManagerName" DataType="System.String"/>
+        <Column Name="GateInPortName" DataType="System.String"/>
+        <Column Name="GateOutPortName" DataType="System.String"/>
+        <Column Name="Logo" DataType="System.String" PropName="Column" Calculated="true" Expression="[Logo]"/>
+        <Column Name="DeliveryOrderNumber" DataType="System.String"/>
+        <Column Name="Quantity" DataType="System.String"/>
+        <Column Name="GateInDate" DataType="System.String"/>
+        <Column Name="DeliveryDate" DataType="System.String"/>
+        <Column Name="LoadingTime" DataType="System.String"/>
+        <Column Name="TruckingEquipmentName" DataType="System.String"/>
+        <Column Name="CCReleaseNo" DataType="System.String"/>
+        <Column Name="LoadingDate1" DataType="System.DateTime"/>
+        <Column Name="DONumber" DataType="System.String"/>
+        <Column Name="DirectionType" DataType="System.Int32"/>
+        <Column Name="BookingNumber" DataType="System.String"/>
+        <CommandParameter Name="query" DataType="12" Expression="[query]" DefaultValue="Rep_TRMTruckingOrder &quot;WHERE 1 =1&quot;"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="Logo" DataType="System.String" Expression="[Logo]"/>
+    <Parameter Name="Logo1" DataType="System.String" Expression="[Logo1]"/>
+  </Dictionary>
+  <ReportPage Name="Page1" FirstPageSource="15" OtherPagesSource="15">
+    <PageHeaderBand Name="PageHeader1" Width="718.2" Height="1048.95">
+      <TextObject Name="Text1" Left="292.95" Top="160.65" Width="122.85" Height="18.9" Text="تكليف نقل - شهادة" HorzAlign="Center" Font="Arial, 12pt, style=Bold, Underline"/>
+      <TextObject Name="Text2" Left="13.2" Top="129.6" Width="699.3" Height="18.9" Text="__________________________________________________________________________" HorzAlign="Center" Font="Arial, 12pt, style=Underline"/>
+      <TextObject Name="Text3" Left="9.45" Top="170.1" Width="699.3" Height="18.9" Text="__________________________________________________________________________" HorzAlign="Center" Font="Arial, 12pt, style=Underline"/>
+      <TextObject Name="Text4" Left="66.15" Top="207.9" Width="557.55" Height="28.35" Text="[Rep_TRMTruckingOrder.TruckerName] " HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text5" Left="-75.6" Top="207.9" Width="292.95" Height="18.9" Text="[Rep_TRMTruckingOrder.Code]" HorzAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text6" Left="283.5" Top="245.7" Width="132.3" Height="18.9" Text=", تحية طيبة و بعد " HorzAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text7" Left="-9450" Top="-9450" Width="699.3" Height="18.9" Text="__________________________________________________________________________" HorzAlign="Center" Font="Arial, 12pt, style=Underline"/>
+      <TextObject Name="Text9" Left="255.15" Top="283.5" Width="368.55" Height="18.9" Text="[Rep_TRMTruckingOrder.ShippingLineName] " HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text10" Left="188.12" Top="281.82" Width="321.3" Height="18.9" Text="[IIf([Rep_TRMTruckingOrder.DirectionType]==2,&quot;رقم الحجز&quot;,&quot;رقم البوليصة&quot;)]" HorzAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text11" Left="-37.8" Top="283.5" Width="226.8" Height="56.7" Text="[IIf([Rep_TRMTruckingOrder.DirectionType] == 2, &quot;اذن الشحن&quot;, &quot;اذن التسليم &quot;)]" HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text13" Left="-160.65" Top="349.65" Width="689.85" Height="18.9" Text="[Rep_TRMTruckingOrder.Quantity]" HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text15" Left="28.35" Top="387.45" Width="567" Height="18.9" CanGrow="true" Text="[Rep_TRMTruckingOrder.ClientName]" HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text16" Left="-9450" Top="-9450" Width="699.3" Height="18.9" Text="__________________________________________________________________________" HorzAlign="Center" Font="Arial, 12pt, style=Underline"/>
+      <TextObject Name="Text18" Left="510.3" Top="415.8" Width="378" Height="18.9" Text="[Rep_TRMTruckingOrder.GateInPortName]" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text19" Left="311.85" Top="415.8" Width="330.75" Height="18.9" Text="[Rep_TRMTruckingOrder.GateOutPortName]  " Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text20" Left="-255.15" Top="415.8" Width="406.35" Height="18.9" Text="[Rep_TRMTruckingOrder.TruckingEquipmentName]" HorzAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text21" Left="557.55" Top="472.5" Width="330.75" Height="18.9" Text="[Rep_TRMTruckingOrder.LoadingTime] " Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text22" Left="-219.45" Top="471.05" Width="340.2" Height="18.9" Text="[Rep_TRMTruckingOrder.DeliveryDate]  " HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text23" Left="56.7" Top="519.75" Width="548.1" Height="18.9" Text="[Rep_TRMTruckingOrder.DeliveryAddress] " HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text24" Left="283.5" Top="557.55" Width="255.15" Height="18.9" CanGrow="true" Text="[Rep_TRMTruckingOrder.CustomerWarehouseManagerName]" HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text25" Left="89.85" Top="595.3" Width="538.65" Height="18.9" Text="[Rep_TRMTruckingOrder.CustomerWarehouseManagerPhone] " HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text28" Left="66.15" Top="699.3" Width="576.45" Height="18.9" CanGrow="true" Text="[Rep_TRMTruckingOrder.Notes] " HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text31" Left="142.8" Top="829.3" Width="122.85" Height="18.9" Text="مقدمة لسيادتكم" HorzAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text32" Left="151.2" Top="878.85" Width="94.5" Height="18.9" Text=" : المسئول" HorzAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text33" Left="90.95" Top="921.85" Width="236.25" Height="18.9" Text="و تفضلوا بقبول وافر الاحترام و التقدير" HorzAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text34" Left="226.8" Top="642.6" Width="302.4" Height="18.9" CanGrow="true" Text="[Rep_TRMTruckingOrder.ContactPerson] " HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text35" Left="-198.45" Top="642.6" Width="321.3" Height="18.9" Text="[Rep_TRMTruckingOrder.ContactPersonPhones] " HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <PictureObject Name="Picture1" Left="18.9" Top="28.35" Width="689.85" Height="85.05" DataColumn="Rep_TRMTruckingOrder.Logo"/>
+      <TextObject Name="Text36" Left="9.45" Top="255.15" Width="699.3" Height="18.9" Text="__________________________________________________________________________" HorzAlign="Center" Font="Arial, 12pt, style=Underline"/>
+      <TextObject Name="Text37" Left="9.45" Top="321.3" Width="699.3" Height="18.9" Text="__________________________________________________________________________" HorzAlign="Center" Font="Arial, 12pt, style=Bold, Underline"/>
+      <TextObject Name="Text38" Left="9.45" Top="359.1" Width="699.3" Height="18.9" Text="__________________________________________________________________________" HorzAlign="Center" Font="Arial, 12pt, style=Underline"/>
+      <TextObject Name="Text39" Left="9.45" Top="396.9" Width="699.3" Height="18.9" Text="__________________________________________________________________________" HorzAlign="Center" Font="Arial, 12pt, style=Underline"/>
+      <TextObject Name="Text40" Left="9.45" Top="614.25" Width="699.3" Height="18.9" Text="__________________________________________________________________________" HorzAlign="Center" Font="Arial, 12pt, style=Underline"/>
+      <TextObject Name="Text41" Left="9.45" Top="661.5" Width="699.3" Height="18.9" Text="__________________________________________________________________________" HorzAlign="Center" Font="Arial, 12pt, style=Underline"/>
+      <TextObject Name="Text42" Left="9.45" Top="765.45" Width="699.3" Height="18.9" Text="__________________________________________________________________________" HorzAlign="Center" Font="Arial, 12pt, style=Underline"/>
+      <TextObject Name="Text43" Left="9.45" Top="784.35" Width="699.3" Height="18.9" Text="__________________________________________________________________________" HorzAlign="Center" Font="Arial, 12pt, style=Underline"/>
+      <TextObject Name="Text8" Left="595.35" Top="207.9" Width="94.5" Height="18.9" Text="/السادة شركة " HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text12" Left="94.5" Top="207.9" Width="94.5" Height="18.9" Text=": رقم العملية " HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text14" Left="623.7" Top="283.5" Width="66.15" Height="18.9" Text=": خط ملاحى " HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text17" Left="529.2" Top="349.65" Width="160.65" Height="18.9" Text=": الرجاء التكرم بعمل اللازم لنقل" HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text26" Left="595.35" Top="387.45" Width="94.5" Height="18.9" Text=" : بأسم شركة " HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text27" Left="595.35" Top="415.8" Width="94.5" Height="18.9" Text=":  دخول ميناء" HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text29" Left="415.8" Top="415.8" Width="94.5" Height="18.9" Text=": سحب ميناء" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text30" Left="66.15" Top="415.8" Width="122.85" Height="18.9" Text=" : نوع سيارة التحميل " HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text44" Left="595.35" Top="472.5" Width="94.5" Height="18.9" Text=": معاد التحميل" HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text45" Left="94.5" Top="472.5" Width="94.5" Height="18.9" Text=": وصول للعميل" HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text46" Left="585.9" Top="519.75" Width="113.4" Height="18.9" Text=": على العنوان التالى " HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text47" Left="538.65" Top="557.55" Width="160.65" Height="18.9" Text=": اسم المسئول عن مخزن العميل " HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text48" Left="604.8" Top="595.35" Width="94.5" Height="18.9" Text=": رقم التليفون" HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text49" Left="529.2" Top="642.6" Width="170.1" Height="18.9" Text=": اسم المستخلص او مسئول التسليم " HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text50" Left="94.5" Top="642.6" Width="94.5" Height="18.9" Text=": رقم التليفون " HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text51" Left="604.8" Top="699.3" Width="94.5" Height="18.9" Text=": ملاحظات " HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text52" Left="170.1" Top="283.5" Width="132.3" Height="18.9" Text="[IIf([Rep_TRMTruckingOrder.DirectionType]==2,[Rep_TRMTruckingOrder.BookingNumber],[Rep_TRMTruckingOrder.MasterBL])]" HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text53" Left="37.8" Top="283.5" Width="94.5" Height="18.9" Text="[IIf([Rep_TRMTruckingOrder.DirectionType]==2,[Rep_TRMTruckingOrder.DONumber],[Rep_TRMTruckingOrder.DONumber])]" HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+    </PageHeaderBand>
+  </ReportPage>
+</Report>

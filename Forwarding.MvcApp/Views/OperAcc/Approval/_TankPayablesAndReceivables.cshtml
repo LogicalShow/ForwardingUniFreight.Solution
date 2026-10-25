@@ -1,0 +1,85 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li><a id="hl-homepage" href="javascript:void(0);"><i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+    </a></li>
+    <li><a id="liOperAcc" href="javascript:void(0);">@Forwarding.MvcApp.App_Resources.App_Resources.OperAcc
+    </a></li>
+    <li><a id="liApprovals" href="javascript:void(0);">@Forwarding.MvcApp.App_Resources.App_Resources.Approvals
+    </a></li>
+    <li id="Transfer Draft Invoices" class="active">Tank Payables And Receivables</li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-Invoices">
+    <!-- Region Options & Template  -->
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 id="h3InvoiceApproval" class="m-b-none">Tank Payables And Receivables</h3>
+            </header>
+            <!--Region the searh, delete, addnew-->
+            <div class="row text-sm wrapper hidden-print ">
+                @*<div id="div-main-options" class="col-sm-2 m-b-xs">
+                    <button id="btn-NewAdd-Remove" class="btn btn-warning btn-sm swapChildrenClass hide" data-toggle="modal" data-target="#OperationPayableApprovalModal"><i class="fa fa-plus"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.New&nbsp;</b></button>
+                    <div id="div-option-buttons" class="btn-group hide">
+                        <button id="btn-Copy" type="button" class="btn btn-sm btn-default"><i class="fa fa-copy"></i>&nbsp;Copy </button>
+                        <button id="btn-Print" type="button" class="btn btn-sm btn-default"><i class="fa fa-print"></i>&nbsp;Print </button>
+                        <button id="btn-Send" type="button" class="btn btn-sm btn-default"><i class="fa fa-envelope-o"></i>&nbsp;Send </button>
+                    </div>
+                </div>    *@
+                
+                <div id="div-search-option" class="col-sm-12 swapChildrenClass">
+                    <div class="col-sm-12 m-t-n-xs">
+                        @*<input id="btnAddFromExcel" type="file" title="Import Items from Excel 97-2003" class=" btn-lightblue btn-sm"  />*@
+                        <input id="UploadFromExcelTanks" type="file" class=" btn-lightblue btn-sm hide" />
+                        <a class="btn btn-warning btn-sm m-t-sm hide" onclick=" ImportExcel('#UploadFromExcelTanks', '#tblTanksExcel');">Show Excel</a>
+                        <a class="btn btn-lightblue btn-sm m-t-sm hide" onclick=" SendExcelDatatable();">Upload Excel</a>
+                        
+                        <div class="col-sm-3">
+                            <button id="btn-UploadExcel" type="button" onclick="UploadExcel();" class="btn btn-sm btn-info hidden"><i class="fa fa-upload"></i><b>&nbsp;Upload Excel&nbsp;</b></button>
+                            <input type="file" id="UploadEmptyContainersFile" class="input-group m-t-sm btn btn-lightblue btn-sm" onchange="UploadExcelFile();" />
+                        </div>
+                        <div class="col-sm-9" >
+                            <textarea type="text" style="height: 400px;height: 400px;" id="txtRemarks" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control input-sm" data-required="false" data-minlength="1" maxlength="10" placeholder="Remarks" style="text-transform:uppercase" ></textarea>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-3 m-t-n-xs">
+                       
+                       
+                        @*<table  id="tblTanksExcel"></table>*@
+                    </div>
+                </div>
+            </div>
+            <!--EOF Region the searh, delete, addnew line-->
+            
+            <!--Region: table header-->
+           @* to return delete from here check that no payments are made/ to make it more easy don't allow multi-check *@
+            <div class="table-responsive  m-t-xs " @*style="width:1350px; height:800px; overflow:auto;"*@>
+                <table id="tblTanksExcel" class="table table-striped b-t b-light text-sm table-hover"  cellspacing="0" cellpadding="1" border="1" width="300" >
+                    <thead>
+                      
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+          @*@using (Html.BeginForm("Importexcel", "TankPayablesAndReceivables", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+          {
+            <table>
+                <tr><td>Excel file</td><td><input type="file" id="FileUpload1" name="FileUpload1" /></td></tr>
+                <tr><td></td><td><input type="submit" id="Submit" name="Submit" value="Submit" /></td></tr>
+            </table>
+          }*@
+          
+            <!--Region: table header-->
+
+        </section>
+    </div>
+</div>
+

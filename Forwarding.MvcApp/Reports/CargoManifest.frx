@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="10/26/2021 16:56:05" ReportInfo.Modified="07/09/2023 13:03:49" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+
+
+    private void Data1_AfterData(object sender, EventArgs e)
+    {
+      
+    }
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFsw9b0kspEyGC+iACx9AnHion4ta/JRvUJ2KYvzJ2sHh5V0MPiugDuU1rVdALpVyH3hi5i7udMQ02cRh9iiSvvOj7LjB/SRSCKqVyzhSd+QWD2/jPE01J4/IAtf5JGj4frpjg/gwTKVDjSZ637zbzCA==">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="exec (@query)">
+        <Column Name="ShipperName" DataType="System.String"/>
+        <Column Name="ShipperAddress" DataType="System.String"/>
+        <Column Name="ConsigneeName" DataType="System.String"/>
+        <Column Name="ConsigneeAddress" DataType="System.String"/>
+        <Column Name="Notify1Name" DataType="System.String"/>
+        <Column Name="Notify1Address" DataType="System.String"/>
+        <Column Name="POLCountryName" DataType="System.String"/>
+        <Column Name="VesselName" DataType="System.String"/>
+        <Column Name="POLName" DataType="System.String"/>
+        <Column Name="PODName" DataType="System.String"/>
+        <Column Name="ID" DataType="System.Int64"/>
+        <Column Name="VesselFlag" DataType="System.String"/>
+        <Column Name="BLDate" DataType="System.DateTime"/>
+        <Column Name="PODCountryName" DataType="System.String"/>
+        <Column Name="MasterBL" DataType="System.String"/>
+        <Column Name="DescriptionOfGoods" DataType="System.String"/>
+        <Column Name="GrossWeight" DataType="System.Decimal"/>
+        <Column Name="NumberOfPackages" DataType="System.Int32"/>
+        <Column Name="PackageTypeName" DataType="System.String"/>
+        <CommandParameter Name="@query" DataType="12" Expression="[query]" DefaultValue="SELECT O.ID,O.VesselName,(SELECT Notes FROM Vessels WHERE ID=O.VesselID) VesselFlag,O.BLDate,O.POLCountryName,O.POLName,O.PODCountryName,O.PODName,O.ShipperName,O.ShipperAddress,O.ConsigneeName,O.ConsigneeAddress,O.Notify1Name,O.Notify1Address,O.MasterBL,O.DescriptionOfGoods,O.GrossWeight,O.NumberOfPackages,O.PackageTypeName FROM vwOperations O"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="OperationID" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" RawPaperSize="9">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="85.05">
+      <TextObject Name="Text1" Left="283.5" Top="28.35" Width="160.65" Height="28.35" Text="CARGO MANIFEST" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="89.05" Width="718.2" Height="538.65">
+      <TextObject Name="Text2" Left="9.45" Top="18.9" Width="94.5" Height="28.35" Text="Vessel" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text3" Left="103.95" Top="18.9" Width="245.7" Height="28.35" Text="[Table.VesselName]" VertAlign="Center"/>
+      <TextObject Name="Text4" Left="9.45" Top="47.25" Width="94.5" Height="28.35" Text="Flag" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text5" Left="9.45" Top="75.6" Width="94.5" Height="28.35" Text="Sailing from" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text6" Left="103.95" Top="47.25" Width="245.7" Height="28.35" Text="[Table.VesselFlag]" VertAlign="Center"/>
+      <TextObject Name="Text7" Left="103.95" Top="75.6" Width="245.7" Height="28.35" Text="[Table.POLName], [Table.POLCountryName]" VertAlign="Center"/>
+      <TextObject Name="Text10" Left="349.65" Top="47.25" Width="94.5" Height="28.35" Text="Date" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text11" Left="349.65" Top="75.6" Width="94.5" Height="28.35" Text="To" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text12" Left="444.15" Top="47.25" Width="245.7" Height="28.35" Text="[Table.BLDate]" VertAlign="Center"/>
+      <TextObject Name="Text13" Left="444.15" Top="75.6" Width="245.7" Height="28.35" Text="[Table.PODName], [Table.PODCountryName]" VertAlign="Center"/>
+      <TextObject Name="Text14" Left="9.45" Top="151.2" Width="94.5" Height="94.5" Border.Lines="All" Text="Shipper" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text15" Left="103.95" Top="151.2" Width="217.35" Height="94.5" Border.Lines="All" Text="[Table.ShipperName]&#13;&#10;[Table.ShipperAddress]" VertAlign="Center"/>
+      <TextObject Name="Text16" Left="321.3" Top="122.85" Width="75.6" Height="28.35" Border.Lines="All" Text="B/L No." VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text17" Left="396.9" Top="122.85" Width="207.9" Height="28.35" Border.Lines="All" Text="Description" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text18" Left="604.8" Top="122.85" Width="103.95" Height="28.35" Border.Lines="All" Text="Gross Weight" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text19" Left="321.3" Top="151.2" Width="75.6" Height="283.5" Border.Lines="All" Text="[Table.MasterBL]" VertAlign="Center"/>
+      <TextObject Name="Text20" Left="396.9" Top="151.2" Width="207.9" Height="283.5" Border.Lines="All" Text="[Table.DescriptionOfGoods]" VertAlign="Center"/>
+      <TextObject Name="Text21" Left="604.8" Top="151.2" Width="103.95" Height="283.5" Border.Lines="All" Text="[Table.GrossWeight]" VertAlign="Center"/>
+      <TextObject Name="Text22" Left="321.3" Top="434.7" Width="75.6" Height="28.35" Text="Total" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text23" Left="396.9" Top="434.7" Width="207.9" Height="28.35" Border.Lines="All" Text="[Table.NumberOfPackages] * [Table.PackageTypeName]" VertAlign="Center"/>
+      <TextObject Name="Text24" Left="604.8" Top="434.7" Width="103.95" Height="28.35" Border.Lines="All" Text="[Table.GrossWeight]" VertAlign="Center"/>
+      <TextObject Name="Text25" Left="9.45" Top="245.7" Width="94.5" Height="94.5" Border.Lines="All" Text="Consignee" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text26" Left="103.95" Top="245.7" Width="217.35" Height="94.5" Border.Lines="All" Text="[Table.ConsigneeName]&#13;&#10;[Table.ConsigneeAddress]" VertAlign="Center"/>
+      <TextObject Name="Text27" Left="9.45" Top="340.2" Width="94.5" Height="94.5" Border.Lines="All" Text="Notify" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text28" Left="103.95" Top="340.2" Width="217.35" Height="94.5" Border.Lines="All" Text="[Table.Notify1Name]&#13;&#10;[Table.Notify1Address]" VertAlign="Center"/>
+      <TextObject Name="Text29" Left="217.35" Top="491.4" Width="245.7" Height="28.35" Text="*** END OF MANIFEST ***" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="631.7" Width="718.2" DataSource="Table"/>
+    <PageFooterBand Name="PageFooter1" Top="635.7" Width="718.2" Height="37.8"/>
+  </ReportPage>
+</Report>

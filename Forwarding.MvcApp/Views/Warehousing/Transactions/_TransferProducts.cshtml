@@ -1,0 +1,422 @@
+﻿<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="liGroupName" href="javascript:void(0);" onclick="LoadViews('VehicleModule')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.VehicleModule
+    </a>
+</li>
+<li>
+    <a id="liTabName" href="javascript:void(0);" onclick="LoadViews('VehicleModule')">
+        @Forwarding.MvcApp.App_Resources.App_Resources.VehicleTransaction
+</a>
+</li>
+<li id="liFormName" class="active"></li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-TransferProducts">
+    <!-- Region Options & Template  -->
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 id="h3Label" class="m-b-none">
+                    
+            </h3>
+                <input type="hidden" id="hIsAdd" />
+                <input type="hidden" id="hInvoiceHeaderID" />
+                <input type="hidden" id="hInvoiceDetailID" />
+                <input type="hidden" id="hCurrencyID" />
+                <input type="hidden" id="hCurrencyCode" />
+                <input type="hidden" id="hItemID" />
+                <input type="hidden" id="hOldLocationID" />
+                <input type="hidden" id="hID" />
+            </header>
+
+            <div class="row text-sm wrapper hidden-print">
+               
+                <div id="div-main-options" class="col-sm-1 m-b-xs">
+
+                    @*<button type="button" id="btnOpenNewInvoice" onclick="InvoicesWithoutBill_New();" class="btn btn-warning btn-sm swapChildrenClass" title="New Invoice">
+                        <i class="fa fa-plus"></i>
+                        @*<b>&nbsp;@Shipping.MvcApp.App_Resources.App_Resources.New&nbsp;</b>
+                    </button>*@
+                </div>
+
+
+                <div class="form-group col-sm-1 m-l-n-lg text-right" style="clear:both;"><h6><b>Customer:</b></h6></div>
+                <div class="form-group col-sm-2 m-l-n-md">
+                    <select id="slCustomerSearch" onchange="TransferProducts_LoadingWithPaging();" class="form-control input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"><option value="0"><--Select--></option></select>
+                </div>
+
+                <div class="form-group col-sm-1 m-l-n-lg text-right" style=""><h6><b>Product:</b></h6></div>
+                <div class="form-group col-sm-2 m-l-n-md">
+                    <select id="slPurchaseItemSearch" onchange="TransferProducts_LoadingWithPaging();" class="form-control input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"><option value="0"><--Select--></option></select>
+                </div>
+
+                <div class="form-group col-sm-1 m-l-n-lg text-right" style=""><h6><b>Warehouse:</b></h6></div>
+                <div class="form-group col-sm-2 m-l-n-md">
+                    <select id="slWarehouseSearch" class="form-control input-sm" onfocus="DisableBackspaceKey(id);"  onchange="GetAreas('slWarehouseSearch', 'slArea', 'slLocationSearch');TransferProducts_LoadingWithPaging();" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"><option value="0"><--Select--></option></select>
+                </div>
+
+                <div class="form-group col-sm-1 m-l-n-lg text-right" style=""><h6><b>Area:</b></h6></div>
+                <div class="form-group col-sm-2 m-l-n-md">
+                    <select id="slAreaSearch"  onchange="GetLocation('slAreaSearch', 'slLocationSearch');TransferProducts_LoadingWithPaging();" class="form-control input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"><option value="0"><--Select--></option></select>
+                </div>
+
+                <div class="col-sm-1" style="">
+                    <button id="btn-Filter" class="btn btn-primary btn-sm" data-toggle="modal" data-target="" onclick="TransferProducts_LoadingWithPaging();"><i class="fa fa-refresh"></i>&nbsp;Retrieve</button>
+                </div>
+
+                <div class="form-group col-sm-1 m-l-n-lg text-right" style="clear:both;"><h6><b>Location:</b></h6></div>
+                <div class="form-group col-sm-2 m-l-n-md">
+                    <select id="slLocationSearch" onchange="TransferProducts_LoadingWithPaging();" class="form-control input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"><option value="0"><--Select--></option></select>
+                </div>
+
+                <div class="form-group col-sm-1 m-l-n-lg text-right hide classShowForGBL" style=""><h6><b>Motor:</b></h6></div>
+                <div class="form-group col-sm-2 m-l-n-md hide classShowForGBL">
+                    <input onblur="TransferProducts_LoadingWithPaging();" type="text" id="txtMotorNumberSearch" class="form-control input-sm"  data-required="false" placeholder="Motor No." />
+                </div>
+
+                <div class="form-group col-sm-1 m-l-n-lg text-right hide classShowForGBL" style=""><h6><b>Chassis:</b></h6></div>
+                <div class="form-group col-sm-2 m-l-n-md hide classShowForGBL">
+                    <input type="text" onblur="TransferProducts_LoadingWithPaging();" id="txtChassisNoSearch" class="form-control input-sm"  data-required="false" placeholder="Chassis No." />
+                </div>
+
+                <div class="form-group col-sm-1 m-l-n-lg text-right hide classShowForGBL" style=""><h6><b>OCN:</b></h6></div>
+                <div class="form-group col-sm-2 m-l-n-md hide classShowForGBL">
+                    <input type="text" id="txtOCNCodeSearch" onblur="TransferProducts_LoadingWithPaging();" class="form-control input-sm"  data-required="false" placeholder="OCN Code" />
+                </div>
+
+                <div class="form-group col-sm-1">
+                    <button id="btn-Import" class="btn btn-lightblue btn-sm m-t-xxs" data-toggle="modal" data-target="" onclick="TransferProducts_Import();"><i class="fa fa-table"></i>&nbsp;Import from Excel</button>
+                    <input id="btnAddFromExcel" type="file" title="Import Items from Excel 97-2003" class="btn-info btn-sm m-t-xxs hide" onchange="onFileSelected(event);" />
+                </div>
+
+                <!--<div id="div-main-options" class="col-sm-11 m-b-xs">
+                    <div id="div-search-controls" class="input-group col-sm-10">
+                        
+                        <div class="form-group col-sm-5">
+                            <div class="input-group">
+                                <span class="input-group-addon" style="width:150px;">
+                                    <b>
+                                        <i>@Forwarding.MvcApp.App_Resources.App_Resources.Warehouse</i>
+                                    </b>
+                                </span>
+                                <select id="slWarehouseSearch" class="form-control m-b input-sm" style="width:255px;" onchange="GetAreas('slWarehouseSearch', 'slArea', 'slLocationSearch');TransferProducts_LoadingWithPaging();" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"><option value="">&lt;--Select--&gt;</option></select>
+                                @*<span class="input-group-addon"><i class="fa fa-tasks" style="color:blue;"></i></span>*@
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-5">
+                            <div class="input-group">
+                                <span class="input-group-addon" style="width:150px;">
+                                    <b>
+                                       <i>@Forwarding.MvcApp.App_Resources.App_Resources.Areas</i>
+                                    </b>
+                                </span>
+                                <select id="slAreaSearch" class="form-control m-b input-sm" style="width:255px;" onchange="GetLocation('slAreaSearch', 'slLocationSearch');TransferProducts_LoadingWithPaging();" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"><option value="">&lt;--Select--&gt;</option></select>
+                                @*<span class="input-group-addon"><i class="fa fa-tasks" style="color:blue;"></i></span>*@
+
+                            </div>
+                        </div>
+
+
+                        <div class="form-group col-sm-5">
+                            <div class="input-group">
+                                <span class="input-group-addon" style="width:150px;">
+                                    <b>
+                                        <i>@Forwarding.MvcApp.App_Resources.App_Resources.Locations</i>
+                                    </b>
+                                </span>
+                                <select onchange="TransferProducts_LoadingWithPaging();" id="slLocationSearch" name="slLocationSearch" class="form-control m-b input-sm" style="width:255px;" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"><option value="">&lt;--Select--&gt;</option></select>
+                                @*<span class="input-group-addon"><i class="fa fa-tasks" style="color:blue;"></i></span>*@
+
+                            </div>
+                        </div>
+
+                        <div class="form-group col-sm-5">
+                            <div class="input-group">
+                                <span class="input-group-addon" style="width:150px;">
+                                    <b>
+                                        <i>@Forwarding.MvcApp.App_Resources.App_Resources.Customer</i>
+                                    </b>
+                                </span>
+                                <select onchange="TransferProducts_LoadingWithPaging();" id="slCustomerSearch" class="form-control m-b input-sm" style="width:255px;" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"><option value="">&lt;--Select--&gt;</option></select>
+                                @*<span class="input-group-addon"><i class="fa fa-tasks" style="color:blue;"></i></span>*@
+
+                            </div>
+                        </div>
+
+                        <div class="form-group col-sm-5">
+                            <div class="input-group">
+                                <span class="input-group-addon" style="width:150px;">
+                                    <b>
+                                        <i>@Forwarding.MvcApp.App_Resources.App_Resources.Product</i>
+                                    </b>
+                                </span>
+                                <select onchange="TransferProducts_LoadingWithPaging();" id="slPurchaseItemSearch" class="form-control m-b input-sm" style="width:255px;" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"><option value="">&lt;--Select--&gt;</option></select>
+                                @*<span class="input-group-addon"><i class="fa fa-tasks" style="color:blue;"></i></span>*@
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group col-sm-5 hide classShowForGBL">
+                            <div class="input-group">
+                                <span class="input-group-addon" style="width:150px;">
+                                    <b>
+                                        <i>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_MotorNo</i>
+                                    </b>
+                                </span>
+                                <input onblur="TransferProducts_LoadingWithPaging();" type="text" id="txtMotorNumberSearch" class="form-control input-sm" style="width:255px;" data-required="false" placeholder="Motor No." />
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-5 hide classShowForGBL">
+                            <div class="input-group">
+                                <span class="input-group-addon" style="width:150px;">
+                                    <b>
+                                        <i>@Forwarding.MvcApp.App_Resources.App_Resources.Chassisnumber</i>
+                                    </b>
+                                </span>
+                                <input type="text" onblur="TransferProducts_LoadingWithPaging();" id="txtChassisNoSearch" class="form-control input-sm" style="width:255px;" data-required="false" placeholder="Chassis No." />
+                            </div>
+                        </div>
+
+                        <div class="form-group col-sm-5 hide classShowForGBL">
+                            <div class="input-group">
+                                <span class="input-group-addon" style="width:150px;">
+                                    <b>
+                                        <i>OCN Code</i>
+                                    </b>
+                                </span>
+                                <input type="text" id="txtOCNCodeSearch" onblur="TransferProducts_LoadingWithPaging();" class="form-control input-sm" style="width:255px;" data-required="false" placeholder="OCN Code" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>-->
+            </div>
+
+            <div class="row wrapper hidden-print m-b-sm hide classShowForGBL">
+
+                <div class="form-group col-sm-2">
+                </div>
+
+                <div class="form-group col-sm-8">
+                    <div class="input-group col-sm-12">
+                        <div class="col-sm-9">
+                            <label>&nbsp; Allocate Vichels Automatic</label><br />
+                            <select id="slArea" class="form-control m-b input-sm" style="" onchange="" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"><option value="">&lt;-- Please Select Warehouse , then Area --&gt;</option></select>
+                        </div>
+                        <div class="col-sm-3">
+                            &nbsp;&nbsp;<br /> <button type="button" onclick="UpdateRecieveDetailsLocations();" class=" rounded btn btn-warning" style="width:150px;">
+                                <b>
+                                    <i>@Forwarding.MvcApp.App_Resources.App_Resources.Apply</i>
+                                </b>
+                            </button>
+                        </div>
+                    </div>
+                    </div>
+
+
+                <div class="form-group col-sm-2">
+                </div>
+
+
+            </div>
+
+
+                <div class="table-responsive">
+                    <table id="tblTransferProducts" class="table table-responsive table-striped b-t b-light text-sm nowrap table-hover m-t-n-sm">
+                        <thead>
+                            <tr>
+                                <th id="ID">
+                                    <input id="cb-CheckAll" type="checkbox" />
+                                </th>
+                                <th class="hide">ID</th>
+                                <th class="hide">RecieveID</th>
+                                <th class="hide">CustomerID</th>
+                                <th class="hide">LocationID</th>
+                                <th class="hide">Quantity</th>
+                                <th class="hide">FinalizedPickedQuantity</th>
+                                <th>@Forwarding.MvcApp.App_Resources.App_Resources.Customer</th>
+                                <th>@Forwarding.MvcApp.App_Resources.App_Resources.ProductCode</th>
+                                <th>@Forwarding.MvcApp.App_Resources.App_Resources.ProductName</th>
+                                <th style="width:20%;">@Forwarding.MvcApp.App_Resources.App_Resources.Location</th>
+                                <th class="hide classShowForGBL">@Forwarding.MvcApp.App_Resources.App_Resources.AvailableQuantity</th>
+                                <th class="hide classShowForGBL">@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_MotorNo</th>
+                                <th class="hide classShowForGBL">@Forwarding.MvcApp.App_Resources.App_Resources.Chassisnumber</th>
+                                <th class="hide classShowForGBL">OCNCode</th>
+                                <th class="hide classShowForGBL">Multi Auto Position</th>
+                                @*<th>@Shipping.MvcApp.App_Resources.App_Resources.TraInvoiceNumber</th>
+                        <th>@Shipping.MvcApp.App_Resources.App_Resources.TraInvoiceType</th>
+                        <th>@Shipping.MvcApp.App_Resources.App_Resources.IssueDate</th>
+                        <th>@Shipping.MvcApp.App_Resources.App_Resources.Client</th>
+                        <th>@Shipping.MvcApp.App_Resources.App_Resources.Audit</th>
+                        <th>@Shipping.MvcApp.App_Resources.App_Resources.Paid</th>*@
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <footer class="panel-footer">
+                    <div class="row">
+                        <div class="col-sm-4 hidden-xs">
+                            <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                            </select>
+                            <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                            </button>
+                        </div>
+                        <div id="div-Text-Total" class="col-sm-4 text-center">
+                            <small class="text-muted inline m-t-sm m-b-sm">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                                <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                                <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                            </small>
+                        </div>
+                        <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+                    </div>
+                </footer>
+</section>
+    </div>
+
+    <div class="modal fade" id="TransferProductsModal" tabindex="-1" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="TransferProductsModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modalwidth-100">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" title="Close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3 class="m-b-none">
+                        @Forwarding.MvcApp.App_Resources.App_Resources.Transfer &nbsp;<label id="lblShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                    </h3>
+                </div>
+                <div class="modal-body">
+
+                    <div class="span7 form vertical-mode TransferProductsform" id="TransferProducts-form">
+                        <fieldset>
+                            <div class="form-group pull-in has-error  clearfix">
+
+                              
+
+
+                                    <div class="panel-body" id="DvTransferProducts">
+
+
+                                                <div class="form-group col-sm-6  clearfix hide">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon" style="width:150px;">
+                                                            <b>
+                                                                <i>@Forwarding.MvcApp.App_Resources.App_Resources.ProductName</i>
+                                                            </b>
+                                                        </span>
+                                                        <input type="text" id="txtProductName" class="form-control input-sm" style="width:255px;" data-required="false" placeholder="Product Name" disabled="disabled" />
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group col-sm-4  clearfix">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon " style="">
+                                                            <b>
+                                                                <i>@Forwarding.MvcApp.App_Resources.App_Resources.From</i>
+                                                            </b>
+                                                        </span>
+                                                        <input type="text" id="txtFromLocation" class="form-control input-sm" style="" data-required="false" placeholder="From Location" disabled="disabled" />
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group col-sm-4" style="clear:both;">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon" style="">
+                                                            <b>
+                                                                <i>To Warehouse</i>
+                                                            </b>
+                                                        </span>
+                                                        <select id="slWarehouse_To" disabled="disabled" class="form-control m-b input-sm" style="" onchange="GetAreas('slWarehouse_To', 'slArea_To', 'slLocation_To');" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"><option value="">&lt;--Select--&gt;</option></select>
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-sm-4">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon" style="">
+                                                            <b>
+                                                                <i>To Area</i>
+                                                            </b>
+                                                        </span>
+                                                        <select id="slArea_To" class="form-control m-b input-sm" style="" onchange="GetLocation('slArea_To', 'slLocation_To');" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"><option value="">&lt;--Select--&gt;</option></select>
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-sm-4  clearfix">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon " style="">
+                                                            <b>
+                                                                <i>@Forwarding.MvcApp.App_Resources.App_Resources.ToLocation</i>
+                                                        </b>
+                                                    </span>
+                                                    <select id="slLocation_To" class="form-control m-b input-sm" style="" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="true"><option value=""><--Select--></option></select>
+                                                </div>
+                                            </div>
+
+
+                                                <div class="form-group col-sm-6  clearfix hide">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon " style="width:150px;">
+                                                            <b>
+                                                                <i>@Forwarding.MvcApp.App_Resources.App_Resources.AvailableQuantity</i>
+                                                            </b>
+                                                        </span>
+                                                        <input type="number" id="numAvailableQuantity" class="form-control input-sm" style="width:255px;" data-required="false" placeholder="Available Quantity"/>
+                                                    </div>
+                                                </div>
+
+                                        
+                                        <div class="float-right col-sm-1" style="clear:both;">
+                                          
+
+                                            <button type="button" id="BtnTransfer" onclick="TransferProducts_Save();" class="btn btn-sm btn-primary m-r-n  float-right swapChildrenClass">
+                                                <i class="fa fa-exchange">
+                                                </i><b> @Forwarding.MvcApp.App_Resources.App_Resources.Transfer</b>
+                                            </button>
+
+                                        </div>
+
+
+
+                                    </div>
+
+                              
+
+                                
+                            </div>
+                            
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btnClose btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+

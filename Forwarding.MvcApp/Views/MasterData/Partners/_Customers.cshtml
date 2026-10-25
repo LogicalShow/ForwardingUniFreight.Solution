@@ -1,0 +1,377 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="MasterData" href="javascript:void(0);" onclick="LoadViews('Partners')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.MasterData
+        </a>
+    </li>
+    <li>
+        <a id="Partners" href="javascript:void(0);" onclick="LoadViews(id)">
+            @Forwarding.MvcApp.App_Resources.App_Resources.Partners
+        </a>
+    </li>
+    <li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.Customers</li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-Customers">
+    <!-- Region Options & Template  -->
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.Customers</h3>
+            </header>
+            <!--Region the searh, delete, addnew-->
+            <div class="row text-sm wrapper hidden-print ">
+                <div id="div-main-options" class="col-sm-5 m-b-xs">
+                    <button id="btn-NewAdd" class="btn btn-warning btn-sm hide" data-toggle="modal" data-target="#CustomerModal"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.New</button>
+                    <button id="btn-FilterOptions-Customers" class="btn btn-primary btn-sm" data-toggle="modal" onclick="" data-target="#FilterOptionsModal"><i class="fa fa-filter"></i> Filter Options</button>
+                    <input id="btnAddFromExcel-Customers" type="file" style="display:inline;" title="Import Items from Excel 97-2003" class="btn-lightblue btn-sm classHideForMESCOChildren hide" onchange="Customers_onFileSelected(event, id);" />
+                    <button id="btn-AutoMailSetting" class="btn btn-default btn-sm" data-toggle="modal" data-target="#CustomerAutomailPlanModal" onclick="LoadCustomers_Automail();"><i class="fa fa-envelope-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.AutomailPlan</button>
+                    <button id="btn-refreshInvoicesVAT" class="btn btn-sm btn-primary hide" type="button" onclick="RefreshInvoicesVAT();"><i class="fa fa-refresh"></i> Refresh Invoices VAT</button>
+                    @*<button id="btn-FollowUp" onclick="Customers_CreateSalesLeadFromCustomers();" type="button" class="btn btn-lightblue  btn-sm"><i class="fa fa-comments-o icon"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.ActivateCustomerFollowUp</button>*@
+                    <select id="slFilterCompany" class="input-sm ShowForTopManagement"></select>
+
+                    <div id="div-option-buttons" class="btn-group hide">
+                        <button id="btn-Copy" type="button" class="btn btn-sm btn-default"><i class="fa fa-copy"></i>&nbsp;Copy </button>
+                        <button id="btn-Print" type="button" class="btn btn-sm btn-default"><i class="fa fa-print"></i>&nbsp;Print </button>
+                        <button id="btn-Send" type="button" class="btn btn-sm btn-default"><i class="fa fa-envelope-o"></i>&nbsp;Send </button>
+                    </div>
+                </div>
+                <div id="div-search-option" class="col-sm-7">
+                    <div id="div-search-controls" class="input-group col-sm-9">
+                        <input id="txt-Search" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search Code / Name / Local Name / Vat NO">
+                        <span class="input-group-btn">
+                            <button id="btn-search" class="btn btn-sm btn-primary" type="button" onclick="Customers_LoadingWithPaging();"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                    <div class="float-right col-sm-1">
+                        <button id="btn-Delete" type="button" class="float-right btn btn-sm btn-danger m-r-n hide"><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete</button>
+                    </div>
+                </div>
+            </div>
+            <!--EOF Region the searh, delete, addnew line-->
+            <!--Customers Modal-->
+            <!--EOF Customers Modal-->
+            <!--Region: table header-->
+            <div class="table-responsive">
+                <table id="tblCustomers" class="table table-striped b-t b-light text-sm  table-hover">
+                    <thead>
+                        <tr id="srchControls" class="hide">
+                            <th style="width:5%;"></th>
+                            <th class="ShowForTopManagement hide"><input type="text" id="srchCompany" class="form-control" onchange="Customers_LoadingWithPaging();" /></th>
+                            <th><input type="text" id="srchCode" class="form-control" onchange="Customers_LoadingWithPaging();" /></th>
+                            <th><input type="text" id="srchCustomer" class="form-control" onchange="Customers_LoadingWithPaging();" /></th>
+                            <th><input type="text" id="srchCustomerLocal" class="form-control" onchange="Customers_LoadingWithPaging();" /></th>
+                            <th><input type="text" id="srchPayment" class="form-control" onchange="Customers_LoadingWithPaging();" /></th>
+                            <th><input type="checkbox" id="srchIsInactive" class="" onchange="Customers_LoadingWithPaging();" /></th>
+                            <th><input type="text" id="srchVAT" class="form-control" onchange="Customers_LoadingWithPaging();" /></th>
+                            <th><input type="checkbox" id="srchIsActiveUser" class="" onchange="Customers_LoadingWithPaging();" /></th>
+                            <th><input type="text" id="srchUser" class="form-control" onchange="Customers_LoadingWithPaging();" /></th>
+                            <th><input type="checkbox" id="srchCRM" class="" onchange="Customers_LoadingWithPaging();" /></th>
+                            <th class="AccountUNF"><input type="text" id="srchAccount" class="form-control" onchange="Customers_LoadingWithPaging();" /></th>
+                            <th><input type="text" id="srchPrice" class="form-control" onchange="Customers_LoadingWithPaging();" autocomplete="off"/></th>
+                            <th class="Notes hide"><input type="text" id="srchNotes" class="form-control" onchange="Customers_LoadingWithPaging();" /></th>
+                        </tr>
+                        <tr>
+                            <th id="ID">
+                                <input id="cb-CheckAll" type="checkbox" />
+                            </th>
+                            <th class="ShowForTopManagement hide">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.CompanyName
+                            </th>
+                            <th class="th-sortable" data-toggle="class">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Code
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Name
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.LocalName
+                            </th>
+                            <th class="showForNex hide">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Salesman
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.PaymentTerm
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.IsInactive
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.VATNumber
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.IsActiveUser
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Username
+                            </th>
+                            <th class="">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.CRM
+                            </th>
+                            <th class="AccountUNF">
+                                Account Number
+                            </th>
+                            <th class="">
+                                Price List
+                            </th>
+                            <th class="ShowForTEU hide">
+
+                            </th>
+                            <th class="ShowForLATT hide">
+                                Is Integrated
+                            </th>
+                            <th class="hide">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Notes
+                            </th>
+
+                            <th class="rounded-right hide"></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <!--Region: table header-->
+            <!--Region: footer-->
+            <footer class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-4 hidden-xs">
+                        <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                        <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                        </button>
+                    </div>
+                    <div id="div-Text-Total" class="col-sm-4 text-center">
+                        <small class="text-muted inline m-t-sm m-b-sm">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                            <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                            <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                        </small>
+                    </div>
+                    <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+                </div>
+            </footer>
+            <!--Region: footer-->
+        </section>
+
+
+        <div class="modal fade" id="CustomerAutomailPlanModal" tabindex="-1" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="CustomerModalLabel" aria-hidden="true">
+            <div class="modal-dialog modalwidth-90 m-t-n-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="m-b-none">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Customer &nbsp;<label id="lblShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                        </h3>
+                    </div>
+                    <!-- Region Add / Edit Region Form -->
+                    <div class="modal-body">
+                        <div class="span7 form vertical-mode" id="CustomerAutomailPlan-form">
+                            <fieldset>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Customer</label>
+                                        <input type="text" id="txtCustomerName_Automail" class="form-control input-sm" placeholder="Search by Name / Local Name" style="text-transform:uppercase;">
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.PeriodType</label>
+                                        <select id="slPeriodType_Automail" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm">
+                                            <option value="-1"> @Forwarding.MvcApp.App_Resources.App_Resources.All</option>
+                                            <option value="0"> @Forwarding.MvcApp.App_Resources.App_Resources.None</option>
+                                            <option value="10">@Forwarding.MvcApp.App_Resources.App_Resources.EmailHalfMonthly</option>
+                                            <option value="20">@Forwarding.MvcApp.App_Resources.App_Resources.EmailMonthly</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button style="margin-top:20px;" id="btn-search-customers_Automail" type="button" class="btn float-left btn-lightblue btn-sm " onclick="LoadCustomers_Automail();"><i class="fa fa-search"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Search</button>
+                                    </div>
+
+                                </div>
+                                <section class="panel panel-default m-t-sm">
+                                    <div class="wizard wizard-vertical Automail-wizard">
+                                        <ul class="steps">
+                                            @*<li data-target="#ReportView" id="stepsReportView" onclick="" class="active"><span class="badge badge-info" style="background-color:midnightblue;">1</span>@Forwarding.MvcApp.App_Resources.App_Resources.ReportView</li>*@
+                                            <li data-target="#InvoiceAutoMailPlan" id="stepsInvoiceAutoMailPlan" value="Invoice" onclick="" class="active"><span class="badge badge-info" style="background-color:midnightblue;">1</span>@Forwarding.MvcApp.App_Resources.App_Resources.InvoiceAutomailPlan</li>
+                                            <li data-target="#AgingAutoMailPlan" id="stepsAgingAutoMailPlan" value="Aging" onclick="" class="complete non_basic"><span class="badge badge-info" style="background-color:midnightblue;">2</span>@Forwarding.MvcApp.App_Resources.App_Resources.AgingAutomailPlan</li>
+                                            <li data-target="#AccountStatementAutoMailPlan" id="stepsAccountStatementAutoMailPlan" value="AccountStatement" onclick="" class="complete non_basic"><span class="badge badge-info" style="background-color:midnightblue;">3</span>@Forwarding.MvcApp.App_Resources.App_Resources.AccountStatement</li>
+
+                                        </ul>
+                                        <div class="actions" style="display:none;">
+                                            <!--Next & Previous buttons-->
+                                            <button type="button" class="btn btn-default btn-xs btn-prev" disabled="disabled">@Forwarding.MvcApp.App_Resources.App_Resources.Prev</button>
+                                            <button type="button" class="btn btn-default btn-xs btn-next" data-last="Finish">@Forwarding.MvcApp.App_Resources.App_Resources.Next</button>
+                                        </div>
+                                    </div>
+                                    <div class="step-content">
+                                        <div id="InvoiceAutoMailPlan" style="padding:1px!important;" class="step-pane active step-content">
+                                            <header class="panel-heading hide">
+                                                <div id="hExportedTable" class="hide"></div>
+                                                <h3 class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.InvoiceAutomailPlan</h3>
+                                                @*<h3 class="m-b-none">Best Print Using Internet Explorer</h3>*@
+                                            </header>
+
+                                            <div class="row text-sm wrapper hidden-print ">
+                                                <section id="secCustomers_Invoice" class="col-sm-12 panel panel-default">
+                                                    <div class="">
+                                                        <label class="swapChildrenClass"><input type="checkbox" id="cbCheckAllCustomers_Invoice" onchange="cbCheckAllCustomers_InvoiceAutomailChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><u>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.SelectAllCustomers&nbsp;</u></label><br />
+                                                    </div>
+                                                    <div id="divCbCustomers_Invoice" style="width:104%; height:370px; font-size:100%; overflow:scroll;">
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        @*<h4 style="">Tuning for selected clients</h4>*@
+
+                                                    </div>
+                                                </section>
+                                            </div>
+                                        </div>
+                                        <div id="AgingAutoMailPlan" style="padding:1px!important;" class="step-pane  step-content">
+                                            <header class="panel-heading hide">
+                                                <div id="hExportedTable" class="hide"></div>
+                                                <h3 class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.AgingAutomailPlan</h3>
+                                                @*<h3 class="m-b-none">Best Print Using Internet Explorer</h3>*@
+                                            </header>
+
+                                            <div class="row text-sm wrapper hidden-print ">
+                                                <section id="secCustomers_Aging" class="col-sm-12 panel panel-default">
+                                                    <div class="">
+                                                        <label class="swapChildrenClass"><input type="checkbox" id="cbCheckAllCustomers_Aging" onchange="cbCheckAllCustomers_AgingAutomailChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><u>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.SelectAllCustomers&nbsp;</u></label><br />
+                                                    </div>
+                                                    <div id="divCbCustomers_Aging" style="width:104%; height:370px; font-size:100%; overflow:scroll;">
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        @*<h4 style="">Tuning for selected clients</h4>*@
+
+                                                    </div>
+                                                </section>
+                                            </div>
+                                        </div>
+                                        <div id="AccountStatementAutoMailPlan" style="padding:1px!important;" class="step-pane  step-content">
+                                            <header class="panel-heading hide">
+                                                <div id="hExportedTable" class="hide"></div>
+                                                <h3 class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.AccountStatement</h3>
+                                                @*<h3 class="m-b-none">Best Print Using Internet Explorer</h3>*@
+                                            </header>
+
+                                            <div class="row text-sm wrapper hidden-print ">
+                                                <section id="secCustomers_AccountStatement" class="col-sm-12 panel panel-default">
+                                                    <div class="">
+                                                        <label class="swapChildrenClass"><input type="checkbox" id="cbCheckAllCustomers_AccountStatement" onchange="cbCheckAllCustomers_AccountStatementAutomailChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><u>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.SelectAllCustomers&nbsp;</u></label><br />
+                                                    </div>
+                                                    <div id="divCbCustomers_AccountStatement" style="width:104%; height:370px; font-size:100%; overflow:scroll;">
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        @*<h4 style="">Tuning for selected clients</h4>*@
+
+                                                    </div>
+                                                </section>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </section>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <!-- Endregion Add / Edit Region Form -->
+                    <div class="modal-footer">
+                        <button id="btn-None" type="button" class="btn float-left btn-primary btn-sm " onclick="SaveAutomailPlan(0);"><i class=""></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.None</button>
+                        <button id="btn-Weekly" type="button" class="btn float-left btn-lightblue btn-sm hide classShowForARK " onclick="SaveAutomailPlan(70);"><i class="fa fa-calendar"></i>&nbsp;Weekly</button>
+                        <button id="btn-HalfMonthly" type="button" class="btn float-left btn-lightblue btn-sm " onclick="SaveAutomailPlan(10);"><i class="fa fa-calendar"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.EmailHalfMonthly</button>
+                        <button id="btn-Monthly" type="button" class="btn float-left btn-warning btn-sm " onclick="SaveAutomailPlan(20);"><i class="fa fa-calendar-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.EmailMonthly</button>
+                        <button class="btn btn-link btn-sm" id="btnClose" @*onclick="Customers_UnlockRecord();"*@ data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+<!--FilterOptionsModal-->
+<div class="modal fade" id="FilterOptionsModal" @*tabindex="-1" style="z-index: 3000;"*@ data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="FilterOptionsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-100">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" title="Close">
+                    &times;
+                </button>
+                <h3 class="m-b-none">
+                    <label id="lblShownFilterOptions" class="static-text-primary">Filter Options</label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region FilterOptions Form -->
+                <button id="btn-ClearAllFilterOptions" type="button" class="btn btn-warning btn-sm m-l m-t-n-sm hide" onclick=""><i class="fa "></i><b>&nbsp;Clear All</b></button>
+                <div class="span7 form vertical-mode m-t-sm" id="FilterOptions-form">
+                    <fieldset>
+                        <div class="row hide">
+                            <div id="div-FilterOptions-controls" class="input-group m-l col-sm-5">
+                                <input id="txtFilterOptions" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search" />
+                                <span class="input-group-btn">
+                                    <button id="btn-FilterOptions" class="btn btn-sm btn-primary" type="button"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div id="divFilterOptions" class="m-t-n classSearchOptions">
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Type</label>
+                                <select id="slFilterCustomerType" class="form-control m-b input-sm" data-required="false">
+                                    <option value="All" selected>All</option>
+                                    <option value="Internal">Internal</option>
+                                    <option value="External">External</option>
+                                    <option value="Related">Related</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Country</label>
+                                <select id="slFilterCountry" class="form-control m-b" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);"></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>Customer</label>
+                                <select id="slFilterCustomerKind" class="form-control m-b input-sm" data-required="false">
+                                    <option value="All" selected>All</option>
+                                    <option value="Consignee">Consignee</option>
+                                    <option value="Shipper">Shipper</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>Customer Category</label>
+                                <select id="slFilterCustomerCategory" class="form-control m-b input-sm" data-required="false">
+                                </select>
+                            </div>
+                            <button id="btn-ExportToExcel" type="button" onclick="Customers_Print('Excel');" class="btn m-t-md btn-sm btn-primary float-right hide"><i class="fa fa-table"></i><b>&nbsp;Export Excel&nbsp;</b></button>
+                            <button id="btn-ExportBlackList" type="button" onclick="Customers_Print_Blacklist('Excel');" class="btn m-t-md btn-sm btn-primary float-right hide"><i class="fa fa-table"></i><b>&nbsp;Export Blacklist Customers&nbsp;</b></button>
+                        </div>
+
+                    </fieldset>
+                </div>
+                <!-- Endegion FilterOptions Form -->
+            </div>
+            <div class="modal-footer m-t-n">
+                <!--sherif-->
+                <button type="button" data-dismiss="modal" onclick="Customers_LoadingWithPaging();" id="btnFilterOptionsApply" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-search"></span>&nbsp;Search
+                </button>
+                @*<button class=" btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF FilterOptionsModal-->

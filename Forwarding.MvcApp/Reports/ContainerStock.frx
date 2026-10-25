@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/08/2020 09:45:30" ReportInfo.Modified="01/20/2020 15:04:42" ReportInfo.CreatorVersion="2018.3.14.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqqbHFhVIwocP/yqXnQRvzskfUzdbgTM4o1F3+VxbooXmeeyAAU6DGupT9byu7LEiiAhzhjKD9t18VAn5Syg60YML4C5Ck5Y2pQr4W/iZpda1M7W94ObZhz2/Rd5pzfPhW8z/rxLXRAxNzHsIxLiCF+LGm/ceYW4LHxnPUKWAvzg7NkZaQTDCvNS5qGtPgIYni0ivJ/Y8nHCq6mobDOz0Exw==">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="exec  GetListVw_DptEirRpt @WhereClause">
+        <Column Name="ContainerNO" DataType="System.String"/>
+        <Column Name="Size" DataType="System.String"/>
+        <Column Name="EirNo" DataType="System.Int32"/>
+        <Column Name="EirDate" DataType="System.DateTime"/>
+        <Column Name="Customer" DataType="System.String"/>
+        <Column Name="Consignee" DataType="System.String"/>
+        <Column Name="Location" DataType="System.String"/>
+        <Column Name="Load" DataType="System.String"/>
+        <Column Name="Age" DataType="System.Int32"/>
+        <Column Name="Time" DataType="System.String"/>
+        <Column Name="Move" DataType="System.String"/>
+        <Column Name="JobNo" DataType="System.String"/>
+        <Column Name="ShippingLine" DataType="System.String"/>
+        <Column Name="Transporter" DataType="System.String"/>
+        <Column Name="TruckNo" DataType="System.String"/>
+        <Column Name="Driver" DataType="System.String"/>
+        <Column Name="TripMoney" DataType="System.Decimal"/>
+        <Column Name="ID" DataType="System.Int32"/>
+        <Column Name="Remarks" DataType="System.String"/>
+        <Column Name="TransAmount" DataType="System.Decimal"/>
+        <Column Name="FKID" DataType="System.Int64"/>
+        <Column Name="cntrSize" DataType="System.Int32"/>
+        <Column Name="CntrType" DataType="System.String"/>
+        <Column Name="BookingNo" DataType="System.String"/>
+        <CommandParameter Name="WhereClause" DataType="22" Expression="[WhereClause]"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="WhereClause" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="75.6">
+      <TextObject Name="Text1" Left="9.45" Top="37.8" Width="226.8" Height="18.9" Text="Container Stock Report" Font="Arial, 12pt, style=Bold"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="79.6" Width="718.2" Height="28.35">
+      <TextObject Name="Text2" Left="9.45" Top="9.45" Width="103.95" Height="18.9" Border.Lines="Left, Top, Bottom" Text="Container No" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text3" Left="113.4" Top="9.45" Width="47.25" Height="18.9" Border.Lines="Top, Bottom" Text="Size" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text4" Left="160.65" Top="9.45" Width="66.15" Height="18.9" Border.Lines="Top, Bottom" Text="EIR No" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text5" Left="226.8" Top="9.45" Width="66.15" Height="18.9" Border.Lines="Top, Bottom" Text="EIR Date" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text6" Left="292.95" Top="9.45" Width="103.95" Height="18.9" Border.Lines="Top, Bottom" Text="Customer" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text7" Left="396.9" Top="9.45" Width="113.4" Height="18.9" Border.Lines="Top, Bottom" Text="Consignee" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text8" Left="510.3" Top="9.45" Width="94.5" Height="18.9" Border.Lines="Top, Bottom" Text="Location" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text9" Left="604.8" Top="9.45" Width="56.7" Height="18.9" Border.Lines="Top, Bottom" Text="Load" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text10" Left="661.5" Top="9.45" Width="37.8" Height="18.9" Border.Lines="Right, Top, Bottom" Text="Age" Font="Arial, 10pt, style=Bold"/>
+    </PageHeaderBand>
+    <GroupHeaderBand Name="GroupHeader1" Top="111.95" Width="718.2" Height="28.35" Condition="[Table.cntrSize]">
+      <TextObject Name="Text20" Top="9.45" Width="37.8" Height="18.9" Border.Lines="Bottom" Text="[Table.cntrSize]" HorzAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text21" Left="37.8" Top="9.45" Width="37.8" Height="18.9" Border.Lines="Bottom" Text="Feet" Font="Arial, 10pt, style=Bold"/>
+      <DataBand Name="Data1" Top="144.3" Width="718.2" Height="18.9" CanGrow="true" DataSource="Table">
+        <TextObject Name="Text11" Left="9.45" Width="103.95" Height="18.9" Text="[Table.ContainerNO]"/>
+        <TextObject Name="Text12" Left="113.4" Width="47.25" Height="18.9" CanGrow="true" GrowToBottom="true" Text="[Table.Size]"/>
+        <TextObject Name="Text13" Left="160.65" Width="66.15" Height="18.9" Text="[Table.EirNo]"/>
+        <TextObject Name="Text14" Left="226.8" Width="66.15" Height="18.9" CanGrow="true" GrowToBottom="true" Text="[Table.EirDate]" Format="Date" Format.Format="d" Font="Arial, 9pt"/>
+        <TextObject Name="Text15" Left="292.95" Width="103.95" Height="18.9" CanGrow="true" GrowToBottom="true" Text="[Table.Customer]"/>
+        <TextObject Name="Text16" Left="396.9" Width="113.4" Height="18.9" CanGrow="true" GrowToBottom="true" Text="[Table.Consignee]"/>
+        <TextObject Name="Text17" Left="510.3" Width="94.5" Height="18.9" Text="[Table.Location]"/>
+        <TextObject Name="Text18" Left="604.8" Width="56.7" Height="18.9" Text="[Table.Load]"/>
+        <TextObject Name="Text19" Left="661.5" Width="37.8" Height="18.9" Text="[Table.Age]"/>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter1" Top="167.2" Width="718.2"/>
+    </GroupHeaderBand>
+  </ReportPage>
+</Report>

@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/03/2022 13:02:22" ReportInfo.Modified="10/23/2023 19:35:19" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+    
+
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFtHJVZLL/i3PN7CkdFc/1A7YXJU6T13VfFIAjI9Ib2eHK43COXIAb1+oG8abaGcWEZGpgJFPBP3+b+JobTIAbFImpu7AL5/m4I+6ScGE9e6WjDfiveqdM4GY1NsEAX+IAP+trrVoC6prlOtYHyFAXJg==">
+      <TableDataSource Name="Table" Alias="Rep_3PL_ClientOccupiedArea" DataType="System.Int32" Enabled="true" SelectCommand="exec (@query)">
+        <Column Name="Logo" DataType="System.String" PropName="Column" Calculated="true" Expression="[Logo]"/>
+        <Column Name="ReceiveCode" DataType="System.String"/>
+        <Column Name="PartNumber" DataType="System.String"/>
+        <Column Name="WarehouseName" DataType="System.String"/>
+        <Column Name="LocationCode" DataType="System.String"/>
+        <Column Name="ReceiveDate" DataType="System.DateTime"/>
+        <Column Name="CustomerName" DataType="System.String"/>
+        <Column Name="PurchaseItemName" DataType="System.String"/>
+        <Column Name="AvailableQuantity" DataType="System.Decimal"/>
+        <Column Name="NumberofUsedLocations" DataType="System.Int32"/>
+        <Column Name="LocationID" DataType="System.Int32"/>
+        <CommandParameter Name="@query" DataType="12" Expression="[query]" DefaultValue="Rep_3PL_ClientOccupiedArea ' WHERE 1=1 '"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="Logo" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9">
+    <DataBand Name="Data1" Top="171.59" Width="1047.06" Height="36.14" CanGrow="true" DataSource="Table">
+      <TableObject Name="Table1" Left="5.68" Top="-0.15" Width="1031.52" Height="36.29">
+        <TableColumn Name="Column21" Width="147.36"/>
+        <TableColumn Name="Column22" Width="147.36"/>
+        <TableColumn Name="Column23" Width="147.36"/>
+        <TableColumn Name="Column24" Width="147.36"/>
+        <TableColumn Name="Column25" Width="147.36"/>
+        <TableColumn Name="Column26" Width="147.36"/>
+        <TableColumn Name="Column27" Width="147.36"/>
+        <TableRow Name="Row8" MinHeight="36.29" Height="36.29" AutoSize="true">
+          <TableCell Name="Cell66" Border.Lines="All" Text="[Rep_3PL_ClientOccupiedArea.ReceiveCode]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell67" Border.Lines="All" Text="[Rep_3PL_ClientOccupiedArea.LocationCode]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell68" Border.Lines="All" Text="[Rep_3PL_ClientOccupiedArea.WarehouseName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell69" Border.Lines="All" Text="[Rep_3PL_ClientOccupiedArea.PartNumber]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell70" Border.Lines="All" Text="[IIf(FormatDateTime([Rep_3PL_ClientOccupiedArea.ReceiveDate],&quot;dd/MM/yyyy&quot;) == &quot;01/01/0001&quot;,&quot;&quot;,FormatDateTime([Rep_3PL_ClientOccupiedArea.ReceiveDate],&quot;dd/MM/yyyy&quot;))]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell71" Border.Lines="All" Text="[Rep_3PL_ClientOccupiedArea.PurchaseItemName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell72" Border.Lines="All" Text="[Rep_3PL_ClientOccupiedArea.AvailableQuantity]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+        </TableRow>
+      </TableObject>
+      <DataHeaderBand Name="DataHeader1" Width="1047.06" Height="167.59">
+        <PictureObject Name="Picture1" Left="6.92" Top="3.67" Width="1029.65" Height="50.42" DataColumn="Rep_3PL_ClientOccupiedArea.Logo"/>
+        <TextObject Name="Text1" Left="403.52" Top="55.2" Width="236.45" Height="18.9" Text="Client Occupied Area" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+        <TextObject Name="Text2" Left="19.46" Top="83.12" Width="1004.56" Height="18.9" Text="Client Name : [Rep_3PL_ClientOccupiedArea.CustomerName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+        <TableObject Name="Table2" Left="5.68" Top="133.74" Width="1031.52" Height="33.85">
+          <TableColumn Name="Column11" Width="147.36"/>
+          <TableColumn Name="Column12" Width="147.36"/>
+          <TableColumn Name="Column13" Width="147.36"/>
+          <TableColumn Name="Column14" Width="147.36"/>
+          <TableColumn Name="Column15" Width="147.36"/>
+          <TableColumn Name="Column16" Width="147.36"/>
+          <TableColumn Name="Column17" Width="147.36"/>
+          <TableRow Name="Row6" Height="33.85">
+            <TableCell Name="Cell26" Border.Lines="All" Fill.Color="Silver" Text="Receive Code" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell27" Border.Lines="All" Fill.Color="Silver" Text="Location Code" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell28" Border.Lines="All" Fill.Color="Silver" Text="Warehouse" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell29" Border.Lines="All" Fill.Color="Silver" Text="Part Number" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell30" Border.Lines="All" Fill.Color="Silver" Text="Receive Date" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell51" Border.Lines="All" Fill.Color="Silver" Text="Product" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell52" Border.Lines="All" Fill.Color="Silver" Text="Available Quantity" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          </TableRow>
+        </TableObject>
+        <TextObject Name="Text3" Left="5.23" Top="110.55" Width="291.49" Height="18.9" Text="Used Locations : [Rep_3PL_ClientOccupiedArea.NumberofUsedLocations] [IIf([Rep_3PL_ClientOccupiedArea.NumberofUsedLocations] &gt; 1,&quot;Locations&quot;,&quot;Location&quot;)]" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      </DataHeaderBand>
+    </DataBand>
+  </ReportPage>
+</Report>

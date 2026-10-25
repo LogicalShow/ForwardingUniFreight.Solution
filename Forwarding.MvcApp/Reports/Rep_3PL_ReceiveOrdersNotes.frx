@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/03/2022 13:02:22" ReportInfo.Modified="09/30/2023 18:14:24" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+    
+
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFtHJVZLL/i3PN7CkdFc/1A7YXJU6T13VfFIAjI9Ib2eHK43COXIAb1+oG8abaGcWEZGpgJFPBP3+b+JobTIAbFImpu7AL5/m4I+6ScGE9e6WjDfiveqdM4GY1NsEAX+IA1kfPU3oMl24TxlKQy3QC0w==">
+      <TableDataSource Name="Table" Alias="Rep_3PL_ReceiveOrdersNotes" DataType="System.Int32" Enabled="true" SelectCommand="exec (@query)">
+        <Column Name="Logo" DataType="System.String" PropName="Column" Calculated="true" Expression="[Logo]"/>
+        <Column Name="ReceiveCode" DataType="System.String"/>
+        <Column Name="Notes" DataType="System.String"/>
+        <Column Name="ReceiveDate" DataType="System.DateTime"/>
+        <CommandParameter Name="@query" DataType="12" Expression="[query]" DefaultValue="Rep_3PL_ReceiveOrdersNotes ' WHERE 1=1 '"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="Logo" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9">
+    <DataBand Name="Data1" Top="145.75" Width="1047.06" Height="36.14" CanGrow="true" DataSource="Table">
+      <TableObject Name="Table1" Left="12.01" Top="-0.15" Width="1023.72" Height="36.29">
+        <TableColumn Name="Column21" Width="341.24"/>
+        <TableColumn Name="Column22" Width="341.24"/>
+        <TableColumn Name="Column23" Width="341.24"/>
+        <TableRow Name="Row8" MinHeight="36.29" Height="36.29" AutoSize="true">
+          <TableCell Name="Cell66" Border.Lines="All" Text="[Rep_3PL_ReceiveOrdersNotes.ReceiveCode]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell67" Border.Lines="All" Text="[IIf(FormatDateTime([Rep_3PL_ReceiveOrdersNotes.ReceiveDate],&quot;dd/MM/yyyy&quot;) == &quot;01/01/0001&quot;,&quot;&quot;,FormatDateTime([Rep_3PL_ReceiveOrdersNotes.ReceiveDate],&quot;dd/MM/yyyy&quot;))]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell68" Border.Lines="All" Text="[Rep_3PL_ReceiveOrdersNotes.Notes]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+        </TableRow>
+      </TableObject>
+      <DataHeaderBand Name="DataHeader1" Width="1047.06" Height="141.75">
+        <PictureObject Name="Picture1" Left="6.92" Top="3.67" Width="1029.65" Height="50.42" DataColumn="Rep_3PL_ReceiveOrdersNotes.Logo"/>
+        <TextObject Name="Text1" Left="403.52" Top="55.2" Width="236.45" Height="18.9" Text="Receive Orders Notes" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+        <TableObject Name="Table2" Left="11.97" Top="107.9" Width="1023.81" Height="33.85">
+          <TableColumn Name="Column11" Width="341.27"/>
+          <TableColumn Name="Column12" Width="341.27"/>
+          <TableColumn Name="Column13" Width="341.27"/>
+          <TableRow Name="Row6" Height="33.85">
+            <TableCell Name="Cell26" Border.Lines="All" Fill.Color="Silver" Text="Receive Code" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell27" Border.Lines="All" Fill.Color="Silver" Text="Receive Date" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell28" Border.Lines="All" Fill.Color="Silver" Text="Notes" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          </TableRow>
+        </TableObject>
+      </DataHeaderBand>
+    </DataBand>
+  </ReportPage>
+</Report>

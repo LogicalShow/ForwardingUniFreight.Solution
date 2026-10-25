@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" DoublePass="true" ReportInfo.Created="08/08/2024 00:49:02" ReportInfo.Modified="07/29/2025 15:15:37" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {  
+  }
+      
+
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqM7gJFg/iaLrqMhRfGy5lGvDpaqZCIZMhCF/R3IvWihwu4YnyMH75h03vBZsDhKkoBX5QVpNha6hIC94j086Hm/ZGOWXF9S+92K+N7GATdk7LdgfYP7EqsowNKjGmxll35nb7ynCdXgfC6gll71ZyAbggfo6rwcBKrrgtJjSThFDxHzS3oKOrC3TYnvlBfRbaCQ4ZUOhLWrEblnNOBSDtV64XwV2AJCzbtGZhnYmUbls=">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="select * from Rep_Vessels where ID = @VesselID">
+        <Column Name="ID" DataType="System.Int32"/>
+        <Column Name="Name" DataType="System.String"/>
+        <Column Name="CountrySign" DataType="System.String"/>
+        <Column Name="CurrentDate" DataType="System.DateTime"/>
+        <Column Name="ATAPOD" DataType="System.DateTime"/>
+        <Column Name="OperationID" DataType="System.Int64"/>
+        <Column Name="RoutingID" DataType="System.Int64"/>
+        <Column Name="PODName" DataType="System.String"/>
+        <Column Name="PODCountryName" DataType="System.String"/>
+        <Column Name="ShippingLineNotes" DataType="System.String"/>
+        <CommandParameter Name="VesselID" DataType="12" Expression="[VesselID]" DefaultValue="1"/>
+      </TableDataSource>
+      <TableDataSource Name="Table1" DataType="System.Int32" Enabled="true" SelectCommand="&#13;&#10;exec GetListRep_Vessels @WhereClause">
+        <Column Name="ContainerNumber" DataType="System.String"/>
+        <Column Name="ContainerTypeName" DataType="System.String"/>
+        <Column Name="GrossWeight" DataType="System.Decimal"/>
+        <Column Name="CommodityName" DataType="System.String"/>
+        <Column Name="POLName" DataType="System.String"/>
+        <Column Name="POLCountryName" DataType="System.String"/>
+        <Column Name="ShipperName" DataType="System.String"/>
+        <Column Name="HouseNumber" DataType="System.String"/>
+        <Column Name="ConsigneeName" DataType="System.String"/>
+        <Column Name="RowSerial" DataType="System.Int64"/>
+        <CommandParameter Name="WhereClause" DataType="22" Expression="[pWhereClause]" DefaultValue="Where 1 = 1"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="Logo" DataType="System.String"/>
+    <Parameter Name="VesselID" DataType="System.String"/>
+    <Parameter Name="pWhereClause" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <PageHeaderBand Name="PageHeader1" Width="718.2" Height="245.7" Fill.Color="White" PrintOn="FirstPage, SinglePage" FirstRowStartsNewPage="true">
+      <TextObject Name="Text1" Left="189" Top="18.9" Width="122.85" Height="37.8" Text="[Format(&quot;{0:dd/MM/yyyy}&quot;,[Table.CurrentDate])]"/>
+      <TextObject Name="Text2" Left="359.1" Top="18.9" Width="122.85" Height="37.8" Text="[Format(&quot;{0:dd/MM/yyyy}&quot;,[Table.CurrentDate])]"/>
+      <TextObject Name="Text3" Left="548.1" Top="85.05" Width="113.4" Height="37.8" Text="[Table.Name]"/>
+      <TextObject Name="Text4" Left="368.55" Top="85.05" Width="94.5" Height="37.8" Text="تقليدية" Font="Arial, 12pt"/>
+      <TextObject Name="Text5" Left="151.2" Top="85.05" Width="132.3" Height="37.8" Text="[Table.CountrySign]"/>
+      <TextObject Name="Text6" Left="510.3" Top="141.75" Width="160.65" Height="37.8" Text="[IIf(ToString(Format(&quot;{0:dd/MM/yyyy}&quot;,[Table.ATAPOD]))!=&quot;01/01/0001&quot;,Format(&quot;{0:dd/MM/yyyy}&quot;, [Table.ATAPOD]),&quot;&quot;)]"/>
+      <TextObject Name="Text7" Left="236.25" Top="141.75" Width="217.35" Height="37.8" Text="[Table.PODName] - [Table.PODCountryName]"/>
+      <TextObject Name="Text8" Left="255.15" Top="198.45" Width="434.7" Height="37.8" Text="[Table.ShippingLineNotes]"/>
+    </PageHeaderBand>
+    <ColumnHeaderBand Name="ColumnHeader1" Top="249.7" Width="718.2" Height="28.35"/>
+    <DataBand Name="Data1" Top="282.05" Width="718.2" Height="94.5" CanGrow="true" DataSource="Table1">
+      <TextObject Name="Text9" Left="557.55" Width="94.5" Height="28.35" Text="[Table1.ContainerTypeName]" Font="Arial, 8pt"/>
+      <TextObject Name="Text10" Left="444.15" Width="94.5" Height="28.35" Text="[Table1.CommodityName]" Font="Arial, 8pt"/>
+      <TextObject Name="Text11" Left="302.4" Width="132.3" Height="28.35" Text="[Table1.POLName] - [Table1.POLCountryName]" Font="Arial, 8pt"/>
+      <TextObject Name="Text12" Left="198.45" Width="94.5" Height="28.35" Text="[Table1.ShipperName]" Font="Arial, 8pt"/>
+      <TextObject Name="Text13" Left="122.85" Width="66.15" Height="28.35" Text="[Table1.HouseNumber]" Font="Arial, 8pt"/>
+      <TextObject Name="Text14" Left="510.3" Top="56.7" Width="94.5" Height="18.9" Text="  : ارقام الحاويات " Font="Arial, 8pt"/>
+      <TextObject Name="Text15" Left="368.55" Top="56.7" Width="122.85" Height="18.9" Text="[Table1.ContainerNumber]" Font="Arial, 8pt"/>
+      <TextObject Name="Text16" Left="245.7" Top="56.7" Width="94.5" Height="18.9" Text=": اجمالي الوزن   " Font="Arial, 8pt"/>
+      <TextObject Name="Text17" Left="103.95" Top="56.7" Width="132.3" Height="18.9" Text="[Table1.GrossWeight] KG" Font="Arial, 8pt"/>
+      <TextObject Name="Text18" Left="9.45" Width="103.95" Height="28.35" Text="[Table1.ConsigneeName]" Font="Arial, 8pt"/>
+      <TextObject Name="Text19" Left="670.95" Width="47.25" Height="28.35" Text="[Table1.RowSerial]" Font="Arial, 8pt"/>
+      <LineObject Name="Line1" Left="9.45" Top="85.05" Width="689.85" Diagonal="true"/>
+      <LineObject Name="Line2" Left="595.35" Top="66.15" Diagonal="true"/>
+    </DataBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="380.55" Width="718.2" Height="189"/>
+    <PageFooterBand Name="PageFooter1" Top="573.55" Width="718.2"/>
+  </ReportPage>
+</Report>

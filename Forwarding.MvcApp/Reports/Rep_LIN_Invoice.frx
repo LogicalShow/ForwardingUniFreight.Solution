@@ -1,0 +1,751 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" DoublePass="true" ReportInfo.Created="08/08/2024 00:49:02" ReportInfo.Modified="07/28/2025 16:56:50" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+
+  
+
+
+    
+   
+
+    private void Picture1_BeforePrint(object sender, EventArgs e)
+    {
+      string myParameterValue = (string)Report.GetParameterValue(&quot;Printheader&quot;);
+      if (myParameterValue==&quot;true&quot;)
+      {
+        Picture1.Visible=true;
+      }
+      else
+      {
+         Picture1.Visible=false;
+      }
+    }
+
+    private void Text44_BeforePrint(object sender, EventArgs e)
+    {   if ((Decimal)Report.GetColumnValue(&quot;Table.DiscountAmount&quot;) == 0)
+
+      {
+        Text44.Visible = true;
+      } else {
+        Text44.Visible = false;
+      }
+      
+    }
+
+    private void Text54_BeforePrint(object sender, EventArgs e)
+    {    if ((Decimal)Report.GetColumnValue(&quot;Table.DiscountAmount&quot;) == 0)
+
+      {
+        Text54.Visible = true;
+      } else {
+        Text54.Visible = false;
+      }
+      
+    }
+
+    private void Text45_BeforePrint(object sender, EventArgs e)
+    {      if ((Decimal)Report.GetColumnValue(&quot;Table.DiscountAmount&quot;) == 0)
+
+      {
+        Text45.Visible = true;
+      } else {
+        Text45.Visible = false;
+      }
+      
+    }
+
+    private void Text55_BeforePrint(object sender, EventArgs e)
+    {
+      if ((Decimal)Report.GetColumnValue(&quot;Table.DiscountAmount&quot;) == 0)
+
+      {
+        Text55.Visible = true;
+      } else {
+        Text55.Visible = false;
+      }
+    }
+
+    private void Text118_BeforePrint(object sender, EventArgs e)
+    {
+      if ((Decimal)Report.GetColumnValue(&quot;Table.DiscountAmount&quot;) != 0)
+
+      {
+        Text118.Visible = true;
+      } else {
+        Text118.Visible = false;
+      }
+    }
+
+    private void Text119_BeforePrint(object sender, EventArgs e)
+    {
+      if ((Decimal)Report.GetColumnValue(&quot;Table.DiscountAmount&quot;) != 0)
+
+      {
+        Text119.Visible = true;
+      } else {
+        Text119.Visible = false;
+      }
+    }
+
+    private void Text4_BeforePrint(object sender, EventArgs e)
+    {
+      if ((Decimal)Report.GetColumnValue(&quot;Table.DiscountAmount&quot;) != 0)
+
+      {
+        Text4.Visible = true;
+      } else {
+        Text4.Visible = false;
+      }
+    }
+
+    private void Text115_BeforePrint(object sender, EventArgs e)
+    {
+      if ((Decimal)Report.GetColumnValue(&quot;Table.DiscountAmount&quot;) != 0)
+
+      {
+        Text115.Visible = true;
+      } else {
+        Text115.Visible = false;
+      }
+    }
+
+    private void Text116_BeforePrint(object sender, EventArgs e)
+    {
+      if ((Decimal)Report.GetColumnValue(&quot;Table.DiscountAmount&quot;) != 0)
+
+      {
+        Text116.Visible = true;
+      } else {
+        Text116.Visible = false;
+      }
+    }
+
+    private void Text117_BeforePrint(object sender, EventArgs e)
+    {
+      if ((Decimal)Report.GetColumnValue(&quot;Table.DiscountAmount&quot;) != 0)
+
+      {
+        Text117.Visible = true;
+      } else {
+        Text117.Visible = false;
+      }
+    }
+
+    private void Text26_BeforePrint(object sender, EventArgs e)
+    {
+            string PrintNote = (string)Report.GetParameterValue(&quot;PrintNote&quot;);
+            if (PrintNote!=&quot;true&quot;)
+            {
+              Text26.Visible=true;
+            }
+            else
+            {
+              Text26.Visible=false;
+            }
+    }
+
+    private void Text27_BeforePrint(object sender, EventArgs e)
+    {    string PrintNote = (string)Report.GetParameterValue(&quot;PrintNote&quot;);
+      if (PrintNote!=&quot;true&quot;)
+      {
+         Text27.Visible=true;
+      }
+      else
+      {
+         Text27.Visible=false;
+      }
+      
+    }
+
+    private void Text28_BeforePrint(object sender, EventArgs e)
+    {
+      string PrintNote = (string)Report.GetParameterValue(&quot;PrintNote&quot;);
+      if (PrintNote!=&quot;true&quot;)
+      {
+        Text28.Visible=true;
+      }
+      else
+      {
+        Text28.Visible=false;
+      }
+    }
+
+    private void Text29_BeforePrint(object sender, EventArgs e)
+    {
+      string PrintNote = (string)Report.GetParameterValue(&quot;PrintNote&quot;);
+      if (PrintNote!=&quot;true&quot;)
+      {
+        Text29.Visible=true;
+      }
+      else
+      {
+        Text29.Visible=false;
+      }
+    }
+
+    private void Text30_BeforePrint(object sender, EventArgs e)
+    {
+      string PrintNote = (string)Report.GetParameterValue(&quot;PrintNote&quot;);
+      if (PrintNote!=&quot;true&quot;)
+      {
+        Text30.Visible=true;
+      }
+      else
+      {
+        Text30.Visible=false;
+      }
+    }
+
+    private void Text31_BeforePrint(object sender, EventArgs e)
+    {
+      string PrintNote = (string)Report.GetParameterValue(&quot;PrintNote&quot;);
+      if (PrintNote!=&quot;true&quot;)
+      {
+        Text31.Visible=true;
+      }
+      else
+      {
+        Text31.Visible=false;
+      }
+    }
+
+    private void Text32_BeforePrint(object sender, EventArgs e)
+    {
+      string PrintNote = (string)Report.GetParameterValue(&quot;PrintNote&quot;);
+      if (PrintNote!=&quot;true&quot;)
+      {
+        Text32.Visible=true;
+      }
+      else
+      {
+        Text32.Visible=false;
+      }
+    }
+
+    private void Text33_BeforePrint(object sender, EventArgs e)
+    {
+      string PrintNote = (string)Report.GetParameterValue(&quot;PrintNote&quot;);
+      if (PrintNote!=&quot;true&quot;)
+      {
+        Text33.Visible=true;
+      }
+      else
+      {
+        Text33.Visible=false;
+      }
+    }
+
+    private void Text120_BeforePrint(object sender, EventArgs e)
+    {
+      string PrintNote = (string)Report.GetParameterValue(&quot;PrintNote&quot;);
+      if (PrintNote==&quot;true&quot;)
+      {
+        Text120.Visible=true;
+      }
+      else
+      {
+        Text120.Visible=false;
+      }
+    }
+
+    private void Text128_BeforePrint(object sender, EventArgs e)
+    {      string PrintNote = (string)Report.GetParameterValue(&quot;PrintNote&quot;);
+      if (PrintNote==&quot;true&quot;)
+      {
+        Text128.Visible=true;
+      }
+      else
+      {
+        Text128.Visible=false;
+      }
+    }
+
+    private void Text121_BeforePrint(object sender, EventArgs e)
+    {
+      string PrintNote = (string)Report.GetParameterValue(&quot;PrintNote&quot;);
+      if (PrintNote==&quot;true&quot;)
+      {
+        Text121.Visible=true;
+      }
+      else
+      {
+        Text121.Visible=false;
+      }
+    }
+
+    private void Text122_BeforePrint(object sender, EventArgs e)
+    {
+      string PrintNote = (string)Report.GetParameterValue(&quot;PrintNote&quot;);
+      if (PrintNote==&quot;true&quot;)
+      {
+        Text122.Visible=true;
+      }
+      else
+      {
+        Text122.Visible=false;
+      }
+    }
+
+    private void Text123_BeforePrint(object sender, EventArgs e)
+    {
+      string PrintNote = (string)Report.GetParameterValue(&quot;PrintNote&quot;);
+      if (PrintNote==&quot;true&quot;)
+      {
+        Text123.Visible=true;
+      }
+      else
+      {
+        Text123.Visible=false;
+      }
+    }
+
+    private void Text124_BeforePrint(object sender, EventArgs e)
+    {
+      string PrintNote = (string)Report.GetParameterValue(&quot;PrintNote&quot;);
+      if (PrintNote==&quot;true&quot;)
+      {
+        Text124.Visible=true;
+      }
+      else
+      {
+        Text124.Visible=false;
+      }
+    }
+
+    private void Text125_BeforePrint(object sender, EventArgs e)
+    {
+      string PrintNote = (string)Report.GetParameterValue(&quot;PrintNote&quot;);
+      if (PrintNote==&quot;true&quot;)
+      {
+        Text125.Visible=true;
+      }
+      else
+      {
+        Text125.Visible=false;
+      }
+    }
+
+    private void Text126_BeforePrint(object sender, EventArgs e)
+    {
+      string PrintNote = (string)Report.GetParameterValue(&quot;PrintNote&quot;);
+      if (PrintNote==&quot;true&quot;)
+      {
+        Text126.Visible=true;
+      }
+      else
+      {
+        Text126.Visible=false;
+      }
+    }
+
+    private void Text127_BeforePrint(object sender, EventArgs e)
+    {
+      string PrintNote = (string)Report.GetParameterValue(&quot;PrintNote&quot;);
+      if (PrintNote==&quot;true&quot;)
+      {
+        Text127.Visible=true;
+      }
+      else
+      {
+        Text127.Visible=false;
+      }
+    }
+
+    private void Text9_BeforePrint(object sender, EventArgs e)
+    {
+      string PrintNote = (string)Report.GetParameterValue(&quot;PrintNote&quot;);
+      if (PrintNote==&quot;true&quot;)
+      {
+        Text9.Visible=true;
+      }
+      else
+      {
+        Text9.Visible=false;
+      }
+    }
+  }
+      
+
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqM7gJFg/iaLrqMhRfGy5lGvDpaqZCIZMhCF/R3IvWihwu4YnyMH75h03vBZsDhKkoBX5QVpNha6hIC94j086Hm/ZGOWXF9S+92K+N7GATdk4EmLguV3nfdKqezpvsMvuDGDIylkQyLpkxI4Z4MlIw/vb0881GG0OiuCdsEApFLDx/kUE+1FsDfkhrGbXNfFu8gVSDsqn/zEBSkFygABlEmsL7iN+X1ORu+oVGs3guo5g=">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="select * from vwInvoices where id =@InvID&#13;&#10;">
+        <Column Name="InvoiceDate" DataType="System.DateTime"/>
+        <Column Name="PartnerTypeID" DataType="System.Int32"/>
+        <Column Name="PartnerName" DataType="System.String"/>
+        <Column Name="OperationCode" DataType="System.String"/>
+        <Column Name="DueDate" DataType="System.DateTime"/>
+        <Column Name="POLCode" DataType="System.String"/>
+        <Column Name="PODCode" DataType="System.String"/>
+        <Column Name="BookingNumber" DataType="System.String"/>
+        <Column Name="VesselName" DataType="System.String"/>
+        <Column Name="VoyageOrTruckNumber" DataType="System.String"/>
+        <Column Name="MasterBL" DataType="System.String"/>
+        <Column Name="HouseNumber" DataType="System.String"/>
+        <Column Name="ContainerNumbers" DataType="System.String"/>
+        <Column Name="AmountWithoutVAT" DataType="System.Decimal"/>
+        <Column Name="Amount" DataType="System.Decimal"/>
+        <Column Name="CurrencyCode" DataType="System.String"/>
+        <Column Name="Column" Alias="logo" DataType="System.Int32" Calculated="true" Expression="[header]"/>
+        <Column Name="CityName" DataType="System.String"/>
+        <Column Name="TaxTypeID" DataType="System.Int32"/>
+        <Column Name="TaxPercentage" DataType="System.Decimal"/>
+        <Column Name="ID" DataType="System.Int64"/>
+        <Column Name="InvoiceNumber" DataType="System.Int64"/>
+        <Column Name="InvoiceTypeID" DataType="System.Int32"/>
+        <Column Name="InvoiceTypeCode" DataType="System.String"/>
+        <Column Name="InvoiceTypeName" DataType="System.String"/>
+        <Column Name="ConcatenatedInvoiceNumber" DataType="System.String"/>
+        <Column Name="Code" DataType="System.String"/>
+        <Column Name="OperationID" DataType="System.Int64"/>
+        <Column Name="OperationCodeWithoutDashes" DataType="System.String"/>
+        <Column Name="MainRouteNotes" DataType="System.String"/>
+        <Column Name="TransportType" DataType="System.Int32"/>
+        <Column Name="OperationStageID" DataType="System.Int32"/>
+        <Column Name="OperationNotes" DataType="System.String"/>
+        <Column Name="OperationCloseDate" DataType="System.DateTime"/>
+        <Column Name="IsOperationClosed" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="BranchID" DataType="System.Int32"/>
+        <Column Name="BranchName" DataType="System.String"/>
+        <Column Name="DirectionType" DataType="System.Int32"/>
+        <Column Name="BLType" DataType="System.Int32"/>
+        <Column Name="POLName" DataType="System.String"/>
+        <Column Name="PODCountryName" DataType="System.String"/>
+        <Column Name="PODName" DataType="System.String"/>
+        <Column Name="PODCountryCode" DataType="System.String"/>
+        <Column Name="MasterOperationID" DataType="System.Int64"/>
+        <Column Name="MasterOperationCode" DataType="System.String"/>
+        <Column Name="OperationPartnerID" DataType="System.Int64"/>
+        <Column Name="PartnerTypeCode" DataType="System.String"/>
+        <Column Name="GeneralPartnerTypeCode" DataType="System.String"/>
+        <Column Name="PartnerID" DataType="System.Int32"/>
+        <Column Name="PartnerLocalName" DataType="System.String"/>
+        <Column Name="IsInactive" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="VATNumber" DataType="System.String"/>
+        <Column Name="PartnerTaxID" DataType="System.String"/>
+        <Column Name="PartnerAddress" DataType="System.String"/>
+        <Column Name="PartnerPhonesAndFaxes" DataType="System.String"/>
+        <Column Name="PartnerPaymentTermID" DataType="System.Int32"/>
+        <Column Name="InvoiceStatus" DataType="System.String"/>
+        <Column Name="AddressID" DataType="System.Int64"/>
+        <Column Name="CityID" DataType="System.Int32"/>
+        <Column Name="CountryID" DataType="System.Int32"/>
+        <Column Name="CountryName" DataType="System.String"/>
+        <Column Name="StreetLine1" DataType="System.String"/>
+        <Column Name="StreetLine2" DataType="System.String"/>
+        <Column Name="AddressTypeID" DataType="System.Int32"/>
+        <Column Name="AddressTypeName" DataType="System.String"/>
+        <Column Name="PrintedAddress" DataType="System.String"/>
+        <Column Name="CustomerReference" DataType="System.String"/>
+        <Column Name="SupplierReference" DataType="System.String"/>
+        <Column Name="PaymentTermID" DataType="System.Int32"/>
+        <Column Name="PaymentTermCode" DataType="System.String"/>
+        <Column Name="PaymentTermName" DataType="System.String"/>
+        <Column Name="CurrencyID" DataType="System.Int32"/>
+        <Column Name="MasterDataExchangeRate" DataType="System.Decimal"/>
+        <Column Name="ExchangeRate" DataType="System.Decimal"/>
+        <Column Name="TaxTypeName" DataType="System.String"/>
+        <Column Name="TaxAmount" DataType="System.Decimal"/>
+        <Column Name="DiscountTypeID" DataType="System.Int32"/>
+        <Column Name="DiscountTypeName" DataType="System.String"/>
+        <Column Name="DiscountPercentage" DataType="System.Decimal"/>
+        <Column Name="DiscountAmount" DataType="System.Decimal"/>
+        <Column Name="FixedDiscount" DataType="System.Decimal"/>
+        <Column Name="Items5PercTaxAmount" DataType="System.Decimal"/>
+        <Column Name="Items10PercTaxAmount" DataType="System.Decimal"/>
+        <Column Name="Items14PercTaxAmount" DataType="System.Decimal"/>
+        <Column Name="VATFromItems" DataType="System.Decimal"/>
+        <Column Name="DiscountFromItems" DataType="System.Decimal"/>
+        <Column Name="PaidAmount" DataType="System.Decimal"/>
+        <Column Name="RemainingAmount" DataType="System.Decimal"/>
+        <Column Name="IsApproved" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="IsDeleted" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="ApprovingUserID" DataType="System.Int32"/>
+        <Column Name="ApprovingUserName" DataType="System.String"/>
+        <Column Name="VesselID" DataType="System.Int32"/>
+        <Column Name="VesselCode" DataType="System.String"/>
+        <Column Name="LineID" DataType="System.Int32"/>
+        <Column Name="LineName" DataType="System.String"/>
+        <Column Name="NumberOfAccNotes" DataType="System.Int32"/>
+        <Column Name="NumberOfRoutings" DataType="System.Int32"/>
+        <Column Name="CreatorUserID" DataType="System.Int32"/>
+        <Column Name="CreatorName" DataType="System.String"/>
+        <Column Name="SalesmanID" DataType="System.Int32"/>
+        <Column Name="SalesmanName" DataType="System.String"/>
+        <Column Name="CreationDate" DataType="System.DateTime"/>
+        <Column Name="ModificatorUserID" DataType="System.Int32"/>
+        <Column Name="ModificatorName" DataType="System.String"/>
+        <Column Name="ModificationDate" DataType="System.DateTime"/>
+        <Column Name="LeftSignature" DataType="System.String"/>
+        <Column Name="MiddleSignature" DataType="System.String"/>
+        <Column Name="RightSignature" DataType="System.String"/>
+        <Column Name="TaxAccount_ID" DataType="System.Int32"/>
+        <Column Name="TaxSubAccount_ID" DataType="System.Int32"/>
+        <Column Name="DiscAccount_ID" DataType="System.Int32"/>
+        <Column Name="DiscSubAccount_ID" DataType="System.Int32"/>
+        <Column Name="GRT" DataType="System.String"/>
+        <Column Name="DWT" DataType="System.String"/>
+        <Column Name="NRT" DataType="System.String"/>
+        <Column Name="LOA" DataType="System.String"/>
+        <Column Name="RoutingID" DataType="System.Int64"/>
+        <Column Name="CertificateNumber" DataType="System.String"/>
+        <Column Name="CCReleaseNo" DataType="System.String"/>
+        <Column Name="HouseCertificateNumber" DataType="System.String"/>
+        <Column Name="OperationContainersAndPackagesID" DataType="System.Int64"/>
+        <Column Name="TankOrFlexiNumber" DataType="System.String"/>
+        <Column Name="IsNeglectLimit" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="RelatedToInvoiceID" DataType="System.Int64"/>
+        <Column Name="RelatedToInvoiceNumber" DataType="System.Int64"/>
+        <Column Name="RelatedToInvoiceTypeName" DataType="System.String"/>
+        <Column Name="OperationOpenDate" DataType="System.DateTime"/>
+        <Column Name="ChildInvoiceID" DataType="System.Int64"/>
+        <Column Name="ChildInvoiceNumber" DataType="System.Int64"/>
+        <Column Name="ChildInvoiceTypeName" DataType="System.String"/>
+        <Column Name="IsDraftApproved" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="DraftApprovingUserID" DataType="System.Int32"/>
+        <Column Name="PaymentDate" DataType="System.DateTime"/>
+        <Column Name="TransactionTypeID" DataType="System.Int32"/>
+        <Column Name="CutOffDate" DataType="System.DateTime"/>
+        <Column Name="Notes" DataType="System.String"/>
+        <Column Name="EditableNotes" DataType="System.String"/>
+        <Column Name="Is3PL" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="IsFleet" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="IsPrintOriginal" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="CancelledInvoiceID" DataType="System.Int64"/>
+        <Column Name="IsDelivered" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="ManualPaymentStatusID" DataType="System.Int32"/>
+        <Column Name="ManualPaymentStatusName" DataType="System.String"/>
+        <Column Name="ECode" DataType="System.String"/>
+        <Column Name="TariffID" DataType="System.Int32"/>
+        <Column Name="GrossWeight" DataType="System.Decimal"/>
+        <Column Name="StorageFromDate" DataType="System.DateTime"/>
+        <Column Name="StorageToDate" DataType="System.DateTime"/>
+        <Column Name="IsValidPortal" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="IsHold" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="OnBehalfName" DataType="System.String"/>
+        <Column Name="PortalOperationPartnerID" DataType="System.Int64"/>
+        <Column Name="PortalPartnerTypeID" DataType="System.Int32"/>
+        <Column Name="PortalPartnerTypeCode" DataType="System.String"/>
+        <Column Name="PortalGeneralPartnerTypeCode" DataType="System.String"/>
+        <Column Name="PortalPartnerID" DataType="System.Int32"/>
+        <Column Name="PortalPartnerName" DataType="System.String"/>
+        <Column Name="PortalPartnerLocalName" DataType="System.String"/>
+        <Column Name="PortalIsInactive" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="PortalVATNumber" DataType="System.String"/>
+        <Column Name="PortalPartnerTaxID" DataType="System.String"/>
+        <Column Name="PortalPartnerAddress" DataType="System.String"/>
+        <Column Name="PortalPartnerPhonesAndFaxes" DataType="System.String"/>
+        <Column Name="PortalPartnerPaymentTermID" DataType="System.Int32"/>
+        <Column Name="AccountName" DataType="System.String"/>
+        <Column Name="USDPerContainer" DataType="System.Decimal"/>
+        <Column Name="UniqueSerial" DataType="System.Int32"/>
+        <Column Name="Reference" DataType="System.String"/>
+        <Column Name="TotalEN" DataType="System.String"/>
+        <Column Name="ShipmentTypeCode" DataType="System.String"/>
+        <Column Name="POrCName" DataType="System.String"/>
+        <Column Name="Volume" DataType="System.Decimal"/>
+        <Column Name="ApprovedDate" DataType="System.DateTime"/>
+        <Column Name="CreditAmount" DataType="System.Decimal"/>
+        <Column Name="AgentName" DataType="System.String"/>
+        <Column Name="ChildInvType" DataType="System.Int32"/>
+        <Column Name="ChequeNum" DataType="System.String"/>
+        <Column Name="AllocationCode" DataType="System.String"/>
+        <Column Name="BillingDetails" DataType="System.String"/>
+        <CommandParameter Name="InvID" DataType="22" Expression="[id]"/>
+      </TableDataSource>
+      <TableDataSource Name="Table1" Alias="Receivables" DataType="System.Int32" Enabled="true" SelectCommand="IF @cbCombineTrucking = 'yes' &#13;&#10;    AND (SELECT COUNT(DISTINCT SalePrice) &#13;&#10;         FROM vwReceivables &#13;&#10;         WHERE (DraftInvoiceID = @INVID OR InvoiceID = @INVID) &#13;&#10;         AND ChargeTypeID IN (521, 233)&#13;&#10;         AND SaleAmount != 0) &gt; 1&#13;&#10;BEGIN&#13;&#10;    -- Execute the query for the case when @cbCombineTrucking = 'no'&#13;&#10;    SELECT &#13;&#10;        ID,&#13;&#10;        ChargeTypeName,&#13;&#10;        Quantity,&#13;&#10;        SalePrice,&#13;&#10;        SaleAmount,&#13;&#10;        notes&#13;&#10;    FROM &#13;&#10;        vwReceivables &#13;&#10;    WHERE &#13;&#10;        (DraftInvoiceID = @INVID OR InvoiceID = @INVID) &#13;&#10;        AND SaleAmount != 0&#13;&#10;END&#13;&#10;ELSE IF @cbCombineTrucking = 'yes'&#13;&#10;BEGIN&#13;&#10;    SELECT &#13;&#10;        MAX(ID) AS id,&#13;&#10;        MAX(ChargeTypeID) AS ChargeTypeID,&#13;&#10;        MAX(ChargeTypeName) AS ChargeTypeName,&#13;&#10;        SUM(Quantity) AS Quantity,&#13;&#10;        Max(SalePrice) AS SalePrice,&#13;&#10;        SUM(SaleAmount) AS SaleAmount,&#13;&#10;        MAX(notes) AS notes&#13;&#10;    FROM &#13;&#10;        vwReceivables &#13;&#10;    WHERE &#13;&#10;        (DraftInvoiceID = @INVID OR InvoiceID = @INVID) &#13;&#10;        AND SaleAmount != 0&#13;&#10;    GROUP BY &#13;&#10;        CASE &#13;&#10;            WHEN ChargeTypeID IN (521, 233) THEN 0 &#13;&#10;            ELSE ID&#13;&#10;        END,&#13;&#10;        CASE &#13;&#10;            WHEN ChargeTypeID IN (521, 233) THEN 'TRUCKING'&#13;&#10;            ELSE NULL&#13;&#10;        END&#13;&#10;END&#13;&#10;ELSE&#13;&#10;BEGIN&#13;&#10;    SELECT &#13;&#10;        ID,&#13;&#10;        ChargeTypeName,&#13;&#10;        Quantity,&#13;&#10;        SalePrice,&#13;&#10;        SaleAmount,&#13;&#10;        notes&#13;&#10;    FROM &#13;&#10;        vwReceivables &#13;&#10;    WHERE &#13;&#10;        (DraftInvoiceID = @INVID OR InvoiceID = @INVID) &#13;&#10;        AND SaleAmount != 0&#13;&#10;END">
+        <Column Name="Quantity" DataType="System.Decimal"/>
+        <Column Name="SalePrice" DataType="System.Decimal"/>
+        <Column Name="SaleAmount" DataType="System.Decimal"/>
+        <Column Name="ChargeTypeName" DataType="System.String"/>
+        <Column Name="id" DataType="System.Int64"/>
+        <Column Name="notes" DataType="System.String"/>
+        <CommandParameter Name="INVID " DataType="22" Expression="[id]"/>
+        <CommandParameter Name="cbCombineTrucking" DataType="22" Expression="[cbCombineTrucking]" DefaultValue="no"/>
+      </TableDataSource>
+      <TableDataSource Name="Table2" Alias="Bank" DataType="System.Int32" Enabled="true" SelectCommand="select AccountName,BankName,BankAddress,SwiftCode,AccountNumber from Defaults">
+        <Column Name="AccountName" DataType="System.String"/>
+        <Column Name="BankName" DataType="System.String"/>
+        <Column Name="BankAddress" DataType="System.String"/>
+        <Column Name="SwiftCode" DataType="System.String"/>
+        <Column Name="AccountNumber" DataType="System.String"/>
+      </TableDataSource>
+      <TableDataSource Name="Table4" DataType="System.Int32" Enabled="true" SelectCommand="select ActualArrival,ContainerTypes, CommodityName,ContainerNumber,Form13Number,VolumeSum,NumberOfPackages,PackageTypeName,WeightCharge,ConsigneeName,ShipperName,GrossWeightSum,PONumber,ACIDNumber from vwoperations where  id =@OPID&#13;&#10;">
+        <Column Name="ActualArrival" DataType="System.DateTime"/>
+        <Column Name="WeightCharge" DataType="System.Decimal"/>
+        <Column Name="ContainerNumber" DataType="System.String"/>
+        <Column Name="ContainerTypes" DataType="System.String"/>
+        <Column Name="NumberOfPackages" DataType="System.Int32"/>
+        <Column Name="PackageTypeName" DataType="System.String"/>
+        <Column Name="CommodityName" DataType="System.String"/>
+        <Column Name="VolumeSum" DataType="System.Decimal"/>
+        <Column Name="Form13Number" DataType="System.String"/>
+        <Column Name="ConsigneeName" DataType="System.String"/>
+        <Column Name="ShipperName" DataType="System.String"/>
+        <Column Name="GrossWeightSum" DataType="System.Decimal"/>
+        <Column Name="PONumber" DataType="System.String"/>
+        <Column Name="ACIDNumber" DataType="System.String"/>
+        <CommandParameter Name="OPID" DataType="22" Expression="[Table.OperationID]"/>
+      </TableDataSource>
+      <TableDataSource Name="Table3" Alias="InvoiceNameDrafts" DataType="System.Int32" Enabled="true" SelectCommand="select i.InvoiceTypeCode, t.Name as drafttype from vwinvoices i left join InvoiceTypes t on i.USDPerContainer = t.id where  i.id = @ID">
+        <Column Name="InvoiceTypeCode" DataType="System.String"/>
+        <Column Name="drafttype" DataType="System.String"/>
+        <CommandParameter Name="ID" DataType="22" Expression="[ID]"/>
+      </TableDataSource>
+      <TableDataSource Name="Table5" Alias="ClientAddress" DataType="System.Int32" Enabled="true" SelectCommand="SELECT TOP 1  StreetLine1+ ' , '+ CityName + ' , ' + CountryName &#13;&#10;FROM vwAddresses WHERE PartnerID=@PID AND AddressTypeID=1">
+        <Column Name="Column1" DataType="System.String"/>
+        <CommandParameter Name="PID" DataType="22" Expression="[Table.PartnerID]"/>
+      </TableDataSource>
+      <TableDataSource Name="Table6" DataType="System.Int32" Enabled="true" SelectCommand="select InvoiceTypeID from invoices where ChildInvoiceID =@INVID&#13;&#10;">
+        <Column Name="InvoiceTypeID" DataType="System.Int32"/>
+        <CommandParameter Name="INVID" DataType="22" Expression="[id]"/>
+      </TableDataSource>
+      <TableDataSource Name="Table7" DataType="System.Int32" Enabled="true" SelectCommand="select Form13Number from operations where id =@MSOP">
+        <Column Name="Form13Number" DataType="System.String"/>
+        <CommandParameter Name="MSOP" DataType="22" Expression="[Table.MasterOperationID]"/>
+      </TableDataSource>
+      <TableDataSource Name="Table8" Alias="package" DataType="System.Int32" Enabled="true" SelectCommand="select NumberOfPackages,PackageTypeName,PackageTypesOnContainersTotals from vwoperations where id = @OPID">
+        <Column Name="NumberOfPackages" DataType="System.Int32"/>
+        <Column Name="PackageTypeName" DataType="System.String"/>
+        <Column Name="PackageTypesOnContainersTotals" DataType="System.String"/>
+        <CommandParameter Name="OPID" DataType="22" Expression="[Table.OperationID]"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="header" DataType="System.String"/>
+    <Parameter Name="printuser" DataType="System.String"/>
+    <Parameter Name="id" DataType="System.String"/>
+    <Parameter Name="Printheader" DataType="System.String"/>
+    <Parameter Name="PrintFooter" DataType="System.String"/>
+    <Parameter Name="PrintNote" DataType="System.String"/>
+    <Parameter Name="cbCombineTrucking" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <PageHeaderBand Name="PageHeader1" Width="718.2" Height="368.55" Fill.Color="White" PrintOn="FirstPage, SinglePage" FirstRowStartsNewPage="true">
+      <TextObject Name="Text1" Top="103.95" Width="718.2" Height="28.35" Text="[Table.InvoiceTypeName][IIf([Table.InvoiceTypeID]==9,[InvoiceNameDrafts.drafttype],&quot;&quot;)][IIf([Table6.InvoiceTypeID]!=0,&quot;THC&quot;,&quot;&quot;)]  No. [IIf([Table.InvoiceTypeID]==12,[Table.InvoiceTypeCode],&quot;&quot;)] [Table.InvoiceNumber]/[Year([Table.InvoiceDate])]" HorzAlign="Center" VertAlign="Center" Font="Arial, 20pt"/>
+      <TextObject Name="Text2" Left="-18.9" Top="141.75" Width="66.15" Height="18.9" Text="Bill to:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text3" Left="-18.9" Top="160.65" Width="94.5" Height="18.9" Text="Address:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text5" Left="567" Top="141.75" Width="85.05" Height="18.9" Text="Inv.Date:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text6" Left="567" Top="160.65" Width="94.5" Height="18.9" Text="Due Date:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <LineObject Name="Line1" Left="-18.9" Top="189" Width="737.1"/>
+      <TextObject Name="Text7" Left="28.35" Top="132.3" Width="472.5" Height="37.8" Text="[Table.PartnerName]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text8" Left="47.25" Top="160.65" Width="529.2" Height="18.9" CanGrow="true" Text="[ClientAddress.Column1]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text10" Left="633.15" Top="141.75" Width="94.5" Height="18.9" Text="[Format(&quot;{0:dd/MM/yyyy}&quot;,[Table.InvoiceDate])]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text12" Top="189" Width="94.5" Height="18.9" Text="Operation:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text13" Top="207.9" Width="94.5" Height="18.9" Text="MBIL No:." VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text14" Top="226.8" Width="94.5" Height="18.9" Text="POL:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text15" Top="245.7" Width="94.5" Height="18.9" BeforePrintEvent="Text15_BeforePrint" Text="Vessel:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text16" Top="264.6" Width="103.95" Height="18.9" BeforePrintEvent="Text16_BeforePrint" Text="Containers:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text19" Left="472.5" Top="189" Width="103.95" Height="18.9" Text="Currency:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text20" Left="472.5" Top="207.9" Width="103.95" Height="18.9" Text="HBIL No.:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text21" Left="472.5" Top="226.8" Width="103.95" Height="18.9" Text="POD:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text22" Left="472.5" Top="245.7" Width="103.95" Height="18.9" Text="Arrival Date:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text23" Left="472.5" Top="264.6" Width="160.65" Height="18.9" BeforePrintEvent="Text23_BeforePrint" Text="Container Numbers:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text24" Top="283.5" Width="103.95" Height="18.9" BeforePrintEvent="Text24_BeforePrint" Text="Commodity:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text25" Left="472.5" Top="302.4" Width="103.95" Height="18.9" BeforePrintEvent="Text25_BeforePrint" Text="Weight:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text47" Left="642.6" Top="160.65" Width="94.5" Height="18.9" Text="[Format(&quot;{0:dd/MM/yyyy}&quot;,[Table.DueDate])]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text38" Left="75.6" Top="189" Width="396.9" Height="18.9" Text="[IIf([Table.MasterOperationCode]==&quot;&quot;,[Table.OperationCode],[Table.MasterOperationCode])]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text56" Left="75.6" Top="207.9" Width="396.9" Height="18.9" Text="[Table.MasterBL]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text57" Left="37.8" Top="226.8" Width="434.7" Height="18.9" Text="[Table.POLName]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text58" Left="56.7" Top="245.7" Width="415.8" Height="18.9" BeforePrintEvent="Text58_BeforePrint" Text="[Table.VesselName]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text59" Left="548.1" Top="189" Width="302.4" Height="18.9" Text="[Table.CurrencyCode]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text60" Left="548.1" Top="207.9" Width="302.4" Height="18.9" Text="[Table.HouseNumber]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text61" Left="519.75" Top="226.8" Width="302.4" Height="18.9" Text="[Table.PODName]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text62" Left="567" Top="245.7" Width="302.4" Height="18.9" Text="[IIf(ToString([Table4.ActualArrival])!=&quot;1/1/0001 12:00:00 AM&quot;,Format(&quot;{0:dd/MM/yyyy}&quot;, [Table4.ActualArrival]),&quot;&quot;)]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text63" Left="529.2" Top="302.4" Width="151.2" Height="18.9" BeforePrintEvent="Text63_BeforePrint" Text="[Table4.GrossWeightSum] KG" Format="Number" Format.UseLocale="false" Format.DecimalDigits="0" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="1" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text64" Left="85.05" Top="264.6" Width="387.45" Height="18.9" BeforePrintEvent="Text64_BeforePrint" Text="[Table4.ContainerTypes]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text65" Left="614.25" Top="264.6" Width="160.65" Height="18.9" BeforePrintEvent="Text65_BeforePrint" Text="[Table4.ContainerNumber]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text67" Left="94.5" Top="283.5" Width="387.45" Height="18.9" BeforePrintEvent="Text67_BeforePrint" Text="[Table4.CommodityName]" VertAlign="Center" Font="Arial, 9pt"/>
+      <PictureObject Name="Picture1" Left="519.75" Width="198.45" Height="113.4" BeforePrintEvent="Picture1_BeforePrint" Image="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"/>
+      <TextObject Name="Text103" Top="302.4" Width="103.95" Height="18.9" BeforePrintEvent="Text24_BeforePrint" Text="Consignee:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text104" Left="85.05" Top="302.4" Width="387.45" Height="18.9" BeforePrintEvent="Text67_BeforePrint" Text="[Table4.ConsigneeName]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text105" Top="321.3" Width="122.85" Height="18.9" BeforePrintEvent="Text24_BeforePrint" Text="Customer Ref :" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text106" Left="113.4" Top="321.3" Width="359.1" Height="18.9" BeforePrintEvent="Text67_BeforePrint" Text="[Table.CustomerReference]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text107" Left="472.5" Top="283.5" Width="122.85" Height="18.9" BeforePrintEvent="Text24_BeforePrint" Text="Shipper:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text108" Left="538.65" Top="283.5" Width="255.15" Height="18.9" CanGrow="true" BeforePrintEvent="Text67_BeforePrint" Text="[Table4.ShipperName]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text129" Left="472.5" Top="321.3" Width="122.85" Height="18.9" BeforePrintEvent="Text24_BeforePrint" Text="Packages :" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text130" Left="557.55" Top="321.3" Width="226.8" Height="18.9" BeforePrintEvent="Text67_BeforePrint" Text="[IIf([package.NumberOfPackages]==0,&quot;&quot;,[package.NumberOfPackages]+&quot;x&quot;+[package.PackageTypeName] )]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text131" Top="340.2" Width="122.85" Height="18.9" BeforePrintEvent="Text25_BeforePrint" Text="ACIDNumber :" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text132" Left="103.95" Top="340.2" Width="368.55" Height="18.9" BeforePrintEvent="Text63_BeforePrint" Text="[Table4.ACIDNumber]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="0" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="1" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text133" Left="472.5" Top="340.2" Width="103.95" Height="18.9" BeforePrintEvent="Text25_BeforePrint" Text="PONumber :" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text134" Left="567" Top="340.2" Width="141.75" Height="18.9" BeforePrintEvent="Text63_BeforePrint" Text="[Table4.PONumber]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="0" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="1" VertAlign="Center" Font="Arial, 9pt"/>
+    </PageHeaderBand>
+    <ColumnHeaderBand Name="ColumnHeader1" Top="372.55" Width="718.2" Height="28.35">
+      <TextObject Name="Text26" Width="340.2" Height="28.35" Border.Lines="Left, Top, Bottom" BeforePrintEvent="Text26_BeforePrint" Text="Description" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text27" Left="340.2" Width="94.5" Height="28.35" Border.Lines="Left, Top, Bottom" BeforePrintEvent="Text27_BeforePrint" Text="Qty" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text28" Left="434.7" Width="141.75" Height="28.35" Border.Lines="Left, Top, Bottom" BeforePrintEvent="Text28_BeforePrint" Text="Unit Price" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text29" Left="576.45" Width="141.75" Height="28.35" Border.Lines="All" BeforePrintEvent="Text29_BeforePrint" Text="Sale Price" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text120" Width="122.85" Height="28.35" Border.Lines="Left, Top, Bottom" BeforePrintEvent="Text120_BeforePrint" Text="Description" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text121" Left="434.7" Width="66.15" Height="28.35" Border.Lines="Left, Top, Bottom" BeforePrintEvent="Text121_BeforePrint" Text="Qty" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text122" Left="500.85" Width="103.95" Height="28.35" Border.Lines="Left, Top, Bottom" BeforePrintEvent="Text122_BeforePrint" Text="Unit Price" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text123" Left="604.8" Width="113.4" Height="28.35" Border.Lines="All" BeforePrintEvent="Text123_BeforePrint" Text="Sale Price" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text128" Left="122.85" Width="311.85" Height="28.35" Border.Lines="Left, Top, Bottom" BeforePrintEvent="Text128_BeforePrint" Text="Note" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+    </ColumnHeaderBand>
+    <DataBand Name="Data1" Top="404.9" Width="718.2" Height="37.8" DataSource="Table1">
+      <TextObject Name="Text30" Width="340.2" Height="37.8" Border.Lines="Left, Bottom" BeforePrintEvent="Text30_BeforePrint" Text="[Receivables.ChargeTypeName]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text31" Left="340.2" Width="94.5" Height="37.8" Border.Lines="Left, Bottom" BeforePrintEvent="Text31_BeforePrint" Text="[Receivables.Quantity]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text32" Left="434.7" Width="141.75" Height="37.8" Border.Lines="Left, Bottom" BeforePrintEvent="Text32_BeforePrint" Text="[Receivables.SalePrice]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text33" Left="576.45" Width="141.75" Height="37.8" Border.Lines="Left, Right, Bottom" BeforePrintEvent="Text33_BeforePrint" Text="[Receivables.SaleAmount]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text124" Width="122.85" Height="37.8" Border.Lines="Left, Bottom" BeforePrintEvent="Text124_BeforePrint" Text="[Receivables.ChargeTypeName]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text125" Left="434.7" Width="66.15" Height="37.8" Border.Lines="Left, Bottom" BeforePrintEvent="Text125_BeforePrint" Text="[Receivables.Quantity]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text126" Left="500.85" Width="103.95" Height="37.8" Border.Lines="Left, Bottom" BeforePrintEvent="Text126_BeforePrint" Text="[Receivables.SalePrice]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text127" Left="604.8" Width="113.4" Height="37.8" Border.Lines="Left, Right, Bottom" BeforePrintEvent="Text127_BeforePrint" Text="[Receivables.SaleAmount]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text9" Left="122.85" Width="311.85" Height="37.8" Border.Lines="Left, Right, Bottom" BeforePrintEvent="Text9_BeforePrint" Text="[Receivables.notes]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+    </DataBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="446.7" Width="718.2" Height="189">
+      <TextObject Name="Text34" Width="151.2" Height="18.9" Text="BANK DETAILS:" VertAlign="Center" Font="Arial, 9pt, style=Bold, Underline"/>
+      <TextObject Name="Text42" Left="349.65" Top="18.9" Width="103.95" Height="18.9" Text="[IIf([Table.TaxTypeName]==&quot;&quot;,&quot;VAT&quot;,IIf([Table.TaxTypeName]==&quot;VAT 14&quot;,&quot;VAT (14)%&quot;,[Table.TaxTypeName]))]" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text44" Left="349.65" Top="37.8" Width="75.6" Height="18.9" BeforePrintEvent="Text44_BeforePrint" Text="Total:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text45" Left="349.65" Top="56.7" Width="47.25" Height="18.9" BeforePrintEvent="Text45_BeforePrint" Text="ONLY" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text53" Left="463.05" Top="18.9" Width="255.15" Height="18.9" Text="[Table.CurrencyCode] [Table.TaxAmount]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text54" Left="463.05" Top="37.8" Width="255.15" Height="18.9" BeforePrintEvent="Text54_BeforePrint" Text="[Table.CurrencyCode] [Table.Amount]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text11" Top="18.9" Width="122.85" Height="28.35" Text="Account Name:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text94" Top="37.8" Width="122.85" Height="37.8" Text="Bank Name:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text95" Top="66.15" Width="122.85" Height="28.35" Text="Bank Address: " VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text96" Top="85.05" Width="122.85" Height="28.35" Text="Swift Code:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text97" Top="113.4" Width="141.75" Height="28.35" Text="Account Number:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text98" Left="113.4" Top="18.9" Width="217.35" Height="28.35" Text="[Bank.AccountName]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text99" Left="113.4" Top="37.8" Width="217.35" Height="37.8" Text="[Bank.BankName]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text100" Left="113.4" Top="66.15" Width="226.8" Height="28.35" Text="[Bank.BankAddress]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text101" Left="113.4" Top="85.05" Width="236.25" Height="28.35" Text="[Bank.SwiftCode]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text102" Left="113.4" Top="113.4" Width="415.8" Height="28.35" CanGrow="true" Text="[Bank.AccountNumber]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text55" Left="463.05" Top="56.7" Width="311.85" Height="18.9" CanGrow="true" BeforePrintEvent="Text55_BeforePrint" Text="[Table.TotalEN] [Table.CurrencyCode]" Font="Arial, 9pt"/>
+      <TextObject Name="Text4" Left="349.65" Top="56.7" Width="56.7" Height="18.9" BeforePrintEvent="Text4_BeforePrint" Text="Total:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text115" Left="396.9" Top="56.7" Width="330.75" Height="18.9" BeforePrintEvent="Text115_BeforePrint" Text="[Table.CurrencyCode] [Table.Amount]" VertAlign="Center" Font="Arial, 9pt">
+        <Formats>
+          <NumberFormat UseLocale="false" DecimalDigits="0" NegativePattern="1"/>
+          <NumberFormat UseLocale="false"/>
+        </Formats>
+      </TextObject>
+      <TextObject Name="Text116" Left="349.65" Top="75.6" Width="47.25" Height="18.9" BeforePrintEvent="Text116_BeforePrint" Text="ONLY" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text117" Left="396.9" Top="75.6" Width="321.3" Height="18.9" CanGrow="true" BeforePrintEvent="Text117_BeforePrint" Text="[Table.TotalEN] [Table.CurrencyCode]" VertAlign="Center" Font="Arial, 9pt">
+        <Formats>
+          <NumberFormat UseLocale="false" NegativePattern="1"/>
+          <GeneralFormat/>
+        </Formats>
+      </TextObject>
+      <TextObject Name="Text118" Left="349.65" Top="37.8" Width="66.15" Height="18.9" BeforePrintEvent="Text118_BeforePrint" Text="W.H.T :" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text119" Left="463.05" Top="37.8" Width="255.15" Height="18.9" BeforePrintEvent="Text119_BeforePrint" Text="[Table.DiscountAmount]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text41" Left="349.65" Width="66.15" Height="18.9" Text="Subtotal:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text46" Left="463.05" Width="255.15" Height="18.9" Text="[Table.CurrencyCode] [Table.AmountWithoutVAT]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" VertAlign="Center" Font="Arial, 9pt"/>
+    </ReportSummaryBand>
+    <PageFooterBand Name="PageFooter1" Top="639.7" Width="718.2"/>
+  </ReportPage>
+</Report>

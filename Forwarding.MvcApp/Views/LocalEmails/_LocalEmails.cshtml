@@ -1,0 +1,388 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);" onclick="LoadViews('Dashboard')">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.EmailsAndAlarms</li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-LocalEmails">
+    <!-- Region Options & Template  -->
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 id="h3LocalEmails" class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.EmailsAndAlarms</h3>
+            </header>
+            <!--Region the searh, delete, addnew-->
+            <div class="row text-sm wrapper hidden-print ">
+                <div id="div-main-options" class="col-sm-2 m-b-xs">
+                    <button id="btn-NewAdd" class="btn btn-warning btn-sm swapChildrenClass" onclick="LocalEmail_ClearAllControls();" data-toggle="modal" data-target="#LocalEmailsModal"><i class="fa fa-plus"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.New&nbsp;</b></button>
+                    <div id="div-option-buttons" class="btn-group hide">
+                        <button id="btn-Copy" type="button" class="btn btn-sm btn-default"><i class="fa fa-copy"></i>&nbsp;Copy </button>
+                        <button id="btn-Print" type="button" class="btn btn-sm btn-default"><i class="fa fa-print"></i>&nbsp;Print </button>
+                        <button id="btn-Send" type="button" class="btn btn-sm btn-default"><i class="fa fa-envelope-o"></i>&nbsp;Send </button>
+                    </div>
+                </div>    
+                <div id="div-search-option" class="col-sm-10 swapChildrenClass">
+
+
+                    <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass">
+                        <select id="slUser" onchange="LocalEmails_LoadingWithPaging();" onfocus="DisableBackspaceKey(id);" onkeydz="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                        <span class="input-group-btn">
+                            <button id="btn-filter-User" title="Filter" class="btn btn-sm btn-lightblue" type="button" onclick="LocalEmails_LoadingWithPaging();"><i class="fa fa-filter"></i></button>
+                        </span>
+                    </div>
+
+                    <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass hide">
+                        <select id="slEmailStatus" onfocus="DisableBackspaceKey(id);" onchange="LocalEmails_LoadingWithPaging();" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b input-sm" data-required="false">
+                            <option value="10" selected="selected">Received</option>
+                            <option value="20">Sent</option>
+                        </select>
+                        <span class="input-group-btn">
+                            <button id="btn-filter-EmailStatus" title="Filter" class="btn btn-sm btn-lightblue" type="button" onclick="LocalEmails_LoadingWithPaging();"><i class="fa fa-filter"></i></button>
+                        </span>
+                    </div>
+
+                    <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass hide">
+                        <select id="slEmailOrAlarm" onfocus="DisableBackspaceKey(id);" onchange="LocalEmails_LoadingWithPaging();" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b input-sm" data-required="false">
+                            <option value="0" selected="selected">Checked & history</option>
+                            <option value="1">Alarm</option>
+                        </select>
+                        <span class="input-group-btn">
+                            <button id="btn-filter-EmailIsAlarm" title="Filter" class="btn btn-sm btn-lightblue" type="button" onclick="LocalEmails_LoadingWithPaging();"><i class="fa fa-filter"></i></button>
+                        </span>
+                    </div>
+                    <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass">
+                        <select id="slOperationFilterEmail" onfocus="DisableBackspaceKey(id);" onchange="" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b input-sm" data-required="false">
+                            <option value=""><--Select Oper.--></option>
+                        </select>
+                        <span class="input-group-btn">
+                            <button id="btn-filter-OperationFilterEmail" title="Filter" class="btn btn-sm btn-lightblue" type="button" onclick="LocalEmails_LoadingWithPaging();"><i class="fa fa-filter"></i></button>
+                        </span>
+                    </div>
+
+                    <div id="div-search-controls" class="input-group col-sm-4">
+                        <input id="txt-Search" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="">
+                        <span class="input-group-btn">
+                            <button id="btn-search" title="Search" class="btn btn-sm btn-primary" type="button" onclick="LocalEmails_LoadingWithPaging();"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                    @*<div class="form-group input-group col-sm-2 m-t-xs swapChildrenClass">
+            <label><input type="checkbox" checked="checked" id="cbHideApprovedPayments" onchange="Payment_LoadingWithPaging();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Hide Approved</label>
+        </div>*@
+                <div class="float-right col-sm-2">
+                    <button type="button" class="btn btn-danger btn-sm swapChildrenClass" onclick="RemoveAllAlarms();"><b>Remove Alarms</b></button>
+
+                    <button id="btn-Delete" type="button" class="float-right btn btn-sm btn-danger m-r-n swapChildrenClass hide"><i class="fa fa-trash-o"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete&nbsp;</b></button>
+                    <button id="btn-DeleteEmails" type="button" class="float-right btn btn-sm btn-danger m-r-n swapChildrenClass hide" onclick="DeleteAllAlarms();"><b>Delete Emails</b></button>
+                </div>
+
+                    </div>
+            
+                </div>
+            <!--EOF Region the searh, delete, addnew line-->
+            
+            <!--Region: table header-->
+            <div class="table-responsive m-t-n-sm">
+                <table id="tblLocalEmails" class="table table-striped b-t b-light text-sm  table-hover">
+                    <thead>
+                        <tr>
+                            <th id="HeaderDeleteLocalEmailID">
+                                <input id="cbLocalEmailDeleteHeader" type="checkbox" />
+                            </th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Senders
+                            </th>
+                            <th>Receivers
+                            </th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Subject
+                            </th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Operation
+                            </th>
+                            <th >@Forwarding.MvcApp.App_Resources.App_Resources.DateAndTime
+                            </th>
+                            
+                            <th class="rounded-right "></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <!--Region: table header-->
+
+            <!--Region: footer-->
+            <footer class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-4 hidden-xs">
+                        <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                        <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                        </button>
+                    </div>
+                    <div id="div-Text-Total" class="col-sm-4 text-center">
+                        <small class="text-muted inline m-t-sm m-b-sm"> @Forwarding.MvcApp.App_Resources.App_Resources.Showing 
+                            <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                            <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                        </small>
+                    </div>
+                    <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+                </div>
+            </footer>
+            <!--Region: footer-->
+        </section>
+    </div>
+</div>
+
+
+<!-- LocalEmailsModal -->
+    <div class="modal fade" id="LocalEmailsModal" tabindex="-1" style="z-index: 1050;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="LocalEmailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modalwidth-100">
+            <div class="modal-content m-t-n-lg">
+                <div class="modal-header">
+                    @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;</button>*@
+                    <h3 class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.LocalEmails &nbsp;<label id="lblLocalEmailShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <!-- Region Add / Edit LocalEmails Form -->
+                    <div class="span7 form vertical-mode" id="LocalEmails-form">
+                        <fieldset>
+                            <div class="form-group pull-in  has-error clearfix">
+                                <input id="hLocalEmailID" type="hidden" />
+                                <input id="hParentEmailID" type="hidden" />
+                                <input id="hSenderUserID" type="hidden" />
+
+                                <!-- start alert message region -->
+                                @*<div class="alert alert-danger div-error">
+            @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+        </div>*@
+                                <!-- end alert message region -->
+                                @*<div class="form-group col-sm-10 m-l-lg m-t-n-xs">
+            <label>@Forwarding.MvcApp.App_Resources.App_Resources.To</label>
+            <textarea id="txtReceivers" disabled="disabled" maxlength="2000" class="form-group col-sm-12 textDivGoodsDescription" placeholder="Receptionists" style="text-transform:uppercase; height:60px; font-size:90%;"></textarea>
+        </div>
+        <div class="col-sm-2 m-t-xs m-l-n-lg">
+            <br />
+            <button id="btn-SelectReceivers" class="form-group btn btn-warning btn-sm m-l-sm" data-toggle="modal" onclick="LocalEmails_SelectReceivers();"><i class="fa fa-plus">&nbsp;Select</i></button>
+        </div>
+        <div class="form-group col-sm-11 m-l-lg">
+            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Subject</label>
+            <input type="text" id="txtSubject" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="true" data-minlength="0" maxlength="500" style="text-transform:uppercase" />
+        </div>
+        <div class="form-group col-sm-11 m-l-lg">
+            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Body</label>
+            <textarea id="txtBody" maxlength="2000" class="form-group col-sm-12 textDivGoodsDescription"  style="text-transform:uppercase; height:310px;"></textarea>
+        </div>*@
+
+                                <div class="row">
+                                    <div class="form-group col-sm-8 m-l-lg">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Subject</label>
+                                        <input type="text" id="txtSubject" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="true" data-minlength="0" maxlength="500" style="text-transform:uppercase" />
+                                    </div>
+                                    <div class="form-group col-sm-3">
+                                        <label>Operation</label>
+                                        <select id="slRegardingOperation" disabled="disabled" class="form-control input-sm">
+                                            <option value=""><--Select--></option>
+                                        </select>
+                                    </div>
+
+
+
+                                    </div>
+                                <div class="row" style="max-height:900px; overflow-y:scroll; overflow-x:no-display;">
+                                    <div id="ChatArea" class="col-sm-12 m-l-lg m-t-sm">
+
+
+                                    </div>
+                                    <div id="BodyArea" class="form-group col-sm-11 m-l-lg hide" style="clear:both;">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Body</label>
+                                        <textarea id="txtBody" maxlength="2000" class="form-group col-sm-12 textDivGoodsDescription " style="text-transform:uppercase; height:400px;"></textarea>
+                                    </div>
+                                </div>
+
+                                </div>
+</fieldset>
+                    </div>
+                    <!-- Endegion Add / Edit EditCharge Form -->
+                </div>
+                <div class="modal-footer m-t-n">
+
+                    <button type="button" id="btnReplyLocalEmail" class="btn btn-lightblue btn-sm hide" data-toggle="modal" onclick="LocalEmail_ClearAllControls('Reply');">
+                        <span class="fa fa-mail-reply-all"></span>&nbsp;Reply&nbsp;
+                    </button>
+                    
+                    <button type="button" id="btnSendLocalEmail" class="btn btn-primary btn-sm" data-toggle="modal" onclick="LocalEmails_SelectReceivers();">
+                        <span class="glyphicon glyphicon-send"></span>&nbsp;Select Users & Send&nbsp;</button>
+                    
+                    @*<button type="button" id="btnSaveAndNewPaymentDetails" class="btn btn-primary btn-sm">
+                        <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew</button>*@
+                    <button class="btnClose btn btn-link btn-sm" id="btnLocalEmailClose" data-dismiss="modal" aria-hidden="true" >@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+                </div>
+            </div>
+        </div>
+    </div>
+<!--EOF LocalEmailsModal -->
+
+
+
+<!--SelectOperationTypeModal-->
+<div class="modal fade" id="SelectOperationTypeModal" tabindex="-1" style="z-index:2000;" @*data-keyboard="false"*@ data-backdrop="false" role="dialog" aria-labelledby="SelectOperationTypeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-50">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="m-b-none">Quotation&nbsp;<label id="lblSelectOperationTypeShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                    @*<button type="button" class="close" title="Close" data-dismiss="modal" onclick="MAWBStockSelect_ResetFunctionsNames();" aria-hidden="true">&times;</button>*@
+                </h3>
+            </div>
+            <!-- Region Add / Edit Region Form -->
+            <div class="modal-body">
+                <div class="span7 form vertical-mode" id="SelectOperationType-form">
+                    <fieldset>
+                        <div class="row" >
+                            @*<input id="hOperationToCopyID" type="hidden" />*@
+                            <div class="form-group col-sm-4" id="HideForUniFreight">
+                                <section class="panel panel-default m-t-n">
+                                    <header class="panel-heading font-bold">@Forwarding.MvcApp.App_Resources.App_Resources.BLType</header>
+                                    <label class="m-l"><input type="radio" id="cbIsDirect" onchange="" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbBLType" value="1">&nbsp;<i class='fa fa-indent direct-icon-style' />&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Direct</label><br />
+                                    <label class="m-l hide"><input type="radio" id="cbIsHouse" onchange="" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbBLType" value="2">&nbsp;<i class='fa fa-link house-icon-style' />&nbsp;<span id="spanCbIsHouse">@Forwarding.MvcApp.App_Resources.App_Resources.House</span></label>
+                                    <label class="m-l"><input type="radio" id="cbIsMaster" onchange="" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbBLType" value="3">&nbsp;<i class='fa fa-book master-icon-style' />&nbsp;<span id="spanCbIsMaster">@Forwarding.MvcApp.App_Resources.App_Resources.Master</span></label><br />
+                                </section>
+                            </div>
+                            <div class="form-group col-sm-4 classShowByOperationType hide">
+                                <label>Number Of Trucking Orders</label>
+                                <input type="text" id="NumberOfTruckingOrders" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-minlength="0" maxlength="500" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-4 m-t-lg classShowByOperationType hide ">
+                                <label><input type="checkbox" id="cbTruckingOrderIsOwnedByCompany" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" checked>&nbsp;Owned By Company</label>
+                            </div>
+                        </div>
+                        <div class="row classShowByOperationType hide">
+                            <div class="form-group col-sm-3">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ClientName</label>
+                                <input type="text" id="txtClientName" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-minlength="0" maxlength="500" style="text-transform:uppercase" disabled="disabled" />
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label>POL Name</label>
+                                <input type="text" id="txtPOLName" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-minlength="0" maxlength="500" style="text-transform:uppercase" disabled="disabled" />
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label>POD Name</label>
+                                <input type="text" id="txtPODName" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-minlength="0" maxlength="500" style="text-transform:uppercase" disabled="disabled" />
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label>Gross Weight</label>
+                                <input type="text" id="txtGrossWeight" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-minlength="0" maxlength="500" style="text-transform:uppercase" disabled="disabled" />
+                            </div>
+                        </div>
+                        <div class="row classShowByOperationType hide">
+                            <div class="form-group col-sm-3">
+                                <label>Commodity Name</label>
+                                <input type="text" id="txtCommodityName" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-minlength="0" maxlength="500" style="text-transform:uppercase" disabled="disabled" />
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label>Number Of Packages</label>
+                                <input type="text" id="NumberOfPackages" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-minlength="0" maxlength="500" style="text-transform:uppercase" disabled="disabled" />
+                            </div>
+
+
+
+                        </div>
+                        <!--
+    <div  class="col-sm-3 m-t-lg">
+        <section class="panel panel-default m-t-n">
+            <header class="panel-heading font-bold">@Forwarding.MvcApp.App_Resources.App_Resources.Direction</header>
+            <label class="m-l"><input type="radio" id="cbIsImport"   onchange="DirectionType_SetIconNameAndStyle();Operations_SetCloseDate('txtOperationOpenDate', 'txtOperationCloseDate');" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbDirectionType" value="1">&nbsp;<i class= 'fa fa-arrow-circle-down import-icon-style'/>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Import</label><br />
+            <label class="m-l"><input type="radio" id="cbIsExport"   onchange="DirectionType_SetIconNameAndStyle();Operations_SetCloseDate('txtOperationOpenDate', 'txtOperationCloseDate');" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbDirectionType" value="2">&nbsp;<i class= 'fa fa-external-link export-icon-style'/>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Export</label><br />
+            <label class="m-l"><input type="radio" id="cbIsDomestic" onchange="DirectionType_SetIconNameAndStyle();Operations_SetCloseDate('txtOperationOpenDate', 'txtOperationCloseDate');" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbDirectionType" value="3">&nbsp;<i class= 'fa fa-home domestic-icon-style'/>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Domestic</label><br />
+        </section>
+    </div>
+    <div class="col-sm-3 m-t-lg">
+        <section class="panel panel-default m-t-n">
+            <header class="panel-heading font-bold">@Forwarding.MvcApp.App_Resources.App_Resources.TransportMode</header>
+            @*<label class="m-l"><input type="radio" id="cbIsOcean"  onchange="Operations_TransportTypeChanged();Operations_SetCloseDate('txtOperationOpenDate', 'txtOperationCloseDate');" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbTransportType" value="1">&nbsp;<i class= 'fa fa-anchor ocean-icon-style'/>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.IsOcean</label><br />
+            <label class="m-l"><input type="radio" id="cbIsAir"    onchange="Operations_TransportTypeChanged();Operations_SetCloseDate('txtOperationOpenDate', 'txtOperationCloseDate');" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbTransportType" value="2">&nbsp;<i class= 'fa fa-plane air-icon-style'/>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.IsAir</label><br />
+            <label class="m-l"><input type="radio" id="cbIsInland" onchange="Operations_TransportTypeChanged();Operations_SetCloseDate('txtOperationOpenDate', 'txtOperationCloseDate');" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbTransportType" value="3">&nbsp;<i class= 'fa fa-truck inland-icon-style'/>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.IsInland</label><br />*@
+            <label class="m-l"><input type="radio" id="cbIsOcean"  onchange="Operations_TransportTypeChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbTransportType" value="1">&nbsp;<i class= 'fa fa-anchor ocean-icon-style'/>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.IsOcean</label><br />
+            <label class="m-l"><input type="radio" id="cbIsAir"    onchange="Operations_TransportTypeChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbTransportType" value="2">&nbsp;<i class= 'fa fa-plane air-icon-style'/>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.IsAir</label><br />
+            <label class="m-l"><input type="radio" id="cbIsInland" onchange="Operations_TransportTypeChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbTransportType" value="3">&nbsp;<i class= 'fa fa-truck inland-icon-style'/>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.IsInland</label><br />
+        </section>
+    </div>
+    <div class="col-sm-3 m-t-lg">
+        <section id="secShipmentType" class="panel panel-default m-t-n hide">
+            <header class="panel-heading font-bold">@Forwarding.MvcApp.App_Resources.App_Resources.ShipmentType</header>
+            <div id="divOceanType">
+                <label @*id="lblFCL"*@ class="m-l"><input type="radio" id="cbIsFCL" onchange="Operations_ShipmentTypeChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbShipmentType" value="1">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.FCL</label><br />
+                <label @*id="lblLCL"*@ class="m-l"><input type="radio" id="cbIsLCL" onchange="Operations_ShipmentTypeChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbShipmentType" value="2">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.LCL</label>
+            </div>
+            <div id="divInlandType" class="hide">
+                <label class="m-l"><input type="radio" id="cbIsFTL" onchange="Operations_ShipmentTypeChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbShipmentType" value="3">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.FTL</label><br />
+                <label class="m-l"><input type="radio" id="cbIsLTL" onchange="Operations_ShipmentTypeChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbShipmentType" value="4">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.LTL</label>
+            </div>
+            <div id="divConsolidationOption" class="hide">
+                <label class="m-l"><input type="radio" id="cbIsConsolidation" onchange="Operations_ShipmentTypeChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbShipmentType" value="5">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Consolidation</label><br />
+            </div>
+        </section>
+    </div>
+    -->
+                        <div id="txtBodyCreateOperation" class="form-group col-sm-11" style="width:100%;border:1px solid #000;clear:both;">
+
+                        </div>
+
+                        <div id="divQuotationCharges" class="hide" style="clear:both">
+                            <div id="QuotationPayables" class="has-error">
+                                <h4>@Forwarding.MvcApp.App_Resources.App_Resources.Payables</h4>
+                                <table id="tblQuotationPayables" class="table table-striped b-t b-light text-sm  table-hover ">
+                                    <thead>
+                                        <tr>
+                                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.ChargeTypeName</th>
+                                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Amount</th>
+                                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.category</th>
+                                            <th class="rounded-right hide"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <div id="QuotationReceivables" class="has-error">
+                                <h4>@Forwarding.MvcApp.App_Resources.App_Resources.Receivables</h4>
+                                <table id="tblQuotationReceivables" class="table table-striped b-t b-light text-sm  table-hover ">
+                                    <thead>
+                                        <tr>
+                                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.ChargeTypeName</th>
+                                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Amount</th>
+                                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.category</th>
+                                            <th class="rounded-right hide"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <!-- Endregion Add / Edit Region Form -->
+            <div class="modal-footer">
+                <button type="button" id="btnSelectOperationType" class="btn btn-primary btn-sm" @*onclick="Alarm_CreateOperationFromAlarm();"*@>
+                    <span class="glyphicon glyphicon-save"></span>&nbsp;Create Operation</button>
+                @*<button type="button" id="btnSaveandNew" class="btn btn-primary btn-sm" onclick="MAWBStockSelect_Insert(true);">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew</button>*@
+                <button class="btnClose btn btn-link btn-sm" id="btnCloseSelectOperationTypeModal" title="Close" data-dismiss="modal" aria-hidden="true" >@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div> 
+        </div>
+    </div>
+</div>
+<!--EOF SelectOperationTypeModal-->
+

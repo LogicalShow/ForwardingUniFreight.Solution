@@ -1,0 +1,595 @@
+ <!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);" onclick="LoadViews(id);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="ContainerFreightStation" href="javascript:void(0);" onclick="LoadViews('ContainerFreightStation')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.ContainerFreightStation
+        </a>
+    </li>
+    <li>
+        <a id="ContainerFreightStationTransactions" href="javascript:void(0);" onclick="LoadViews('ContainerFreightStationTransactions');">
+            @Forwarding.MvcApp.App_Resources.App_Resources.ContainerFreightStationTransactions
+        </a>
+    </li>
+    <li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.WH_CFS_ReleaseVouchers</li>
+</ul>
+<!-- end breadcrumb  -->
+ 
+<div id="div-WH_CFS_ReleaseOrders">
+    <!-- Region Options & Template  -->
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.WH_CFS_ReleaseVouchers</h3>
+            </header>
+            <!--Region the searh, delete, addnew-->
+            <div class="row text-sm wrapper">
+                <div id="div-main-options">
+                    <!--Region Filter-->
+                    <div class="form-group col-sm-2">
+
+                    </div>
+
+                    <div id="div-search-controls" class="input-group col-sm-5 m-l-n m-t-22">
+                        <input id="txt-Search" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" placeholder="Search House Number">
+                        <span class="input-group-btn">
+                            <button id="btn-search" title="" class="btn btn-sm btn-primary" type="button" onclick="WH_CFS_ReleaseVouchers_LoadWithPagingWithWhereClauseAndOrderBy();"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                    <div class="form-group col-sm-3 m-t-22">
+                        <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#FilterOptionsModal">
+                            <i class="fa fa-filter"></i>&nbsp;Filter
+                        </button>
+                        <button class="btn btn-sm btn-warning m-l-xs" onclick="ClearAll('#FilterOptionsModal'); WH_CFS_ReleaseVouchers_LoadWithPagingWithWhereClauseAndOrderBy();">
+                            <i class="fa fa-eraser"></i>&nbsp;Clear
+                        </button>
+                    </div>
+                    <div class="form-inline hide showForMESCO m-t-sm m-b-sm">
+                        <input type="text" id="txtHouseNumberToSendBack" class="form-control input-sm" placeholder="Enter House Number" style="width: 200px;" />
+                        <button type="button" id="btnSubmitHouseNumber" class="btn btn-danger btn-sm" onclick="WH_CFS_ReleaseVouchersDetails_SendBack();">
+                            <i class="fa fa-undo"></i>&nbsp;Send Back To Release Vouchers
+                        </button>
+                    </div>
+
+                    <!--Region: table header-->
+                    <div class="table-responsive">
+                        <table id="tblWH_CFS_ReleaseOrders" class="table table-striped b-t b-light text-sm table-hover" style="font-size:90%;">
+                            <thead>
+                                <tr>
+                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.OperationNumber</th>
+                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.MasterBL</th>
+                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.ContainerNumber</th>
+                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.HouseNumber</th>
+                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.Consignee</th>
+                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.BookingParty</th>
+                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.StorageLocation</th>
+                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.EntryDate</th>
+                                    <th class="rounded-right hide"></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <!--Region: EOF table header-->
+                    <!--Region: table footer-->
+                    <footer class="panel-footer">
+                        <div class="row">
+                            <div class="col-sm-4 hidden-xs">
+                                <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                </select>
+                                <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                                    @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                                </button>
+                            </div>
+                            <div id="div-Text-Total" class="col-sm-4 text-center">
+                                <small class="text-muted inline m-t-sm m-b-sm">
+                                    @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                                    <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                                    <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                                </small>
+                            </div>
+                            <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+                        </div>
+                    </footer>
+                    <!--Region: EOF table footer-->
+
+                </div><!--EOF Region Main-Options-->
+            </div>
+            <!--EOF Region the searh, delete, addnew-->
+        </section>
+    </div>
+</div>
+
+
+<!--FilterOptionsModal-->
+<div class="modal fade" id="FilterOptionsModal" tabindex="-1" data-keyboard="true" data-backdrop="false" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modalwidth-100">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="m-b-none"><label class="static-text-primary">Filter Options</label></h3>
+            </div>
+            <div class="modal-body">
+                <div class="span7 form vertical-mode m-t-sm">
+                    <fieldset>
+                        <div class="m-t-n classSearchOptions">
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.OperationNumber</label>
+                                <input id="txtFilterOperationNumber" type="text" class="form-control input-sm" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ContainerNumber</label>
+                                <input id="txtFilterContainerNumber" type="text" class="form-control input-sm" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.MasterBL</label>
+                                <input id="txtFilterMasterBL" type="text" class="form-control input-sm" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.HouseNumber</label>
+                                <input id="txtFilterHouseNumber" type="text" class="form-control input-sm" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Consignee</label>
+                                <input id="txtFilterConsignee" type="text" class="form-control input-sm" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.BookingParty</label>
+                                <input id="txtFilterBookingParty" type="text" class="form-control input-sm" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.StorageLocation</label>
+                                <input id="txtFilterStorageLocation" type="text" class="form-control input-sm" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>Gross Weight</label>
+                                <input id="txtFilterGrossWeight" type="text" class="form-control input-sm" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>Net Weight</label>
+                                <input id="txtFilterNetWeight" type="text" class="form-control input-sm" />
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="ClearAll('#FilterOptionsModal');" class="btn btn-sm btn-warning"><i class="fa fa-eraser"></i>&nbsp;Clear Filters</button>
+                <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal" onclick="WH_CFS_ReleaseVouchers_LoadWithPagingWithWhereClauseAndOrderBy();"><i class="fa fa-search"></i>&nbsp;Search</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--WH_CFS_ReleaseOrders Modal-->
+<div class="modal fade" id="ModelWH_CFS_ReleaseOrders" tabindex="-1" style="z-index:1040;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="ModalLabelContainerTracking" aria-hidden="true">
+    <div class="modal-dialog modalwidth-100">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                <button type="button" title="Close" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="m-b-none" id="ModelHeader">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.WH_CFS_ReleaseVouchers &nbsp;<label id="lblShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <!-- Region Add / Edit Region Form -->
+            <div class="modal-body">
+                <div class="span7 form vertical-mode" id="WH_CFS_ReleaseOrders-form">
+                    <input id="hInventoryID" type="hidden" />
+                    <input id="hOperationID" type="hidden" />
+                    <input id="hContainerID" type="hidden" />
+                    <input id="hHouseBillID" type="hidden" />
+                    <input id="hReleaseOrderID" type="hidden" />
+                    <input id="hReleaseNumber" type="hidden" />
+                    <input id="hServerDate" type="hidden" />
+                    <input id="hReleasingDate" type="hidden" />
+                    <!-- start alert message region -->
+                    <div class="alert alert-danger div-error">
+                        @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                    </div>
+                    <!-- end alert message region -->
+                    <!--Wizard-->
+                    <fieldset>
+                        <div class="form-group pull-in  has-error clearfix">
+
+                            <div class="row m-l m-r">
+                                <!--1st row-->
+                                <div class="form-group col-sm-2">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.OperationNumber</label>
+                                    <input type="text" id="txtOperationNumber" autocomplete="off" onfocus="DisableEnterKey(id);" disabled="disabled" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" readonly style="text-transform:uppercase" />
+                                </div>
+
+                                <div class="form-group col-sm-2 hide">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.MasterBL</label>
+                                    <input type="text" id="txtMasterBL" autocomplete="off" onfocus="DisableEnterKey(id);" disabled="disabled" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" readonly style="text-transform:uppercase" />
+                                </div>
+
+                                <div class="form-group col-sm-4">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.BookingParty</label>
+                                    <input type="text" id="txtBookingParty" autocomplete="off" onfocus="DisableEnterKey(id);" disabled="disabled" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" readonly style="text-transform:uppercase" />
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.ContainerNumber </label>
+                                    <input type="text" id="txtContainerNumber" autocomplete="off" onfocus="DisableEnterKey(id);" disabled="disabled" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" readonly placeholder="ex. ABCD1234567" style="text-transform:uppercase" />
+                                </div>
+
+                                <div class="form-group col-sm-2">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.ContainerType </label>
+                                    <input type="text" id="txtContainerType" autocomplete="off" onfocus="DisableEnterKey(id);" disabled="disabled" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" readonly placeholder="" style="text-transform:uppercase" />
+                                </div>
+
+                                <div class="form-group col-sm-2" id="dvHouseBill">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.HouseNumber</label>
+                                    <input type="text" id="txtHouseNumber" autocomplete="off" onfocus="DisableEnterKey(id);" disabled="disabled" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" readonly style="text-transform:uppercase" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                    <section class="panel panel-default"> </section>
+                    <fieldset>
+                        <div class="form-group pull-in  has-error clearfix">
+
+                            <div class="row m-l m-r">
+
+
+                                <div class="form-group col-sm-2">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.GrossWeight</label>
+                                    <input type="text" id="txtGrossWeight" autocomplete="off" onfocus="DisableEnterKey(id);" disabled="disabled" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" readonly style="text-transform:uppercase" />
+                                </div>
+
+                                <div class="form-group col-sm-2">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.NetWeight </label>
+                                    <input type="text" id="txtNetWeight" autocomplete="off" onfocus="DisableEnterKey(id);" disabled="disabled" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" readonly style="text-transform:uppercase" />
+                                </div>
+
+                                <div class="form-group col-sm-2">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Packages </label>
+                                    <input type="text" id="txtPackages" autocomplete="off" onfocus="DisableEnterKey(id);" disabled="disabled" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" readonly style="text-transform:uppercase" />
+
+                                </div>
+
+                                <div class="form-group col-sm-4">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Consignee</label>
+                                    <input type="text" id="txtConsignee" autocomplete="off" onfocus="DisableEnterKey(id);" disabled="disabled" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" readonly style="text-transform:uppercase" />
+                                </div>
+
+                                <div class="form-group col-sm-2">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.StorageEndDate </label>
+                                    <input id="txtStorageEndDate" autocomplete="off" type="text" onfocus="DisableEnterKey(id);" disabled="disabled" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                                </div>
+
+                                <div class="form-group col-sm-5">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.DescriptionOfGoods</label>
+                                    <input type="text" id="txtDescriptionOfGoods" autocomplete="off" onfocus="DisableEnterKey(id);" disabled="disabled" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" readonly style="text-transform:uppercase" />
+
+                                </div>
+
+                                <div class="form-group col-sm-1">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.EntryDate </label>
+                                    <input id="txtEntryDate" autocomplete="off" disabled="disabled" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                                </div>
+
+
+                                <div class="form-group col-sm-4">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.StorageLocation</label>
+                                    <input type="text" id="txtStorageLocation" disabled="disabled" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" style="text-transform:uppercase" />
+
+                                </div>
+
+                                @*<div class="col-sm-2 m-t-22" style="clear:both">
+            <label><input type="checkbox" id="cKIsRelease" name="cKIsRelease" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" />&nbsp;<i class='fa fa-sign-out ocean-icon-style' />&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Release</label><br />
+        </div>*@
+
+                                <div class="form-group col-sm-2" style="clear:both">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.ReleaseOrderNumber</label>
+                                    <input type="text" id="txtReleaseNumber" disabled="disabled" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" style="text-transform:uppercase" />
+
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.ReleaseDate </label>
+                                    <input id="txtReleasingDate" autocomplete="off" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm" data-required="true" data-date-format="dd/mm/yyyy" placeholder="Select Date" disabled />
+                                </div>
+
+                                <div class="form-group col-sm-2">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.CouponNumber</label>
+                                    <input type="text" id="txtCouponNumber" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" style="text-transform:uppercase" disabled />
+
+                                </div>
+
+                                <div class="form-group col-sm-2">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.CertificationNumber</label>
+                                    <input type="text" id="txtCertificationNumber" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" style="text-transform:uppercase" disabled />
+
+                                </div>
+
+                                <div class="form-group col-sm-4">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Remark</label>
+                                    <input type="text" id="txtRemarks" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" style="text-transform:uppercase" disabled />
+
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label>Car Number</label>
+                                    <input type="text" id="txtCarNumber" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" style="text-transform:uppercase" />
+
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label>Driver License</label>
+                                    <input type="text" id="txtDriverLicense" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" style="text-transform:uppercase" />
+
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label>Driver Name</label>
+                                    <input type="text" id="txtDriverName" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" style="text-transform:uppercase" />
+
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label>National ID</label>
+                                    <input type="text" id="txtNationalID" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" style="text-transform:uppercase" />
+
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label>Ticket Number</label>
+                                    <input type="text" id="txtTicketNumber" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" style="text-transform:uppercase" />
+
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label>Certification Number</label>
+                                    <input type="text" id="txtCertificationNumberDetails" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" style="text-transform:uppercase" />
+
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label>Certification Date</label>
+                                    <input id="txtCertificationDate" autocomplete="off" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm" data-required="true" data-date-format="dd/mm/yyyy" placeholder="Select Date"  />
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </fieldset>
+
+                    <section class="panel panel-default"> </section>
+                
+
+                </div>
+            </div>
+            <!-- Endregion Add / Edit Region Form -->
+            <div class="modal-footer m-t-n-lg">
+                <div class="col-sm-2 hide">
+                    <label><input type="checkbox" id="cbConfirmRelease" onfocus="DisableEnterKey(id);" onchange="EnterReleaseDate()" onkeypress="DisableEnterKey(id);">&nbsp;Confirm Release</label>
+                </div>
+                <button type="button" id="btn-Print" class="btn btn-facebook btn-sm  OnlyUNFCPWHide " onclick="PrintReleaseVoucher(); ">
+                    <span class="glyphicon glyphicon-print"></span>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Print
+                </button>
+           
+                <button type="button" id="btn-Save" class="btn btn-primary btn-sm " onclick="WH_CFS_ReleaseVouchersDetails_Insert();">
+                    <span class="glyphicon glyphicon-save"></span>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                </button>
+
+                <button class="btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF WH_CFS_ReleaseOrders Modal-->
+<!-- EditReleaseNotesModal -->
+<div class="modal fade" id="EditReleaseNotesModal" tabindex="-1" style="z-index: 1050;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="EditReleaseNotesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-80">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.ReleaseOrderNotes &nbsp;<label id="lblReleaseNotesShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region Add / Edit EditReleaseNotes Form -->
+                <div class="span7 form vertical-mode" id="EditReleaseNotes-form">
+                    <fieldset>
+                        <div class="form-group pull-in  has-error clearfix">
+                            <input id="hReleaseOrderNotesID" type="hidden" />
+
+                            <div class="form-group col-sm-4">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ReleaseOrderNotes</label>
+                                <select id="slReleaseNotes" onchange="GetNoteDetails();" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="true"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-8">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Details</label>
+                                <input type="text" id="txtNoteDetails" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" style="text-transform:uppercase" />
+
+                            </div>
+
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- Endegion Add / Edit EditCharge Form -->
+            </div>
+            <div class="modal-footer m-t-n">
+                <button type="button" id="btnSaveReleaseNotes" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                </button>
+                <button type="button" id="btnSaveandNewReleaseNotes" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew
+                </button>
+                <button class="btnClose btn btn-link btn-sm" id="btnReleaseNotesClose" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+            <br />
+        </div>
+    </div>
+</div>
+<!--EOF EditReleaseNotesModal -->
+<!--EditInvoiceModal-->
+<div class="modal fade" id="EditInvoiceModal" tabindex="-1" style="z-index: 1040;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="EditInvoiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-100">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.Invoice &nbsp;<label id="lblEditedInvoiceShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region EditInvoice Form -->
+                <div class="span7 form vertical-mode" id="EditInvoice-form">
+                    <fieldset>
+                        <input id="hEditedInvoiceID" type="hidden" />
+                        <input id="hEditedInvoiceOperationID" type="hidden" />
+                        <input id="hEditedInvoiceMasterOperationID" type="hidden" />
+                        <input id="hEditedInvoiceTypeCode" type="hidden" />
+
+                        <div class="form-group pull-in has-error clearfix">
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Operation</label>
+                                <select id="slEditInvoiceOperations" disabled="disabled" onchange="Invoices_InvoiceOperationChanged('slEditInvoiceOperations', 'Edit');" class="form-control input-sm" data-required="true"></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.BillTo</label>
+                                <select id="slEditInvoicePartner" disabled="disabled" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="input-sm form-control" data-required="true"></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.AddressType</label>
+                                <select id="slEditInvoiceAddressTypes" disabled="disabled" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="input-sm form-control" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-2 hide">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.InvoiceNumber</label>
+                                <input type="text" id="txtEditInvoiceNumber" disabled="disabled" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="input-sm form-control parsley-validated" data-required="false" data-minlength="1" maxlength="15" placeholder="Generated Automatically" readonly="readonly" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2 hide">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.CustomerReference</label>
+                                <input type="text" id="txtEditInvoiceCustomerReference" class="input-sm form-control parsley-validated" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" data-required="false" data-minlength="0" maxlength="10" placeholder="Ref No." style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.PaymentTerm</label>
+                                <select id="slEditInvoicePaymentTerms" disabled="disabled" name="slInvoicePaymentTerms" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="Invoices_SetDueDate('txtEditInvoiceIssueDate' ,'txtEditInvoiceDueDate' ,id);" class="input-sm form-control" data-required="true"></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.InvoiceDate</label>
+                                <input id="txtEditInvoiceIssueDate" disabled="disabled" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text; " class="input-sm datepicker-input form-control" data-required="true" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.DueDate</label>
+                                <input id="txtEditInvoiceDueDate" disabled="disabled" type="text" style="cursor:text;" class="input-sm datepicker-input form-control" data-required="true" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                            </div>
+
+
+                            <div class="form-group col-sm-2">
+                                <label>Amt w/o Tax-Disc</label>
+                                <input type="text" id="txtEditInvoiceAmountWithoutVAT" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="7" placeholder="Amount" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2 hide classShowForTaxOnHeader">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.VAT</label>
+                                <select id="slEditInvoiceTax" disabled="disabled" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="Invoices_ChangeAmountInInvoiceEdit(false, false);" class="form-control input-sm" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-1 hide classShowForTaxOnHeader">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Perc</label>
+                                <input type="text" id="txtEditInvoiceTaxPercentage" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="4" placeholder="Tax (%)" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-1 hide classShowForTaxOnHeader">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.VATAmt</label>
+                                <input type="text" id="txtEditInvoiceTaxAmount" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="7" placeholder="Tax Amount" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                @*<label>@Forwarding.MvcApp.App_Resources.App_Resources.TaxDiscount</label>*@
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.DeductedTax</label>
+                                <select id="slEditInvoiceDiscount" disabled="disabled" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="Invoices_ChangeAmountInInvoiceEdit(false, false);" class="form-control input-sm" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-1">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Perc</label>
+                                <input type="text" id="txtEditInvoiceDiscountPercentage" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="4" placeholder="Discount (%)" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-1">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.DiscAmt</label>
+                                <input type="text" id="txtEditInvoiceDiscountAmount" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="7" placeholder="Discount Amount" style="text-transform:uppercase" />
+                            </div>
+
+
+                            <div class="form-group col-sm-1">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Total</label>
+                                <input type="text" id="txtEditInvoiceAmount" disabled="disabled" class="input-sm form-control parsley-validated" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="10" placeholder="0.00" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-1">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Currency</label>@*the bool parameter in Invoices_CurrencyChanged() is true for edit to set the control names*@
+                                <select id="slEditInvoiceCurrency" disabled="disabled" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="Invoices_CurrencyChanged(true);" class="input-sm form-control" data-required="true"></select>
+                            </div>
+                            <div class="form-group col-sm-2 hide">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ExchangeRate</label>
+                                <input type="text" id="txtEditInvoiceMasterDataExchangeRate" disabled="disabled" class="input-sm form-control parsley-validated" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="3" placeholder="Exchange Rate" style="text-transform:uppercase" />
+                            </div>
+
+                            <div id="div-search-controls" class="input-group col-sm-4 float-right hide">
+                                <input id="txtSearchInvoiceItems" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control m-t-md" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search Item Code/Name">
+                                <span class="input-group-btn">
+                                    <button id="btn-SearchInvoiceItems" class="input-sm btn btn-md btn-primary m-t-md" type="button"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+
+                            <div class="form-group col-sm-2">
+                                <label>Customs Clearance Cert.</label>
+                                <select id="slEditInvoiceRoutingCCA" disabled="disabled" class="form-control input-sm" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.LeftSignature</label>
+                                <input type="text" id="txtEditInvoiceLeftSignature" disabled="disabled" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" data-minlength="0" maxlength="50" style="" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.MiddleSignature</label>
+                                <input type="text" id="txtEditInvoiceMiddleSignature" disabled="disabled" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" data-minlength="0" maxlength="50" style="" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.RightSignature</label>
+                                <input type="text" id="txtEditInvoiceRightSignature" disabled="disabled" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" data-minlength="0" maxlength="50" style="" />
+                            </div>
+                            <div class="form-group col-sm-2 hide classShowForTank">
+                                <label>Tank</label>
+                                <select id="slEditInvoiceTank" disabled="disabled" class="form-control input-sm" data-required="false"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-2 hide classShowForELI">
+                                <label>Issue Date</label>
+                                <input id="txtEditInvoiceCreationDate" disabled="disabled" readonly="readonly" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text; background-color:white;" class="input-sm datepicker-input form-control" data-required="true" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                            </div>
+
+                            <div class="form-group col-sm-1 classKDS">
+                                <label>GRT</label>
+                                <input type="text" id="txtEditInvoiceGRT" disabled="disabled" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" data-minlength="0" maxlength="50" style="" />
+                            </div>
+                            <div class="form-group col-sm-1 classKDS">
+                                <label>DWT</label>
+                                <input type="text" id="txtEditInvoiceDWT" disabled="disabled" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" data-minlength="0" maxlength="50" style="" />
+                            </div>
+                            <div class="form-group col-sm-1 classKDS">
+                                <label>NRT</label>
+                                <input type="text" id="txtEditInvoiceNRT" disabled="disabled" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" data-minlength="0" maxlength="50" style="" />
+                            </div>
+                            <div class="form-group col-sm-1 classKDS">
+                                <label>LOA</label>
+                                <input type="text" id="txtEditInvoiceLOA" disabled="disabled" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" data-minlength="0" maxlength="50" style="" />
+                            </div>
+                        </div>
+
+                        <div id="divEditInvoice" class="m-t-sm">
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- Endegion EditInvoice Form -->
+            </div>
+            <div class="modal-footer m-t-n-lg">
+                <!--sherif-->
+
+                <button class="btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF EditInvoiceModal-->

@@ -1,0 +1,363 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.Quotations</li>
+    <!--in the next line i used target instead of id coz the id should be unique-->
+    @*<li><a target="Quotations" href="javascript:void(0);" onclick="LoadViews(target)">@Forwarding.MvcApp.App_Resources.App_Resources.Quotations
+        </a></li>*@
+    @*<li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.QuotationsManagement</li>*@
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-Quotations">
+    <!-- Region Options & Template  -->
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.Quotations</h3>
+            </header>
+            <!--Region the searh, delete, addnew-->
+            <div class="row text-sm wrapper hidden-print m-t-nsm">
+                <div id="div-main-options" class="col-sm-7 m-b-xs" ondblclick="Quotations_LoadingWithPaging();">
+                    <button id="btn-NewAdd" class="btn btn-warning btn-sm hide" data-toggle="modal" data-target="#QuotationModal"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.New</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                    @*<button id="btn-NewAdd" class="btn btn-warning btn-sm " onclick="Quotations_ClearAllControls();" data-toggle="modal" data-target="#QuotationModal"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.New</button>*@&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div id="div-option-buttons" class="btn-group hide">
+                        <button id="btn-Copy" type="button" class="btn btn-sm btn-default"><i class="fa fa-copy"></i>&nbsp;Copy </button>
+                        <button id="btn-Print" type="button" class="btn btn-sm btn-default"><i class="fa fa-print"></i>&nbsp;Print </button>
+                        <button id="btn-Send" type="button" class="btn btn-sm btn-default"><i class="fa fa-envelope-o"></i>&nbsp;Send </button>
+                    </div>
+                    <!--Region Filter-->
+                    <div class="btn-group hide" data-toggle="buttons" ondblclick="Quotations_LoadingWithPaging();">
+                        @*<label class="btn btn-sm btn-primary active" id="lbl-filter-ocean" > <input type="checkbox" name="options"> <i class="fa fa-check text-active ">    </i> <i class="fa fa-anchor   "></i>    </label>
+                            <label class="btn btn-sm btn-primary active" id="lbl-filter-air"   > <input type="checkbox" name="options"> <i class="fa fa-check text-active ">  </i> <i class="fa fa-plane    "></i>  </label>
+                            <label class="btn btn-sm btn-primary active" id="lbl-filter-inland"> <input type="checkbox" name="options"><i class="fa fa-check text-active  "></i> <i class="fa fa-truck      "></i> </label>*@
+                        <label class="btn btn-sm btn-default active" id="lbl-filter-AllTransports" title="All"> <input type="radio" name="options">   <i class="fa text-active"></i> @Forwarding.MvcApp.App_Resources.App_Resources.All</label>
+                        <label class="btn btn-sm btn-default       " id="lbl-filter-ocean" title="Ocean"> <input type="radio" name="options"> <i class="fa text-active ">    </i> <i class="fa fa-anchor   "></i>    </label>
+                        <label class="btn btn-sm btn-default       " id="lbl-filter-air" title="Air"> <input type="radio" name="options"> <i class="fa text-active ">  </i> <i class="fa fa-plane    "></i>  </label>
+                        <label class="btn btn-sm btn-default       " id="lbl-filter-inland" title="Inland"> <input type="radio" name="options"> <i class="fa text-active  "></i> <i class="fa fa-truck      "></i> </label>
+                    </div>
+                    <div class="btn-group hide" data-toggle="buttons" ondblclick="Quotations_LoadingWithPaging();">
+                        @*<label class="btn btn-sm btn-facebook active" id="lbl-filter-import"  > <input type="checkbox" name="options">   <i class="fa fa-check text-active"  >    </i> <i class="fa fa-arrow-circle-down"  ></i>    </label>
+                            <label class="btn btn-sm btn-facebook active" id="lbl-filter-export"  > <input type="checkbox" name="options">   <i class="fa fa-check text-active"  >  </i> <i class="fa fa-external-link      "  ></i>  </label>
+                            <label class="btn btn-sm btn-facebook active" id="lbl-filter-domestic"> <input type="checkbox" name="options"> <i class="fa fa-check text-active"></i> <i class="fa fa-home                   "></i> </label>*@
+                        <label class="btn btn-sm btn-default active" id="lbl-filter-AllDirections" title="All"> <input type="radio" name="options">   <i class="fa text-active"></i> @Forwarding.MvcApp.App_Resources.App_Resources.All</label>
+                        <label class="btn btn-sm btn-default       " id="lbl-filter-import" title="Import"> <input type="radio" name="options">   <i class="fa text-active">    </i> <i class="fa fa-arrow-circle-down"></i>    </label>
+                        <label class="btn btn-sm btn-default       " id="lbl-filter-export" title="Export"> <input type="radio" name="options">   <i class="fa text-active">  </i> <i class="fa fa-external-link      "></i>  </label>
+                        <label class="btn btn-sm btn-default       " id="lbl-filter-domestic" title="Domestic"> <input type="radio" name="options">   <i class="fa text-active"></i> <i class="fa fa-home                   "></i> </label>
+                    </div>
+                    @*  to get the StageID selected $("#ulQuotationStages li[class=active]").val() *@
+
+                    <div class="btn-group m-r hide">
+                        <!--<button data-toggle="dropdown" class="btn btn-sm btn-default dropdown-toggle"><span class="dropdown-label">@Forwarding.MvcApp.App_Resources.App_Resources.AllStages</span> <span class="caret"></span></button>
+                        <ul id="ulQuotationStages" class="dropdown-menu dropdown-select">
+                            @*<li class="active" value="0"><a href="#"><input type="radio" name="d-s-r">ALL STAGES</a></li>
+                            <li class="" value="1"><a href="#"><input type="radio" name="d-s-r">CREATED</a></li>
+                            <li class="" value="2"><a href="#"><input type="radio" name="d-s-r">SENT</a></li>
+                            <li class="" value="3"><a href="#"><input type="radio" name="d-s-r">DRAFT</a></li>
+                            <li class="" value="5"><a href="#"><input type="radio" name="d-s-r">DECLINED</a></li>
+                            <li class="" value="4"><a href="#"><input type="radio" name="d-s-r">ACCEPTED</a></li>*@
+                            @*<li class="disabled"><a href="#"><input type="radio" name="d-s-r" disabled="">I'm disabled</a></li>*@
+                        </ul>-->
+                        <select id="ulQuotationStages" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="input-sm btn-lightblue"></select>
+                    </div>
+
+                    <div class="btn-group m-l-n" data-toggle="buttons">
+                        @*<label class="btn btn-sm btn-lightblue" onclick="Quotations_LoadingWithPaging();"> <input type="checkbox" name="options" id="btn-filter"><i class="fa fa-filter">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Filter</i> </label>*@
+                        <button id="btn-FilterOptions" class="btn btn-lightblue btn-sm" data-toggle="modal" onclick="" data-target="#FilterModal"><i class="fa fa-filter"></i> Filter Options</button>
+                    </div>
+                    <!--EOF Region Filter-->
+                </div>
+                <div id="div-search-option" class="col-sm-5">
+                    <div id="div-search-controls" class="input-group col-sm-9 hide">
+                        <input id="txt-Search" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search BY Code">
+                        <span class="input-group-btn">
+                            <button id="btn-search" onfocus="DisableBackspaceKey(id);" class="btn btn-sm btn-primary" type="button" onclick="Quotations_LoadingWithPaging();"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                    <div class="float-right col-sm-1">
+                        <button id="btn-Delete" onfocus="DisableBackspaceKey(id);" type="button" class="float-right btn btn-sm btn-danger m-r-n hide"><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete</button>
+                    </div>
+                </div>
+            </div>
+            <!--EOF Region the searh, delete, addnew line-->
+            <!--Quotations Modal-->
+            <!--EOF Quotations Modal-->
+            <!--Region: table header-->
+            <div class="table-responsive m-t-n">
+                <table id="tblQuotations" class="table table-striped b-t b-light text-sm  table-hover">
+                    <thead>
+                        <tr>
+                            <th id="ID">
+                                <input id="cb-CheckAll" type="checkbox" />
+                            </th>
+                            @*<th class="th-sortable" data-toggle="class">@Forwarding.MvcApp.App_Resources.App_Resources.Code
+        </th>*@
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Direction
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Transport
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Opened
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Code
+                            </th>
+                            <th class="classShowForAKS hide">
+                                Crm Code
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Client
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Agent
+                            </th>
+                            <th class="hide">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Shipper
+                            </th>
+                            <th class="hide">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Consignee
+                            </th>
+                            <th class="hide">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Carrier
+                            </th>
+                            <th class="hide">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Routing
+                            </th>
+                            <th class="hide">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.QuotationType
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Shipment
+                            </th>
+                            <th class="hide">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Expiration
+                            </th>
+                            <th class="classShowForNIL hide">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Salesman
+                            </th>
+                            <th class="">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.From
+                            </th>
+                            <th class="">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.To
+                            </th>
+                            <th class="classShowForNIL hide">@Forwarding.MvcApp.App_Resources.App_Resources.Line</th>
+                            <th class="">Status</th>
+                            <th class="classShowForGBL hide">Creator</th>
+
+                            <th class="QuotationCopy rounded-right"></th>
+                        </tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
+<!--Region: table header-->
+<!--Region: footer-->
+<footer class="panel-footer">
+    <div class="row">
+        <div class="col-sm-4 hidden-xs">
+            <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+            </select>
+            <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+            </button>
+        </div>
+        <div id="div-Text-Total" class="col-sm-4 text-center">
+            <small class="text-muted inline m-t-sm m-b-sm">
+                @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+            </small>
+        </div>
+        <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+    </div>
+</footer>
+<!--Region: footer-->
+</section>
+</div>
+</div>
+
+<!--FilterModal-->
+<div class="modal fade" id="FilterModal" tabindex="-1" @*style="z-index: 3000;"*@ data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="FilterModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-100">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" title="Close">
+                    &times;
+                </button>
+                <h3 class="m-b-none">
+                    <label id="lblShownFilter" purpose="dynamicLabel" class="static-text-primary">Filter Quotations</label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region Filter Form -->
+                <button id="btn-ClearAllFilter" type="button" class="btn btn-warning btn-sm m-l m-t-n-sm hide" onclick=""><i class="fa "></i><b>&nbsp;Clear All</b></button>
+                <div class="span7 form vertical-mode m-t-sm" id="Filter-form">
+                    <fieldset>
+                        <div class="row hide">
+                            <div id="div-Filter-controls" class="input-group m-l col-sm-5">
+                                <input id="txtFilter" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search" />
+                                <span class="input-group-btn">
+                                    <button id="btn-Filter" class="btn btn-sm btn-primary" type="button"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div id="divFilter" class="m-t-n classApplyFilter">
+                            <div class="form-group col-sm-2">
+                                <label>Quotation Serial</label>
+                                <input type="text" id="txtFilterQuotationCode" autocomplete="off" class="form-control input-sm" maxlength="200" placeholder="Quot.Serial" style="text-transform:uppercase">
+                            </div>
+                            <div class="form-group col-sm-2 hide classShowForMED">
+                                <label>Operation Serial</label>
+                                <input type="text" id="txtFilterOperationCode" autocomplete="off" class="form-control input-sm" maxlength="200" placeholder="Oper.Serial" style="text-transform:uppercase">
+                            </div>
+                            <div class="form-group col-sm-2 hideForAWB">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.CreatedBy</label>
+                                <select id="slFilterCreator" class="form-control input-sm"></select>
+                            </div>
+                            <div class="form-group col-sm-2 hideForAWB">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Salesman</label>
+                                <select id="slFilterSalesman" class="form-control input-sm"></select>
+                            </div>
+                            @*<div class="form-group col-sm-2 hide classShowForEGL">*@
+                            <div class="form-group col-sm-2 hideForAWB">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Branch</label>
+                                <select id="slFilterBranch" class="form-control input-sm"></select>
+                            </div>
+                            @*<div class="form-group col-sm-2">
+            <label>State</label>
+            <select id="slFilterQuotationStages" class="input-sm col-sm-12"></select>
+        </div>*@
+                            <div class="form-group col-sm-2 hideForAWB">
+                                <label>Direction</label>
+                                <select id="slFilterDirection" class="input-sm col-sm-12">
+                                    <option value=""><--Select--></option>
+                                    <option value="1">Import</option>
+                                    <option value="2">Export</option>
+                                    <option value="3">Domestic</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-2 hideForAWB">
+                                <label>Transport</label>
+                                <select id="slFilterTransport" class="input-sm col-sm-12">
+                                    <option value=""><--Select--></option>
+                                    <option value="1">Ocean</option>
+                                    <option value="2">Air</option>
+                                    <option value="3">Inland</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-2" style="clear:both;">
+                                <label>POL Country</label>
+                                <select id="slFilterPOLCountry" class="input-sm col-sm-12"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>POL</label>
+                                <select id="slFilterPOL" class="input-sm col-sm-12"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>POD Country</label>
+                                <select id="slFilterPODCountry" class="input-sm col-sm-12"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>POD</label>
+                                <select id="slFilterPOD" class="input-sm col-sm-12"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="fom-group col-sm-2" @*style="clear:both;"*@>
+                                <label>Client</label>
+                                <input type="text" id="txtFilterClientName" autocomplete="off" class="form-control input-sm" maxlength="200" placeholder="" style="text-transform:uppercase">
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>Shipper</label>
+                                <input type="text" id="txtFilterShipperName" autocomplete="off" class="form-control input-sm" maxlength="200" placeholder="" style="text-transform:uppercase">
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>Consignee</label>
+                                <input type="text" id="txtFilterConsigneeName" autocomplete="off" class="form-control input-sm" maxlength="200" placeholder="" style="text-transform:uppercase">
+                            </div>
+                            <div class="form-group col-sm-2 hideForAWB">
+                                <label>Agent</label>
+                                <input type="text" id="txtFilterAgentName" autocomplete="off" class="form-control input-sm" maxlength="200" placeholder="" style="text-transform:uppercase">
+                            </div>
+                            <div class="form-group col-sm-2 hide classHideForEGL">
+                                <label>Shipper</label>
+                                <select id="slFilterShipper" class="input-sm col-sm-12"></select>
+                            </div>
+                            <div class="form-group col-sm-2 hide classHideForEGL">
+                                <label>Consignee</label>
+                                <select id="slFilterConsignee" class="input-sm col-sm-12"></select>
+                            </div>
+                            @*<div class="form-group col-sm-2 hide classHideForEGL hideForAWB">
+            <label>Agent</label>
+            <select id="slFilterAgent" class="input-sm col-sm-12"></select>
+        </div>*@
+                            <div class="form-group col-sm-2 hide classShowForUNI">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Agent</label>
+                                <select id="slFilterAgent" class="input-sm col-sm-12"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-2 hideForAWB" style="clear:both;">
+                                <label>From Open Date</label>
+                                <input id="txtFilterFromOpenDate" autocomplete="off" type="text" style="background-color:white; cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                            </div>
+                            <div class="form-group col-sm-2 hideForAWB">
+                                @*<label>@Forwarding.MvcApp.App_Resources.App_Resources.CreatedBy</label>
+            <select id="slCreator" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>*@
+                                <label>To Open Date</label>
+                                <input id="txtFilterToOpenDate" autocomplete="off" type="text" style="background-color:white; cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>Line</label>
+                                <input type="text" id="txtFilterLineName" autocomplete="off" class="form-control input-sm" maxlength="200" placeholder="" style="text-transform:uppercase">
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>Shipping line</label>
+                                <select id="slFilterShippingLine" class="input-sm col-sm-12"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>Status</label>
+                                <select id="slFilterStatus" class="input-sm col-sm-12">
+                                    <option value=""><--Select--></option>
+                                    <option value="10">CREATED</option>
+                                    <option value="20">ACCEPTED</option>
+                                    <option value="30">DECLINED</option>
+                                </select>
+                            </div>
+                            @*<div class="col-sm-2 m-t-27">
+            <label> <input type="checkbox" id="cbIsWorkFlow" onchange="QuotationsStatistics_cbIsWorkFlowChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp; Work Flow </label>
+        </div>
+        <div class="col-sm-6 m-t-md">
+            <button id="btn-print" type="button" class="btn btn-lightblue btn-sm" onclick="QuotationsStatistics_Print('Print');"><i class="fa fa-print"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Print</b></button>
+            <button id="btn-ExportToExcel" type="button" onclick="QuotationsStatistics_Print('Excel');" class="btn btn-sm btn-primary"><i class="fa fa-table"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.TraExportExcel&nbsp;</b></button>
+            <button id="btn-SelectQuotations" type="button" class="btn btn-info btn-sm" onclick="QuotationsStatistics_SelectQuotations();"><i class="fa fa-check-square-o"></i><b>&nbsp;Select Quotations</b></button>
+            <button id="btn-SelectColumns" type="button" class="btn btn-warning btn-sm" onclick="QuotationsStatistics_SelectColumns();"><i class="fa fa-print"></i><b>&nbsp;Add / Remove Columns</b></button>
+        </div>*@
+                        </div>
+
+                    </fieldset>
+                </div>
+                <!-- Endegion Filter Form -->
+            </div>
+            <div class="modal-footer m-t-n">
+                <!--sherif-->
+                <button type="button" data-dismiss="modal" onclick="Quotations_LoadingWithPaging();" id="btnFilterApply" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-search"></span>&nbsp;Search
+                </button>
+                @*<button class=" btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF FilterModal-->

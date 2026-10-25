@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="06/12/2024 13:08:00" ReportInfo.Modified="02/05/2025 10:22:24" ReportInfo.CreatorVersion="2018.3.14.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFHqm0rZN8U3ovGdwvYth0uiUdmsDM9GBKvMdM2icdnfklNMjMNrhb+YH/+nfAY3K3tQ1ZfvL+FurXFWUYCaJb8VhW2e5vkGIpGjE2zruyLxgoKy4JYbQZgqS69wY6St/m">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="exec RepA_JVNew @FromDate , @ToDate ,@JVType_IDs,@SafeID,@DirectionID,@ServiceID,@InvoiceTypeID">
+        <Column Name="ID" DataType="System.Int64"/>
+        <Column Name="JVNo" DataType="System.String"/>
+        <Column Name="TransID" DataType="System.Int64"/>
+        <Column Name="JVDate" DataType="System.DateTime"/>
+        <Column Name="UserID" DataType="System.Int32"/>
+        <Column Name="Notes" DataType="System.String"/>
+        <Column Name="ReverseParentID" DataType="System.Int64"/>
+        <Column Name="ID1" DataType="System.Int64"/>
+        <Column Name="ACCOUNTDISPLAYVALUE" DataType="System.String"/>
+        <Column Name="DEBITAMOUNT" DataType="System.Decimal"/>
+        <Column Name="CREDITAMOUNT" DataType="System.Decimal"/>
+        <Column Name="DEFAULTDIMENSIONDISPLAYVALUE" DataType="System.String"/>
+        <Column Name="CostCenterInvestmentcenter" DataType="System.String"/>
+        <Column Name="ActivityName" DataType="System.String"/>
+        <Column Name="BookingNo" DataType="System.String"/>
+        <Column Name="BookingStatus" DataType="System.String"/>
+        <Column Name="Bookingcreationdate" DataType="System.String"/>
+        <Column Name="BookingClosingdate" DataType="System.String"/>
+        <Column Name="CustodyResponsible" DataType="System.String"/>
+        <Column Name="ClientInvoiceName" DataType="System.String"/>
+        <Column Name="CreditclientName" DataType="System.String"/>
+        <Column Name="SalesMan" DataType="System.String"/>
+        <Column Name="SalesManID" DataType="System.Int32"/>
+        <Column Name="CurrencyID" DataType="System.Int32"/>
+        <Column Name="EXCHANGERATE" DataType="System.Decimal"/>
+        <Column Name="CoordinatorMan" DataType="System.String"/>
+        <Column Name="PaymentrequestDate" DataType="System.String"/>
+        <Column Name="Nameofrequester" DataType="System.String"/>
+        <Column Name="QuotationNumber" DataType="System.String"/>
+        <Column Name="MBL" DataType="System.String"/>
+        <Column Name="HBL" DataType="System.String"/>
+        <Column Name="CNTR" DataType="System.String"/>
+        <Column Name="VesselName" DataType="System.String"/>
+        <Column Name="VesselID" DataType="System.Int32"/>
+        <Column Name="ETAETD" DataType="System.DateTime"/>
+        <Column Name="ItemExpenseName" DataType="System.String"/>
+        <Column Name="ItemExpenseTypeOREXP" DataType="System.String"/>
+        <Column Name="VendorInvoiceName" DataType="System.String"/>
+        <Column Name="CreditvendorName" DataType="System.String"/>
+        <Column Name="Paymentterm" DataType="System.String"/>
+        <Column Name="TruckerType" DataType="System.String"/>
+        <Column Name="TruckNumber" DataType="System.String"/>
+        <Column Name="AgentName" DataType="System.String"/>
+        <Column Name="InvoiceNumber" DataType="System.String"/>
+        <Column Name="InvoiceDate" DataType="System.String"/>
+        <Column Name="PaymentMethod" DataType="System.String"/>
+        <Column Name="BankNameTreasuryName" DataType="System.String"/>
+        <Column Name="CheckNumber" DataType="System.String"/>
+        <Column Name="CheckDueDate" DataType="System.String"/>
+        <Column Name="DESCRIPTION" DataType="System.String"/>
+        <Column Name="DOCUMENT" DataType="System.String"/>
+        <Column Name="INVOICE" DataType="System.String"/>
+        <Column Name="ISWITHHOLDINGCALCULATIONENABLED" DataType="System.String"/>
+        <Column Name="ITEMSALESTAXGROUP" DataType="System.String"/>
+        <Column Name="ITEMWITHHOLDINGTAXGROUPCODE" DataType="System.String"/>
+        <Column Name="TransDate" DataType="System.String"/>
+        <Column Name="Voucher" DataType="System.String"/>
+        <Column Name="OperationID" DataType="System.Int64"/>
+        <Column Name="JVID" DataType="System.Int64"/>
+        <Column Name="SafeID" DataType="System.Int32"/>
+        <Column Name="BankID" DataType="System.Int32"/>
+        <Column Name="CostCenterID" DataType="System.Int32"/>
+        <Column Name="ACCOUNTTYPE" DataType="System.String"/>
+        <Column Name="VatAmount" DataType="System.Decimal"/>
+        <Column Name="DiscountAmount" DataType="System.Decimal"/>
+        <Column Name="CurrencyCode" DataType="System.String"/>
+        <Column Name="PAYMENTREFERENCE" DataType="System.String"/>
+        <Column Name="SALESTAXGROUP" DataType="System.String"/>
+        <Column Name="LINENUMBER" DataType="System.Int32"/>
+        <Column Name="JOURNALBATCHNUMBER" DataType="System.String"/>
+        <Column Name="JOURNALNAME" DataType="System.String"/>
+        <Column Name="FINTAGDISPLAYVALUE" DataType="System.String"/>
+        <Column Name="TEXT" DataType="System.String"/>
+        <Column Name="OFFSETACCOUNTTYPE" DataType="System.String"/>
+        <Column Name="OFFSETACCOUNTDISPLAYVALUE" DataType="System.String"/>
+        <Column Name="OFFSETDEFAULTDIMENSIONDISPLAYVALUE" DataType="System.String"/>
+        <Column Name="OFFSETFINTAGDISPLAYVALUE" DataType="System.String"/>
+        <Column Name="OFFSETTEXT" DataType="System.String"/>
+        <Column Name="PREPAYMENT" DataType="System.String"/>
+        <Column Name="TAXEXEMPTNUMBER" DataType="System.String"/>
+        <Column Name="DOCUMENTDATE" DataType="System.String"/>
+        <Column Name="DUEDATE" DataType="System.String"/>
+        <Column Name="CASHDISCOUNT" DataType="System.Int32"/>
+        <Column Name="CASHDISCOUNTAMOUNT" DataType="System.Int32"/>
+        <Column Name="CASHDISCOUNTDATE" DataType="System.String"/>
+        <Column Name="EXCHANGERATESECONDARY" DataType="System.Int32"/>
+        <Column Name="OVERRIDESALESTAX" DataType="System.String"/>
+        <Column Name="PAYMENTID" DataType="System.String"/>
+        <Column Name="QUANTITY" DataType="System.Int32"/>
+        <Column Name="REPORTINGCURRENCYEXCHRATESECONDARY" DataType="System.Int32"/>
+        <Column Name="REPORTINGCURRENCYEXCHRATE" DataType="System.String"/>
+        <Column Name="REVERSEDATE" DataType="System.String"/>
+        <Column Name="REVERSEENTRY" DataType="System.String"/>
+        <Column Name="SALESTAXCODE" DataType="System.String"/>
+        <Column Name="POSTINGPROFILE" DataType="System.String"/>
+        <Column Name="POSTINGLAYER" DataType="System.String"/>
+        <Column Name="ISPOSTED" DataType="System.String"/>
+        <Column Name="Journal_ID" DataType="System.Int32"/>
+        <Column Name="JVType_ID" DataType="System.Int32"/>
+        <Column Name="Journal_ID1" DataType="System.Int32"/>
+        <Column Name="JVType_ID1" DataType="System.Int32"/>
+        <Column Name="SafeID1" DataType="System.Int32"/>
+        <Column Name="ServiceID" DataType="System.Int32"/>
+        <CommandParameter Name="@FromDate" DataType="22" Expression="[FromDate]" DefaultValue="0"/>
+        <CommandParameter Name="@ToDate" DataType="22" Expression="[ToDate]" DefaultValue="0"/>
+        <CommandParameter Name="@JVType_IDs" DataType="22" Expression="[JVType_IDs]" DefaultValue="0"/>
+        <CommandParameter Name="@SafeID" DataType="22" Expression="[SafeID]" DefaultValue="0"/>
+        <CommandParameter Name="@DirectionID" DataType="22" Expression="[DirectionID]" DefaultValue="0"/>
+        <CommandParameter Name="@ServiceID" DataType="22" Expression="[ServiceID]" DefaultValue="0"/>
+        <CommandParameter Name="@InvoiceTypeID" DataType="22" Expression="[InvoiceTypeID]" DefaultValue="0"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="FromDate" DataType="System.String"/>
+    <Parameter Name="ToDate" DataType="System.String"/>
+    <Parameter Name="JVType_IDs" DataType="System.String"/>
+    <Parameter Name="SafeID" DataType="System.String"/>
+    <Parameter Name="DirectionID" DataType="System.String"/>
+    <Parameter Name="ServiceID" DataType="System.String"/>
+    <Parameter Name="InvoiceTypeID" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="1130" PaperHeight="210">
+    <ReportTitleBand Name="ReportTitle1" Width="4195.8" Height="22.68">
+      <TextObject Name="Text2" Left="1.89" Top="3.78" Width="94.5" Height="18.9" Text="LINENUMBER"/>
+      <TextObject Name="Text4" Left="96.39" Top="3.78" Width="94.5" Height="18.9" Text="JOURNALBATCHNUMBER"/>
+      <TextObject Name="Text6" Left="190.88" Top="3.78" Width="92.62" Height="18.9" Text="JOURNALNAME"/>
+      <TextObject Name="Text8" Left="283.5" Top="3.78" Width="94.5" Height="18.9" Text="DESCRIPTION"/>
+      <TextObject Name="Text10" Left="378" Top="3.78" Width="94.5" Height="18.9" Text="VOUCHER"/>
+      <TextObject Name="Text12" Left="472.5" Top="3.78" Width="94.5" Height="18.9" Text="TRANSDATE"/>
+      <TextObject Name="Text14" Left="567" Top="3.78" Width="94.5" Height="18.9" Text="ACCOUNTTYPE"/>
+      <TextObject Name="Text16" Left="661.5" Top="3.78" Width="94.5" Height="18.9" Text="ACCOUNTDISPLAYVALUE"/>
+      <TextObject Name="Text18" Left="756" Top="3.78" Width="94.5" Height="18.9" Text="DEFAULTDIMENSIONDISPLAYVALUE"/>
+      <TextObject Name="Text20" Left="850.5" Top="3.78" Width="94.5" Height="18.9" Text="FINTAGDISPLAYVALUE"/>
+      <TextObject Name="Text22" Left="945" Top="3.78" Width="94.5" Height="18.9" Text="TEXT"/>
+      <TextObject Name="Text24" Left="1039.5" Top="3.78" Width="94.5" Height="18.9" Text="DEBITAMOUNT"/>
+      <TextObject Name="Text26" Left="1134" Top="3.78" Width="94.5" Height="18.9" Text="CREDITAMOUNT"/>
+      <TextObject Name="Text28" Left="1228.5" Top="3.78" Width="94.5" Height="18.9" Text="CURRENCYCODE"/>
+      <TextObject Name="Text30" Left="1323" Top="3.78" Width="94.5" Height="18.9" Text="EXCHANGERATE"/>
+      <TextObject Name="Text32" Left="1417.5" Top="3.78" Width="94.5" Height="18.9" Text="OFFSETACCOUNTTYPE"/>
+      <TextObject Name="Text34" Left="1512" Top="3.78" Width="94.5" Height="18.9" Text="OFFSETACCOUNTDISPLAYVALUE"/>
+      <TextObject Name="Text36" Left="1606.5" Top="3.78" Width="94.5" Height="18.9" Text="OFFSETDEFAULTDIMENSIONDISPLAYVALUE"/>
+      <TextObject Name="Text38" Left="1701" Top="3.78" Width="94.5" Height="18.9" Text="OFFSETFINTAGDISPLAYVALUE"/>
+      <TextObject Name="Text40" Left="1795.5" Top="3.78" Width="94.5" Height="18.9" Text="OFFSETTEXT"/>
+      <TextObject Name="Text42" Left="1890" Top="3.78" Width="94.5" Height="18.9" Text="PREPAYMENT"/>
+      <TextObject Name="Text44" Left="1984.5" Top="3.78" Width="94.5" Height="18.9" Text="SALESTAXGROUP"/>
+      <TextObject Name="Text48" Left="2173.5" Top="3.78" Width="94.5" Height="18.9" Text="TAXEXEMPTNUMBER"/>
+      <TextObject Name="Text50" Left="2268" Top="3.78" Width="94.5" Height="18.9" Text="ISWITHHOLDINGCALCULATIONENABLED"/>
+      <TextObject Name="Text52" Left="2362.5" Top="3.78" Width="94.5" Height="18.9" Text="ITEMWITHHOLDINGTAXGROUPCODE"/>
+      <TextObject Name="Text54" Left="2457" Top="3.78" Width="94.5" Height="18.9" Text="DOCUMENT"/>
+      <TextObject Name="Text56" Left="2551.5" Top="3.78" Width="94.5" Height="18.9" Text="DOCUMENTDATE"/>
+      <TextObject Name="Text58" Left="2646" Top="3.78" Width="94.5" Height="18.9" Text="DUEDATE"/>
+      <TextObject Name="Text60" Left="2740.5" Top="3.78" Width="94.5" Height="18.9" Text="INVOICE"/>
+      <TextObject Name="Text62" Left="2835" Top="3.78" Width="94.5" Height="18.9" Text="PAYMENTMETHOD"/>
+      <TextObject Name="Text64" Left="2929.5" Top="3.78" Width="94.5" Height="18.9" Text="PAYMENTREFERENCE"/>
+      <TextObject Name="Text66" Left="3024" Top="3.78" Width="94.5" Height="18.9" Text="CASHDISCOUNT"/>
+      <TextObject Name="Text68" Left="3118.5" Top="3.78" Width="94.5" Height="18.9" Text="CASHDISCOUNTAMOUNT"/>
+      <TextObject Name="Text70" Left="3213" Top="3.78" Width="94.5" Height="18.9" Text="CASHDISCOUNTDATE"/>
+      <TextObject Name="Text72" Left="3307.5" Top="3.78" Width="94.5" Height="18.9" Text="EXCHANGERATESECONDARY"/>
+      <TextObject Name="Text74" Left="3402" Top="3.78" Width="94.5" Height="18.9" Text="OVERRIDESALESTAX"/>
+      <TextObject Name="Text76" Left="3496.5" Top="3.78" Width="94.5" Height="18.9" Text="PAYMENTID"/>
+      <TextObject Name="Text78" Left="3591" Top="3.78" Width="60.48" Height="18.9" Text="QUANTITY"/>
+      <TextObject Name="Text80" Left="3651.48" Top="3.78" Width="49.14" Height="18.9" Text="REPORTINGCURRENCYEXCHRATESECONDARY"/>
+      <TextObject Name="Text82" Left="3700.62" Top="3.78" Width="94.5" Height="18.9" Text="REPORTINGCURRENCYEXCHRATE"/>
+      <TextObject Name="Text84" Left="3795.12" Top="3.78" Width="60.48" Height="18.9" Text="REVERSEDATE"/>
+      <TextObject Name="Text86" Left="3855.6" Top="3.78" Width="56.7" Height="18.9" Text="REVERSEENTRY"/>
+      <TextObject Name="Text88" Left="3912.3" Top="3.78" Width="56.7" Height="18.9" Text="SALESTAXCODE"/>
+      <TextObject Name="Text90" Left="3969" Top="3.78" Width="79.38" Height="18.9" Text="POSTINGPROFILE"/>
+      <TextObject Name="Text92" Left="4048.38" Top="3.78" Width="86.94" Height="18.9" Text="POSTINGLAYER"/>
+      <TextObject Name="Text94" Left="4135.32" Top="3.78" Width="64.26" Height="18.9" Text="ISPOSTED"/>
+      <TextObject Name="Text46" Left="2079" Top="3.78" Width="94.5" Height="18.9" Text="ITEMSALESTAXGROUP"/>
+    </ReportTitleBand>
+    <DataBand Name="Data1" Top="27.39" Width="4195.8" Height="18.9" DataSource="Table">
+      <TextObject Name="Text1" Left="1.89" Width="94.5" Height="18.9" Text="[Table.LINENUMBER]"/>
+      <TextObject Name="Text3" Left="96.39" Width="94.5" Height="18.9" Text="[Table.JOURNALBATCHNUMBER]"/>
+      <TextObject Name="Text5" Left="190.88" Top="-0.02" Width="92.62" Height="18.9" Text="[Table.JOURNALNAME]"/>
+      <TextObject Name="Text7" Left="283.5" Width="94.5" Height="18.9" Text="[Table.DESCRIPTION]"/>
+      <TextObject Name="Text9" Left="378" Width="94.5" Height="18.9" Text="[Table.Voucher]"/>
+      <TextObject Name="Text11" Left="472.5" Width="94.5" Height="18.9" Text="[Table.TransDate]"/>
+      <TextObject Name="Text13" Left="567" Width="94.5" Height="18.9" Text="[Table.ACCOUNTTYPE]"/>
+      <TextObject Name="Text15" Left="661.5" Width="94.5" Height="18.9" Text="[Table.ACCOUNTDISPLAYVALUE]"/>
+      <TextObject Name="Text17" Left="756" Width="94.5" Height="18.9" Text="[Table.DEFAULTDIMENSIONDISPLAYVALUE]" WordWrap="false"/>
+      <TextObject Name="Text19" Left="850.5" Width="94.5" Height="18.9" Text="[Table.FINTAGDISPLAYVALUE]"/>
+      <TextObject Name="Text21" Left="945" Width="94.5" Height="18.9" Text="[Table.TEXT]"/>
+      <TextObject Name="Text23" Left="1039.5" Width="94.5" Height="18.9" Text="[Table.DEBITAMOUNT]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Right" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text25" Left="1134" Width="94.5" Height="18.9" Text="[Table.CREDITAMOUNT]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Right" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text27" Left="1228.5" Width="94.5" Height="18.9" Text="[Table.CurrencyCode]"/>
+      <TextObject Name="Text29" Left="1323" Width="94.5" Height="18.9" Text="[Table.EXCHANGERATE]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Right" WordWrap="false" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text31" Left="1417.5" Width="94.5" Height="18.9" Text="[Table.OFFSETACCOUNTTYPE]"/>
+      <TextObject Name="Text33" Left="1512" Width="94.5" Height="18.9" Text="[Table.OFFSETACCOUNTDISPLAYVALUE]"/>
+      <TextObject Name="Text35" Left="1606.5" Width="94.5" Height="18.9" Text="[Table.OFFSETDEFAULTDIMENSIONDISPLAYVALUE]"/>
+      <TextObject Name="Text37" Left="1701" Width="94.5" Height="18.9" Text="[Table.OFFSETFINTAGDISPLAYVALUE]"/>
+      <TextObject Name="Text39" Left="1795.5" Width="94.5" Height="18.9" Text="[Table.OFFSETTEXT]"/>
+      <TextObject Name="Text41" Left="1890" Width="94.5" Height="18.9" Text="[Table.PREPAYMENT]"/>
+      <TextObject Name="Text43" Left="1984.5" Width="94.5" Height="18.9" Text="[Table.SALESTAXGROUP]"/>
+      <TextObject Name="Text47" Left="2173.5" Width="94.5" Height="18.9" Text="[Table.TAXEXEMPTNUMBER]"/>
+      <TextObject Name="Text49" Left="2268" Width="94.5" Height="18.9" Text="[Table.ISWITHHOLDINGCALCULATIONENABLED]"/>
+      <TextObject Name="Text51" Left="2362.5" Width="94.5" Height="18.9" Text="[Table.ITEMWITHHOLDINGTAXGROUPCODE]"/>
+      <TextObject Name="Text53" Left="2457" Width="94.5" Height="18.9" Text="[Table.DOCUMENT]"/>
+      <TextObject Name="Text55" Left="2551.5" Width="94.5" Height="18.9" Text="[Table.DOCUMENTDATE]"/>
+      <TextObject Name="Text57" Left="2646" Width="94.5" Height="18.9" Text="[Table.DUEDATE]"/>
+      <TextObject Name="Text59" Left="2740.5" Width="94.5" Height="18.9" Text="[Table.INVOICE]"/>
+      <TextObject Name="Text61" Left="2835" Width="94.5" Height="18.9" Text="[Table.PaymentMethod]"/>
+      <TextObject Name="Text63" Left="2929.5" Width="94.5" Height="18.9" Text="[Table.PAYMENTREFERENCE]"/>
+      <TextObject Name="Text65" Left="3024" Width="94.5" Height="18.9" Text="[Table.CASHDISCOUNT]"/>
+      <TextObject Name="Text67" Left="3118.5" Width="94.5" Height="18.9" Text="[Table.CASHDISCOUNTAMOUNT]"/>
+      <TextObject Name="Text69" Left="3213" Width="94.5" Height="18.9" Text="[Table.CASHDISCOUNTDATE]"/>
+      <TextObject Name="Text71" Left="3307.5" Width="94.5" Height="18.9" Text="[Table.EXCHANGERATESECONDARY]"/>
+      <TextObject Name="Text73" Left="3402" Width="94.5" Height="18.9" Text="[Table.OVERRIDESALESTAX]"/>
+      <TextObject Name="Text75" Left="3496.5" Width="94.5" Height="18.9" Text="[Table.PAYMENTID]"/>
+      <TextObject Name="Text77" Left="3591" Width="60.48" Height="18.9" Text="[Table.QUANTITY]"/>
+      <TextObject Name="Text79" Left="3651.48" Width="49.14" Height="18.9" Text="[Table.REPORTINGCURRENCYEXCHRATESECONDARY]"/>
+      <TextObject Name="Text81" Left="3700.62" Width="94.5" Height="18.9" Text="[Table.REPORTINGCURRENCYEXCHRATE]"/>
+      <TextObject Name="Text83" Left="3795.12" Width="60.48" Height="18.9" Text="[Table.REVERSEDATE]"/>
+      <TextObject Name="Text85" Left="3855.6" Width="56.7" Height="18.9" Text="[Table.REVERSEENTRY]"/>
+      <TextObject Name="Text87" Left="3912.3" Width="56.7" Height="18.9" Text="[Table.SALESTAXCODE]"/>
+      <TextObject Name="Text89" Left="3969" Width="79.38" Height="18.9" Text="[Table.POSTINGPROFILE]"/>
+      <TextObject Name="Text91" Left="4048.38" Width="86.94" Height="18.9" Text="[Table.POSTINGLAYER]"/>
+      <TextObject Name="Text93" Left="4135.32" Width="64.26" Height="18.9" Text="[Table.ISPOSTED]"/>
+      <TextObject Name="Text45" Left="2079" Width="94.5" Height="18.9" Text="[Table.ITEMSALESTAXGROUP]"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="50.99" Width="4195.8"/>
+  </ReportPage>
+</Report>

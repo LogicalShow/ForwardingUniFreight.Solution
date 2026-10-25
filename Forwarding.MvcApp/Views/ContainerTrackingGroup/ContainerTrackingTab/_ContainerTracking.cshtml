@@ -1,0 +1,551 @@
+﻿@*@{ Culture = UICulture = ViewBag.CutlureID; }*@
+<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li><a id="hl-homepage" href="javascript:void(0);" onclick="LoadViews(id);"><i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+    </a></li>
+    <li><a id="ContainerTrackingGroup" href="javascript:void(0);" onclick="LoadViews('ContainerTrackingGroup')">@Forwarding.MvcApp.App_Resources.App_Resources.ContainerTracking
+    </a></li>
+    @*<li><a id="ContainerTrackingTab" href="javascript:void(0);" onclick="LoadViews(ContainerTrackingGroup)">@Forwarding.MvcApp.App_Resources.App_Resources.ContainerTracking
+    </a></li>*@
+    <li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.ContainerTracking </li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-ContainerTracking">
+    <!-- Region Options & Template  -->
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.ContainerTracking</h3>
+            </header>
+            <!--Region the searh, delete, addnew-->
+            <div class="row text-sm wrapper">
+                <div id="div-main-options">
+                    <!--Region Filter-->
+                    
+                    <div class="form-group col-sm-1">
+                        <button id="btn-NewAdd" class="btn btn-warning btn-sm m-t-22 float-left hide" data-toggle="modal" data-target="" onclick="ContainerTracking_ClearAllControls();"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.New</button>
+                    </div>
+                    <div class="form-group input-group col-sm-3 swapChildrenClass m-l-n">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Operations</label>
+                        <select id="slOperationSearch" @*onchange="ARAllocation_PartnerTypeChanged();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b input-sm" data-required="false"></select>
+                        <span class="input-group-btn">
+                            <button id="btn-filterPartnerType" title="Filter" class="btn btn-sm btn-lightblue m-t-22" type="button" onclick="ContainerTracking_LoadWithPagingWithWhereClauseAndOrderBy();"><i class="fa fa-filter"></i></button>
+                        </span>
+                    </div>
+                    
+                    @*<div class="form-group input-group col-sm-2 swapChildrenClass m-l-n">
+                        <label>B/Ls</label>
+                        <select id="slBLsSearch" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b input-sm" data-required="false"></select>
+                        <span class="input-group-btn">
+                            <button id="btn-filterBLs" title="Filter" class="btn btn-sm btn-lightblue m-t-22" type="button" onclick="ContainerTracking_LoadWithPagingWithWhereClauseAndOrderBy();"><i class="fa fa-filter"></i></button>
+                        </span>
+                    </div>*@
+
+                    <div class="form-group input-group col-sm-2 swapChildrenClass m-l-n">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Status</label>
+                        <select id="slLoadedSearch" @*onchange="ARAllocation_PartnerTypeChanged();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b input-sm" data-required="false">
+                            <option value=""><--All--></option>
+                            <option value="10">Loaded</option>
+                            <option value="20">Not Loaded</option>
+                        </select>
+                        <span class="input-group-btn">
+                            <button id="btn-filterHold" title="Filter" class="btn btn-sm btn-lightblue m-t-22" type="button" onclick="ContainerTracking_LoadWithPagingWithWhereClauseAndOrderBy();"><i class="fa fa-filter"></i></button>
+                        </span>
+                    </div>
+                    <div class="form-group input-group col-sm-3 swapChildrenClass m-l-n">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.BookingParty</label>
+                        <select id="slBookingPartySearch" @*onchange="ARAllocation_PartnerTypeChanged();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b input-sm" data-required="false"></select>
+                        <span class="input-group-btn">
+                            <button id="btn-filterBookingParty" title="Filter" class="btn btn-sm btn-lightblue m-t-22" type="button" onclick="ContainerTracking_LoadWithPagingWithWhereClauseAndOrderBy();"><i class="fa fa-filter"></i></button>
+                        </span>
+                    </div>
+
+                    <div id="div-search-controls" class="input-group col-sm-2 m-l-n m-t-22">
+                        <input id="txt-Search" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase"  type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search ContainerNo / Exp.BL / Imp.BL" title="Search ContainerNo / Factory / Exp.BL / Imp.BL / Shipper / Line">
+                        <span class="input-group-btn">
+                            <button id="btn-search" title="" class="btn btn-sm btn-primary" type="button" onclick="ContainerTracking_LoadWithPagingWithWhereClauseAndOrderBy();"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                    @*<div class="form-group col-sm-1 m-t-27">
+                        <label><input type="checkbox" id="cbSearchIsHold" onchange="InvoiceApproval_LoadingWithPaging();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Hold</label>
+                    </div>*@
+                    @*<div class="form-group col-sm-2 m-l-n hide">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.ValidFrom</label>
+                        <input id="txtValidFrom" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="input-sm datepicker-input form-control" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                    </div>
+                    <div class="form-group col-sm-2 m-l-n hide">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.ValidTo</label>
+                        <input id="txtValidTo" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="input-sm datepicker-input form-control" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                    </div>*@
+                    <!--EOF Region Filter-->
+                    <button id="btn-Delete" type="button" class="float-right btn btn-sm btn-danger m-r-lg m-t-22 hide" onclick=""><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete</button>
+                        <!--Region: table header-->
+                        <div class="table-responsive">
+                            <table id="tblContainerTracking" class="table table-striped b-t b-light text-sm table-hover" style="font-size:90%;">
+                                <thead>
+                                    <tr>
+                                        <th id="HeaderDeleteContainerTrackingID">
+                                            <input id="cb-CheckAll" type="checkbox" />
+                                        </th>
+                                        <th>OperationCode</th>
+                                        <th>Cont.No</th>
+                                        <th>Type</th>
+                                        <th>Gate-Out Port</th>
+                                        <th>Gate-In Port</th>
+                                        <th>GateOut Date</th>
+                                        <th>StuffingDate</th>
+                                        <th>LoadingDate</th>
+                                        <th>Days Diff</th>
+                                        <th>Factory</th>
+                                        <th>Exp.BL</th>
+                                        <th>Imp.BL</th>
+                                        <th>Loaded</th>
+                                        <th class="rounded-right"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--Region: EOF table header-->
+                        <!--Region: table footer-->
+                        <footer class="panel-footer">
+                            <div class="row">
+                                <div class="col-sm-4 hidden-xs">
+                                    <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                    </select>
+                                    <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                                        @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                                    </button>
+                                </div>
+                                <div id="div-Text-Total" class="col-sm-4 text-center">
+                                    <small class="text-muted inline m-t-sm m-b-sm"> @Forwarding.MvcApp.App_Resources.App_Resources.Showing 
+                                        <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                                        <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                                    </small>
+                                </div>
+                                <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+                            </div>
+                        </footer>
+                        <!--Region: EOF table footer-->
+                    
+                </div><!--EOF Region Main-Options-->
+            </div>
+            <!--EOF Region the searh, delete, addnew-->
+        </section>
+    </div>
+</div>
+
+
+<!--ContainerTracking Modal-->
+<div class="modal fade" id="ModalContainerTracking" tabindex="-1" style="z-index:1040;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="ModalLabelContainerTracking" aria-hidden="true">
+    <div class="modal-dialog modalwidth-100">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                <button type="button" title="Close" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;</button>
+                <h3 class="m-b-none">Containers Tracking -  @*@Forwarding.MvcApp.App_Resources.App_Resources.Trucking*@ &nbsp;<label id="lblRoutingShownContainerTracking" @*purpose="dynamicLabel"*@ class="static-text-primary">متابعة الحاويات</label>
+                </h3>
+            </div>
+            <!-- Region Add / Edit Region Form -->
+            <div class="modal-body">
+                <div class="span7 form vertical-mode" id="ContainerTracking-form">
+                    <fieldset>
+                        <div class="form-group pull-in  has-error clearfix">
+                            <input id="hID" type="hidden" />
+                            <!-- start alert message region -->
+                            @*<div class="alert alert-danger div-error">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                            </div>*@
+                            <!-- end alert message region -->
+
+                            <!--Wizard-->
+                            <div class="row m-l m-r">
+                                    <!--1st row-->
+                                        <div class="form-group col-sm-2">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Operation</label>
+                                            <select id="slOperation" data-required="true" class="form-control input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);"></select>
+                                        </div>
+                                        @*<div class="sol-sm-6">&nbsp;<br /><br /><br /><br />
+                                        </div>*@
+
+                                    
+                                        <div class="form-group col-sm-2">
+                                            <label>Container No. - رقم الحاوية </label>
+                                            <input type="text" id="txtContainerNumber" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="11" placeholder="ex. ABCD1234567" style="text-transform:uppercase"/>
+                                        </div>
+                                        <div class="form-group col-sm-2">
+                                            <label>Container Type - نوع الحاوية </label>
+                                            <input type="text" id="txtContainerTypeCode" autocomplete="off" disabled="disabled" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="100" placeholder="" style="text-transform:uppercase" />
+                                        </div>
+                                        
+                                        <div class="form-group col-sm-3">
+                                            <label>Gate Out Port - سحب ميناء </label>
+                                            <select id="slGateOutPort" data-required="true" class="form-control input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);"></select>
+                                        </div>
+                                        <div class="form-group col-sm-3">
+                                            <label>Gate In Port - دخول ميناء</label>
+                                            <select id="slGateInPort" data-required="true" class="form-control input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);"></select>
+                                        </div>
+
+                                        <div class="form-group col-sm-2" style="clear:both;">
+                                            <label>Gate Out Date - تاريخ السحب </label>
+                                            <input id="txtGateOutDate" autocomplete="off" onchange="ContainerTracking_GetDaysDifference();" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                                        </div>
+                                        <div class="form-group col-sm-2">
+                                            <label>Stuffing Date - تاريخ التعتيق </label>
+                                            <input id="txtStuffingDate" autocomplete="off" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                                        </div>
+                                        <div class="form-group col-sm-2">
+                                            <label>Loading Date - تاريخ التحميل </label>
+                                            <input id="txtLoadingDate" autocomplete="off" onchange="ContainerTracking_GetDaysDifference();" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                                        </div>
+                                        <div class="form-group col-sm-2">
+                                            <label>DaysDiff. - فرق الأيام</label>
+                                            <input id="txtGateOutAndLoadingDatesDifference" disabled="disabled" type="text" onkeypress="CheckValueIsInteger(id);" onfocus="CheckValueIsInteger(id);" class="form-control parsley-validated input-sm" data-type="number" data-required="false" maxlength="3" placeholder="" />
+                                        </div>
+                                        
+                                        <div class="form-group col-sm-4">
+                                            <label>Factory - المصنع </label>
+                                            <input type="text" id="txtFactory" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="100" placeholder="" style="text-transform:uppercase" />
+                                        </div>
+                                        <div class="form-group col-sm-2">
+                                            <label>Exp.BL -   رقم بوليصة صادر </label>
+                                            <input type="text" id="txtExportBLNumber" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="100" placeholder="" style="text-transform:uppercase" />
+                                        </div>
+                                        <div class="form-group col-sm-2">
+                                            <label>Imp.BL - رقم بوليصة وارد </label>
+                                            <input type="text" id="txtImportBLNumber" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="100" placeholder="" style="text-transform:uppercase" />
+                                        </div>
+                                        <div class="form-group col-sm-3">
+                                            <label>Shipper - المصدر </label>
+                                            <input type="text" id="txtShipperName" disabled="disabled" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="150" placeholder="" style="text-transform:uppercase" />
+                                        </div>
+                                        <div class="form-group col-sm-3">
+                                            <label>Shipping Line - الخط الملاحى </label>
+                                            <input type="text" id="txtShippingLine" disabled="disabled" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="150" placeholder="" style="text-transform:uppercase" />
+                                        </div>
+                                        <div class="form-group col-sm-6 hide">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Notes - ملاحظات </label>
+                                            <textarea id="txtRoutingNotesContainerTracking" maxlength="1500" class="form-control col-sm-12 textDivOperations input-sm" style="text-transform:uppercase;"></textarea>
+                                        </div>
+                                        <div class="form-group col-sm-1 m-t-27">
+                                             <label><input type="checkbox" id="cbIsLoaded" onchange="InvoiceApproval_LoadingWithPaging();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Loaded</label>
+                                        </div>
+                                        
+                                    <!--5th row-->
+                                        <div class="form-group col-sm-2 m-t-md" style="clear:both;">
+                                            <label><input type="checkbox" id="cbIsOwnedByCompany" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" onchange="ContainerTracking_ShowHideOwnedByCompanyProperties();">&nbsp;Owned By Company</label>
+                                        </div>
+                                        <div class="form-group col-sm-2 hide classOwnedByCompany">
+                                            <label>Trailer</label>
+                                            <select id="slTrailer" data-required="false" class="form-control input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);"><option value=""><--Select--></option></select>
+                                        </div>
+                                        <div class="form-group col-sm-2 hide classOwnedByCompany">
+                                            <label>Driver</label>
+                                            <select id="slDriver" data-required="false" class="form-control input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);"><option value=""><--Select--></option></select>
+                                        </div>
+                                        <div class="form-group col-sm-2 hide classOwnedByCompany">
+                                            <label>Driver Assistant</label>
+                                            <select id="slDriverAssistant" data-required="false" class="form-control input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);"><option value=""><--Select--></option></select>
+                                        </div>
+                                    
+                                        <div class="form-group col-sm-2 classOwnedBySupplier">
+                                            <label>Trailer</label>
+                                            <input type="text" id="txtSupplierTrailerName" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="100" placeholder="" style="text-transform:uppercase" />
+                                        </div>
+                                        <div class="form-group col-sm-2 classOwnedBySupplier">
+                                            <label>Driver</label>
+                                            <input type="text" id="txtSupplierDriverName" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="100" placeholder="" style="text-transform:uppercase" />
+                                        </div>
+                                        <div class="form-group col-sm-2 classOwnedBySupplier">
+                                            <label>Driver Assistant</label>
+                                            <input type="text" id="txtSupplierDriverAssistantName" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="100" placeholder="" style="text-transform:uppercase" />
+                                        </div>
+                                    <!--EOF 5th row-->
+                                    <!--6th row-->
+                                    <!--EOF 6th row-->
+                                    <!--7th row-->
+                                    <!--EOF 7th row-->
+                                    <!---------------------Ahmed Mohamed-------------------------->
+                                    @*------------yard----------------------------------------*@
+                                    <div class="form-group col-sm-4" style="clear:both;">
+                                        <label>&emsp;Gate Status</label>
+                                        <div>
+                                            <div class="col-sm-4 hidden">
+                                                <label>
+                                                    <input type="radio" name="optionsRadios2" id="radNone" value="None" checked>
+                                                    None
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <label class="col-sm-4">
+                                                    <input type="radio" name="optionsRadios2" id="radGateIn" value="GateIn">
+                                                    Gate In
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <label class="col-sm-4">
+                                                    <input type="radio" name="optionsRadios2" id="radGateOut" value="GateOut">
+                                                    Gate Out
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="divYardEIRNumber" class="col-sm-3 hidden" style="clear:both;">
+                                        <div class="col-sm-10">
+                                            <label id="lblYardEIRNumber">Yard EIR Number</label>
+                                            <input type="text" id="txtYardEIRNumber" autocomplete="off" onfocus="CheckValueIsInteger(id);" onkeypress="CheckValueIsInteger(id);" class="form-control input-sm" data-required="false" maxlength="10" placeholder="EIR Number In" style="text-transform:uppercase" disabled="disabled">
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label id="lblYardEIRNumber">&nbsp;&nbsp;</label>
+                                            <span class="input-group m-t-sm m-l-n"><i id="BtnGnrtSrIn" class="fa fa-refresh" style="color:blue;"></i></span>
+                                        </div>
+                                    </div>
+
+                                    <div id="divFullEmpty" class="form-group col-sm-3 hidden">
+                                        <label>&emsp;Full/Empty</label>
+                                        <div>
+                                            <div class="col-sm-6">
+                                                <label>
+                                                    <input type="radio" name="optionsRadios3" id="radFull" value="Full" checked>
+                                                    Full
+                                                </label>
+                                            </div>
+                                            <div>
+                                                <label class="col-sm-6">
+                                                    <input type="radio" name="optionsRadios3" id="radEmpty" value="Empty">
+                                                    Empty
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="divYardInDate" class="form-group col-sm-3 hidden">
+                                        <label id="lblYardInDate">Yard In Date</label>
+                                        <input id="txtYardInDate" autocomplete="off" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date">
+                                    </div>
+                                    <div id="divYardInTime" class="form-group col-sm-3 hidden">
+                                        <label id="lblYardInTime">Yard In Time</label>
+                                        @*<input type="text" id="txtYardInTime" autocomplete="off" onfocus="CheckValueIsInteger(id);" onkeypress="CheckValueIsInteger(id);" class="form-control input-sm" data-required="false" maxlength="10" placeholder="Yard In Time" style="text-transform:uppercase">*@
+                                        <input type="time" id="txtYardInTime" min="00:00" max="23:59" class="form-control">
+                                    </div>
+                                    <div id="divYardEIRNumberOut" class="col-sm-3 hidden" style="clear:both;">
+                                        <div class="col-sm-10">
+                                            <label id="lblYardEIRNumberOut">Yard EIR Number</label>
+                                            <input type="text" id="txtYardEIRNumberOut" autocomplete="off" onfocus="CheckValueIsInteger(id);" onkeypress="CheckValueIsInteger(id);" class="form-control input-sm" data-required="false" maxlength="10" placeholder="EIR Number Out" style="text-transform:uppercase" disabled="disabled">
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label id="lblGnrtSrOut">&nbsp;&nbsp;</label>
+                                            <span class="input-group m-t-sm m-l-n"><i id="BtnGnrtSrOut" class="fa fa-refresh" style="color:blue;"></i></span>
+                                        </div>
+                                    </div>
+
+                                    <div id="divYardOutDate" class="form-group col-sm-3 hidden">
+                                        <label id="lblYardOutDate">Yard Out Date</label>
+                                        <input id="txtYardOutDate" autocomplete="off" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date">
+                                    </div>
+                                    <div id="divYardOutTime" class="form-group col-sm-3 hidden">
+                                        <label id="lblYardOutTime">Yard Out Time</label>
+                                        @*<input type="text" id="txtYardOutTime" autocomplete="off" onfocus="CheckValueIsInteger(id);" onkeypress="CheckValueIsInteger(id);" class="form-control input-sm" data-required="false" maxlength="10" placeholder="Yard Out Time" style="text-transform:uppercase">*@
+                                        <input type="time" id="txtYardOutTime" min="00:00" max="23:59" class="form-control">
+                                    </div>
+                                    <div id="divYardLocationID" class="form-group col-sm-3 hidden">
+                                        <label id="lblYardLocationID">Yard Location</label>
+                                        <select id="slYardLocationID" data-required="false" class="form-control input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);"><option value=""><--Select--></option></select>
+                                    </div>
+                                    <div id="divPrintEir" class="form-group col-sm-2 hidden">
+                                        <label id="lblPrintEir">&nbsp;&nbsp; </label><br />
+                                        <button type="button" id="btnPrintEir" class="btn btn-primary" onclick="PrintEIRReport();">
+                                            <i><span class="glyphicon glyphicon-print"></span></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Print&nbsp;EIR
+                                        </button>
+                                    </div>
+                                    @*------------yard----------------------------------------*@
+                                    <!---------------------Ahmed Mohamed-------------------------->
+                                </div>
+                        </div>
+
+
+                                <!--Charges-->
+                                    @*<button id="btn-OperationsFromShipment" type="button" class="btn btn-sm btn-primary m-t-n-xs" onclick="SwitchToOperationsView();"><i class="fa fa-desktop"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.BackToOperations</button>*@
+                                    <div id="divPayBtns" class="col-sm-6" style="clear:both;">
+                                        <button id="btn-AddPayables" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#SelectChargesModal" onclick="Payables_GetAvailableCharges();"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.AddPayables</button>
+                                        <button id="btn-MultiRowEditPayables" class="btn btn-info btn-sm hide" data-toggle="modal" data-target="#SelectChargesModal" onclick="Payables_MultiRowEdit();"><i class="fa fa-pencil"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.MultiEdit</button>
+                                        <button id="btn-DeletePayable" type="button" class="float-right btn btn-sm btn-danger" onclick="Payables_DeleteList();"><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete</button>
+                                    </div>
+                                    <div id="divRecBtns" class="col-sm-6">
+                                        <button id="btn-AddReceivables" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#SelectChargesModal" onclick="Receivables_GetAvailableCharges();"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.AddReceivables</button>
+                                        <button id="btn-MultiRowEditReceivables" class="btn btn-info btn-sm hide" data-toggle="modal" data-target="#SelectChargesModal" onclick="Receivables_MultiRowEdit();"><i class="fa fa-pencil"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.MultiEdit</button>
+                                        <button id="btn-DeleteReceivable" type="button" class="float-right btn btn-sm btn-danger" onclick="Receivables_DeleteList();"><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete</button>
+                                    </div>
+                                    
+
+                                    <div id="divPayables" class="col-sm-6 m-t-xs">
+                                        <section class="panel panel-default">
+                                            <header class="panel-heading font-bold text-ul">@Forwarding.MvcApp.App_Resources.App_Resources.Payables</header>
+                                            <!--Region: table header-->
+                                            <div class="table-responsive" style="width:100%; height:200px; overflow:scroll;">
+                                                <table id="tblPayables" class="table table-striped b-t b-light text-sm  table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th id="HeaderDeletePayableID">
+                                                                <input id="cb-CheckAll-Payables" type="checkbox" />
+                                                            </th>
+                                                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.ChargeType</th>
+                                                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Qty</th>
+                                                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.UnitPriceAbbrev</th>
+                                                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Cost</th>
+                                                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.ExchangeRateAbbrev</th>
+                                                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Cur</th>
+                                                            <th class="rounded-right hide"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!--Region: EOF table header-->
+                                            <!--Region: table footer-->
+                                            <footer class="panel-footer">
+                                                <span id="spanNoPayables" class="hide">No Paybles.</span>
+                                            </footer>
+                                            <!--Region: EOF table footer-->
+                                        </section>
+                                    </div>
+
+                                    <div id="divReceivables" class="col-sm-6 m-t-xs">
+                                        <section class="panel panel-default">
+                                            <header class="panel-heading font-bold text-ul">@Forwarding.MvcApp.App_Resources.App_Resources.Receivables</header>
+                                            <!--Region: table header-->
+                                            <div class="table-responsive" style="width:100%; height:200px; overflow:scroll;">
+                                                <table id="tblReceivables" class="table table-striped b-t b-light text-sm  table-hover ">
+                                                    <thead>
+                                                        <tr>
+                                                            <th id="HeaderDeleteReceivableID">
+                                                                <input id="cb-CheckAll-Receivables" type="checkbox" />
+                                                            </th>
+                                                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.ChargeType</th>
+                                                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Qty</th>
+                                                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.UnitPriceAbbrev</th>
+                                                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.SaleAmount</th>
+                                                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.ExchangeRateAbbrev</th>
+                                                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Cur</th>
+                                                            <th class="rounded-right hide"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!--Region: EOF table header-->
+                                            <!--Region: table footer-->
+                                            <footer class="panel-footer">
+                                                <span id="spanNoReceivables" class="hide">No Receivables.</span>
+                                            </footer>
+                                            <!--Region: EOF table footer-->
+                                        </section>
+                                    </div>                            
+                                <!--EOF Charges-->
+
+                    </fieldset>
+                </div>
+            </div>
+            <!-- Endregion Add / Edit Region Form -->
+            <div class="modal-footer m-t-n-lg">
+                <button type="button" id="btnSave" class="btn btn-primary btn-sm" onclick="Routings_Insert(false);">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save</button>
+                @*<a id="btnSaveandNew" class="btn btn-primary btn-sm" onclick="Routings_Insert(true);">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew</a>*@
+                <button class="btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true" >@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div> 
+        </div>
+    </div>
+</div>
+<!--EOF RoutingsContainerTracking Modal-->
+
+
+<!--SelectOperationModal-->
+<div class="modal fade" id="SelectOperationModal" tabindex="-1" style="z-index:2000;" @*data-keyboard="false"*@ data-backdrop="false" role="dialog" aria-labelledby="SelectOperationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-50">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" title="Close">
+                    &times;
+                </button>
+                <h3 id="h3PrintOperationDocument" class="m-b-none">
+                    Transfer Container&nbsp;<label id="lblSelectOperationShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                    @*<button type="button" class="close" title="Close" data-dismiss="modal" onclick="MAWBStockSelect_ResetFunctionsNames();" aria-hidden="true">&times;</button>*@
+                </h3>
+            </div>
+            <!-- Region Add / Edit Region Form -->
+            <div class="modal-body">
+                <div class="span7 form vertical-mode" id="SelectOperationModal-form">
+                    <fieldset>
+                        <input id="hSelectOperationID" type="hidden" />
+                        <div class="form-group col-sm-6 m-t">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Operation</label>
+                            <select id="slOperation_Destination" class="form-control input-sm"><option value=""><--Select--></option></select>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <!-- Endregion Add / Edit Region Form -->
+            <div class="modal-footer">
+                <button type="button" id="btnTransferContainer" class="btn btn-primary btn-sm" onclick="ContainerTracking_TransferHouse();">
+                    Transfer
+                </button>
+                @*<button type="button" id="btnSaveandNew" class="btn btn-primary btn-sm" onclick="MAWBStockSelect_Insert(true);">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew</button>*@
+                <button class="btnClose btn btn-link btn-sm" id="btnCloseTransferContainer" title="Close" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF SelectOperationModal-->
+
+
+<!--CheckboxesListModal-->
+<div class="modal fade" id="CheckboxesListModal" tabindex="-1" style="z-index: 3000;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="CheckboxesListModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-90">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.Select &nbsp;<label id="lblShownItems" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region CheckboxesList Form -->
+                <div class="span7 form vertical-mode" id="CheckboxesList-form">
+                    <fieldset>
+                        <div class="row hide">
+                            <div id="div-search-CheckboxesListModal" class="input-group m-l col-sm-5">
+                                <input id="txtSearchItems" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase"  type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search" />
+                                <span class="input-group-btn">
+                                    <button id="btn-SearchItems" class="btn btn-sm btn-primary" type="button"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div><br />
+
+                        <div id="divCheckboxesList">
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- Endegion CheckboxesList Form -->
+            </div>
+            <div class="modal-footer"><!--sherif-->
+                <button type="button" id="btnCheckboxesListApply" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-save"></span>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Apply</button>
+                <button class=" btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF CheckboxesListModal-->

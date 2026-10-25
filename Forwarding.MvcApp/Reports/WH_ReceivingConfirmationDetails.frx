@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ConvertNulls="false" ReportInfo.Created="09/21/2024 14:09:12" ReportInfo.Modified="06/24/2025 16:18:13" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Windows.Forms;
+    using System.Drawing;
+    using System.Data;
+    using FastReport;
+    using FastReport.Data;
+    using FastReport.Dialog;
+    using FastReport.Barcode;
+    using FastReport.Table;
+    using FastReport.Utils;
+
+    namespace FastReport
+    {
+    public class ReportScript
+    {
+
+    }
+    }
+  </ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqM7gJFg/iaLrqMhRfGy5lGq91KBmNiopoFLj651QdmAvpNKhNKYCo5qfv8k/w8OS65qqqKr8mwMcGWh/5YqZq5XPkkeZcJvaBp3/OY3DXoJBtbjCNVRCVNQJnRg0s/ngdgUnL4KQrur9kEVaXP003BY0joQutRahB9XqCm222Z/LCNeTqdreLrJvflht9ddKud3RP/CziO+qrVZTbTs9oXQ==">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="exec (@query)">
+        <Column Name="ID" DataType="System.Int64"/>
+        <Column Name="Code" DataType="System.String"/>
+        <Column Name="CustomerName" DataType="System.String"/>
+        <Column Name="WarehouseName" DataType="System.String"/>
+        <Column Name="Notes" DataType="System.String"/>
+        <Column Name="CreationDate" DataType="System.DateTime"/>
+        <Column Name="CreatorUserName" DataType="System.String"/>
+        <Column Name="ItemCode" DataType="System.String"/>
+        <Column Name="ItemName" DataType="System.String"/>
+        <Column Name="BatchNumber" DataType="System.String"/>
+        <Column Name="ExpectedQuantity" DataType="System.Decimal"/>
+        <Column Name="UOM" DataType="System.String"/>
+        <Column Name="Quantity" DataType="System.Decimal"/>
+        <Column Name="ProductionDate" DataType="System.DateTime"/>
+        <Column Name="ExpirationDate" DataType="System.DateTime"/>
+        <Column Name="PalletID" DataType="System.String"/>
+        <Column Name="PalletStatusName" DataType="System.String"/>
+        <Column Name="LocationCode" DataType="System.String"/>
+        <Column Name="ActualQuantity" DataType="System.Decimal"/>
+        <Column Name="DamageQuantity" DataType="System.Decimal"/>
+        <Column Name="VarianceQuantity" DataType="System.Decimal"/>
+        <Column Name="ContainerNumber" DataType="System.String"/>
+        <Column Name="PO" DataType="System.String"/>
+        <CommandParameter Name="@query" DataType="12" Expression="[query]" DefaultValue="select * from vwWH_Inbound_rpt"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="query" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" RawPaperSize="9" ExtraDesignWidth="true" UnlimitedWidth="true">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="59.87">
+      <TextObject Name="Text1" Left="396.9" Top="9.45" Width="264.6" Height="37.8" Border.Shadow="true" Border.ShadowWidth="1" Border.ShadowColor="WhiteSmoke" Text="Receiving Confirmation Detail" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <PictureObject Name="picLogo" Width="198.05" Height="59.87"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="63.87" Width="718.2" Height="160.65">
+      <TextObject Name="Text2" Left="9.45" Top="9.45" Width="94.5" Height="18.9" Text="Shipment #" VertAlign="Center"/>
+      <TextObject Name="Text3" Left="103.95" Top="9.45" Width="226.8" Height="18.9" Text="[Table.Code]" VertAlign="Center"/>
+      <TextObject Name="Text4" Left="9.45" Top="37.8" Width="94.5" Height="18.9" Text="Owner" VertAlign="Center"/>
+      <TextObject Name="Text5" Left="103.95" Top="37.8" Width="226.8" Height="18.9" Text="[Table.CustomerName]" VertAlign="Center"/>
+      <TextObject Name="Text6" Left="9.45" Top="66.15" Width="94.5" Height="18.9" Text="Warehouse" VertAlign="Center"/>
+      <TextObject Name="Text7" Left="103.95" Top="66.15" Width="226.8" Height="18.9" Text="[Table.WarehouseName]" VertAlign="Center"/>
+      <TextObject Name="Text8" Left="444.15" Top="9.45" Width="94.5" Height="18.9" Text="Create DATE" VertAlign="Center"/>
+      <TextObject Name="Text9" Left="538.65" Top="9.45" Width="170.1" Height="18.9" Text="[Table.CreationDate]" Format="Custom" Format.Format="dd/MM/yyyy" VertAlign="Center"/>
+      <TextObject Name="Text10" Left="444.15" Top="37.8" Width="94.5" Height="18.9" Text="ORDER Note" VertAlign="Center"/>
+      <TextObject Name="Text11" Left="538.65" Top="37.8" Width="170.1" Height="18.9" Text="[Table.Notes]" VertAlign="Center"/>
+      <TextObject Name="Text12" Left="444.15" Top="66.15" Width="94.5" Height="18.9" Text="Created BY" VertAlign="Center"/>
+      <TextObject Name="Text13" Left="538.65" Top="66.15" Width="170.1" Height="18.9" Text="[Table.CreatorUserName]" VertAlign="Center"/>
+      <TextObject Name="Text14" Left="9.45" Top="122.85" Width="56.7" Height="37.8" Border.Lines="All" Fill.Color="141, 180, 226" Text="S" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text15" Left="66.15" Top="122.85" Width="75.6" Height="37.8" Border.Lines="All" Fill.Color="141, 180, 226" Text="SKU" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text16" Left="141.75" Top="122.85" Width="189" Height="37.8" Border.Lines="All" Fill.Color="141, 180, 226" Text="SKU DESCRIPTION" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text17" Left="330.75" Top="122.85" Width="85.05" Height="37.8" Border.Lines="All" Fill.Color="141, 180, 226" Text="Patch" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text18" Left="793.8" Top="122.85" Width="85.05" Height="37.8" Border.Lines="All" Fill.Color="141, 180, 226" Text="EXP QTY" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text19" Left="878.85" Top="122.85" Width="85.05" Height="37.8" Border.Lines="All" Fill.Color="141, 180, 226" Text="UOM" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text52" Left="963.9" Top="122.85" Width="85.05" Height="37.8" Border.Lines="All" Fill.Color="141, 180, 226" Text="Actual QTY" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text58" Left="415.8" Top="122.85" Width="85.05" Height="37.8" Border.Lines="All" Fill.Color="141, 180, 226" Text="MAN Date" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text60" Left="500.85" Top="122.85" Width="85.05" Height="37.8" Border.Lines="All" Fill.Color="141, 180, 226" Text="EXP Date" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text62" Left="585.9" Top="122.85" Width="75.6" Height="37.8" Border.Lines="All" Fill.Color="141, 180, 226" Text="LPN" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text64" Left="661.5" Top="122.85" Width="132.3" Height="37.8" Border.Lines="All" Fill.Color="141, 180, 226" Text="Location" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text66" Left="1048.95" Top="122.85" Width="85.05" Height="37.8" Border.Lines="All" Fill.Color="141, 180, 226" Text="Lp Status" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text68" Left="9.45" Top="94.5" Width="94.5" Height="18.9" Text="Container No" VertAlign="Center"/>
+      <TextObject Name="Text69" Left="103.95" Top="94.5" Width="226.8" Height="18.9" Text="[Table.ContainerNumber]" VertAlign="Center"/>
+      <TextObject Name="Text70" Left="444.15" Top="94.5" Width="94.5" Height="18.9" Text="PO" VertAlign="Center"/>
+      <TextObject Name="Text71" Left="538.65" Top="94.5" Width="170.1" Height="18.9" Text="[Table.PO]" VertAlign="Center"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="228.52" Width="718.2" Height="37.8" DataSource="Table">
+      <TextObject Name="Text20" Left="9.45" Width="56.7" Height="37.8" Border.Lines="All" Text="[Row#]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text21" Left="66.15" Width="75.6" Height="37.8" Border.Lines="All" Text="[Table.ItemCode]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text22" Left="141.75" Width="189" Height="37.8" Border.Lines="All" Text="[Table.ItemName]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text23" Left="330.75" Width="85.05" Height="37.8" Border.Lines="All" Text="[Table.BatchNumber]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text24" Left="793.8" Width="85.05" Height="37.8" Border.Lines="All" Text="[Table.ExpectedQuantity]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="3" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text25" Left="878.85" Width="85.05" Height="37.8" Border.Lines="All" Text="[Table.UOM]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text53" Left="963.9" Width="85.05" Height="37.8" Border.Lines="All" Text="[Table.Quantity]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="3" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text59" Left="415.8" Width="85.05" Height="37.8" Border.Lines="All" Text="[Table.ProductionDate]" Editable="true" Format="Date" Format.Format="d" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text61" Left="500.85" Width="85.05" Height="37.8" Border.Lines="All" Text="[Table.ExpirationDate]" Format="Date" Format.Format="d" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text63" Left="585.9" Width="75.6" Height="37.8" Border.Lines="All" Text="[Table.PalletID]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text65" Left="661.5" Width="132.3" Height="37.8" Border.Lines="All" Text="[Table.LocationCode]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text67" Left="1048.95" Width="85.05" Height="37.8" Border.Lines="All" Text="[Table.PalletStatusName]" HorzAlign="Center" VertAlign="Center"/>
+    </DataBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="270.32" Width="718.2" Height="151.2">
+      <TextObject Name="Text48" Left="9.45" Top="122.85" Width="103.95" Height="18.9" Text="OP Signature" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text49" Left="113.4" Top="122.85" Width="122.85" Height="18.9" Text="______________" VertAlign="Bottom"/>
+      <TextObject Name="Text50" Left="500.85" Top="122.85" Width="103.95" Height="18.9" Text="PRINTEDate :" VertAlign="Center"/>
+      <TextObject Name="Text51" Left="604.8" Top="122.85" Width="103.95" Height="18.9" Text="[Date]" Format="Custom" Format.Format="dd/MM/yyyy" VertAlign="Center"/>
+      <TextObject Name="Text32" Left="9.45" Top="28.35" Width="122.85" Height="18.9" Text="Pallet Building:" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text38" Left="321.3" Top="28.35" Width="141.75" Height="18.9" Text="Offloading 20:" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text44" Left="652.05" Top="28.35" Width="94.5" Height="18.9" Text="Open Shift:" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text33" Left="9.45" Top="56.7" Width="122.85" Height="18.9" Text="Pallet Shrinking:" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text39" Left="321.3" Top="56.7" Width="141.75" Height="18.9" Text="Offloading 40:" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text45" Left="652.05" Top="56.7" Width="94.5" Height="18.9" Text="Coding:" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text34" Left="9.45" Top="85.05" Width="122.85" Height="18.9" Text="Segregation:" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text40" Left="321.3" Top="85.05" Width="141.75" Height="18.9" Text="OffLoading Jumbo:" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+    </ReportSummaryBand>
+    <PageFooterBand Name="PageFooter1" Top="425.52" Width="718.2" Height="18.9"/>
+  </ReportPage>
+</Report>

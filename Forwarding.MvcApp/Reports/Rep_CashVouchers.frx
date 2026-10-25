@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/03/2022 13:02:22" ReportInfo.Modified="08/01/2023 16:32:19" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+    public static string ConvertNumberToWords(int number)
+    {
+      if (number == 0)
+        return &quot;zero&quot;;
+
+      if (number &lt; 0)
+        return &quot;minus &quot; + ConvertNumberToWords(Math.Abs(number));
+
+      string words = &quot;&quot;;
+
+      if ((number / 1000000) &gt; 0)
+      {
+        words += ConvertNumberToWords(number / 1000000) + &quot; million &quot;;
+        number %= 1000000;
+      }
+
+      if ((number / 1000) &gt; 0)
+      {
+        words += ConvertNumberToWords(number / 1000) + &quot; thousand &quot;;
+        number %= 1000;
+      }
+
+      if ((number / 100) &gt; 0)
+      {
+        words += ConvertNumberToWords(number / 100) + &quot; hundred &quot;;
+        number %= 100;
+      }
+
+      if (number &gt; 0)
+      {
+        if (words != &quot;&quot;)
+          words += &quot;and &quot;;
+
+        var unitsMap = new string[] {
+        &quot;zero&quot;, &quot;one&quot;, &quot;two&quot;, &quot;three&quot;, &quot;four&quot;, &quot;five&quot;, &quot;six&quot;, &quot;seven&quot;, &quot;eight&quot;, &quot;nine&quot;,
+        &quot;ten&quot;, &quot;eleven&quot;, &quot;twelve&quot;, &quot;thirteen&quot;, &quot;fourteen&quot;, &quot;fifteen&quot;, &quot;sixteen&quot;, &quot;seventeen&quot;, &quot;eighteen&quot;, &quot;nineteen&quot;
+        };
+
+        var tensMap = new string[] {
+        &quot;zero&quot;, &quot;ten&quot;, &quot;twenty&quot;, &quot;thirty&quot;, &quot;forty&quot;, &quot;fifty&quot;, &quot;sixty&quot;, &quot;seventy&quot;, &quot;eighty&quot;, &quot;ninety&quot;
+        };
+
+        if (number &lt; 20)
+          words += unitsMap[number];
+        else
+        {
+          words += tensMap[number / 10];
+          if ((number % 10) &gt; 0)
+            words += &quot;-&quot; + unitsMap[number % 10];
+        }
+        }
+
+      return words;
+    }
+
+    //Only
+    private void Cell12_BeforePrint(object sender, EventArgs e)
+    {
+      Cell12.Text = &quot;only : &quot; 
+        + ConvertNumberToWords(((int)Math.Round((decimal)Report.GetColumnValue(&quot;vwA_Voucher.Total&quot;)))) 
+        + &quot; &quot; 
+        + ((String)Report.GetColumnValue(&quot;vwA_Voucher.CurrencyCode&quot;));
+      
+      Cell28.Text = &quot;Total Amount Only : &quot; 
+        + ConvertNumberToWords(((int)Math.Round((decimal)Report.GetColumnValue(&quot;vwA_Voucher.Total&quot;)))) 
+        + &quot; &quot; 
+        + ((String)Report.GetColumnValue(&quot;vwA_Voucher.CurrencyCode&quot;));
+    }
+
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFXoyLo1BguqfmJqQ0duwo2P6gf9uEI7UUp3GfzKUWqBNHtm1Csn6d/RCnCS1+uTmnmzOcmYqOzPhMP7nCxKhEFYpPZmyRlW5vhVarfpIVrk6PlMlFFz8HJKEAVPKKIfrCvwEdANQfEzz9BYM6Q8q5/A==">
+      <TableDataSource Name="vwA_Voucher" DataType="System.Int32" Enabled="true" TableName="vwA_Voucher" SelectCommand="exec GetListvwA_Voucher @WhereClause">
+        <Column Name="ID" DataType="System.Int64"/>
+        <Column Name="Code" DataType="System.String"/>
+        <Column Name="VoucherDate" DataType="System.DateTime"/>
+        <Column Name="SafeID" DataType="System.Int32"/>
+        <Column Name="SafeName" DataType="System.String"/>
+        <Column Name="CurrencyID" DataType="System.Int32"/>
+        <Column Name="CurrencyCode" DataType="System.String"/>
+        <Column Name="ExchangeRate" DataType="System.Decimal"/>
+        <Column Name="ChargedPerson" DataType="System.String"/>
+        <Column Name="Notes" DataType="System.String"/>
+        <Column Name="TaxID" DataType="System.Int32"/>
+        <Column Name="TaxName" DataType="System.String"/>
+        <Column Name="IsDebitAccount" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="TaxValue" DataType="System.Decimal"/>
+        <Column Name="TaxSign" DataType="System.Int32"/>
+        <Column Name="TaxID2" DataType="System.Int32"/>
+        <Column Name="TaxName2" DataType="System.String"/>
+        <Column Name="IsDebitAccount2" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="TaxValue2" DataType="System.Decimal"/>
+        <Column Name="TaxSign2" DataType="System.Int32"/>
+        <Column Name="Total" DataType="System.Decimal"/>
+        <Column Name="TotalAfterTax" DataType="System.Decimal"/>
+        <Column Name="Approved" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="Posted" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="IsAGInvoice" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="AGInvType_ID" DataType="System.Int32"/>
+        <Column Name="Inv_No" DataType="System.Int32"/>
+        <Column Name="InvoiceID" DataType="System.Int64"/>
+        <Column Name="SLInvoiceNumber" DataType="System.String"/>
+        <Column Name="JVID1" DataType="System.Int64"/>
+        <Column Name="JVID2" DataType="System.Int64"/>
+        <Column Name="JVID3" DataType="System.Int64"/>
+        <Column Name="JVID4" DataType="System.Int64"/>
+        <Column Name="SalesManID" DataType="System.Int32"/>
+        <Column Name="forwOperationID" DataType="System.Int32"/>
+        <Column Name="IsCustomClearance" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="TransType_ID" DataType="System.Int32"/>
+        <Column Name="VoucherType" DataType="System.Int32"/>
+        <Column Name="VoucherTypeName" DataType="System.String"/>
+        <Column Name="IsCash" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="IsCheque" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="PrintDate" DataType="System.DateTime"/>
+        <Column Name="ChequeNo" DataType="System.String"/>
+        <Column Name="ChequeDate" DataType="System.DateTime"/>
+        <Column Name="BankID" DataType="System.Int32"/>
+        <Column Name="BankName" DataType="System.String"/>
+        <Column Name="OtherSideBankName" DataType="System.String"/>
+        <Column Name="CollectionDate" DataType="System.DateTime"/>
+        <Column Name="CollectionExpense" DataType="System.Decimal"/>
+        <Column Name="UserName" DataType="System.String"/>
+        <Column Name="DisbursementJob_ID" DataType="System.Int32"/>
+        <Column Name="SL_SalesManID" DataType="System.Int32"/>
+        <Column Name="IsLiner" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="Logo" DataType="System.String" PropName="Column" Calculated="true" Expression="[Logo]"/>
+        <CommandParameter Name="WhereClause" DataType="22" Expression="[WhereClause]" DefaultValue=" WHERE 1=1"/>
+      </TableDataSource>
+      <TableDataSource Name="vwA_VoucherDetails" DataType="System.Int32" Enabled="true" TableName="vwA_VoucherDetails" SelectCommand="exec GetListvwA_VoucherDetails @WhereClauseDetails">
+        <Column Name="ID" DataType="System.Int64"/>
+        <Column Name="VoucherID" DataType="System.Int64"/>
+        <Column Name="Value" DataType="System.Decimal"/>
+        <Column Name="Description" DataType="System.String"/>
+        <Column Name="AccountID" DataType="System.Int32"/>
+        <Column Name="Account_Name" DataType="System.String"/>
+        <Column Name="Account_EnName" DataType="System.String"/>
+        <Column Name="Account_Number" DataType="System.String"/>
+        <Column Name="SubAccountID" DataType="System.Int32"/>
+        <Column Name="SubAccount_Name" DataType="System.String"/>
+        <Column Name="SubAccount_EnName" DataType="System.String"/>
+        <Column Name="SubAccount_Number" DataType="System.String"/>
+        <Column Name="CostCenterID" DataType="System.Int32"/>
+        <Column Name="CostCenterName" DataType="System.String"/>
+        <Column Name="CostCenterNumber" DataType="System.String"/>
+        <Column Name="IsDocumented" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="InvoiceID" DataType="System.Int64"/>
+        <Column Name="InvoiceNo" DataType="System.String"/>
+        <Column Name="VoucherType" DataType="System.Int32"/>
+        <Column Name="OperationID" DataType="System.Int64"/>
+        <Column Name="HouseID" DataType="System.Int64"/>
+        <Column Name="BranchID" DataType="System.Int32"/>
+        <Column Name="OperationCode" DataType="System.String"/>
+        <Column Name="CodeSerial" DataType="System.Int32"/>
+        <Column Name="TruckingOrderID" DataType="System.Int32"/>
+        <CommandParameter Name="WhereClauseDetails" DataType="12" Expression="[WhereClauseDetails]"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="WhereClause" DataType="System.String"/>
+    <Parameter Name="WhereClauseDetails" DataType="System.String"/>
+    <Parameter Name="Logo" DataType="System.String"/>
+    <Total Name="TotalAmountDetails" Expression="[vwA_VoucherDetails.Value]" Evaluator="Data2" EvaluateCondition="[vwA_VoucherDetails.VoucherID] == [vwA_Voucher.ID]"/>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <DataBand Name="Data1" Width="718.2" Height="228.58" CanGrow="true" CanBreak="true" DataSource="vwA_Voucher" KeepTogether="true" KeepDetail="true">
+      <TextObject Name="Text1" Left="189.98" Top="61.17" Width="332.52" Height="18.9" Text="[IIf([vwA_Voucher.VoucherType] == 10,&quot;Cash Receiving Receipt No.&quot;,&quot;Cash Issuing Receipt No.&quot;)] [vwA_Voucher.Code]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text2" Left="190.92" Top="87.65" Width="332.52" Height="18.9" Text="[IIf([vwA_Voucher.VoucherType] == 10,&quot;إيصال استلام نقدى&quot;,&quot;إيصال صرف نقدى&quot;)]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TableObject Name="Table1" Left="6.93" Top="115.07" Width="699.34" Height="75.6" Border.Lines="All" Border.Width="1.5">
+        <TableColumn Name="Column1" Width="349.67"/>
+        <TableColumn Name="Column2" Width="349.67"/>
+        <TableRow Name="Row1">
+          <TableCell Name="Cell1" Text="Receipt Date: [FormatDateTime([vwA_Voucher.VoucherDate],&quot;dd/MM/yyyy&quot;)]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+          <TableCell Name="Cell2" Text="Name : [vwA_Voucher.ChargedPerson]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+        </TableRow>
+        <TableRow Name="Row2">
+          <TableCell Name="Cell6" Text="Safe: [vwA_Voucher.SafeName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+          <TableCell Name="Cell7" Text="Total: [FormatNumber([vwA_Voucher.Total],2)] [vwA_Voucher.CurrencyCode]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+        </TableRow>
+        <TableRow Name="Row3" AutoSize="true">
+          <TableCell Name="Cell11" Text="Total After Tax: [FormatNumber([vwA_Voucher.TotalAfterTax],2)] [vwA_Voucher.CurrencyCode]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+          <TableCell Name="Cell12" BeforePrintEvent="Cell12_BeforePrint" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+        </TableRow>
+        <TableRow Name="Row4">
+          <TableCell Name="Cell16" Text="Notes: [vwA_Voucher.Notes]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold" ColSpan="2"/>
+          <TableCell Name="Cell17" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+        </TableRow>
+      </TableObject>
+      <TextObject Name="Text3" Left="6.93" Top="190.77" Width="115.17" Height="18.9" Text="Payment Details" VertAlign="Center" Font="Arial, 10pt, style=Bold, Underline"/>
+      <TableObject Name="Table2" Left="6.93" Top="209.68" Width="699.3" Height="18.9" Border.Lines="All">
+        <TableColumn Name="Column3" Width="308.07"/>
+        <TableColumn Name="Column4" Width="62.37"/>
+        <TableColumn Name="Column5" Width="90.72"/>
+        <TableColumn Name="Column6" Width="128.52"/>
+        <TableColumn Name="Column7" Width="109.62"/>
+        <TableRow Name="Row5">
+          <TableCell Name="Cell18" Border.Lines="All" Text="Description" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell19" Border.Lines="All" Text="Amount" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell20" Border.Lines="All" Text="Account" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell21" Border.Lines="All" Text="SubAccount" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell22" Border.Lines="All" Text="Cost Center" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        </TableRow>
+      </TableObject>
+      <PictureObject Name="Picture1" Left="5.91" Top="5.12" Width="702.7" Height="50.42" DataColumn="vwA_Voucher.Logo"/>
+      <DataBand Name="Data2" Top="232.58" Width="718.2" Height="18.9" CanGrow="true" DataSource="vwA_VoucherDetails" Filter="[vwA_VoucherDetails.VoucherID] == [vwA_Voucher.ID]">
+        <TableObject Name="Table3" Left="6.93" Width="699.3" Height="18.9" Border.Lines="All">
+          <TableColumn Name="Column8" Width="308.07"/>
+          <TableColumn Name="Column9" Width="62.37"/>
+          <TableColumn Name="Column10" Width="90.72"/>
+          <TableColumn Name="Column11" Width="128.52"/>
+          <TableColumn Name="Column12" Width="109.62"/>
+          <TableRow Name="Row6" AutoSize="true">
+            <TableCell Name="Cell23" Border.Lines="All" Text="[vwA_VoucherDetails.Description]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+            <TableCell Name="Cell24" Border.Lines="All" Text="[FormatNumber([vwA_VoucherDetails.Value],2)]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+            <TableCell Name="Cell25" Border.Lines="All" Text="[vwA_VoucherDetails.Account_Name]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+            <TableCell Name="Cell26" Border.Lines="All" Text="[vwA_VoucherDetails.SubAccount_Name]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+            <TableCell Name="Cell27" Border.Lines="All" Text="[vwA_VoucherDetails.CostCenterName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          </TableRow>
+        </TableObject>
+        <DataFooterBand Name="DataFooter1" Top="255.48" Width="718.2" Height="97.5">
+          <TableObject Name="Table4" Left="6.93" Width="699.3" Height="18.9" Border.Lines="All">
+            <TableColumn Name="Column13" Width="308.07"/>
+            <TableColumn Name="Column14" Width="62.37"/>
+            <TableColumn Name="Column15" Width="90.72"/>
+            <TableColumn Name="Column16" Width="128.52"/>
+            <TableColumn Name="Column17" Width="109.62"/>
+            <TableRow Name="Row7">
+              <TableCell Name="Cell28" Border.Lines="All" BeforePrintEvent="Cell28_BeforePrint" HorzAlign="Center" VertAlign="Center" ColSpan="5"/>
+              <TableCell Name="Cell29" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+              <TableCell Name="Cell30" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+              <TableCell Name="Cell31" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+              <TableCell Name="Cell32" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            </TableRow>
+          </TableObject>
+          <TextObject Name="Text4" Left="7.11" Top="27.41" Width="141.75" Height="47.25" Border.Lines="All" Border.Width="1.5" Text="Receiver: &#13;&#10;Name:&#13;&#10;No.:&#13;&#10;Signature" Font="Arial, 7pt, style=Bold"/>
+          <TextObject Name="Text5" Left="189" Top="28.35" Width="141.75" Height="47.25" Border.Lines="All" Border.Width="1.5" Text="Approved By" Font="Arial, 7pt, style=Bold"/>
+          <TextObject Name="Text6" Left="368.55" Top="28.35" Width="141.75" Height="47.25" Border.Lines="All" Border.Width="1.5" Text="Reviewed By" Font="Arial, 7pt, style=Bold"/>
+          <TextObject Name="Text7" Left="561.61" Top="28.35" Width="141.75" Height="47.25" Border.Lines="All" Border.Width="1.5" Text="Prepared By&#13;&#10;&#13;&#10;[vwA_Voucher.UserName]" VertAlign="Center" Font="Arial, 7pt, style=Bold"/>
+          <LineObject Name="Line1" Left="-2.63" Top="88.57" Width="716.8" Border.Style="Dash" Border.Width="1.5"/>
+        </DataFooterBand>
+      </DataBand>
+    </DataBand>
+  </ReportPage>
+</Report>

@@ -1,0 +1,303 @@
+﻿
+
+    <script src="http://people.iola.dk/olau/flot/jquery.flot.js"></script>
+    <ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+        <li>
+            <a id="hl-homepage" href="javascript:void(0);">
+                <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+            </a>
+        </li>
+        <li>
+            <a id="MasterData" href="javascript:void(0);" onclick="LoadViews('CRM')">
+                @Forwarding.MvcApp.App_Resources.App_Resources.CRM
+            </a>
+        </li>
+        <li>
+            <a id="CRMDashboard" href="javascript:void(0);" onclick="LoadViews(id)">
+                Dashboard  @*@Forwarding.MvcApp.App_Resources.App_Resources.CRMReports*@
+            </a>
+        </li>
+        <li class="active">Client Follow Up Dashboard</li>
+    </ul>
+    <!-- end breadcrumb  -->
+  
+    <div id="div-vwCRM_ClientsFollowReport">
+        <!-- Add / Edit Region Modal --> <!--data-keyboard="false" data-backdrop="false" to prevent modal closure on pressing escape and pressing outside the modal-->
+        <!-- Region Options & Template  -->
+
+        <div id="div-Data">
+            <section class="panel panel-default">
+                <header class="panel-heading">
+                    <h3 class="m-b-none">
+                        @Forwarding.MvcApp.App_Resources.App_Resources.FilterBy
+                    </h3>
+                </header>
+                <div class="m-t-sm">
+                    <div class="span7 form" id="Search-form">
+                        <fieldset>
+                            <div class="form-group pull-in    row">
+
+                                <div class="col-sm-12 hide">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.ReportType  :</label><br />
+
+
+                                    <label class=""><input type="radio" checked="checked" value="10" name="ReportType" id="cbIsFollowupReport" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;FollowUp Report &nbsp;&nbsp;&nbsp;</label>
+                                    <label class=""><input type="radio" value="20" name="ReportType" id="cbIsTargetReport" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Salesmen Target Summary&nbsp;&nbsp;&nbsp; </label>
+
+
+                                </div>
+                            </div>
+                            <div class="form-group pull-in    row">
+
+                                <!-- start alert message region -->
+                                <!-- end alert message region -->
+                                <!-- Region Add / Edit Region Form -->
+
+
+                                <div class="form-group has-error  col-sm-3 hide">
+                                    <div class="col-sm-12">
+                                        <label>Sales Lead</label>
+                                        <select id="slCOEnName_search" class="input-sm form-control" onchange=""></select>
+                                    </div>
+                                </div>
+                                <div class="form-group has-error  col-sm-3">
+                                    <div class="col-sm-12">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.SalesRep</label>
+                                        <select id="slSalesRep_search" class="input-sm form-control" onchange=""></select>
+                                    </div>
+                                </div>
+                                <div class="form-group has-error  col-sm-3">
+                                    <div class="col-sm-12">
+                                        <label>Year</label>
+                                        <select id="slYearsCRMdashboard" class="input-sm form-control" onchange=""></select>
+                                    </div>
+                                </div>
+                                <div class="form-group has-error  col-sm-3">
+                                    <div class="col-sm-12">
+                                        <label>Month</label>
+                                        <select id="slMonthsCRMdashboard" class="input-sm form-control" onchange="">
+                                            <option value="0">Select Month</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                            <option value="10">10</option>
+                                            <option value="11">11</option>
+                                            <option value="12">12</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group has-error col-sm-3 hide">
+                                    <div class="col-sm-12">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.ActionType</label>
+                                        <select id="slActionType_Search" class="input-sm form-control" onchange=""></select>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-group col-sm-12   row">
+                                &nbsp;&nbsp;&nbsp;
+                                <button id="btn-printDashboard" type="button" class="btn btn-lightblue btn-sm hide" onclick="vwCRM_ClientsFollowUpDashboard();"><b>&nbsp; Follow Up</b></button>
+                                <button id="btn-printDashboardSalesLead" type="button" class="btn btn-lightblue btn-sm hide" onclick="vwCRM_ClientsSalesLeadDashboard();"><b>&nbsp;Sales Lead</b></button>
+                                <button id="btn-printDashboardLastActionPerUsers" type="button" class="btn btn-lightblue btn-sm hide" onclick="vwCRM_ClientsLastActionPerUsersDashboard();"><b>&nbsp;Last Actions</b></button>
+                                <button id="btn-ShowDashboard" type="button" class="btn btn-lightblue btn-sm" onclick="ShowDashboard();"><b>&nbsp;Show</b></button>
+                            </div>
+                            @*<div class="col-sm-12 hide">
+                                    <table id="tblDailySpotlight" class="table table-striped b-t b-light text-sm  table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th id="ID">
+                                                </th>
+                                                <th>
+                                                </th>
+                                                <th>
+                                                    Today
+                                                </th>
+                                                <th>
+                                                    MTD
+                                                </th>
+                                                <th>
+                                                    YTD
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbodyDailySpot"></tbody>
+                                    </table>
+                                </div>*@
+                            @*<div class="row">
+                                    <div class="col-sm-7">
+                                        <section class="panel panel-default">
+                                            <header class="panel-heading font-bold">Activity Status (Operations/Month)</header>
+                                            <div class="panel-body">
+                                                <div id="flot-line" style="height: 1px; padding: 0px; position: relative;">
+                                                </div>
+                                                <div id="flot-bar-ActivityStatus" style="height: 185px; width:100%; padding: 0px; position: relative;">
+
+                                                </div>
+                                            </div>
+
+                                        </section>
+                                    </div>
+                                </div>
+
+                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                                <script src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.2/jquery.flot.min.js"></script>
+                                <script src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.2/jquery.flot.threshold.min.js"></script>
+                                <div id="flot-bar-chart" syle="height: 300px;"></div>*@
+
+
+                            <div class="">
+
+                                <div class="form-group col-sm-6 hide" id="chartdiv">
+                                    <div id="chart-example"></div>
+                                </div>
+
+
+
+                                <div class="form-group col-sm-12  row">
+                                    <div class="form-group col-sm-6" id="IDbarChart8">
+                                        <section class="panel panel-default">
+                                            <header class="panel-heading font-bold">Monthly Revenue</header>
+                                            <div class="panel-body m-l-n" id="ChartMonthlyRevenue">
+                                                <canvas id="barChart8" style="height: 185px; width:100%; padding: 0px; position: relative;"></canvas>
+                                            </div>
+                                        </section>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <section class="panel panel-default">
+                                            <header class="panel-heading font-bold">Top 5 Sales</header>
+                                            <div class="panel-body">
+                                                <div id="ChartTop5Sales" @*id="flot-pie" style="height: 185px; padding: 0px; position: relative;"*@>
+                                                    <canvas id="pieChart1" style="height: 185px; width:100%; padding: 0px; position: relative;"></canvas>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-12  row">
+                                    <div class="col-sm-6">
+                                        <section class="panel panel-default" id="SEC_RecentPipeline">
+                                            <header class="panel-heading font-bold">Recent Pipe line</header>
+                                            <div class="panel-body"  id="ChartSalesLeadPipeline"  @*style="height: 185px; width:100%; padding: 0px; position: relative;"*@>
+                                                <div id="PipelineNames"></div>
+                                                <canvas id="PipelineChart"></canvas>
+                                            </div>
+                                        </section>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <section class="panel panel-default" id="SEC_PipelineStatistics">
+                                            <header class="panel-heading font-bold">Pipeline Statistics</header>
+                                            <div class="panel-body" id="ChartProfitValuePipeline"  @*style="height: 185px; width:100%; padding: 0px; position: relative;"*@>
+                                                <div id="barChart44"></div>
+                                                <canvas id="barChart4"></canvas>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-12  row">
+                                    <div class="col-sm-6">
+                                        <section class="panel panel-default" id="SEC_RecentAction">
+                                            <header class="panel-heading font-bold">Recent Action</header>
+                                            <div class="panel-body"  id="ChartSalesLeadLastAction" >
+                                                <div id="ActionsNames"></div>
+                                                <canvas id="lineChart"></canvas>
+                                            </div>
+                                        </section>
+                                    </div>
+                                    <div class="form-group col-sm-6 " @*id="IDbarChart3"*@>
+                                        <section class="panel panel-default" id="SEC_ActionStatistics">
+                                            <header class="panel-heading font-bold">Action Statistics</header>
+                                            <div class="panel-body" id="ChartNumberOfActions">
+                                                <canvas id="barChart3"></canvas>
+                                            </div>
+                                        </section>
+                                        
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6 hide" id="IDbarChart6">
+                                    
+                                </div>
+                                <div class="form-group col-sm-12  row hide">
+                                    <div class="col-sm-6">
+                                        <section class="panel panel-default">
+                                            <header class="panel-heading font-bold">Sales Lead Quotations</header>
+                                            <div class="panel-body" id="ChartSalesLeadLastAction">
+                                                <div id="QuotationsNames"></div>
+                                                <canvas id="barChart6"></canvas>
+                                            </div>
+                                        </section>
+                                    </div>
+                                    <div class="form-group col-sm-6 " id="IDbarChart3">
+                                        <section class="panel panel-default">
+                                            <header class="panel-heading font-bold">Number Of Quotations</header>
+                                            <div class="panel-body" id="ChartNumberOfActions1111">
+                                                <canvas id="barChart31111"></canvas>
+                                            </div>
+                                        </section>
+
+                                    </div>
+                                </div>
+
+
+
+                                <div class="form-group col-sm-12 row hide">
+                                    <div class="form-group col-sm-6" id="IDbarChart1">
+                                        <canvas id="barChart1"></canvas>
+                                    </div>
+                                    <div class="form-group col-sm-6" id="IDbarChart2">
+                                        <canvas id="barChart2"></canvas>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-12 row hide">
+                                    <div class="col-sm-6">
+                                        <section class="panel panel-default">
+                                            <header class="panel-heading font-bold">Number of actions per each Sales lead </header>
+                                            <div class="panel-body" id="ChartNumberofactionsSaleslead">
+                                                <div id="chtAnimatedBarChart" class="bcBar"></div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                   
+                                    <div class="col-sm-6 hide">
+                                        <section class="panel panel-default">
+                                            <header id="headerGraphLocalCurrency" class="panel-heading font-bold"></header>
+                                            <div class="panel-body m-l-n">
+                                                <div id="flot-line1" style="height: 1px; padding: 0px; position: relative;">
+                                                </div>
+                                                <div id="flot-bar-ActivityStatus1" style="height: 185px; width:100%; padding: 0px; position: relative;">
+
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-12 row hide">
+                                    <div class="form-group col-sm-6" id="IDbarChart5">
+                                        <canvas id="barChart5"></canvas>
+                                    </div>
+                                    <div class="form-group col-sm-6" id="IDbarChart6">
+                                        <canvas id="barChart6__Used"></canvas>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-12 row"></div>
+                                <div id="chart"></div>
+
+                            </div>
+                         
+                        </fieldset>
+                    </div>
+                </div>
+                <footer class="panel-footer"></footer>
+                <!--Region: footer-->
+            </section>
+        </div>
+    </div>
+    <input type="hidden" id="hExportedTable" />
+   

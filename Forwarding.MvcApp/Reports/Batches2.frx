@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="02/24/2020 13:10:47" ReportInfo.Modified="02/27/2020 11:27:56" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+    
+    private void Text3_BeforePrint(object sender, EventArgs e)
+    {
+      if( ((Boolean)Report.GetColumnValue(&quot;Table.ISIn&quot;))    == true )
+      {  
+        Text3.Text = &quot; IN &quot;;
+        Text16.Text = &quot;Notes&quot;;
+        Text15.Text = &quot;   &quot;;
+      
+      }
+      else
+      {
+        Text3.Text = &quot; OUT &quot;;
+        Text16.Text = &quot;Liter Cost&quot;;
+        Text15.Text = ((Decimal)Report.GetColumnValue(&quot;Table.CostLiter&quot;)).ToString();
+      }
+    }
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqFN/e/aar5DqpmtDP4czDilhnRl+yZBTj3FGodglc4TuL1zG2E3tlxvsQ0r246DLM4Is4zLQbjrIHiOHCOw3xvYIqR9pkqJ0AJH2Zegkwc/fcEq9rVvogyHHWpUmlgNw0QnALHWQegXzDW/9RQxiwKkfy13BbMwmgpPhNcAvx0uI6C99opz1yrsYRWujPTtve8tJ0lFAFpx5qBnxLDoYUkA==">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="exec  [dbo].[PR_GetBatchesDetails] @ItemID, @StoreID , @Date , @TransactionID">
+        <Column Name="ID" DataType="System.Int32"/>
+        <Column Name="StageID" DataType="System.Int32"/>
+        <Column Name="FinalProductID" DataType="System.Int64"/>
+        <Column Name="ParentStageID" DataType="System.Int32"/>
+        <Column Name="IsDeleted" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="OrderNo" DataType="System.Int32"/>
+        <Column Name="StageName" DataType="System.String"/>
+        <Column Name="Notes" DataType="System.String"/>
+        <Column Name="DID" DataType="System.Int32"/>
+        <Column Name="ProductID" DataType="System.Int64"/>
+        <Column Name="Percentage" DataType="System.Decimal"/>
+        <Column Name="ExpectedQty" DataType="System.Decimal"/>
+        <Column Name="ProductStageID" DataType="System.Int32"/>
+        <Column Name="UnitID" DataType="System.Int32"/>
+        <Column Name="UnitName" DataType="System.String"/>
+        <Column Name="Density" DataType="System.Decimal"/>
+        <Column Name="DIsDeleted" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="ISIn" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="FinalProduct_ItemID" DataType="System.Int64"/>
+        <Column Name="CostPrice" DataType="System.Decimal"/>
+        <Column Name="ActualQty" DataType="System.Decimal"/>
+        <Column Name="CostLiter" DataType="System.Decimal"/>
+        <Column Name="QtyFactor" DataType="System.Int32"/>
+        <Column Name="FinalItemName" DataType="System.String"/>
+        <Column Name="ItemName" DataType="System.String"/>
+        <Column Name="StartDate" DataType="System.DateTime"/>
+        <Column Name="FinishedDate" DataType="System.DateTime"/>
+        <Column Name="Code" DataType="System.String"/>
+        <Column Name="FromStore" DataType="System.String"/>
+        <Column Name="ToStore" DataType="System.String"/>
+        <Column Name="TransDate" DataType="System.DateTime"/>
+        <CommandParameter Name="ItemID" DataType="22" Expression="[ItemID]" DefaultValue="1454"/>
+        <CommandParameter Name="StoreID" DataType="22" Expression="[StoreID]" DefaultValue="1"/>
+        <CommandParameter Name="Date" DataType="33" Expression="[Date]" DefaultValue="02/16/2020"/>
+        <CommandParameter Name="TransactionID" DataType="22" Expression="[TransactionID]" DefaultValue="1088"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="ItemID" DataType="System.Int32" Expression="1454"/>
+    <Parameter Name="StoreID" DataType="System.Int32" Expression="1"/>
+    <Parameter Name="Date" DataType="System.DateTime" Expression="02/14/2020"/>
+    <Parameter Name="TransactionID" DataType="System.Int32" Expression="1110" Description="TransactionID"/>
+  </Dictionary>
+  <ReportPage Name="Page1" BackPage="true">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="141.75">
+      <TextObject Name="Text31" Top="9.45" Width="718.2" Height="37.8" Border.Lines="Top, Bottom" Border.Style="Dash" Text="Batches - أمـــر تـشغــيل" HorzAlign="Center" VertAlign="Center" Font="Britannic Bold, 24pt, style=Bold"/>
+      <TextObject Name="Text22" Left="359.1" Top="56.7" Width="151.2" Height="18.9" Cursor="SizeNS" Text="[Table.TransDate]" Format="Custom" Format.Format="dd/MM/yyyy" Font="Arial, 9pt"/>
+      <TextObject Name="Text19" Left="94.5" Top="56.7" Width="122.85" Height="18.9" Text="[Table.Code]" Font="Arial, 9pt"/>
+      <TextObject Name="Text25" Left="18.9" Top="56.7" Width="94.5" Height="18.9" Border.Lines="Left" Text="Code             :" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text26" Left="264.6" Top="56.7" Width="103.95" Height="18.9" Border.Lines="Left" Text="Date                  :" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text30" Left="264.6" Top="85.05" Width="103.95" Height="18.9" Border.Lines="Left" Text="To Store           :" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text20" Left="94.5" Top="85.05" Width="122.85" Height="18.9" Text="[Table.FromStore]" Format="Custom" Format.Format="dd/MM/yyyy" Font="Arial, 9pt"/>
+      <TextObject Name="Text21" Left="359.1" Top="85.05" Width="151.2" Height="18.9" Text="[Table.ToStore]" Font="Arial, 9pt"/>
+      <TextObject Name="Text29" Left="18.9" Top="85.05" Width="85.05" Height="18.9" Border.Lines="Left" Text="From Store :" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text23" Left="94.5" Top="113.4" Width="122.85" Height="18.9" Text="[Table.StartDate]" Format="Custom" Format.Format="dd/MM/yyyy" Font="Arial, 9pt"/>
+      <TextObject Name="Text24" Left="359.1" Top="113.4" Width="151.2" Height="18.9" Text="[Table.FinishedDate]" Format="Custom" Format.Format="dd/MM/yyyy" Font="Arial, 9pt"/>
+      <TextObject Name="Text27" Left="18.9" Top="113.4" Width="85.05" Height="18.9" Border.Lines="Left" Text="Start Date   :" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text28" Left="264.6" Top="113.4" Width="103.95" Height="18.9" Border.Lines="Left" Text="Finished Date :" Font="Arial, 9pt, style=Bold"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="144.61" Width="718.2"/>
+    <GroupHeaderBand Name="GroupHeader2" Top="147.46" Width="718.2" Height="56.7" StartNewPage="true" Condition="[Table.StageName]">
+      <TextObject Name="Text2" Left="18.9" Top="9.45" Width="368.55" Height="37.8" Border.Lines="All" Text="[[Table.StageName]]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text32" Left="18.9" Top="9.45" Width="94.5" Height="37.8" Border.Lines="All" Text="Stage :" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <GroupHeaderBand Name="GroupHeader3" Top="207.02" Width="718.2" Height="37.8" Condition="[Table.ISIn]" SortOrder="Descending">
+        <TextObject Name="Text3" Left="18.9" Width="94.5" Height="18.9" Border.Lines="All" Fill.Color="LightGray" BeforePrintEvent="Text3_BeforePrint" Text="[[Table.ISIn]]" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text5" Left="18.9" Top="18.9" Width="179.55" Height="18.9" Border.Lines="Left, Top, Bottom" Fill.Color="LightGray" Text="Product" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text7" Left="198.45" Top="18.9" Width="75.6" Height="18.9" Border.Lines="Left, Top, Bottom" Fill.Color="LightGray" Text="Unit" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text8" Left="274.05" Top="18.9" Width="103.95" Height="18.9" Border.Lines="Left, Top, Bottom" Fill.Color="LightGray" Text="Percentage" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text10" Left="378" Top="18.9" Width="85.05" Height="18.9" Border.Lines="Left, Top, Bottom" Fill.Color="LightGray" Text="Qty" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text12" Left="463.05" Top="18.9" Width="75.6" Height="18.9" Border.Lines="Left, Top, Bottom" Fill.Color="LightGray" Text="Density" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text14" Left="538.65" Top="18.9" Width="94.5" Height="18.9" Border.Lines="Left, Top, Bottom" Fill.Color="LightGray" Text="Unit Cost" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text16" Left="633.15" Top="18.9" Width="75.6" Height="18.9" Border.Lines="All" Fill.Color="LightGray" Text="Liter Cost" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <DataBand Name="Data1" Top="247.68" Width="718.2" Height="18.9" DataSource="Table">
+          <TextObject Name="Text4" Left="18.9" Width="179.55" Height="18.9" Border.Lines="All" Text="[Table.ItemName]" HorzAlign="Center" VertAlign="Center"/>
+          <TextObject Name="Text6" Left="198.45" Width="75.6" Height="18.9" Border.Lines="All" Text="[Table.UnitName]" HorzAlign="Center" VertAlign="Center"/>
+          <TextObject Name="Text1" Left="274.05" Width="103.95" Height="18.9" Border.Lines="All" Text="[Table.Percentage]" HorzAlign="Center" VertAlign="Center" WordWrap="false"/>
+          <TextObject Name="Text9" Left="378" Width="85.05" Height="18.9" Border.Lines="All" Text="[Table.ActualQty]" HorzAlign="Center" VertAlign="Center" WordWrap="false"/>
+          <TextObject Name="Text11" Left="463.05" Width="75.6" Height="18.9" Border.Lines="All" Text="[Table.Density]" HorzAlign="Center" VertAlign="Center" WordWrap="false"/>
+          <TextObject Name="Text13" Left="538.65" Width="94.5" Height="18.9" Border.Lines="All" Text="[Table.CostPrice]" HorzAlign="Center" VertAlign="Center" WordWrap="false"/>
+          <TextObject Name="Text15" Left="633.15" Width="75.6" Height="18.9" Border.Lines="All" Text="[Table.CostLiter]" HorzAlign="Center" VertAlign="Center" WordWrap="false"/>
+        </DataBand>
+        <GroupFooterBand Name="GroupFooter3" Top="269.44" Width="718.2" Height="9.45"/>
+      </GroupHeaderBand>
+      <GroupFooterBand Name="GroupFooter2" Top="281.74" Width="718.2"/>
+    </GroupHeaderBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="284.6" Width="718.2" Height="179.55">
+      <TextObject Name="Text18" Left="18.9" Width="94.5" Height="18.9" Text="Notes :" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text17" Left="18.9" Top="18.9" Width="689.85" Height="160.65" Border.Lines="All" Text="[Table.Notes]" Font="Arial, 9pt, style=Bold"/>
+    </ReportSummaryBand>
+    <PageFooterBand Name="PageFooter1" Top="467.01" Width="718.2" Height="94.5"/>
+  </ReportPage>
+</Report>

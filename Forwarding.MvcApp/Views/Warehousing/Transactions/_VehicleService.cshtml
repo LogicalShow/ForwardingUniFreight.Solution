@@ -1,0 +1,241 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="liGroupName" href="javascript:void(0);" onclick="LoadViews('WarehousingTransactions')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.Warehousing
+    </a>
+</li>
+<li>
+    <a id="liTabName" href="javascript:void(0);" onclick="LoadViews('WarehousingTransactions')">
+        @Forwarding.MvcApp.App_Resources.App_Resources.WarehousingTransactions
+</a>
+</li>
+<li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.VehicleService</li>
+</ul>
+<!-- end breadcrumb  -->
+
+
+<div id="div-Receive">
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.VehicleService
+                </h3>
+            </header>
+            <!--Region the searh, delete, addnew-->
+            <div class="row text-sm wrapper hidden-print ">
+                <div id="div-main-options" class="col-sm-5 m-b-xs">
+                    <button id="btn-NewAdd-Rename" class="btn btn-warning btn-sm swapChildrenClass hide" data-toggle="modal" data-target="#ReceiveModal"><i class="fa fa-plus"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.New&nbsp;</b></button>
+                    <div id="div-option-buttons" class="btn-group hide">
+                        <button id="btn-Copy" type="button" class="btn btn-sm btn-default"><i class="fa fa-copy"></i>&nbsp;Copy </button>
+                        <button id="btn-Print" type="button" class="btn btn-sm btn-default"><i class="fa fa-print"></i>&nbsp;Print </button>
+                        <button id="btn-Send" type="button" class="btn btn-sm btn-default"><i class="fa fa-envelope-o"></i>&nbsp;Send </button>
+                    </div>
+                </div>
+                <div id="div-search-option" class="col-sm-7">
+                    <div id="div-search-controls" class="input-group col-sm-9">
+                        <input id="txt-Search" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="">
+                        <span class="input-group-btn">
+                            <button id="btn-search" class="btn btn-sm btn-primary" type="button" onclick="VehicleService_LoadWithPagingWithWhereClauseAndOrderByWithObjectArrayReturned();"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                    <div class="float-right col-sm-1">
+                        <button id="btn-Delete-Rename" type="button" class="float-right btn btn-sm btn-danger m-r-n swapChildrenClass hide"><i class="fa fa-trash-o"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete&nbsp;</b></button>
+                    </div>
+                </div>
+            </div>
+            <!--Region the searh, delete, addnew-->
+            <!--Region: table header-->
+                @*<div class="table-responsive" style="width:100%; height:300px; overflow:scroll;">*@
+                <div class="table-responsive" style="">
+                    <table id="tblReceiveDetails" class="table table-striped b-t b-light text-sm  table-hover ">
+                        <thead>
+                            <tr>
+                                <th id="HeaderDeleteReceiveDetailsID" style="width:5%;">
+                                    <input id="cb-CheckAll-ReceiveDetails" type="checkbox" />
+                                </th>
+                                <th class="hide">Barcode</th>
+                                <th>Item</th>@*<th>Prod.Code</th>*@
+                                <th class="hide">Product Name</th>
+                                <th class="hide classShowForGBL">Engine</th>
+                                <th class="hide classShowForGBL">Chassis</th>
+                                <th class="hide classShowForGBL">OCN</th>
+                                <th class="hide classShowForGBL">Model</th>
+                                <th class="hide">@Forwarding.MvcApp.App_Resources.App_Resources.Qty</th>
+                                @*<th>Split.Qty</th>*@
+                                <th class="hide">Qty.Unit</th>
+                                <th class="hide">@Forwarding.MvcApp.App_Resources.App_Resources.Location</th>
+                                <th>Operation</th>
+                                <th class="hide">PalletID</th>
+                                <th class="hide">Rec.Date</th>
+                                <th class="hide">@Forwarding.MvcApp.App_Resources.App_Resources.Status</th>
+                                <th class="rounded-right hide"></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            <!--Region: table header-->
+            <!--Region: footer-->
+            <footer class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-4 hidden-xs">
+                        <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                        <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                        </button>
+                    </div>
+                    <div id="div-Text-Total" class="col-sm-4 text-center">
+                        <small class="text-muted inline m-t-sm m-b-sm">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                            <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                            <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                        </small>
+                    </div>
+                    <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+                </div>
+            </footer>
+            <!--Region: footer-->
+        </section>
+    </div>
+</div>
+
+<!--OperationChargeModal-->
+<div class="modal fade" id="OperationChargeModal" tabindex="-1" style="z-index:1050;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="OperationChargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-100">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.Charges &nbsp;<label id="lblOperationChargeShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <!-- Region Add / Edit Region Form -->
+            <div class="modal-body">
+                <div class="span7 form vertical-mode" id="OperationCharge-form">
+                    <fieldset>
+                        <div class="form-group  has-error clearfix">
+                            <!-- start alert message region -->
+                            @*<div class="alert alert-danger div-error">
+                                    @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                </div>*@
+                            <!-- end alert message region -->
+                            <!--Charges-->
+                            @*<button id="btn-OperationsFromShipment" type="button" class="btn btn-sm btn-primary m-t-n-xs" onclick="SwitchToOperationsView();"><i class="fa fa-desktop"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.BackToOperations</button>*@
+
+                            <div class="hide">
+                                <select id="slOperation" class="form-control input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);"></select>
+                                <input id="hQuotationRouteID" type="hidden" value="0" />
+                                <input id="hOperationVehicleID" type="hidden" value="0" />
+                            </div>
+
+                            <div id="divPayBtns" class="col-sm-6 m-t-n-sm">
+                                <button id="btn-AddPayables" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#SelectChargesModal" onclick="Payables_GetAvailableCharges();"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.AddPayables</button>
+                                <button id="btn-MultiRowEditPayables" class="btn btn-info btn-sm" data-toggle="modal" data-target="#SelectChargesModal" onclick="Payables_MultiRowEdit();"><i class="fa fa-pencil"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.MultiEdit</button>
+                                <button id="btn-DeletePayable" type="button" class="float-right btn btn-sm btn-danger" onclick="Payables_DeleteList();"><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete</button>
+                            </div>
+                            <div id="divRecBtns" class="col-sm-6 m-t-n-sm">
+                                <button id="btn-AddReceivables" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#SelectChargesModal" onclick="Receivables_GetAvailableCharges();"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.AddReceivables</button>
+                                <button id="btn-MultiRowEditReceivables" class="btn btn-info btn-sm" data-toggle="modal" data-target="#SelectChargesModal" onclick="Receivables_MultiRowEdit();"><i class="fa fa-pencil"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.MultiEdit</button>
+                                <button id="btn-DeleteReceivable" type="button" class="float-right btn btn-sm btn-danger" onclick="Receivables_DeleteList();"><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete</button>
+                            </div>
+
+
+                            <div id="divPayables" class="col-sm-6 m-t-xs">
+                                <section class="panel panel-default">
+                                    <header class="panel-heading font-bold text-ul">@Forwarding.MvcApp.App_Resources.App_Resources.Payables</header>
+                                    <!--Region: table header-->
+                                    <div class="table-responsive" style="width:100%; height:450px; overflow:scroll;">
+                                        <table id="tblPayables" class="table table-striped b-t b-light text-sm  table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th id="HeaderDeletePayableID">
+                                                        <input id="cb-CheckAll-Payables" type="checkbox" />
+                                                    </th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.ChargeType</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.Qty</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.UnitPriceAbbrev</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.Cost</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.ExchangeRateAbbrev</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.Cur</th>
+                                                    <th class="rounded-right hide"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                    <!--Region: EOF table header-->
+                                    <!--Region: table footer-->
+                                    <footer class="panel-footer">
+                                        <span id="spanNoPayables" class="hide">No Paybles.</span>
+                                    </footer>
+                                    <!--Region: EOF table footer-->
+                                </section>
+                            </div>
+
+
+                            <div id="divReceivables" class="col-sm-6 m-t-xs">
+                                <section class="panel panel-default">
+                                    <header class="panel-heading font-bold text-ul">@Forwarding.MvcApp.App_Resources.App_Resources.Receivables</header>
+                                    <!--Region: table header-->
+                                    <div class="table-responsive" style="width:100%; height:450px; overflow:scroll;">
+                                        <table id="tblReceivables" class="table table-striped b-t b-light text-sm  table-hover ">
+                                            <thead>
+                                                <tr>
+                                                    <th id="HeaderDeleteReceivableID">
+                                                        <input id="cb-CheckAll-Receivables" type="checkbox" />
+                                                    </th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.ChargeType</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.Qty</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.UnitPriceAbbrev</th>
+                                                    <th>Tax</th>
+                                                    <th>Deduction</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.SaleAmount</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.ExchangeRateAbbrev</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.Cur</th>
+                                                    <th class="rounded-right hide"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                    <!--Region: EOF table header-->
+                                    <!--Region: table footer-->
+                                    <footer class="panel-footer">
+                                        <span id="spanNoReceivables" class="hide">No Receivables.</span>
+                                    </footer>
+                                    <!--Region: EOF table footer-->
+                                </section>
+                            </div>
+                            <!--EOF Charges-->
+
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <!-- Endregion Add / Edit Region Form -->
+            <div class="modal-footer m-t-n-lg">
+                <!--<button type="button" id="btnSaveOperationCharge" class="btn btn-primary btn-sm" @*onclick="OperationCharges_Insert(false);"*@>
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save</button>
+                <a id="btnSaveandNewQRCharge" class="btn btn-primary btn-sm" @*onclick="QRCharge_Insert(true);"*@>
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew</a>-->
+                <button class="btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF OperationChargeModal-->
+

@@ -1,0 +1,491 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="ContainerYard" href="javascript:void(0);" onclick="LoadViews('ContainerYard')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.ContainerYard1
+        </a>
+    </li>
+    <li>
+        <a id="ContainerYardTariff" href="javascript:void(0);" onclick="LoadViews('ContainerYardTariff')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.ContainerYardTariff
+        </a>
+    </li>
+    <li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.WH_MTY_Tariff</li>
+</ul>
+<!-- end breadcrumb  -->
+
+
+<div id="div-WH_MTY_Tariff">
+    <!-- Region Options & Template  -->
+    @*<div id="Flags" class="hidden">
+            <input id="IsXprt" type="hidden" />
+            <input id="IsStrg" type="hidden" />
+        </div>*@
+
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 id="StrgDmrTitle" class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.WH_MTY_Tariff</h3>
+            </header>
+            <!--Region the search, delete, addnew-->
+            <div class="row text-sm wrapper hidden-print ">
+                <div id="div-main-options" class="col-sm-2 m-t-md">
+                    <button id="btn-NewAdd" class="btn btn-warning btn-sm swapChildrenClass hide" data-toggle="modal" data-target="WH_MTY_TariffModal"><i class="fa fa-plus"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.New&nbsp;</b></button>
+                    @*<div id="div-option-buttons" class="btn-group hide">
+                            <button id="btn-Copy" type="button" class="btn btn-sm btn-default"><i class="fa fa-copy"></i>&nbsp;Copy </button>
+                            <button id="btn-Print" type="button" class="btn btn-sm btn-default"><i class="fa fa-print"></i>&nbsp;Print </button>
+                            <button id="btn-Send" type="button" class="btn btn-sm btn-default"><i class="fa fa-envelope-o"></i>&nbsp;Send </button>
+                        </div>*@
+                </div>
+                <div id="div-search-option" class="col-sm-10 swapChildrenClass">
+
+                    @*<div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass">
+                            <select id="slPartnerType" onchange="WH_MTY_Tariff_PartnerTypeChanged();" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                            <span class="input-group-btn">
+                                <button id="btn-filter-PartnerType" title="Filter" class="btn btn-sm btn-lightblue" type="button" onclick="WH_MTY_Tariff_LoadingWithPaging();"><i class="fa fa-filter"></i></button>
+                            </span>
+                        </div>
+
+                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass">
+                            <select id="slPartner" onfocus="DisableBackspaceKey(id);" onchange="WH_MTY_Tariff_LoadingWithPaging();" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b input-sm" data-required="false"></select>
+                            <span class="input-group-btn">
+                                <button id="btn-filter-Partner" title="Filter" class="btn btn-sm btn-lightblue" type="button" onclick="WH_MTY_Tariff_LoadingWithPaging();"><i class="fa fa-filter"></i></button>
+                            </span>
+                        </div>*@
+                    @*<div class="input-group col-sm-6 m-l-n-xl">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.InvoiceType</label>
+                            <select id="slSInvoiceType" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="input-sm form-control" data-required="true"></select>
+                        </div>*@
+
+                    <div id="div-search-controls" class="input-group col-sm-6 m-l-n-lg m-t-md">
+                        <input id="txt-Search" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search">
+                        <span class="input-group-btn">
+                            <button id="btn-search" title="Search" class="btn btn-sm btn-primary" type="button" onclick="WH_MTY_Tariff_LoadingWithPaging();"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                    @*<div class="form-group input-group col-sm-2 m-t-xs swapChildrenClass">
+                            <label><input type="checkbox" checked="checked" id="cbHideApprovedPayments" onchange="WH_MTY_Tariff_LoadingWithPaging();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Hide Approved</label>
+                        </div>*@
+
+                    @*<div class="float-right col-sm-2">
+                        <button id="btn-Delete" type="button" class="float-right btn btn-sm btn-danger m-r-n m-t-md swapChildrenClass hide"><i class="fa fa-trash-o"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete&nbsp;</b></button>
+                    </div>*@
+                </div>
+            </div>
+            <br />
+            <!--EOF Region the searh, delete, addnew line-->
+            <!--Region: table header-->
+            <div class="table-responsive m-t-n-sm">
+                <table id="tblWH_MTY_Tariff" class="table table-striped b-t b-light text-sm  table-hover">
+                    <thead>
+                        <tr>
+                            <th id="HeaderDeleteWH_MTY_TariffID">
+                                <input id="cbWH_MTY_TariffDeleteHeader" type="checkbox" />
+                            </th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Code</th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Name</th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Customer</th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Warehouse</th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.IsDefault</th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.IsHold</th>
+                            @*<th>Confirmed</th>*@
+
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <!--Region: table header-->
+            <!--Region: footer-->
+            <footer class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-4 hidden-xs">
+                        <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                        <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                        </button>
+                    </div>
+                    <div id="div-Text-Total" class="col-sm-4 text-center">
+                        <small class="text-muted inline m-t-sm m-b-sm">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                            <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                            <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                        </small>
+                    </div>
+                    <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+                </div>
+            </footer>
+            <!--Region: footer-->
+        </section>
+    </div>
+</div>
+
+
+<!-- Add / Edit Region Modal to WH_MTY_Tariff -->
+<div class="modal fade" id="WH_MTY_TariffModal" tabindex="-1" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="WH_MTY_TariffModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-100">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                <button type="button" class="close" title="Close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="m-b-none">
+                    @* @Forwarding.MvcApp.App_Resources.App_Resources.DemurrageForm &nbsp;<label id="lblShown" purpose="dynamicLabel" class="static-text-primary"></label>*@
+                    <label id="StrgWhTDTab2" />
+                </h3>
+            </div>
+            <!-- Region Add / Edit Region Form -->
+            <div class="modal-body">
+                <div class="span7 form vertical-mode" id="WH_MTY_Tariff-form">
+                    <fieldset>
+                        <div class="form-group pull-in has-error clearfix">
+                            <input id="hID" type="hidden" />
+
+
+
+
+                            <section class="panel panel-info">
+                                <header class="panel-heading bg-light">
+                                    <ul class="nav nav-tabs pull-left">
+                                        <li id="liWH_MTY_Tariff" class="active"><a href="#divWH_MTY_Tariff" data-toggle="tab"><i class="fa fa-strikethrough text-warning" /><b> Tariff Data</b></a></li>
+                                        <li id="tabStrTariffItem"><a href="#divWH_MTY_TariffItem" data-toggle="tab"><i class="fa fa-archive text-warning" /><b> Tariff Details</b></a></li>
+                                    </ul>
+                                    <span class="hidden-sm">&nbsp;</span>
+                                </header>
+                                <div class="panel-body">
+                                    <div class="tab-content">
+                                        <div id="divWH_MTY_Tariff" class="tab-pane active">
+                                            <div class="form-group col-sm-2">
+                                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Code</label>
+                                                <input id="txtCode" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated input-sm" data-required="true" data-minlength="1" maxlength="10" placeholder="Code" style="text-transform:uppercase" />
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Name</label>
+                                                <input id="txtName" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated input-sm" data-required="true" data-minlength="1" maxlength="50" placeholder="Tariff Name" style="text-transform:uppercase" />
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Customer</label>
+                                                <select id="slCustomerID" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"></select>
+                                            </div>
+
+                                            <div class="form-group col-sm-4">
+                                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Warehouse</label>
+                                                <select id="slWH_WarehouseID" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control parsley-validated input-sm" data-required="true"></select>
+                                            </div>
+
+                                            <div class="col-sm-2 m-t-22" style="clear:both">
+                                                <label><input type="checkbox" id="cKIsDefault" name="NMIsDefault" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" />&nbsp;<i class='fa fa-ship ocean-icon-style' />&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.IsDefault</label><br />
+                                            </div>
+                                            <div class="col-sm-2 m-t-22">
+                                                <label><input type="checkbox" id="cKIsHold" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" />&nbsp;<i class='fa fa-ship ocean-icon-style' />&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.IsHold</label><br />
+                                            </div>
+
+                                            <div class="form-group col-sm-4" style="clear:both">
+                                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ValidTo</label>
+                                                <input id="dtpValidFromTo" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm" data-required="true" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                                            </div>
+
+                                            <div class="form-group col-sm-8"><br /><br /><br /></div>
+
+
+
+                                        </div>
+
+
+
+                                        <div id="divWH_MTY_TariffItem" class="tab-pane">
+
+
+                                            <!-- Region Options & Template  -->
+                                            <div id="div-Data">
+                                                <div id="div-Options">
+                                                    <div id="div-Action" class="radius-top-left-right">
+                                                    </div>
+                                                </div>
+                                                <section class="panel panel-default">
+                                                    <!--Region the search, delete, addnew-->
+                                                    <div class="row text-sm wrapper hidden-print ">
+                                                        <div id="div-main-optionsItem" class="col-sm-2 m-b-xs">
+                                                            <button id="btn-NewAddItem" class="btn btn-warning btn-sm swapChildrenClass " data-toggle="modal" data-target="#WH_MTY_Tariff_DetailsModal" onclick="WH_MTY_Tariff_Details_ClearAllControls();"><i class="fa fa-plus"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.New &nbsp;</b></button>
+                                                            @*<div id="div-option-buttons" class="btn-group hide">
+                                                                    <button id="btn-Copy" type="button" class="btn btn-sm btn-default"><i class="fa fa-copy"></i>&nbsp;Copy </button>
+                                                                    <button id="btn-Print" type="button" class="btn btn-sm btn-default"><i class="fa fa-print"></i>&nbsp;Print </button>
+                                                                    <button id="btn-Send" type="button" class="btn btn-sm btn-default"><i class="fa fa-envelope-o"></i>&nbsp;Send </button>
+                                                                </div>*@
+                                                        </div>
+                                                        <div id="div-search-optionItem" class="col-sm-10 swapChildrenClass">
+
+
+                                                            <div id="div-search-controlsItem" class="input-group col-sm-8 m-l-n-lg">
+                                                                @*<input id="txt-SearchCntr" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search">*@
+                                                                <input id="txt-SearchItem" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm  col-sm-10" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search">
+                                                                <span class="input-group-btnCntr">
+                                                                    @*<button id="btn-searchItem" title="Search" class="btn btn-sm btn-primary" type="button" onclick="WH_MTY_Tariff_Details_LoadingWithPaging();"><i class="fa fa-search"></i></button>*@
+                                                                    <button id="btn-searchItem" title="Search" class="btn btn-sm btn-primary" type="button" onclick="LoadcntrType();"><i class="fa fa-search"></i></button>
+                                                                </span>
+                                                            </div>
+
+
+                                                            <div class="float-right col-sm-2">
+                                                                <button id="btn-DeleteItem" type="button" class="float-right btn btn-sm btn-danger m-r-n swapChildrenClass " onclick="WH_MTY_Tariff_Details_DeleteList();"><i class="fa fa-trash-o"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete&nbsp;</b></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--EOF Region the searh, delete, addnew line-->
+
+                                                    <div class="table-responsive m-t-n-sm">
+                                                        <table id="tblWH_MTY_Tariff_Details" class="table table-striped b-t b-light text-sm  table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th id="HeaderDeleteWH_MTY_Tariff_DetailsID">
+                                                                        <input id="cbWH_MTY_Tariff_DetailsDeleteHeader" type="checkbox" />
+                                                                    </th>
+                                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.ChargeType</th>
+                                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.Rate</th>
+                                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.ContainerType</th>
+                                                                    <th class="rounded-right hide"></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody></tbody>
+                                                        </table>
+                                                    </div>
+                                                </section>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </section>
+
+
+
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <!-- Endegion Add / Edit Region Form -->
+            <div class="modal-footer m-t-n-lg">
+                <button type="button" id="btnSave" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                </button>
+                <button type="button" id="btnSaveandNew" class="btn btn-primary btn-sm hide">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew
+                </button>
+                <button class="btnClose btn btn-link btn-sm" id="btnClose" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add / Edit Region Modal to WH_MTY_Tariff_Details -->
+<div class="modal fade" id="WH_MTY_Tariff_DetailsModal" tabindex="-1" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="WH_MTY_Tariff_DetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-100">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                <button type="button" class="close" title="Close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.WH_MTY_Tariff_Details &nbsp;<label id="lblShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <!-- Region Add / Edit Region Form -->
+            <div class="modal-body">
+                <div class="span7 form vertical-mode" id="WH_MTY_Tariff_Details-form">
+                    <fieldset>
+                        <div class="form-group pull-in has-error clearfix">
+                            <input id="hIDDSTCT" type="hidden" />
+
+                            <section class="panel panel-info">
+                                <header class="panel-heading bg-light">
+                                    <ul class="nav nav-tabs pull-left">
+                                        <li id="liWH_MTY_TariffUpdt" class="active"><a href="#divWH_MTY_TariffUpdt" data-toggle="tab"><i class="fa fa-strikethrough text-warning" /><b> Item Data</b></a></li>
+                                        <li id="tabWH_MTY_Tariff_Details_Periods"><a href="#divWH_MTY_Tariff_Details_Periods" data-toggle="tab"><i class="fa fa-archive text-warning" /><b> Item Periods</b></a></li>
+                                    </ul>
+                                    <span class="hidden-sm">&nbsp;</span>
+                                </header>
+                                <div class="panel-body">
+                                    <div class="tab-content">
+                                        <div id="divWH_MTY_TariffUpdt" class="tab-pane active">
+                                            <input id="txtWH_MTY_TariffID" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated input-sm hidden" data-required="false" data-minlength="" maxlength="200" placeholder="" style="text-transform:uppercase" />
+
+                                            <div class="form-group col-sm-6">
+                                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ChargeTypes</label>
+                                                <select id="slChargeTypesID" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" onchange="FunGetCalcTypesID();" class="form-control input-sm" data-required="true" />
+                                            </div>
+                                            <div class="form-group col-sm-2">
+                                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Rate</label>
+                                                <input id="txtRate" data-type="digits" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="number" class="form-control parsley-validated input-sm" data-required="true" data-minlength="1" maxlength="10" placeholder="Rate" style="text-transform:uppercase" />
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ContainerTypes</label>
+                                                <select id="slContainerTypesID" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control input-sm" data-required="false" />
+                                            </div>
+                                            <div class="form-group col-sm-4">
+                                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.CalculationType</label>
+                                                <select id="slCalcTypesID" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control input-sm" data-required="false" />
+                                            </div>
+                                            <div class="col-sm-2 m-t-22" style="clear:both">
+                                                <label><input type="checkbox" id="cKisCalcOneTimeToDay" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" />&nbsp;<i class='fa fa-ship ocean-icon-style' />&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.isCalcOneTimeToDay</label><br />
+                                            </div>
+                                            <div class="form-group col-sm-8"><br /><br /><br /></div>
+
+                                        </div>
+
+                                        <div id="divWH_MTY_Tariff_Details_Periods" class="tab-pane">
+
+
+                                            <!-- Region Options & Template  -->
+                                            <div id="div-Data">
+                                                <div id="div-Options">
+                                                    <div id="div-Action" class="radius-top-left-right">
+                                                    </div>
+                                                </div>
+                                                <section class="panel panel-default">
+                                                    <!--Region the search, delete, addnew-->
+                                                    <div class="row text-sm wrapper hidden-print ">
+                                                        <div id="div-main-optionsPRd" class="col-sm-2 m-b-xs">
+                                                            <button id="btn-NewAddPRd" class="btn btn-warning btn-sm swapChildrenClass " data-toggle="modal" data-target="#WH_MTY_Tariff_Details_PeriodsModal" onclick="WH_MTY_Tariff_Details_Periods_ClearAllControls();"><i class="fa fa-plus"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.New &nbsp;</b></button>
+                                                            @*<div id="div-option-buttons" class="btn-group hide">
+                                                                    <button id="btn-Copy" type="button" class="btn btn-sm btn-default"><i class="fa fa-copy"></i>&nbsp;Copy </button>
+                                                                    <button id="btn-Print" type="button" class="btn btn-sm btn-default"><i class="fa fa-print"></i>&nbsp;Print </button>
+                                                                    <button id="btn-Send" type="button" class="btn btn-sm btn-default"><i class="fa fa-envelope-o"></i>&nbsp;Send </button>
+                                                                </div>*@
+                                                        </div>
+                                                        <div id="div-search-optionPRd" class="col-sm-10 swapChildrenClass">
+
+
+                                                            <div id="div-search-controlsPRd" class="input-group col-sm-8 m-l-n-lg">
+                                                                @*<input id="txt-SearchCntr" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search">*@
+                                                                <input id="txt-SearchPRd" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm  col-sm-10" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search">
+                                                                <span class="input-group-btnPRd">
+                                                                    <button id="btn-searchPRd" title="Search" class="btn btn-sm btn-primary" type="button" onclick="LoadcntrPeriod();"><i class="fa fa-search"></i></button>
+                                                                </span>
+                                                            </div>
+
+
+                                                            <div class="float-right col-sm-2">
+                                                                <button id="btn-DeletePRd" type="button" class="float-right btn btn-sm btn-danger m-r-n swapChildrenClass " onclick="WH_MTY_Tariff_Details_Periods_DeleteList();"><i class="fa fa-trash-o"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete&nbsp;</b></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!--EOF Region the searh, delete, addnew line-->
+
+                                                    <div class="table-responsive m-t-n-sm">
+                                                        <table id="tblWH_MTY_Tariff_Details_Periods" class="table table-striped b-t b-light text-sm  table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th id="HeaderDeleteWH_MTY_Tariff_Details_PeriodsID">
+                                                                        <input id="cbWH_MTY_Tariff_Details_PeriodsDeleteHeader" type="checkbox" />
+                                                                    </th>
+                                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.Days</th>
+                                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.Rate</th>
+                                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.PeriodOrder</th>
+                                                                    <th class="rounded-right hide"></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody></tbody>
+                                                        </table>
+                                                    </div>
+                                                </section>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                            </section>
+
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <!-- Endegion Add / Edit Region Form -->
+            <div class="modal-footer m-t-n-lg">
+                <button type="button" id="btnSaveDSTCT" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                </button>
+                <button type="button" id="btnSaveandNewDSTCT" class="btn btn-primary btn-sm hide">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew
+                </button>
+                <button class="btnClose btn btn-link btn-sm" id="btnCloseDSTCT" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add / Edit Region Modal to WH_MTY_Tariff_Details_Periods -->
+<div class="modal fade" id="WH_MTY_Tariff_Details_PeriodsModal" tabindex="-1" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="WH_MTY_Tariff_Details_PeriodsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-100">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                <button type="button" class="close" title="Close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.WH_MTY_Tariff_Items_Periods &nbsp;<label id="lblShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <!-- Region Add / Edit Region Form -->
+            <div class="modal-body">
+                <div class="span7 form vertical-mode" id="WH_MTY_Tariff_Details_Periods-form">
+                    <fieldset>
+                        <div class="form-group pull-in has-error clearfix">
+                            <input id="hIDDSTP" type="hidden" />
+
+                            <section class="panel panel-info">
+                                <div class="panel-body">
+                                    @* <div class="tab-content">
+                                        <div id="divShippingOrderContainerTotals" class="tab-pane active">*@
+                                    <input id="txtWH_MTY_Tariff_DetailsID" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated input-sm hidden" data-required="false" data-minlength="" maxlength="200" placeholder="" style="text-transform:uppercase" />
+
+                                    <div class="form-group col-sm-3">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Days</label>
+                                        <input id="txtDays" data-type="digits" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="number" class="form-control parsley-validated input-sm" data-required="true" data-minlength="" maxlength="200" placeholder="Days" style="text-transform:uppercase" />
+                                    </div>
+
+                                    <div class="form-group col-sm-3">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Rate</label>
+                                        <input id="txtRateP" data-type="digits" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="number" class="form-control parsley-validated input-sm" data-required="true" data-minlength="" maxlength="200" placeholder="0" style="text-transform:uppercase" />
+                                    </div>
+                                    <div class="form-group col-sm-3">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.PeriodOrder</label>
+                                        <input id="txtPeriodOrder" data-type="digits" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="number" class="form-control parsley-validated input-sm" data-required="true" data-minlength="" maxlength="200" placeholder="Period Order" style="text-transform:uppercase" />
+                                    </div>
+
+
+                                    <div class="form-group col-sm-8"><br /><br /><br /></div>
+
+
+
+                                    @*</div>
+                                        </div>*@
+                                </div>
+                            </section>
+
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <!-- Endegion Add / Edit Region Form -->
+            <div class="modal-footer m-t-n-lg">
+                <button type="button" id="btnSaveDSTP" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                </button>
+                <button type="button" id="btnSaveandNewDSTP" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew
+                </button>
+                <button class="btnClose btn btn-link btn-sm" id="btnCloseDSTP" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>

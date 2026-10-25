@@ -1,0 +1,407 @@
+﻿
+<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="liOperAcc" href="javascript:void(0);">
+            @Forwarding.MvcApp.App_Resources.App_Resources.OperAcc
+    </a>
+</li>
+<li>
+    <a id="liApprovals" href="javascript:void(0);">
+        @Forwarding.MvcApp.App_Resources.App_Resources.Approvals
+</a>
+</li>
+<li id="" class="active">@Forwarding.MvcApp.App_Resources.App_Resources.InvoicesPrint</li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-Invoices">
+    <!-- Region Options & Template  -->
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 id="h3InvoiceApproval" class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.InvoicesPrint</h3>
+            </header>
+            <!--Region the searh, delete, addnew-->
+            <div class="row text-sm wrapper hidden-print ">
+
+
+                <div id="div-search-option" class="col-sm-12 swapChildrenClass">
+
+
+
+                    <div class="input-group col-sm-2">
+                        <input id="txtSearchFrom" tabindex="20" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" readonly="readonly" style="background-color:white; cursor:text;" class="form-control datepicker-input input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="@Forwarding.MvcApp.App_Resources.App_Resources.From" />
+                        <span class="input-group-btn">
+                            <button id="btn-filter-Date" title="Filter" class="btn btn-sm btn-lightblue" type="button" onclick="InvoiceApproval_LoadingWithPaging();"><i class="fa fa-filter"></i></button>
+                        </span>
+                    </div>
+                    <div class="input-group col-sm-2">
+                        <input id="txtSearchTo" tabindex="30" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" readonly="readonly" style="background-color:white; cursor:text;" class="form-control datepicker-input input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="@Forwarding.MvcApp.App_Resources.App_Resources.To" />
+                        <span class="input-group-btn">
+                            <button id="btn-filter-Date" title="Filter" class="btn btn-sm btn-lightblue" type="button" onclick="InvoiceApproval_LoadingWithPaging();"><i class="fa fa-filter"></i></button>
+                        </span>
+                    </div>
+                    <div class="input-group col-sm-2 ">
+                        <select id="slBranch" @*onchange="InvoiceApproval_LoadingWithPaging();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" placeholder="@Forwarding.MvcApp.App_Resources.App_Resources.Branch">
+                            <option value="0">@Forwarding.MvcApp.App_Resources.App_Resources.Branch</option>
+                        </select>
+                        <span class="input-group-btn">
+                            <button id="btn-filter-Branch" title="Filter" class="btn btn-sm btn-lightblue" type="button" onclick="InvoiceApproval_LoadingWithPaging();"><i class="fa fa-filter"></i></button>
+                        </span>
+                    </div>
+                    <div class="input-group col-sm-2">
+                        <!--<select id="slOperation" @*onchange="InvoiceApproval_LoadingWithPaging();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>-->
+                        <input id="txtOperation" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="@Forwarding.MvcApp.App_Resources.App_Resources.Operation">
+                        <span class="input-group-btn">
+                            <button id="btn-filter-Operation" title="Filter" class="btn btn-sm btn-lightblue" type="button" onclick="InvoiceApproval_LoadingWithPaging();"><i class="fa fa-filter"></i></button>
+                        </span>
+                    </div>
+                    <div class="input-group col-sm-2">
+                        <!--<select id="slInvoiceNumber" @*onchange="InvoiceApproval_LoadingWithPaging();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>-->
+                        <input id="txtInvoiceNumber" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="@Forwarding.MvcApp.App_Resources.App_Resources.InvoiceNo">
+                        <span class="input-group-btn">
+                            <button id="btn-filter-InvoiceNumber" title="Filter" class="btn btn-sm btn-lightblue" type="button" onclick="InvoiceApproval_LoadingWithPaging();"><i class="fa fa-filter"></i></button>
+                        </span>
+                    </div>
+                    <div class="input-group col-sm-2 hide">
+                        <select id="slInvoiceType" @*onchange="InvoiceApproval_LoadingWithPaging();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                        <span class="input-group-btn">
+                            <button id="btn-filter-InvoiceType" title="Filter" class="btn btn-sm btn-lightblue" type="button" onclick="InvoiceApproval_LoadingWithPaging();"><i class="fa fa-filter"></i></button>
+                        </span>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+            <!--EOF Region the searh, delete, addnew line-->
+            <!--Region: table header-->
+            <div class="col-sm-5 swapChildrenClass ">
+                <div class="form-group input-group col-sm-5">
+                    <select id="slPartnerType" @*onchange="InvoiceApproval_PartnerTypeChanged();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                    <span class="input-group-btn">
+                        <button id="btn-filter-PartnerType" title="Filter" class="btn btn-sm btn-lightblue" type="button" onclick="InvoiceApproval_PartnerTypeChanged();"><i class="fa fa-filter"></i></button>
+                    </span>
+                </div>
+                <div class="form-group input-group col-sm-7">
+                    <select id="slPartner" @*onchange="InvoiceApproval_LoadingWithPaging();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b input-sm" data-required="false"></select>
+                    <span class="input-group-btn">
+                        <button id="btn-filter" title="Filter" class="btn btn-sm btn-lightblue" type="button" onclick="InvoiceApproval_LoadingWithPaging();"><i class="fa fa-filter"></i></button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-6 swapChildrenClass ">
+
+                <div @*id="div-search-controls"*@ class="form-group input-group col-sm-3 swapChildrenClass">
+                    <input id="txt-Search" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="">
+                    <span class="input-group-btn">
+                        <button id="btn-search" title="Search" class="btn btn-sm btn-primary swapChildrenClass" type="button" onclick="InvoiceApproval_LoadingWithPaging();"><i class="fa fa-search"></i></button>
+                    </span>
+                </div>
+                <div class="input-group col-sm-2">
+                    <input id="txtBillNo" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="@Forwarding.MvcApp.App_Resources.App_Resources.BillNo">
+                    <span class="input-group-btn">
+                        <button id="btn-filter-BillNo" title="Filter" class="btn btn-sm btn-lightblue" type="button" onclick="InvoiceApproval_LoadingWithPaging();"><i class="fa fa-filter"></i></button>
+                    </span>
+                </div>
+                <div class="form-group col-sm-6" style="display: flex; flex-direction: row;">
+                    <div class=" row">
+                        <label>HB GW From &nbsp;&nbsp;</label>
+
+                        <input type="text" style="width:80px;" id="txtHB_GWFrom" autocomplete="off" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" class="input-sm" maxlength="10" placeholder="">
+
+                        <label>&nbsp;&nbsp;To &nbsp;&nbsp;</label>
+
+                        <input type="text" style="width:80px;" id="txtHB_GWTo" autocomplete="off" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" class="input-sm" maxlength="10" placeholder="">
+                    </div>
+                </div>
+
+            </div>
+
+            @*<div class="swapChildrenClass"></div>*@
+            <div class="swapChildrenClass m-t-md col-sm-12 form-group">
+
+                &nbsp;<button id="btn-InvoiceOptions" type="button" class="btn btn-sm btn-info swapChildrenClass classHideForInvoiceStatus" onclick="Invoices_PrintOptions();"><i class="fa fa-print swapChildrenClass"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.PrintOptions&nbsp;</button>
+                &nbsp;<button id="btn-PrintMultipleDiffrenceInvoices" type="button" class="btn btn-sm btn-info swapChildrenClass hide" onclick="Invoices_PrintMultipleDiffrenceInvoices(0);"><i class="fa fa-print swapChildrenClass"></i>&nbsp;Print Selected&nbsp;</button>
+
+                &nbsp;<button id="btn-PrintMultipleInvoicesNew" type="button" class="btn btn-sm btn-primary swapChildrenClass hide" onclick="Invoices_Print_Multiple_GetpInvoiceIDs();"><i class="fa fa-print swapChildrenClass"></i>&nbsp;Print Period&nbsp;</button>
+                <select id="slInvoiceTitle" class="input-sm btn-lightblue m-t-n-xs hide">
+                    <option value="0">Select Print Title</option>
+                    <option value="Debit">Debit</option>
+                    <option value="Invoice">Invoice</option>
+                    <option value="Cover">Cover</option>
+                    <option value="Statement">Statement</option>
+                </select>
+
+            </div>
+
+            @* to return delete from here check that no payments are made/ to make it more easy don't allow multi-check *@
+            <div class="table-responsive  m-t-xs ">
+                <table id="tblInvoices" class="table table-striped b-t b-light text-sm table-hover">
+                    <thead>
+                        <tr>
+                            <th id="HeaderDeleteInvoiceID">
+                                <input id="cb-CheckAll-Invoices" type="checkbox" />
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Branch
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.InvoiceNumber
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.InvoiceDateAbbrev
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.PartnerName
+                            </th>
+                            <th class="hide">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.PartnerType
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Vessel
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Amount
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.TaxAmount
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Total
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Currency
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.ExchangeRate
+                            </th>
+                            <th class="hide">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.InvoiceDate
+                            </th>
+                            <th class="hide">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.DueDate
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.OperationNo
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.HBL
+                            </th>
+                            <th class="">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Status
+                            </th>
+                            <th class="">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Approval
+                            </th>
+                            <th>B/L Hold Status</th>
+                            <th class="rounded-right"></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <!--Region: table header-->
+            <!--Region: footer-->
+            <footer class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-4 hidden-xs">
+                        <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                        </select>
+                        <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                        </button>
+                    </div>
+                    <div id="div-Text-Total" class="col-sm-4 text-center">
+                        <small class="text-muted inline m-t-sm m-b-sm">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                            <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                            <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                        </small>
+                    </div>
+                    <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+                </div>
+            </footer>
+            <!--Region: footer-->
+        </section>
+    </div>
+</div>
+
+
+
+
+<!--CheckboxesListModal-->
+<div class="modal fade" id="CheckboxesListModal" tabindex="-1" style="z-index: 3000;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="CheckboxesListModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-90">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" title="Close">
+                    &times;
+                </button>
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.SelectItems &nbsp;<label id="lblShownItems" purpose="dynamicLabel" class="static-text-primary"></label>
+            </h3>
+        </div>
+        <div class="modal-body">
+            <!-- Region CheckboxesList Form -->
+            <div class="span7 form vertical-mode" id="CheckboxesList-form">
+                <fieldset>
+                    <div class="row">
+                        <div id="div-search-controls-checkboxeslist" class="input-group m-l col-sm-5">
+                            <input id="txtSearchItems" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="@Forwarding.MvcApp.App_Resources.App_Resources.Search" />
+                            <span class="input-group-btn">
+                                <button id="btn-SearchItems" class="btn btn-sm btn-primary" type="button"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </div><br />
+
+                    <div id="divCheckboxesList">
+                    </div>
+                </fieldset>
+            </div>
+            <!-- Endegion CheckboxesList Form -->
+        </div>
+        <div class="modal-footer">
+            <!--sherif-->
+            <button type="button" id="btnCheckboxesListApply" class="btn btn-primary btn-sm">
+                <span class="glyphicon glyphicon-save"></span>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Apply
+            </button>
+            <button class=" btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>
+        </div>
+    </div>
+</div>
+</div>
+<!--EOF CheckboxesListModal-->
+<!--PrintInvoiceOptionsModal-->
+<div class="modal fade" id="PrintInvoiceOptionsModal" tabindex="-1" style="z-index: 1040;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="PrintInvoiceOptionsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-70">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                <h3 class="m-b-none">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    Print Options&nbsp;<label id="lblPrintInvoiceOptionsShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region PrintInvoiceOptions Form -->
+                <div class="span7 form vertical-mode" id="PrintInvoiceOptions-form">
+                    <fieldset>
+                        <div class="fprm-group col-sm-12 m-t">
+                            <label class=""><input type="checkbox" id="cbPrintHeaderInvoice" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Print Header</label>&emsp;
+                            <label class=""><input type="checkbox" id="cbPrintFooterInvoice" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Print Footer</label>&emsp;
+                            <label class=""><input type="checkbox" id="cbPrintMBL" checked onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Print MB/L</label>&emsp;
+                            <label class=""><input type="checkbox" id="cbPrintHBL" checked onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Print HB/L</label>&emsp;
+                            <label class=""><input type="checkbox" id="cbPrintArabicItems" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Arabic Items</label>&emsp;
+                            <label class=""><input type="checkbox" id="cbAddNotesToItems" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Add Notes to Items</label>&emsp;
+                            <label class=""><input type="checkbox" id="cbLargeInvoice" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Large Inv.</label>&emsp;
+                            <label class="hide classShowForUNI"><input type="checkbox" id="CBMVolume" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Volume CBM.</label>&emsp;
+                            <label class="hide"><input type="checkbox" id="cbPrintUSDTotal" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;EGP To USD</label>&emsp;
+                            <label class="hide"><input type="checkbox" id="cbPrintReceivableNotes" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Print Receivable Notes</label>
+                            <br /><br />
+                            <label class=""><input type="checkbox" id="cbPrintLeftSignature" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.LeftSignature</label>&emsp;
+                            <label class=""><input type="checkbox" id="cbPrintMiddleSignature" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.MiddleSignature</label>&emsp;
+                            <label class=""><input type="checkbox" id="cbPrintRightSignature" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.RightSignature</label>&emsp;
+                            <label class=""><input type="checkbox" id="cbPrintStamp" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Stamp</label>&emsp;
+                            <label class=""><input type="checkbox" id="cbPrintNotification" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Print Notification</label>&emsp;
+                            <label class="hide showForLIN"><input type="checkbox" id="cbCombineTrucking" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" checked>&nbsp;Collect Trucking items</label>&emsp;
+                            <label class="hide"><input type="checkbox" id="cbTotalInLocalCurrency" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Total In Local Currency</label>&emsp;
+                            <label class="hide"><input type="checkbox" id="cbPrintStamp-Ar" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Stamp-Ar</label>&emsp;
+                            <label class="hide"><input type="checkbox" id="cbPrintStamp-Kadmar" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Stamp-Kadmar</label>&emsp;
+                            <label class="classShowForGBL hide m-t"><input type="checkbox" id="cbPrintOriginalChassisDetails" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Print Original Chassis Items</label>&emsp;
+                            <label class="hide"><input type="checkbox" id="cbPrintUSDToLocal" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;USD To Local</label>&emsp;
+                        </div>
+
+                        <div class="form-group col-sm-12 m-t hide classShowForSEF">
+                            <label class=""><input type="checkbox" checked id="cbPrintLine" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Line</label>&emsp;
+                            <label class=""><input type="checkbox" checked id="cbPrintPOL" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;POL</label>&emsp;
+                            <label class=""><input type="checkbox" checked id="cbPrintPOD" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;POD</label>&emsp;
+                            <label class=""><input type="checkbox" checked id="cbPrintRefNo" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Ref No</label>&emsp;
+                            <label class=""><input type="checkbox" checked id="cbPrintPONumber" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;PO Number</label>&emsp;
+                            <label class=""><input type="checkbox" checked id="cbPrintNoOfContainers" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;No Of Contrs</label>&emsp;
+                            <label class=""><input type="checkbox" checked id="cbPrintCourier" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Courier</label>&emsp;
+                            <label class=""><input type="checkbox" checked id="cbPrintAWB" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;AWB</label>&emsp;
+                            <label class=""><input type="checkbox" checked id="cbPrintNoOfPackages" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;No Of Pkgs</label>&emsp;
+                            <label class=""><input type="checkbox" checked id="cbPrintChargeableWeight" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Chargeable Wgt</label>&emsp;
+                            <label class=""><input type="checkbox" checked id="cbPrintVolume" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Volume</label>&emsp;
+                            <label class=""><input type="checkbox" checked id="cbPrintSONumber" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;SO Number</label>&emsp;
+                            <label class=""><input type="checkbox" checked id="cbPrintShipper" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Shipper</label>&emsp;
+                            <label class=""><input type="checkbox" checked id="cbPrintBookingNumber" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Booking Number</label>&emsp;
+                            <label class=""><input type="checkbox" checked id="cbPrintGrossWeight" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Gross Wgt</label>&emsp;
+                        </div>
+
+                        <div class="form-group col-sm-2 m-t">
+                            <select id="slInvoiceOriginal" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm">
+                                <option value="">Original / Copy</option>
+                                <option value="(Original)">Original</option>
+                                <option value="(Copy)">Copy</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-7 m-t">
+                            <label class=""><input type="radio" checked="checked" id="cbPrintBankDetailsFromDefaults" onchange="Invoices_PrintBankDetailsOptionChanged();" name="nameCbPrintBankDetailsOption" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Print default bank details</label>&emsp;
+                            <label class=""><input type="radio" id="cbPrintBankDetailsFromTemplate" onchange="Invoices_PrintBankDetailsOptionChanged();" name="nameCbPrintBankDetailsOption" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Print template bank details</label>&emsp;
+                            <label class=""><input type="radio" id="cbPrintBankDetailsNone" onchange="Invoices_PrintBankDetailsOptionChanged();" name="nameCbPrintBankDetailsOption" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Don't print bank details</label>
+                        </div>
+                        <div class="form-group container hide classShowForFastFWD" style="clear:both">
+                            <div class="row">
+                                <label class="col-sm-2"><input type="checkbox" checked id="cbPrint_OperationCode" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Operation Code</label>&emsp;
+                                <label class="col-sm-2"><input type="checkbox" checked id="cbPrint_Currency" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Currency</label>&emsp;
+                                <label class="col-sm-2"><input type="checkbox"         id="cbPrint_Vessel" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Vessel</label>&emsp;
+                                <label class="col-sm-2"><input type="checkbox" checked id="cbPrint_POL" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;POL</label>&emsp;
+                                <label class="col-sm-2"><input type="checkbox" checked id="cbPrint_POD" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;POD</label>&emsp;
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2"><input type="checkbox" id="cbPrint_ArrivalDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Arrival Date</label>&emsp;
+                                <label class="col-sm-2"><input type="checkbox" id="cbPrint_Containers" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Containers/Packages</label>&emsp;
+                                <label class="col-sm-2"><input type="checkbox" id="cbPrint_ContainerNumbers" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Container Numbers</label>&emsp;
+                                <label class="col-sm-2"><input type="checkbox" id="cbPrint_Commodity" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Commodity</label>&emsp;
+                                <label class="col-sm-2"><input type="checkbox" id="cbPrint_Shipper" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Shipper</label>&emsp;
+                            </div>
+                            <div class="row">
+                                <label class="col-sm-2"><input type="checkbox" checked id="cbPrint_Consignee" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Consignee</label>&emsp;
+                                <label class="col-sm-2"><input type="checkbox" checked id="cbPrint_Weight" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Weight</label>&emsp;
+                                <label class="col-sm-2"><input type="checkbox" checked id="cbPrint_ChgWeight" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Chg Weight</label>&emsp;
+                                <label class="col-sm-2"><input type="checkbox"         id="cbPrint_Volume" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Volume</label>&emsp;
+                                <label class="col-sm-2"><input type="checkbox" checked id="cbPrint_Courier" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Courier</label>&emsp;
+
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-3 m-t m-l-n-lg">
+                            <select id="slBankTemplate" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm hide"></select>
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- Endegion PrintInvoiceOptions Form -->
+            </div>
+            <div class="modal-footer">
+                <!--sherif-->
+                <button type="button" data-dismiss="modal" id="btnSavePrintInvoiceOptions" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-save"></span>&nbsp;OK
+                </button>
+                @*<button class=" btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF PrintInvoiceOptionsModal-->
+
+
+
+

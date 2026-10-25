@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/03/2022 13:02:22" ReportInfo.Modified="10/29/2023 17:16:39" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+    
+
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFdK1pGRuXb2ZqNrvvshfdvk1WTy4Q4X3n3sfovtvD12ZUZMgosSXIKCfex3Uxiv0ztNRpdBkVUVn6xObKSedOpcc6jTMR7CoRC+37+7/tXCLDT73rOQRxu2R+JRG3kt9Ko6Vbb2plA0TIKcCjOf9f6g==">
+      <TableDataSource Name="Table" Alias="MEDReleaseAcceptanceLetter" DataType="System.Int32" Enabled="true" SelectCommand="exec (@query)">
+        <Column Name="LineName" DataType="System.String"/>
+        <Column Name="MasterBL" DataType="System.String"/>
+        <Column Name="OwnerName" DataType="System.String"/>
+        <Column Name="POL" DataType="System.String"/>
+        <Column Name="POD" DataType="System.String"/>
+        <Column Name="ContainerTypes" DataType="System.String"/>
+        <Column Name="PackageTypes" DataType="System.String"/>
+        <Column Name="CommodityName" DataType="System.String"/>
+        <Column Name="GrossWeightSum" DataType="System.Decimal"/>
+        <Column Name="ConsigneeName" DataType="System.String"/>
+        <Column Name="MAWBSuffix" DataType="System.String"/>
+        <Column Name="Consignee2Name" DataType="System.String"/>
+        <CommandParameter Name="@query" DataType="12" Expression="[query]" DefaultValue="Rep_MEDReleaseLetter 2463"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9">
+    <PageHeaderBand Name="PageHeader1" Width="1047.06" Height="583.62">
+      <TextObject Name="Text1" Left="415.36" Top="18.17" Width="196.38" Height="25.88" Text="قبول تنازل" HorzAlign="Center" VertAlign="Center" Font="Arial, 16pt, style=Bold"/>
+      <TextObject Name="Text2" Left="109.92" Top="62.43" Width="902.36" Height="25.88" Text="السادة / مصلحة الجمارك المصرية" HorzAlign="Right" VertAlign="Center" Font="Arial, 16pt, style=Underline"/>
+      <TextObject Name="Text3" Left="109.25" Top="95.28" Width="906.35" Height="25.88" Text="السادة / التوكيل الملاحى &quot;[MEDReleaseAcceptanceLetter.LineName] &quot;" VertAlign="Center" RightToLeft="true" Font="Arial, 16pt, style=Underline"/>
+      <TextObject Name="Text4" Left="115.4" Top="146.31" Width="839.2" Height="30.43" Text="قبلنا نحن شركة / [MEDReleaseAcceptanceLetter.Consignee2Name]" VertAlign="Center" RightToLeft="true" Font="Arial, 16pt"/>
+      <TextObject Name="Text5" Left="117.24" Top="196.39" Width="837.36" Height="20.85" Text="- عن مشمول الرسالة الآتى ذكر بياناتها ." VertAlign="Center" RightToLeft="true" Font="Arial, 16pt, style=Underline"/>
+      <TextObject Name="Text6" Left="60.39" Top="218.29" Width="894.21" Height="197.53" Text="- مشمول البوليصة رقم : [MEDReleaseAcceptanceLetter.MasterBL]&#13;&#10;- الواردة من : [MEDReleaseAcceptanceLetter.POL]&#13;&#10;- الواردة إلى ميناء : [MEDReleaseAcceptanceLetter.POD]&#13;&#10;- بعدد : [IIf([MEDReleaseAcceptanceLetter.ContainerTypes] == &quot;&quot;,[MEDReleaseAcceptanceLetter.PackageTypes],[MEDReleaseAcceptanceLetter.ContainerTypes])]&#13;&#10;- الصنف : [MEDReleaseAcceptanceLetter.CommodityName]&#13;&#10;- بوزن : [FormatNumber([MEDReleaseAcceptanceLetter.GrossWeightSum],2)] KG" VertAlign="Center" RightToLeft="true" Font="Arial, 16pt"/>
+      <TextObject Name="Text7" Left="288.79" Top="536.02" Width="439.26" Height="25.88" Text="ولسيادتكم جزيل الشكر والتقدير ,,,," HorzAlign="Center" VertAlign="Center" RightToLeft="true" Font="Arial, 16pt, style=Bold"/>
+      <TextObject Name="Text8" Left="62.46" Top="430.76" Width="892.14" Height="30.43" Text="من السادة شركة / [MEDReleaseAcceptanceLetter.ConsigneeName]" VertAlign="Center" RightToLeft="true" Font="Arial, 16pt"/>
+      <TextObject Name="Text9" Left="23.03" Top="469.93" Width="931.57" Height="59.49" Text="وذلك دون أدنى مسئولية على التوكيل الملاحى أو الخط الملاحى مع تحملنا كافة الغرامات والرسوم الناتجة من ذلك أمام كافة الخطوط الملاحية ومصلحة الجمارك والجهات الحكومية ..." RightToLeft="true" Font="Arial, 16pt"/>
+    </PageHeaderBand>
+  </ReportPage>
+</Report>

@@ -1,0 +1,38 @@
+﻿@{
+
+    Layout = "~/Views/GlobalReports/_GlobalReportsLayout.cshtml";
+
+}
+
+<script src="~/Scripts/Reports/AccountingReports/PayablesReports.js"></script>
+
+<input type="hidden" id="txtFromDate" value="@ViewBag.txtFromDate" />
+<input type="hidden" id="txtToDate" value="@ViewBag.txtToDate" />
+<input type="hidden" id="txtFromIssueDate" value="@ViewBag.txtFromDueDate" />
+<input type="hidden" id="txtToIssueDate" value="@ViewBag.txtToDueDate" />
+<input type="hidden" id="cbWithoutVAT" checked=@ViewBag.cbWithoutVAT />
+<input type="hidden" id="cbWithoutDiscount" checked=@ViewBag.cbWithoutDiscount />
+<input type="hidden" id="cbAging" checked=@ViewBag.cbAging />
+<input type="hidden" id="lbl-filter-import" class="@ViewBag.lbl_filter_import" />
+<input type="hidden" id="lbl-filter-export" class="@ViewBag.lbl_filter_export" />
+<input type="hidden" id="lbl-filter-domestic" class="@ViewBag.lbl_filter_domestic" />
+<input type="hidden" id="lbl-filter-ocean" class="@ViewBag.lbl_filter_ocean" />
+<input type="hidden" id="lbl-filter-air" class="@ViewBag.lbl_filter_air" />
+<input type="hidden" id="lbl-filter-inland" class="@ViewBag.lbl_filter_inland" />
+<input type="hidden" id="lbl-filter-direct" class="@ViewBag.lbl_filter_direct" />
+<input type="hidden" id="lbl-filter-house" class="@ViewBag.lbl_filter_house" />
+<input type="hidden" id="lbl-filter-master" class="@ViewBag.lbl_filter_master" />
+<input type="hidden" id="txtSearch" value="@ViewBag.txtSearchOperation" />
+<select id="slPartnerType" class="hide"><option value="@ViewBag.slPartnerType" selected>@ViewBag.slPartnerType_text</option></select>
+<select id="slPartner" class="hide"><option value="@ViewBag.slPartner" selected>@ViewBag.slPartner_text</option></select>
+<select id="slCurrency" class="hide"><option value="@ViewBag.slCurrency" selected>@ViewBag.slCurrency_text</option></select>
+<select id="slApprovalStatus" class="hide"><option value="@ViewBag.slApprovalStatus" selected>@ViewBag.slApprovalStatus_text</option></select>
+<select id="slDiscountType" class="hide"><option value="@ViewBag.slDiscountType" selected>@ViewBag.slDiscountType_text</option></select>
+<select id="slVATType" class="hide"><option value="@ViewBag.slVATType" selected>@ViewBag.slVATType_text</option></select>
+<select id="slChargeType" class="hide"><option value="@ViewBag.slChargeType" selected>@ViewBag.slChargeType_text</option></select>
+<select id="slPayableStatus" class="hide"><option value="@ViewBag.slPayableStatus" selected>@ViewBag.slPayableStatus_text</option></select>
+<input type="hidden" id="hExportedTable" />
+<div id="ReportBody" style="background-color: white!important;">
+
+</div>
+

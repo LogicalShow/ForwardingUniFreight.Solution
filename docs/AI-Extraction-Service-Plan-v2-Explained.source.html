@@ -1,0 +1,1276 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>DocAi Phase 1 — v2 design explained</title>
+<style>
+@page { size: A4; margin: 15mm 13mm 17mm 13mm;
+  @bottom-center { content: "DocAi Phase 1 · v2 design explained · page " counter(page) " of " counter(pages); font: 7.5pt "Segoe UI", Arial, sans-serif; color: #64748b; } }
+* { box-sizing: border-box; }
+body { font-family: "Segoe UI", Calibri, Arial, sans-serif; font-size: 9.6pt; line-height: 1.45; color: #0f172a; margin: 0; }
+h1 { font-size: 24pt; margin: 0 0 6px; color: #1e1b4b; font-weight: 600; }
+h2 { font-size: 15pt; color: #1e1b4b; border-bottom: 2px solid #4f46e5; padding-bottom: 3px; margin: 0 0 8px; font-weight: 600; }
+h3 { font-size: 11.5pt; color: #312e81; margin: 14px 0 5px; font-weight: 600; }
+h4 { font-size: 10pt; margin: 10px 0 4px; color: #334155; }
+p { margin: 4px 0 7px; }
+ul, ol { margin: 3px 0 8px; padding-left: 18px; }
+li { margin: 1px 0; }
+section { break-before: page; }
+section.first { break-before: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 8.3pt; margin: 5px 0 10px; }
+th, td { border: 1px solid #cbd5e1; padding: 3px 5px; vertical-align: top; text-align: left; }
+th { background: #eef2ff; color: #1e1b4b; font-weight: 600; }
+tr { break-inside: avoid; }
+td.n, th.n { text-align: right; white-space: nowrap; }
+tr.tot td { font-weight: 600; background: #f8fafc; }
+.fig { break-inside: avoid; margin: 6px 0 12px; text-align: center; }
+.fig .cap { font-size: 8.2pt; color: #475569; margin-top: 3px; font-style: italic; }
+.mermaid svg { max-width: 100% !important; max-height: 232mm; height: auto; }
+.fig.short .mermaid svg { max-height: 108mm; }
+.fig.mid .mermaid svg { max-height: 150mm; }
+table.keep { break-inside: avoid; }
+pre { font: 7.6pt/1.35 Consolas, "Courier New", monospace; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 4px; padding: 6px 8px; white-space: pre-wrap; break-inside: avoid; margin: 5px 0 10px; }
+code { font-family: Consolas, monospace; font-size: 8.4pt; background: #f1f5f9; padding: 0 3px; border-radius: 2px; }
+.tag { display: inline-block; padding: 0 5px; border-radius: 3px; font-size: 7.4pt; font-weight: 600; line-height: 1.5; }
+.h { background: #fee2e2; color: #991b1b; } .m { background: #fef3c7; color: #92400e; } .l { background: #e0f2fe; color: #075985; }
+.new { background: #ccfbf1; color: #115e59; } .chg { background: #ede9fe; color: #5b21b6; } .same { background: #f1f5f9; color: #475569; }
+.callout { border-left: 4px solid #4f46e5; background: #f5f3ff; padding: 6px 10px; margin: 8px 0; break-inside: avoid; }
+.warn { border-left-color: #d97706; background: #fffbeb; }
+.ok { border-left-color: #0d9488; background: #f0fdfa; }
+.cover { height: 250mm; display: flex; flex-direction: column; justify-content: center; }
+.cover .sub { font-size: 13pt; color: #475569; margin-bottom: 18px; }
+.cover .meta { font-size: 9.5pt; color: #334155; border-top: 1px solid #cbd5e1; padding-top: 10px; margin-top: 18px; }
+.kpis { display: flex; gap: 8px; margin: 10px 0; }
+.kpi { flex: 1; border: 1px solid #c7d2fe; border-radius: 6px; padding: 6px 8px; background: #f8faff; }
+.kpi b { display: block; font-size: 16pt; color: #312e81; }
+.kpi span { font-size: 8pt; color: #475569; }
+.toc { columns: 2; font-size: 9.4pt; }
+.toc li { break-inside: avoid; }
+.two { display: flex; gap: 10px; } .two > div { flex: 1; }
+.small { font-size: 8.2pt; color: #475569; }
+</style>
+</head>
+<body>
+
+<!-- ============================== COVER ============================== -->
+<section class="first cover">
+  <h1>AI Document-Extraction Service</h1>
+  <div class="sub">Phase 1 — the v2 design explained<br>Technical review of the Phase 1 plan by Claude and Codex, and the corrected design</div>
+  <div class="kpis">
+    <div class="kpi"><b>53</b><span>findings after merging both reviews</span></div>
+    <div class="kpi"><b>14</b><span>High — fixed in the design</span></div>
+    <div class="kpi"><b>32</b><span>Medium</span></div>
+    <div class="kpi"><b>7</b><span>Low</span></div>
+  </div>
+  <div class="callout ok">Unchanged and verified: the HMAC test vector (signature recomputed exactly), the worked cost examples, the coverage arithmetic, the managed-identity design, the transactional outbox and the tenant isolation (404 for another consumer's job).</div>
+  <div class="callout">Three decisions taken by the owner: (1) target <b>.NET 10 LTS</b> — .NET 9 support ends on 10 November 2026; (2) the pilot upload action gets <b>[Authorize]</b> and the kit refuses anonymous calls; (3) the revised plan v2 will be written after this explanation is approved.</div>
+  <div class="meta">
+    Source plan: <code>AI-Extraction-Service-Plan.md</code>, revision of 23 October 2026 (Phase 1 only).<br>
+    Pilot consumer checked: <code>ForwardingUniFreight.Solution / Forwarding.MvcApp</code>.<br>
+    Reviewers: Claude (independent review, repository and documentation checks, arithmetic) and Codex <code>gpt-6-astra</code> (read-only review, 35 findings, one debate round).<br>
+    Date: 24 October 2026. Status: design explanation — nothing has been implemented.
+  </div>
+</section>
+
+<!-- ============================== CONTENTS ============================== -->
+<section>
+  <h2>Contents</h2>
+  <ol class="toc">
+    <li>Summary — what changes and why</li>
+    <li>How the review was done</li>
+    <li>Scope (unchanged)</li>
+    <li>Solution structure</li>
+    <li>Where each part lives</li>
+    <li>Runtime view and trust boundaries</li>
+    <li>Request cycle — submit</li>
+    <li>Request cycle — the worker</li>
+    <li>Request cycle — deliver and store</li>
+    <li>The worker in detail and the retry rules</li>
+    <li>State machines</li>
+    <li>The two concurrency fixes: lease token and run number</li>
+    <li>Database — DocAi</li>
+    <li>Database — company side</li>
+    <li>Database permissions</li>
+    <li>Cost per application — model and formula</li>
+    <li>Cost calculations — worked examples</li>
+    <li>Month end, reconciliation gate and capacity cost</li>
+    <li>Security and identity changes</li>
+    <li>Exceptions, error codes and alerts</li>
+    <li>The MVC 4.8 kit</li>
+    <li>Coverage of the five concerns (recomputed)</li>
+    <li>Appendix A — findings register</li>
+    <li>Appendix B — debate outcomes and facts</li>
+    <li>Appendix C — next steps</li>
+  </ol>
+</section>
+
+<!-- ============================== 1 SUMMARY ============================== -->
+<section>
+  <h2>1. Summary — what changes and why</h2>
+  <p>The Phase 1 plan is sound in its shape: a .NET service on Azure App Service accepts documents from legacy MVC 4.8 applications, queues them in Azure SQL, has Azure AI Document Intelligence extract them with custom neural models, and returns canonical JSON v1 through an HMAC-signed webhook. The review kept that shape. What it found are defects in the details that would lose results, bill wrongly, or fail at deployment.</p>
+
+  <h3>The eight changes that matter most</h3>
+  <table>
+    <tr><th style="width:23%">Change</th><th>Problem in v1</th><th>Fix in v2</th></tr>
+    <tr><td><span class="tag h">High</span> Lease token</td><td>Updates check only <code>Status = 'Processing'</code>. A worker that lost its lease still writes: it can double-POST to Azure or overwrite another worker's state.</td><td>A new <code>LeaseToken</code> on every claim; every write checks it. Zero rows = lost ownership, stop.</td></tr>
+    <tr><td><span class="tag h">High</span> Run number</td><td>A late <code>job.failed</code> from an earlier attempt can mark the retried document Failed; the later success is then ignored. The result is lost.</td><td><code>RunNo</code> on jobs, events, results and the consumer row. Outcomes apply only to the exact bound run.</td></tr>
+    <tr><td><span class="tag h">High</span> Azure operations table</td><td>One Operation-Location column for two calls (classify, then extract). A crash mixes them up; classifier pages are lost from billing.</td><td><code>AzureOperations</code>: one row per Azure call, written before the POST.</td></tr>
+    <tr><td><span class="tag h">High</span> Ledger per operation</td><td>Billing is written only when a job completes. Azure work billed on failed jobs never reaches the ledger. A missing price silently drops the row.</td><td>Ledger row when an Azure operation succeeds, whatever the job outcome. Missing price stops and alerts.</td></tr>
+    <tr><td><span class="tag h">High</span> Pilot upload authorization</td><td><code>DocsInController.UploadFile()</code> has no authorization. Anyone could send billable documents.</td><td><code>[Authorize]</code> on that one action; <code>Submit</code> refuses an anonymous user.</td></tr>
+    <tr><td><span class="tag h">High</span> SQL permissions</td><td>A pipeline with only <code>db_ddladmin</code> cannot create users or grant roles; the app's <code>db_datawriter</code> can rewrite the "append-only" ledger.</td><td>Bootstrap by an Entra admin (<code>WITH OBJECT_ID</code>); custom <code>docai_runtime</code> role with INSERT-only ledger.</td></tr>
+    <tr><td><span class="tag h">High</span> Always On + .NET 10</td><td>The worker runs inside the web app; without Always On the app unloads after ~20 idle minutes. .NET 9 support ends 10 Nov 2026.</td><td><code>alwaysOn: true</code>; liveness health check; target .NET 10 LTS.</td></tr>
+    <tr><td><span class="tag h">High</span> Consumer dedupe</td><td>The same file on two operations returns the first operation's row; the second operation loses its link.</td><td>Consumer dedupe adds the business entity and the shipping line.</td></tr>
+  </table>
+
+  <h3>What stays exactly as designed</h3>
+  <ul>
+    <li>Asynchronous request-reply with the SQL Jobs table as the queue, claimed with <code>ROWLOCK, UPDLOCK, READPAST</code> (an extra test runs it with Azure SQL's default <code>READ_COMMITTED_SNAPSHOT ON</code>).</li>
+    <li>Managed identity to every Azure resource, local authentication disabled and enforced by Azure Policy.</li>
+    <li>HMAC-SHA256 over <code>"{timestamp}.{rawBody}"</code>, two secrets during rotation, registered callback URLs (no SSRF).</li>
+    <li>One transaction for outcome + result + ledger + webhook outbox; idempotent intake by file hash; 404 for another consumer's job.</li>
+    <li>The kit footprint: a folder of four files in the existing web project, one table, settings, one route — no new project.</li>
+  </ul>
+</section>
+
+<!-- ============================== 2 REVIEW ============================== -->
+<section>
+  <h2>2. How the review was done</h2>
+  <div class="fig short"><div class="mermaid">
+flowchart TB
+    P["Plan v1 — 2,310 lines, Phase 1"]
+    P --> C["Claude review<br/>repo greps, Microsoft docs,<br/>HMAC + cost recomputed"]
+    P --> X["Codex review<br/>gpt-6-astra, read-only,<br/>35 findings"]
+    C --> D{"Debate round<br/>challenges both ways,<br/>evidence only"}
+    X --> D
+    D --> F["53 merged findings<br/>14 High · 32 Medium · 7 Low"]
+    F --> O["Owner decisions<br/>.NET 10 · upload guard · v2 document"]
+    O --> V["v2 design — this document"]
+  </div><div class="cap">Figure 1. Two independent reviews, one debate round, one merged register</div></div>
+
+  <h3>What was checked, and how</h3>
+  <table>
+    <tr><th style="width:28%">Check</th><th>Result</th></tr>
+    <tr><td>HMAC test vector</td><td>Secret decodes to 32 bytes; body is 326 bytes; <code>1793268922</code> = 2026-10-29 10:15:22 UTC; signature <code>sha256=4dad37de…3d31e14</code> recomputed exactly by both reviewers.</td></tr>
+    <tr><td>Cost examples</td><td>Example 1 ($93.43) and Example 2 ($775.31) recompute exactly from the stated inputs. Break-even of the 20,000-page tier: $540 ÷ $0.030 = 18,000 pages.</td></tr>
+    <tr><td>Coverage percentages</td><td>84.6 %, 88.5 %, 88.2 %, 92.9 %, 100 % — rounding correct. Several items marked "covered" were not, which is a different problem (section 22).</td></tr>
+    <tr><td>Repository (pilot)</td><td>Routes mapped by hand in <code>WebApiConfig.cs</code> ✓ · Hangfire 1.8.22 running through OWIN ✓ · Forms authentication, no OWIN cookie middleware ✓ · no Web API global filters or message handlers ✓ · <code>Defaults.UnEditableCompanyName</code> exists ✓ · <code>&lt;httpRuntime&gt;</code> has no <code>targetFramework</code> (legacy ASP.NET behaviour) ⚠ · IIS allows 4 GB request bodies ⚠ · <code>DocsInController.UploadFile()</code> is anonymous ✗</td></tr>
+    <tr><td>Azure facts</td><td>Delete Analyze Result exists in API <code>2024-11-30</code>; results kept 24 h from completion; S0 default 15 analyze / 50 GET requests per second; Always On available on Basic and needed for background work; App Service outbound IPs come from a shared pool and can change with the pricing tier; <code>CREATE USER … FROM EXTERNAL PROVIDER WITH OBJECT_ID</code> avoids the Directory Readers lookup; UUIDv7 does not insert in order in a SQL Server <code>uniqueidentifier</code> index.</td></tr>
+  </table>
+  <p class="small">The full register of findings is in Appendix A; disputed points and how they were settled are in Appendix B.</p>
+</section>
+
+<!-- ============================== 3 SCOPE ============================== -->
+<section>
+  <h2>3. Scope (unchanged)</h2>
+  <div class="fig short"><div class="mermaid">
+flowchart TB
+    subgraph P1["Phase 1 — this design"]
+        direction LR
+        U1["Upload in an<br/>MVC 4.8 solution"] --> X1["DocAi service<br/>queue, worker,<br/>Document Intelligence"]
+        X1 --> J1["Canonical JSON v1<br/>value, confidence,<br/>page, flags"]
+        J1 --> S1[("AiDocuments row<br/>company database")]
+    end
+    subgraph LATER["Later, designed per solution"]
+        direction LR
+        R2["Phase 2<br/>names to the solution's IDs<br/>exact, alias, fuzzy"] --> C3["Phase 3<br/>review, validate,<br/>save the business record"]
+    end
+    P1 -.->|"hand-over"| LATER
+  </div><div class="cap">Figure 2. Phase 1 ends when the canonical JSON is stored in the company database</div></div>
+  <ul>
+    <li><b>Consumer</b> = one deployment of one solution for one company (for example <code>FWD-UNF</code>). Cost is measured per consumer and rolled up per company and per product.</li>
+    <li><b>The five concerns</b> are unchanged: cost per application on a shared resource, performance, security, exception handling and logging, and no core authorization change or new project layer in the MVC 4.8 solutions.</li>
+    <li><b>Environments:</b> <code>rg-docai-dev</code> and <code>rg-docai-prod</code>, France Central.</li>
+  </ul>
+</section>
+
+<!-- ============================== 4 STRUCTURE ============================== -->
+<section>
+  <h2>4. Solution structure</h2>
+  <div class="fig"><div class="mermaid">
+flowchart TB
+    subgraph SVC["DocAi.sln — new repository, .NET 10 LTS, Azure App Service Linux (Always On)"]
+        direction TB
+        API["DocAi.Api<br/>intake, status, catalog, health live/ready<br/>API-key auth, rate limits, ProblemDetails"]
+        WRK["DocAi.Worker (hosted in the API in Phase 1)<br/>JobProcessor, WebhookSender, RetentionJob"]
+        APP["DocAi.Application<br/>use cases, retry rules, lease and run rules"]
+        DOM["DocAi.Domain<br/>Job, Run, AzureOperation, Delivery state machines<br/>CanonicalDocument v1, error codes"]
+        INF["DocAi.Infrastructure<br/>raw-SQL claim + guarded updates, Blob, Key Vault,<br/>DI REST client 2024-11-30, token handler, HMAC signer"]
+        CON["DocAi.Contracts<br/>DTOs with runNo, JSON schema v1, samples, HMAC vectors"]
+        API --> APP
+        WRK --> APP
+        APP --> DOM
+        INF --> APP
+        API --> INF
+        WRK --> INF
+        API --> CON
+    end
+    subgraph LEG["Each MVC 4.8 solution — a folder, not a project"]
+        direction TB
+        MVC["Existing web project<br/>e.g. Forwarding.MvcApp"]
+        KIT["DocAi folder, 4 files<br/>DocAiClient · DocAiSignature ·<br/>AiDocumentsStore · DocAiWebhookController"]
+        TBL[("One table: AiDocuments")]
+        CFG["Web.config: 2 settings, secrets file,<br/>location limit for the webhook path"]
+        MVC --- KIT
+        KIT --- TBL
+        KIT --- CFG
+    end
+    KIT -.->|"same JSON contract,<br/>checked by sample payloads"| CON
+  </div><div class="cap">Figure 3. The service solution and the kit inside each MVC 4.8 project</div></div>
+
+  <h3>Repository layout of the service</h3>
+<pre>DocAi.sln
+  src/
+    DocAi.Api/              POST /api/v1/jobs, GET /api/v1/jobs/{id}, GET /api/v1/catalog,
+                            /health/live (platform probe), /health/ready (alerts only)
+    DocAi.Worker/           JobProcessor (claim, classify, extract, poll, complete), WebhookSender,
+                            RetentionJob (a PeriodicTimer BackgroundService; Quartz not needed)
+    DocAi.Application/      SubmitJob, GetJob, ProcessJob, CompleteRun, FailRun, DeliverWebhook
+                            ports: IJobQueue, IJobRepository, IOperationStore, IDocumentStore,
+                                   IDocumentAnalyzer, IWebhookSigner, ISecretStore, IUnitOfWork
+    DocAi.Domain/           state machines (Job, Run, AzureOperation, WebhookDelivery), CanonicalDocument v1
+    DocAi.Infrastructure/   SQL statements [S1]–[S19], Blob, Key Vault (1 h secret cache),
+                            DocumentIntelligenceRestClient + BearerTokenHandler, HMAC signer
+    DocAi.Contracts/        DTOs, JSON Schema, sample payloads, both HMAC test vectors
+  db/bootstrap/             00_bootstrap_identities.sql   — Entra admin, once per environment
+  db/migrations/            01_docai_schema.sql, 02_docai_grants.sql — DbUp, pipeline identity
+  db/reference/             03_docai_statements.sql, 04_docai_billing.sql — not migrations
+  infra/                    main.bicep (alwaysOn, healthCheckPath, policies, alerts), dev/prod params
+  tests/                    Domain, Api (SQL Server container with READ_COMMITTED_SNAPSHOT ON),
+                            Contracts (sample payloads), load/ (k6 or Azure Load Testing)</pre>
+
+  <h3>The kit inside each MVC 4.8 solution</h3>
+<pre>&lt;existing web project&gt;/                        e.g. Forwarding.MvcApp — nothing else in the solution changes
+  DocAi/DocAiClient.cs                         Submit (needs an authenticated user), SendPending, Refresh, GetCatalog
+  DocAi/DocAiSignature.cs                      header pre-check, HMAC with two secrets, fixed-time compare, IsFresh
+  DocAi/AiDocumentsStore.cs                    parameterized ADO.NET, statements [C1]–[C8]
+  Controllers/DocAi/DocAiWebhookController.cs  the webhook endpoint (Web API in the pilot)
+  App_Data/docai.secrets.config                API key and webhook secrets — NOT in source control
+db/docai/10_company_db_schema.sql              the AiDocuments table, run on every company database</pre>
+</section>
+
+<!-- ============================== 5 WHERE ============================== -->
+<section>
+  <h2>5. Where each part lives</h2>
+  <table>
+    <tr><th style="width:26%">Concern</th><th style="width:26%">Lives in</th><th>Why there</th><th style="width:9%">v2</th></tr>
+    <tr><td>Consumer authentication, rate limit, file validation, correlation-id check</td><td><code>DocAi.Api</code></td><td>The edge: bad input is rejected before it costs storage or Azure pages.</td><td><span class="tag chg">changed</span></td></tr>
+    <tr><td>Idempotency key and run creation (new / requeue / reprocess)</td><td><code>DocAi.Application</code> + [S2]</td><td>Business rule decided once, under a key-range lock, in one transaction.</td><td><span class="tag new">new</span></td></tr>
+    <tr><td>Retry policy, back-off, lease length, takeover budget</td><td><code>DocAi.Application</code></td><td>Plain rules, unit-tested without SQL.</td><td><span class="tag chg">changed</span></td></tr>
+    <tr><td>Lease fencing (<code>LeaseToken</code> on every write)</td><td><code>DocAi.Infrastructure</code> statements</td><td>Every guarded statement carries the token; zero rows means ownership lost.</td><td><span class="tag new">new</span></td></tr>
+    <tr><td>Queue claim with <code>READPAST</code></td><td><code>DocAi.Infrastructure</code></td><td>SQL-specific; nothing else needs to know how a row is locked.</td><td><span class="tag same">same</span></td></tr>
+    <tr><td>Azure call records (Sending → Accepted → Succeeded / Unknown)</td><td><code>AzureOperations</code> table, <code>IOperationStore</code></td><td>Survives a crash between any two steps; feeds billing and reconciliation.</td><td><span class="tag new">new</span></td></tr>
+    <tr><td>Classifier class → shipping line</td><td><code>ClassifierClasses</code> table</td><td>The model team maps classes when it activates a classifier; the worker never guesses.</td><td><span class="tag new">new</span></td></tr>
+    <tr><td>Azure calls (DI REST <code>2024-11-30</code>, Blob, Key Vault)</td><td><code>DocAi.Infrastructure</code></td><td>One place holds the <code>TokenCredential</code>.</td><td><span class="tag same">same</span></td></tr>
+    <tr><td>Canonical JSON v1 (+ <code>runNo</code> in the envelope)</td><td><code>DocAi.Contracts</code></td><td>The only thing the service and the solutions share.</td><td><span class="tag chg">changed</span></td></tr>
+    <tr><td>Billing ledger and month close</td><td>DocAi database + <code>04_docai_billing.sql</code></td><td>The ledger row commits with the Azure operation that caused the cost.</td><td><span class="tag chg">changed</span></td></tr>
+    <tr><td>Who may write what in SQL</td><td><code>02_docai_grants.sql</code> roles</td><td>The runtime can only append to the ledger; operators and the model team have their own roles.</td><td><span class="tag new">new</span></td></tr>
+    <tr><td>Submitting, receiving and storing the result</td><td>The DocAi folder in each solution</td><td>Four files, one table: no project, no package, no core auth change.</td><td><span class="tag chg">changed</span></td></tr>
+    <tr><td>Sending and refreshing in the background</td><td>Hangfire, only where it already runs (pilot)</td><td>The upload request returns at once; a recurring job catches anything left Pending.</td><td><span class="tag new">new</span></td></tr>
+    <tr><td>Webhook body limit (1 MB)</td><td>Web.config <code>&lt;location path="api/DocAi/Webhook"&gt;</code></td><td>IIS rejects large bodies before any code runs; the rest of the site keeps its limits.</td><td><span class="tag new">new</span></td></tr>
+    <tr><td>Upload authorization (pilot)</td><td><code>[Authorize]</code> on <code>DocsInController.UploadFile</code></td><td>One attribute on one action; login, membership and global filters untouched.</td><td><span class="tag new">new</span></td></tr>
+    <tr><td>Matching names, review, saving records</td><td>Not in Phase 1</td><td>Phases 2 and 3 start from <code>AiDocuments</code>.</td><td><span class="tag same">same</span></td></tr>
+  </table>
+</section>
+
+<!-- ============================== 6 RUNTIME ============================== -->
+<section>
+  <h2>6. Runtime view and trust boundaries</h2>
+  <div class="fig"><div class="mermaid">
+flowchart TB
+    U["User browser"] -->|"existing login (Forms auth)"| M
+    subgraph ONP["Company server — IIS outside Azure, one deployment per company"]
+        direction LR
+        M["MVC 4.8 app<br/>+ DocAi folder"] --- HF["Hangfire<br/>(already in the pilot)"]
+        M --- CDB[("Company DB<br/>AiDocuments")]
+        M --- FS[("App_Data/DocAi<br/>file copies")]
+    end
+    subgraph AZ["Azure — rg-docai-prod, France Central"]
+        direction LR
+        A["DocAi App Service<br/>API + Worker, .NET 10<br/>managed identity, Always On"]
+        S[("Azure SQL<br/>Entra-only")]
+        B[("Blob<br/>shared keys off")]
+        K["Key Vault<br/>RBAC"]
+        D["Document Intelligence S0<br/>local auth off"]
+        AI["Application Insights"]
+        A -->|"MI token"| S
+        A -->|"MI token"| B
+        A -->|"MI token"| K
+        A -->|"Bearer (MI)"| D
+        A -.->|"telemetry"| AI
+    end
+    HF -->|"Step 1: POST /api/v1/jobs — X-Api-Key over TLS"| A
+    A -->|"Step 2: webhook + result — HMAC, no redirects"| M
+    HF -.->|"Step 3: GET /api/v1/jobs/id — fallback"| A
+  </div><div class="cap">Figure 4. Who talks to whom, and how each hop authenticates</div></div>
+
+  <table>
+    <tr><th style="width:20%">Hop</th><th style="width:30%">Mechanism</th><th>Secret stored where</th><th style="width:22%">v2 change</th></tr>
+    <tr><td>Browser → MVC</td><td>the solution's existing login</td><td>HttpOnly cookie</td><td><code>[Authorize]</code> on the pilot upload action</td></tr>
+    <tr><td>MVC → DocAi API</td><td>per-consumer API key, <code>X-Api-Key</code>; consumer derived from the key only</td><td>Consumer: <code>App_Data\docai.secrets.config</code>. Service: SHA-256 hash only</td><td>401/403 pauses sending; never marks documents Failed</td></tr>
+    <tr><td>DocAi → Azure</td><td>managed identity → Entra token</td><td>nothing — there is no secret</td><td>SQL users created by an Entra admin with <code>WITH OBJECT_ID</code></td></tr>
+    <tr><td>DocAi → MVC webhook</td><td>HMAC-SHA256 over <code>timestamp.body</code>, one secret per consumer, fresh timestamp on every attempt</td><td>Service: Key Vault (1 h cache). Consumer: secrets file</td><td>redirects never followed; trusted TLS chain + host name; 1 MB body limit on the consumer</td></tr>
+    <tr><td>Azure → DocAi</td><td>none (Azure sends nothing; the worker polls)</td><td>—</td><td>—</td></tr>
+  </table>
+  <div class="callout warn"><b>Outbound IP addresses.</b> App Service outbound IPs come from a pool shared with other customers on the same scale unit, and they can change when the pricing tier changes (B1 → P0v3 is on the growth path). An IP allow-list is therefore defence in depth, not authentication — the HMAC is the authentication. Before any tier change, capture <code>possibleOutboundIpAddresses</code> and update each consumer firewall. If a fixed address is required, add a NAT Gateway with a static public IP (cost to be confirmed in the Azure pricing calculator).</div>
+</section>
+
+<!-- ============================== 7 CYCLE 1 ============================== -->
+<section>
+  <h2>7. Request cycle — part 1: upload and submit</h2>
+  <div class="fig"><div class="mermaid">
+sequenceDiagram
+    autonumber
+    actor U as User
+    participant M as MVC app + kit
+    participant H as Hangfire
+    participant A as DocAi API
+    participant S as Azure SQL
+    participant B as Blob
+    U->>M: Upload B/L, pick line
+    Note over U,M: [Authorize] on UploadFile<br/>Submit refuses anonymous
+    Note over M,H: [C1] same file, line, entity?<br/>else [C2] Pending + file copy
+    M->>H: Enqueue SendPending
+    M-->>U: "AI processing"
+    H->>A: POST /api/v1/jobs<br/>(120 s budget)
+    A->>S: key hash → consumer<br/>existing job?
+    alt Same submission, or job active or completed
+        A-->>H: 200 OK<br/>jobId, runNo, status
+    else New job, Failed job again, or reprocess
+        A->>S: [S1] daily cap<br/>(today's runs)
+        A->>B: Put the original (MI)
+        A->>S: [S2] job + new run<br/>old events Superseded
+        A-->>H: 202 Accepted<br/>jobId, runNo
+    end
+    H->>M: [C3] Submitted<br/>bind jobId + runNo
+    Note over H,A: 400/413/415/422 → Failed<br/>408/429/5xx → Pending until NextSubmitAt [C4]<br/>401/403 → pause + alert<br/>final status in a 200 → GET at once
+  </div><div class="cap">Figure 5. Steps 1–11 — the upload request returns at once; Hangfire sends the file</div></div>
+
+  <table class="keep">
+    <tr><th style="width:9%">Steps</th><th style="width:28%">What</th><th style="width:16%">Runs in</th><th style="width:15%">Tables</th><th>If it fails</th></tr>
+    <tr><td>1</td><td>Upload, authorization, dedupe, Pending row and file copy</td><td>MVC request (sync)</td><td>AiDocuments [C1] [C2]</td><td>The user sees the error; nothing was sent.</td></tr>
+    <tr><td>2–3</td><td>Enqueue and return</td><td>MVC request</td><td>Hangfire</td><td>A crash before the enqueue: the recurring job finds the row still Pending after a minute.</td></tr>
+    <tr><td>4–10</td><td><code>POST /api/v1/jobs</code></td><td>Hangfire job → DocAi.Api</td><td>Jobs, JobRuns [S1] [S2], Blob</td><td>Network or 5xx: stays Pending, retried. Deadlock 1205: the whole [S2] retried with jitter (3 tries).</td></tr>
+    <tr><td>11</td><td>Bind the job and run</td><td>Hangfire job</td><td>AiDocuments [C3] [C4]</td><td>A webhook that arrived first already completed the row; [C3] then changes nothing.</td></tr>
+  </table>
+  <p class="small">Solutions without Hangfire call <code>SendPending</code> inline from the same request; the behaviour is identical, only slower for the user.</p>
+</section>
+
+<!-- ============================== 8 CYCLE 2 ============================== -->
+<section>
+  <h2>8. Request cycle — part 2: the worker analyzes the document</h2>
+  <div class="fig"><div class="mermaid">
+sequenceDiagram
+    autonumber 12
+    participant W as Worker
+    participant S as Azure SQL
+    participant B as Blob
+    participant D as Document Intelligence
+    W->>S: [S3] claim job, READPAST, new LeaseToken
+    W->>S: [S19] open operation for this run?
+    Note over W,S: Accepted → resume polling<br/>Sending without a location → Unknown
+    W->>B: Read the original (MI)
+    opt No shipping line (Stage = Classify)
+        W->>S: [S4] operation Sending (classify)
+        W->>D: POST classify (splitMode none)
+        D-->>W: 202 + Operation-Location
+        W->>S: [S4] operation Accepted
+        W->>D: GET until succeeded
+        W->>S: [S18] Succeeded + ledger, class → line
+    end
+    W->>S: [S4] operation Sending (extract)
+    W->>D: POST analyze (api-version 2024-11-30)
+    D-->>W: 202 + Operation-Location
+    W->>S: [S4] operation Accepted, location saved
+    loop until succeeded or failed, waiting at least Retry-After
+        W->>D: GET Operation-Location
+        W->>S: [S5] renew the lease (LeaseToken)
+    end
+    W->>S: [S8] Succeeded, ledger, result, event, Completed
+    W->>D: DELETE the analyze result
+  </div><div class="cap">Figure 6. Steps 12–28 — every Azure call is recorded before it is made</div></div>
+
+  <table class="keep">
+    <tr><th style="width:9%">Steps</th><th style="width:30%">What</th><th style="width:16%">Tables</th><th>If it fails</th></tr>
+    <tr><td>12</td><td>Claim with a new lease token</td><td>Jobs [S3]</td><td>Nothing due: sleep 2 s, backing off to 30 s. A job taken over for the 3rd time fails with <code>WORKER_CRASH_LOOP</code>.</td></tr>
+    <tr><td>13</td><td>Resume an open operation</td><td>AzureOperations [S19]</td><td>Accepted → resume polling. Sending without a location → marked <code>Unknown</code> (Azure may have billed it); one resubmission is allowed per run.</td></tr>
+    <tr><td>15–20</td><td>Classifier (only without a shipping line)</td><td>AzureOperations, UsageLedger, Jobs [S18]</td><td>Unmapped class or confidence under the threshold → Failed <code>UNCLASSIFIED</code>. The classifier pages are billed in the ledger either way.</td></tr>
+    <tr><td>21–24</td><td>Extraction POST</td><td>AzureOperations [S4]</td><td>See the retry rules in section 10.</td></tr>
+    <tr><td>25–26</td><td>Poll</td><td>Jobs [S5]</td><td>Worker crash: the lease expires after 10 min; the next worker resumes from the saved location. Lease lost: stop, write nothing.</td></tr>
+    <tr><td>27</td><td>Completion</td><td>5 tables [S8]</td><td>Rolled back as a whole; the job resumes from polling. A missing price stops the transaction and opens the breaker.</td></tr>
+    <tr><td>28</td><td>Delete the result in Azure</td><td>—</td><td>Logged only; Azure deletes it 24 h after completion anyway.</td></tr>
+  </table>
+</section>
+
+<!-- ============================== 9 CYCLE 3 ============================== -->
+<section>
+  <h2>9. Request cycle — part 3: deliver and store the result</h2>
+  <div class="fig"><div class="mermaid">
+sequenceDiagram
+    autonumber 29
+    participant M as MVC app + kit
+    participant H as Hangfire
+    participant A as DocAi API
+    participant W as Webhook sender
+    Note over A,W: [S10] claim due deliveries, new LeaseToken<br/>secret from Key Vault (1 h cache)
+    W->>M: POST /api/DocAi/Webhook — event, runNo, result
+    Note over M,H: IIS caps the path at 1 MB · headers checked first<br/>HMAC + 5-minute window · [C5] store for the bound run
+    M-->>W: 200 OK in under a second
+    Note over A,W: [S11] Delivered (Pending + LeaseToken checked)
+    opt Webhook lost, or no inbound access
+        Note over H,A: every 5 min — [C6] atomic pick of due rows
+        H->>A: GET /api/v1/jobs/jobId (X-Api-Key)
+        A-->>H: 200 OK — same envelope, runNo, result [S13]
+        H->>M: [C5] store the outcome
+    end
+  </div><div class="cap">Figure 7. Steps 29–33 — the result travels in the webhook; GET is the fallback</div></div>
+
+  <table class="keep">
+    <tr><th style="width:18%">Case</th><th>Behaviour</th></tr>
+    <tr><td>Consumer answers non-2xx or times out</td><td>Retries after 1, 5, 15, 60 min, then every 6 h; DeadLettered on the 8th failure; the GET fallback still gets the result. Each attempt is re-signed with a fresh timestamp.</td></tr>
+    <tr><td>Consumer answers 302 (login page)</td><td>Not followed. Counted as a failure — never as delivered.</td></tr>
+    <tr><td>Consumer answers 401</td><td>One rate-limited refresh of the secret from Key Vault, then the normal retry schedule.</td></tr>
+    <tr><td>Webhook arrives before the POST reply</td><td>[C5] matches by <code>clientRequestId</code> and completes the row; the late [C3] then changes nothing.</td></tr>
+    <tr><td>A newer run was created</td><td>Older Pending events were marked Superseded; an event already in flight is rejected by the consumer because its run does not match.</td></tr>
+  </table>
+</section>
+
+<!-- ============================== 10 WORKER ============================== -->
+<section>
+  <h2>10. The worker in detail and the retry rules</h2>
+  <p>The worker is one loop in three parts. Every write after the claim carries the lease token; every red box ends in one transaction, [S9], that sets the job Failed and writes a <code>job.failed</code> event for the run.</p>
+  <div class="fig mid"><div class="mermaid">
+flowchart TD
+    A(["[S3] claim the next due job, or one whose lease expired<br/>new LeaseToken · nothing due: sleep 2 s, backing off to 30 s"]) --> TK{"Taken over<br/>3 times?"}
+    TK -- yes --> XP["Failed<br/>WORKER_CRASH_LOOP"]
+    TK -- no --> O{"[S19] open operation<br/>for this run?"}
+    O -- Accepted --> P(["Resume polling → part C"])
+    O -- none --> SB(["Submit → part B"])
+    O -- "Sending, no location" --> UK["Mark Unknown<br/>(Azure may have billed it)"]
+    UK --> UK2{"Second Unknown<br/>in this run?"}
+    UK2 -- no --> SB
+    UK2 -- yes --> X3["Failed<br/>RETRIES_EXHAUSTED"]
+    classDef fail fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    classDef go fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b
+    class XP,X3 fail
+    class P,SB go
+  </div><div class="cap">Figure 8A. Claim and resume</div></div>
+  <div class="fig mid"><div class="mermaid">
+flowchart TD
+    M["Pick the model<br/>Stage Classify → active classifier<br/>Stage Extract → active model for line + type"] --> I{"Model<br/>found?"}
+    I -- no --> X1["Failed<br/>MODEL_NOT_FOUND"]
+    I -- yes --> J["[S4] operation Sending<br/>POST with Bearer token"]
+    J --> K{"HTTP status"}
+    K -- 202 --> L(["[S4] Accepted, location<br/>saved → part C"])
+    K -- "429 / 5xx<br/>or timeout *" --> R{"5th failure?"}
+    K -- "401 / 403" --> CB(["[S7] release,<br/>breaker 5 min, alert"])
+    K -- 400 --> X2["Failed<br/>INVALID_DOCUMENT"]
+    K -- 404 --> X1b["Failed MODEL_NOT_FOUND<br/>+ registry-drift alert"]
+    R -- no --> Q(["[S6] Queued again<br/>30 s, 1, 2, 4 min<br/>or Retry-After if longer"])
+    R -- yes --> X3["Failed<br/>RETRIES_EXHAUSTED"]
+    classDef fail fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    classDef go fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b
+    class X1,X1b,X2,X3 fail
+    class L go
+  </div><div class="cap">Figure 8B. Submit to Azure — * a timeout first marks the operation Unknown</div></div>
+  <div class="fig mid"><div class="mermaid">
+flowchart TD
+    P["Poll Operation-Location<br/>while running: wait at least Retry-After, [S5] renew the lease"] --> S{"Final status"}
+    S -- "GET 429 / 5xx" --> R(["Back-off as in part B<br/>operation stays Accepted"])
+    S -- "GET 404" --> X5["Failed<br/>ANALYSIS_RESULT_MISSING *"]
+    S -- failed --> X4["Failed<br/>ANALYSIS_FAILED"]
+    S -- "succeeded<br/>(classify)" --> CL["[S18] Succeeded + ledger row<br/>class → line, Stage = Extract"]
+    S -- "succeeded<br/>(extract)" --> V["[S8] one transaction<br/>Succeeded, ledger, JobResults,<br/>event, Completed"]
+    CL --> CC{"Class mapped<br/>and confident?"}
+    CC -- yes --> SB(["Extraction → part B"])
+    CC -- no --> X6["Failed<br/>UNCLASSIFIED"]
+    V --> DEL(["DELETE the analyze result,<br/>next job"])
+    classDef fail fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    classDef good fill:#ccfbf1,stroke:#0d9488,color:#134e4a
+    classDef go fill:#e0e7ff,stroke:#4f46e5,color:#1e1b4b
+    class X4,X5,X6 fail
+    class V,CL good
+    class SB go
+  </div><div class="cap">Figure 8C. Poll and finish — * re-analyze instead only when the operation was accepted more than 24 h ago</div></div>
+</section>
+
+<section>
+  <h3>Retry rules in one place</h3>
+  <table>
+    <tr><th style="width:27%">Error</th><th style="width:12%">Where</th><th>What happens</th><th style="width:10%">Uses an attempt</th></tr>
+    <tr><td>429, 5xx on <code>POST analyze</code></td><td>Worker</td><td>Back to Queued after 30 s, 1, 2, 4 min — or the <code>Retry-After</code> value if longer; Failed <code>RETRIES_EXHAUSTED</code> on the 5th.</td><td>yes</td></tr>
+    <tr><td>Timeout on <code>POST analyze</code></td><td>Worker</td><td>Operation marked <code>Unknown</code> (Azure may have accepted and billed it), then the same back-off. A second Unknown in one run fails it.</td><td>yes</td></tr>
+    <tr><td>429, 5xx on the <code>GET</code> poll</td><td>Worker</td><td>Same back-off; the operation stays Accepted, so the retry resumes polling — no second POST.</td><td>yes</td></tr>
+    <tr><td>401 or 403 from Azure</td><td>Worker</td><td>Job released, worker paused 5 min (breaker), Critical alert.</td><td>no</td></tr>
+    <tr><td>No price in force for a meter</td><td>Worker</td><td>The completing transaction throws; treated like 401/403 — breaker and alert — so no completion is ever recorded without its cost.</td><td>no</td></tr>
+    <tr><td>400 from Azure, or the analysis ends <code>failed</code></td><td>Worker</td><td>Failed with <code>INVALID_DOCUMENT</code> / <code>ANALYSIS_FAILED</code>, <code>job.failed</code> event.</td><td>—</td></tr>
+    <tr><td>404 on <code>POST analyze</code></td><td>Worker</td><td><code>MODEL_NOT_FOUND</code> + "registry drift" alert: the registry names a model that Azure does not have.</td><td>—</td></tr>
+    <tr><td>404 on the <code>GET</code> poll</td><td>Worker</td><td>If the operation was accepted more than 24 h ago the result has expired: start again (billed twice; reconciliation shows it). Otherwise <code>ANALYSIS_RESULT_MISSING</code> + alert, no paid retry.</td><td>yes / —</td></tr>
+    <tr><td>Lease expired, job taken over</td><td>Worker</td><td><code>TakeoverCount + 1</code>; the 3rd takeover fails <code>WORKER_CRASH_LOOP</code> (a document that crashes the process cannot loop forever).</td><td>no</td></tr>
+    <tr><td>Lease lost (another worker holds the token)</td><td>Worker</td><td>The guarded update changes 0 rows: stop at once, write nothing, take the next job.</td><td>no</td></tr>
+    <tr><td>Webhook non-2xx, timeout or redirect</td><td>Sender</td><td>1, 5, 15, 60 min, then every 6 h; DeadLettered on the 8th.</td><td>—</td></tr>
+    <tr><td>DocAi API 408, 429, 5xx or network</td><td>Kit</td><td>Row stays Pending; sent again at <code>NextSubmitAt</code> (Retry-After) by the recurring job; after 10 tries Failed <code>SUBMIT_EXHAUSTED</code>.</td><td>—</td></tr>
+    <tr><td>DocAi API 401 or 403</td><td>Kit</td><td>Sending paused 5 min, critical trace; documents are not failed.</td><td>—</td></tr>
+  </table>
+  <div class="callout"><b>Throttling.</b> Separate token buckets: analyze POSTs at most 10 per second (Azure S0 default: 15) and polls at most 40 per second (default: 50). <code>Retry-After</code> is always a minimum, never capped below the server's value.</div>
+</section>
+
+<!-- ============================== 11 STATES ============================== -->
+<section>
+  <h2>11. State machines</h2>
+      <div class="fig short"><div class="mermaid">
+stateDiagram-v2
+    direction LR
+    [*] --> Queued : POST accepted, run 1
+    Queued --> Processing : claimed, new LeaseToken
+    Processing --> Completed : extraction succeeded [S8]
+    Processing --> Failed : fatal, 5th failure or 3 takeovers [S9]
+    Processing --> Queued : retryable [S6] or released [S7]
+    Failed --> Queued : same file again, new run
+    Completed --> Queued : reprocess, new run
+    </div><div class="cap">Figure 9. Job (DocAi database)</div></div>
+    <div class="fig short"><div class="mermaid">
+stateDiagram-v2
+    direction LR
+    [*] --> Sending : written before the POST
+    Sending --> Accepted : 202, location saved
+    Sending --> Failed : 4xx, 429 or 5xx answer
+    Sending --> Unknown : timeout or crash before saving
+    Accepted --> Succeeded : result read, ledger row
+    Accepted --> Failed : analysis failed or result missing
+    </div><div class="cap">Figure 10. Azure operation (new)</div></div>
+      <div class="fig short"><div class="mermaid">
+stateDiagram-v2
+    direction LR
+    [*] --> Pending : written with the run outcome
+    Pending --> Delivered : 2xx and the lease token matches
+    Pending --> DeadLettered : 8th failure
+    Pending --> Superseded : a newer run was created
+    DeadLettered --> Pending : operator replay, current run only
+    </div><div class="cap">Figure 11. Webhook delivery (DocAi database)</div></div>
+    <div class="fig short"><div class="mermaid">
+stateDiagram-v2
+    direction LR
+    [*] --> Pending : [C2] before the POST
+    Pending --> Submitted : 202 or 200 [C3], binds job and run
+    Pending --> Completed : the webhook beat the reply [C5]
+    Pending --> Failed : bad file, or 10 tries
+    Submitted --> Completed : result stored [C5]
+    Submitted --> Failed : job.failed for the bound run
+    </div><div class="cap">Figure 12. AiDocuments (company database)</div></div>
+  <ul>
+    <li><b>A run</b> is one authorized analysis of a job: the first submission (run 1), the same file sent again after a failure, or an explicit <code>reprocess=true</code>. Transport retries, back-offs and lease takeovers never create a run.</li>
+    <li><b>A retry from the user is a new AiDocuments row.</b> [C1] skips Failed rows, so submitting again creates a new row and — on the service — a new run of the existing job. Terminal rows are never reopened.</li>
+    <li><b>Correcting a wrong shipping line</b>: the requested line is part of the idempotency key, so a different line is a different job and is analyzed again (billed once more, by design).</li>
+  </ul>
+</section>
+
+<!-- ============================== 12 CONCURRENCY ============================== -->
+<section>
+  <h2>12. The two concurrency fixes: lease token and run number</h2>
+  <h3>12.1 Lease token — a worker that lost its lease changes nothing</h3>
+  <div class="fig"><div class="mermaid">
+sequenceDiagram
+    participant A as Worker A
+    participant S as Azure SQL
+    participant B as Worker B
+    A->>S: [S3] claim job J, LeaseToken = t1
+    Note over A: long pause (GC, restart, slow network). Lease expires
+    B->>S: [S3] claim job J again, LeaseToken = t2, TakeoverCount + 1
+    B->>S: [S5] renew WHERE LeaseToken = t2 (1 row)
+    A->>S: [S8] complete WHERE LeaseToken = t1
+    S-->>A: 0 rows. A stops and writes nothing
+    B->>S: [S8] complete WHERE LeaseToken = t2 (1 row)
+  </div><div class="cap">Figure 13. In v1 both workers matched Status = 'Processing'; in v2 only the current token matches</div></div>
+<pre>-- The guard every write after the claim carries ([S4]–[S9], [S18])
+WHERE JobId = @jobId
+  AND Status = 'Processing'
+  AND LeaseToken = @leaseToken;          -- 0 rows: ownership lost — stop, never run [S9]</pre>
+  <p class="small">Decision from the debate: the token alone fences. Adding <code>LeaseExpiresAtUtc &gt; now</code> would make a slow but sole owner abandon work that nobody else has taken.</p>
+
+  <h3>12.2 Run number — a stale event never overwrites a newer run</h3>
+  <div class="fig short"><div class="mermaid">
+flowchart TB
+    R1["Run 1 fails<br/>job.failed queued<br/>(delivery retrying)"] --> R2["Same file sent again<br/>[S2] creates run 2"]
+    R2 --> SU["Run 1 Pending events<br/>→ Superseded<br/>(same transaction)"]
+    SU --> BD["Kit binds<br/>(jobId, runNo = 2)"]
+    LT["Run 1 event already<br/>in flight arrives late"] --> RJ{"[C5] clientRequestId<br/>or (jobId, runNo) match?"}
+    BD --> RJ
+    RJ -- "no match" --> IG["Ignored —<br/>row keeps waiting for run 2"]
+    R2 --> OK["Run 2 completes"] --> ST["[C5] row Completed"]
+    classDef fix fill:#ccfbf1,stroke:#0d9488,color:#134e4a
+    classDef bad fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class SU,BD,ST fix
+    class LT,IG bad
+  </div><div class="cap">Figure 14. In v1, [C5] matched on RemoteJobId alone, so the late run 1 failure marked the new row Failed and the result was lost</div></div>
+<pre>-- [C5] v2: store an outcome only for the submission it belongs to
+UPDATE dbo.AiDocuments
+SET Status = CASE WHEN @status = 'Completed' THEN 'Completed' ELSE 'Failed' END,
+    RemoteJobId = COALESCE(RemoteJobId, @remoteJobId),
+    RemoteRunNo = COALESCE(RemoteRunNo, @runNo),
+    ResultJson = @body, ErrorCode = @errorCode, ErrorMessage = @errorMessage, CompletedAt = GETDATE()
+WHERE Status IN ('Pending', 'Submitted')                               -- terminal rows never change
+  AND (   LocalId = @clientRequestId                                   -- our own submission
+       OR (RemoteJobId = @remoteJobId AND RemoteRunNo = @runNo));      -- or a row bound to this exact run</pre>
+</section>
+
+<!-- ============================== 13 DOCAI DB ============================== -->
+<section>
+  <h2>13. Database — DocAi (Azure SQL, Entra-only)</h2>
+  <div class="fig mid"><div class="mermaid">
+erDiagram
+    Consumers ||--o{ Jobs : submits
+    Jobs ||--|{ JobRuns : "has runs"
+    JobRuns ||--o{ AzureOperations : calls
+    JobRuns ||--o| JobResults : produces
+    JobRuns ||--o{ WebhookDeliveries : announces
+    ModelRegistry ||--o{ AzureOperations : "runs on"
+    ModelRegistry ||--o{ ClassifierClasses : maps
+    Consumers {
+        smallint ConsumerId PK
+        varchar Code UK
+        binary ApiKeyHash1
+        nvarchar CallbackUrl
+    }
+    Jobs {
+        bigint JobSeq UK "clustered key"
+        uniqueidentifier JobId PK "nonclustered"
+        smallint RunNo "current run"
+        varchar RequestedShippingLineCode "immutable"
+        varchar IdemLine "idempotency key part"
+        varchar Stage "Classify or Extract"
+        uniqueidentifier LeaseToken
+        tinyint TakeoverCount
+    }
+    JobRuns {
+        uniqueidentifier JobId PK
+        smallint RunNo PK
+        varchar Reason "New, Requeue, Reprocess"
+        varchar ClientRequestId
+        smallint PageCount "daily cap"
+    }
+    AzureOperations {
+        bigint OperationId PK
+        varchar Kind "classify or extract"
+        varchar State "Sending to Unknown"
+        nvarchar OperationLocation
+        int Pages
+    }
+    JobResults {
+        uniqueidentifier JobId PK
+        smallint RunNo PK
+        nvarchar ResultJson
+    }
+    WebhookDeliveries {
+        bigint DeliveryId PK
+        uniqueidentifier EventId UK
+        smallint RunNo
+        varchar Status "adds Superseded"
+        uniqueidentifier LeaseToken
+    }
+    ModelRegistry {
+        varchar ModelId PK
+        varchar Kind
+        varchar Status
+    }
+    ClassifierClasses {
+        varchar ClassifierModelId PK
+        varchar ClassName PK
+        varchar ShippingLineCode
+    }
+  </div><div class="cap">Figure 15A. DocAi database v2 — processing tables (keys and the columns that change)</div></div>
+
+  <div class="fig short"><div class="mermaid">
+erDiagram
+    Consumers ||--o{ UsageLedger : "is charged"
+    AzureOperations ||--o| UsageLedger : bills
+    BillingPeriods ||--o{ MonthlyConsumerCosts : allocates
+    Consumers ||--o{ MonthlyConsumerCosts : receives
+    UsageLedger {
+        bigint UsageId PK
+        bigint OperationId UK "one row per operation"
+        int Pages
+        decimal PricePer1000 "copied from AzureMeterPrices"
+        datetime2 OccurredAtUtc "when Azure finished"
+        bigint ReversesUsageId UK "one reversal per row"
+    }
+    AzureMeterPrices {
+        varchar MeterCode PK
+        date EffectiveFrom PK
+        decimal PricePer1000
+    }
+    BillingPeriods {
+        char BillingPeriod PK
+        datetime2 ReconciledAtUtc "close gate"
+        decimal UnallocatedUsd
+    }
+    MonthlyConsumerCosts {
+        char BillingPeriod PK
+        smallint ConsumerId PK
+        decimal TotalCostUsd "cents"
+    }
+  </div><div class="cap">Figure 15B. DocAi database v2 — billing tables (prices are copied into each ledger row, not joined)</div></div>
+</section>
+
+<section>
+  <h3>Table catalogue v2</h3>
+  <table>
+    <tr><th style="width:17%">Table</th><th>Purpose</th><th style="width:30%">What changes</th><th style="width:15%">Kept</th></tr>
+    <tr><td>Consumers</td><td>Who may call; callback URL; limits</td><td><span class="tag same">same</span> optional private CA reference for the callback</td><td>Always</td></tr>
+    <tr><td>ModelRegistry</td><td>Line + document type → model; thresholds</td><td><span class="tag chg">changed</span> classifier rows use <code>MinFieldConfidence</code> as the class threshold; activation derives its group from the new model</td><td>Always</td></tr>
+    <tr><td>ClassifierClasses</td><td>Classifier class name → shipping line</td><td><span class="tag new">new</span></td><td>Always</td></tr>
+    <tr><td>Jobs</td><td>The request, its state, the queue</td><td><span class="tag chg">changed</span> <code>JobSeq</code> clustered, <code>RunNo</code>, <code>RequestedShippingLineCode</code> + <code>IdemLine</code>, <code>Stage</code>, <code>LeaseToken</code>, <code>TakeoverCount</code>; Operation-Location moves out; <code>ErrorMessage</code> 400 chars; <code>FileName</code> cleared by retention</td><td>Soft-deleted after 13 months</td></tr>
+    <tr><td>JobRuns</td><td>One row per authorized analysis</td><td><span class="tag new">new</span> daily cap counts these; unique <code>(JobId, ClientRequestId)</code> makes a repeated POST return the same run</td><td>With the job</td></tr>
+    <tr><td>AzureOperations</td><td>One row per Azure call</td><td><span class="tag new">new</span> at most one open operation per run and kind (filtered unique index)</td><td>Always (billing audit)</td></tr>
+    <tr><td>JobResults</td><td>Canonical JSON v1</td><td><span class="tag chg">changed</span> key <code>(JobId, RunNo)</code></td><td>13 months</td></tr>
+    <tr><td>WebhookDeliveries</td><td>Outbox for callbacks</td><td><span class="tag chg">changed</span> <code>RunNo</code>, immutable <code>EventId</code>, <code>LeaseToken</code>, status <code>Superseded</code>, <code>PayloadJson nvarchar(max)</code>, unique <code>(JobId, RunNo, EventType)</code>; no MERGE re-arm</td><td>90 days after delivery</td></tr>
+    <tr><td>AzureMeterPrices</td><td>List prices by date</td><td><span class="tag same">same</span></td><td>Always</td></tr>
+    <tr><td>UsageLedger</td><td>Billing facts, append-only</td><td><span class="tag chg">changed</span> one row per Azure operation; <code>OccurredAtUtc</code> = when Azure finished; one reversal per row; INSERT-only for the app</td><td>Always</td></tr>
+    <tr><td>BillingPeriods</td><td>The month's actual Azure numbers</td><td><span class="tag chg">changed</span> <code>ReconciledAtUtc</code> (gate for closing), <code>UnallocatedUsd</code></td><td>Always</td></tr>
+    <tr><td>MonthlyConsumerCosts</td><td>Frozen monthly allocation</td><td><span class="tag chg">changed</span> amounts in cents (decimal(12,2)), largest-remainder rounding</td><td>Always</td></tr>
+  </table>
+
+  <h3>Key design decisions (corrected)</h3>
+  <ul>
+    <li><b>Clustered key.</b> <code>JobSeq bigint IDENTITY</code> is the clustered key; <code>JobId</code> (any GUID) is the nonclustered primary key. SQL Server sorts <code>uniqueidentifier</code> by its last bytes first, so a UUIDv7 key does not append — v1's claim is removed.</li>
+    <li><b>Idempotency key</b> = <code>(ConsumerId, DocumentTypeCode, FileSha256, IdemLine)</code>, filtered on <code>IsDeleted = 0</code>. <code>IdemLine</code> is a plain column with <code>CHECK (IdemLine = COALESCE(RequestedShippingLineCode, '*'))</code> (filtered indexes and computed columns do not mix well).</li>
+    <li><b>Lease consistency:</b> <code>CHECK ((Status = 'Processing' AND LeaseToken IS NOT NULL) OR (Status &lt;&gt; 'Processing' AND LeaseToken IS NULL))</code>.</li>
+    <li><b>Queue index</b> filter: <code>WHERE Status IN ('Queued','Processing') AND IsDeleted = 0</code>, so the claim never needs a lookup.</li>
+    <li><b>Blob names</b> use the upload id and the real extension: <code>documents/{consumer}/{yyyy}/{MM}/{uploadId}.{pdf|jpg|png|tif}</code>.</li>
+  </ul>
+</section>
+
+<section>
+  <h3>Statement map — DocAi</h3>
+  <table>
+    <tr><th style="width:7%">Label</th><th style="width:30%">Statement</th><th>v2 change</th></tr>
+    <tr><td>[S1]</td><td>Daily page cap</td><td>Sums <code>JobRuns</code> created today, so requeues and reprocesses count. Runs only after the duplicate lookup.</td></tr>
+    <tr><td>[S2]</td><td>Intake: create, requeue or reprocess</td><td>Same submission → same run; Failed job → new run; <code>reprocess=true</code> on a Completed job → new run; older Pending events Superseded; whole transaction retried on deadlock 1205.</td></tr>
+    <tr><td>[S3]</td><td>Claim the next job</td><td>New <code>LeaseToken</code>; <code>TakeoverCount + 1</code> when taking over an expired lease. Hints unchanged: <code>ROWLOCK, UPDLOCK, READPAST</code>.</td></tr>
+    <tr><td>[S4]</td><td>Azure operation: Sending / Accepted / Failed / Unknown</td><td>New: written before the POST, updated after the reply. Replaces v1's "save Operation-Location".</td></tr>
+    <tr><td>[S5]</td><td>Renew the lease</td><td>Guarded by the token.</td></tr>
+    <tr><td>[S6]</td><td>Retryable error</td><td>Guarded; back-off = max(15 × 2<sup>n</sup> s, Retry-After). Exhaustion decided in code, not by "0 rows".</td></tr>
+    <tr><td>[S7]</td><td>Release without using an attempt</td><td>Guarded; used for 401/403, missing price and graceful shutdown.</td></tr>
+    <tr><td>[S8]</td><td>Completion</td><td>Operation Succeeded + ledger row (price must exist, else THROW) + JobResults + immutable event + Completed, one transaction.</td></tr>
+    <tr><td>[S9]</td><td>Failure</td><td>Guarded; inserts a new immutable <code>job.failed</code> event for this run (no MERGE re-arm); message cut to 400 chars.</td></tr>
+    <tr><td>[S10]–[S12]</td><td>Webhook claim, attempt, replay</td><td>Claim sets a token (lease 5 min); the attempt checks <code>Status = 'Pending'</code> + token; replay clears the lease and only targets the current run.</td></tr>
+    <tr><td>[S13]</td><td>GET a job</td><td>Returns <code>runNo</code> and the result of the current run.</td></tr>
+    <tr><td>[S14]</td><td>Model activation</td><td>Locks the new model, derives its group from it, then retires and activates; a classifier needs its class map first.</td></tr>
+    <tr><td>[S15]</td><td>Retention</td><td>Results by their own age; <code>FileName</code> cleared on soft delete; Superseded deliveries purged; deletes in batches.</td></tr>
+    <tr><td>[S16]–[S17]</td><td>Catalog; result for a webhook</td><td>Catalog says whether auto-detect (classifier) exists per document type; result read for the event's run.</td></tr>
+    <tr><td>[S18]</td><td>Classifier succeeded</td><td>New: operation Succeeded + ledger row + mapped line + <code>Stage = 'Extract'</code>, one transaction.</td></tr>
+    <tr><td>[S19]</td><td>Open operations of the current run</td><td>New: the worker's resume point after a crash.</td></tr>
+  </table>
+
+<pre>-- [S2] core of the v2 intake decision (inside SET XACT_ABORT ON / BEGIN TRANSACTION)
+SELECT @existingJobId = JobId, @existingStatus = Status, @existingRun = RunNo
+FROM dbo.Jobs WITH (UPDLOCK, HOLDLOCK)                -- key-range lock serializes the same file
+WHERE ConsumerId = @consumerId AND DocumentTypeCode = @documentTypeCode
+  AND FileSha256 = @fileSha256 AND IdemLine = @idemLine AND IsDeleted = 0;
+
+IF @existingJobId IS NULL                                   -> insert Jobs + JobRuns (run 1)          'Created'   202
+ELSE IF the run with this ClientRequestId exists            -> return that run                       'Existing'  200
+ELSE IF @existingStatus = 'Failed'
+     OR (@reprocess = 1 AND @existingStatus = 'Completed')  -> insert JobRuns (run n+1), reset Jobs,
+                                                               UPDATE WebhookDeliveries SET Status = 'Superseded'
+                                                               WHERE JobId = @existingJobId AND RunNo &lt; @newRun
+                                                                 AND Status = 'Pending'               'Requeued'  202
+ELSE                                                        -> return the current run                'Existing'  200</pre>
+</section>
+
+<!-- ============================== 14 COMPANY DB ============================== -->
+<section>
+  <h2>14. Database — company side (one table per company database)</h2>
+  <p>The AI service never connects to a company database; the consumer never connects to DocAi's. Each company database gets one table, <code>AiDocuments</code>, with no foreign keys to legacy tables.</p>
+  <table>
+    <tr><th style="width:24%">Column</th><th>Meaning</th><th style="width:12%">v2</th></tr>
+    <tr><td>LocalId (PK)</td><td>Sent as <code>clientRequestId</code></td><td><span class="tag same">same</span></td></tr>
+    <tr><td>RemoteJobId, <b>RemoteRunNo</b></td><td>The exact job and run this row is bound to</td><td><span class="tag new">run new</span></td></tr>
+    <tr><td>Status</td><td>Pending · Submitted · Completed · Failed</td><td><span class="tag same">same</span></td></tr>
+    <tr><td>DocumentTypeCode, ShippingLineCode</td><td>From the catalog; the line is part of the dedupe</td><td><span class="tag chg">changed</span></td></tr>
+    <tr><td>EntityName, EntityID</td><td>What the document belongs to (<code>'Operation'</code>, <code>Operations.ID</code>); part of the dedupe</td><td><span class="tag chg">changed</span></td></tr>
+    <tr><td><b>Reprocess</b></td><td>The user asked for a new billed analysis</td><td><span class="tag new">new</span></td></tr>
+    <tr><td>StoredFileName, OriginalFileName, FileSha256, PageCount</td><td>The kit's copy and file facts</td><td><span class="tag same">same</span></td></tr>
+    <tr><td>ResultJson, ErrorCode, ErrorMessage (500)</td><td>The body as received; message at least as long as the service's (400)</td><td><span class="tag same">same</span></td></tr>
+    <tr><td>SubmitAttempts, <b>NextSubmitAt</b></td><td>Retry budget (10) and the Retry-After time</td><td><span class="tag new">new</span></td></tr>
+    <tr><td>LastCheckedAt</td><td>Throttles the GET fallback</td><td><span class="tag same">same</span></td></tr>
+    <tr><td><b>StoredFileDeletedAt, ResultPurgedAt</b></td><td>Housekeeping and retention done</td><td><span class="tag new">new</span></td></tr>
+  </table>
+
+  <h3>Statement map — company database</h3>
+  <table>
+    <tr><th style="width:7%">Label</th><th style="width:28%">Statement</th><th>v2 change</th></tr>
+    <tr><td>[C1]</td><td>Same document already sent?</td><td>Matches file + type + <b>line + entity</b>; skips Failed rows; skipped entirely for <code>reprocess</code>.</td></tr>
+    <tr><td>[C2]</td><td>New Pending row before the POST</td><td>Adds <code>Reprocess</code>.</td></tr>
+    <tr><td>[C3]</td><td>Service answered 202/200</td><td>Only from <code>Pending</code>; binds <code>RemoteJobId</code> + <code>RemoteRunNo</code>; never downgrades a terminal row.</td></tr>
+    <tr><td>[C4]</td><td>Send failed</td><td>Classified by status (permanent / retry later / pause); <code>NextSubmitAt</code> from Retry-After; 10 tries → Failed <code>SUBMIT_EXHAUSTED</code>; 401/403 do not use a try.</td></tr>
+    <tr><td>[C5]</td><td>Store an outcome</td><td>Matches <code>LocalId</code> or the exact <code>(jobId, runNo)</code>; terminal rows never change (figure 14).</td></tr>
+    <tr><td>[C6]</td><td>Pick due rows for resend / refresh</td><td>One atomic <code>UPDATE … OUTPUT</code> (by row, or a batch for the recurring job) replaces the select + unconditional update.</td></tr>
+    <tr><td>[C7]</td><td>Delete the kit's file copy</td><td>Marks <code>StoredFileDeletedAt</code>; 7 days after a result, 30 days after a failure.</td></tr>
+    <tr><td>[C8]</td><td>Result retention</td><td>New: clears <code>ResultJson</code> after the company's period (default 13 months, setting <code>DocAi:ResultRetentionMonths</code>). Phase 2 may keep data longer by its own policy.</td></tr>
+  </table>
+<pre>-- [C6] v2: claim due work atomically (two page views or two jobs can never both act on one row)
+UPDATE TOP (@batchSize) dbo.AiDocuments
+SET LastCheckedAt = GETDATE()
+OUTPUT inserted.LocalId, inserted.Status, inserted.RemoteJobId, inserted.RemoteRunNo
+WHERE (@localId IS NULL OR LocalId = @localId)
+  AND (   (Status = 'Pending'   AND CreatedAt   &lt; DATEADD(minute,  -1, GETDATE())
+                               AND (NextSubmitAt IS NULL OR NextSubmitAt &lt;= GETDATE()))
+       OR (Status = 'Submitted' AND SubmittedAt &lt; DATEADD(minute, -10, GETDATE())))
+  AND (LastCheckedAt IS NULL OR LastCheckedAt &lt; DATEADD(minute, -1, GETDATE()));</pre>
+</section>
+
+<!-- ============================== 15 PERMISSIONS ============================== -->
+<section>
+  <h2>15. Database permissions</h2>
+  <div class="fig"><div class="mermaid">
+flowchart TB
+    ADM["Entra admin of the SQL server<br/>00_bootstrap_identities.sql<br/>once per environment"] -->|"CREATE USER ... FROM EXTERNAL PROVIDER<br/>WITH OBJECT_ID (no Directory Readers)"| U1["App identity<br/>app-docai-{env}"]
+    ADM --> U2["Pipeline identity<br/>(OIDC federated)"]
+    U2 -->|"db_owner of the DocAi database only<br/>DbUp migrations + 02_docai_grants.sql"| DB[("DocAi database")]
+    U1 --> R1["docai_runtime"]
+    R1 -->|"SELECT all · INSERT/UPDATE Jobs, AzureOperations, WebhookDeliveries<br/>INSERT JobRuns, JobResults · INSERT only UsageLedger"| DB
+    OP["Operators<br/>(Entra group)"] --> R2["docai_operator"]
+    R2 -->|"Consumers, prices, billing close,<br/>reversals, webhook replay"| DB
+    MT["Model team<br/>(Entra group)"] --> R3["docai_modelteam"]
+    R3 -->|"ModelRegistry,<br/>ClassifierClasses"| DB
+    classDef role fill:#ede9fe,stroke:#7c3aed,color:#3b0764
+    class R1,R2,R3 role
+  </div><div class="cap">Figure 16. Who may write what — the runtime can only append to the ledger</div></div>
+<pre>-- 00_bootstrap_identities.sql — run by a Microsoft Entra admin of the server (sqlcmd variables per environment)
+CREATE USER [$(AppIdentityName)]      FROM EXTERNAL PROVIDER WITH OBJECT_ID = '$(AppPrincipalId)';
+CREATE USER [$(PipelineIdentityName)] FROM EXTERNAL PROVIDER WITH OBJECT_ID = '$(PipelinePrincipalId)';
+ALTER ROLE db_owner ADD MEMBER [$(PipelineIdentityName)];      -- this database only; no server role
+
+-- 02_docai_grants.sql — run by the pipeline after the schema migration
+CREATE ROLE docai_runtime;
+GRANT SELECT ON SCHEMA::dbo                          TO docai_runtime;
+GRANT INSERT, UPDATE ON dbo.Jobs                     TO docai_runtime;
+GRANT INSERT ON dbo.JobRuns                          TO docai_runtime;
+GRANT INSERT, UPDATE ON dbo.AzureOperations          TO docai_runtime;
+GRANT INSERT, DELETE ON dbo.JobResults               TO docai_runtime;   -- DELETE: retention [S15]
+GRANT INSERT, UPDATE, DELETE ON dbo.WebhookDeliveries TO docai_runtime;  -- DELETE: retention [S15]
+GRANT INSERT ON dbo.UsageLedger                      TO docai_runtime;   -- append only: no UPDATE, no DELETE
+ALTER ROLE docai_runtime ADD MEMBER [$(AppIdentityName)];
+-- Nothing on Consumers, ModelRegistry, ClassifierClasses, AzureMeterPrices, BillingPeriods, MonthlyConsumerCosts.</pre>
+  <p class="small">v1 ran <code>CREATE USER</code> and <code>ALTER ROLE</code> inside a migration executed by a <code>db_ddladmin</code> identity, which lacks the permission for both, and hard-coded <code>app-docai-prod</code>, which breaks the dev environment.</p>
+</section>
+
+<!-- ============================== 16 COST MODEL ============================== -->
+<section>
+  <h2>16. Cost per application — model and formula</h2>
+  <p>Azure bills the Document Intelligence <b>resource</b>, not the caller. With every consumer on one shared resource, the invoice says how many custom pages were analyzed, not who sent them, and tags cannot split one resource's meter. So the service records every billable Azure operation itself — in v2, at the moment the operation succeeds.</p>
+  <div class="fig mid"><div class="mermaid">
+flowchart TB
+    OP["Azure operation<br/>Succeeded"] --> L[("UsageLedger<br/>1 row per operation<br/>pages x price of the day")]
+    L --> MTD["[B1] month to date<br/>PAYG-equivalent estimate"]
+    CM["Azure Cost Management<br/>actual bill, meter pages,<br/>rg-docai-prod infra"] --> BP[("[B2] BillingPeriods")]
+    L --> RC{"[B3] both meters<br/>within 2 %?"}
+    BP --> RC
+    RC -- no --> INV["Investigate: Unknown operations,<br/>Studio on prod, re-analysis"] --> RC
+    RC -- yes --> G["ReconciledAtUtc set<br/>(the gate)"]
+    G --> CL["[B4] close the month<br/>cents, largest remainder"]
+    CL --> MC[("MonthlyConsumerCosts<br/>+ Unallocated line")]
+    MC --> ST["[B5] per consumer and company<br/>[B6] per product"]
+    classDef fix fill:#ccfbf1,stroke:#0d9488,color:#134e4a
+    class OP,G fix
+  </div><div class="cap">Figure 17. From an Azure operation to the monthly statement</div></div>
+
+  <h3>What is billed</h3>
+  <table class="keep">
+    <tr><th style="width:24%">Item</th><th style="width:26%">Price</th><th style="width:22%">When</th><th>How it reaches a consumer</th></tr>
+    <tr><td>Custom extraction <code>DI_CUSTOM_EXTRACT</code></td><td class="n">$30 per 1,000 pages ($0.030)</td><td>every successful extraction</td><td>ledger row: pages Azure analyzed</td></tr>
+    <tr><td>Custom classification <code>DI_CUSTOM_CLASSIFY</code></td><td class="n">$3 per 1,000 pages ($0.003)</td><td>only without a shipping line</td><td>ledger row — now also when the job later fails</td></tr>
+    <tr><td>Commitment tier (optional)</td><td class="n">$540/month for 20,000 pages, then $27 per 1,000</td><td>after 2–3 months above ~18,000 pages</td><td>month end, by page share</td></tr>
+    <tr><td>Infrastructure</td><td class="n">Phase 1 ≈ $32.23 · growth ≈ $100.99</td><td>always</td><td>month end, by page share</td></tr>
+    <tr><td>Model development (dev resource)</td><td class="n">training above 10 free hours at $3/h</td><td>while training</td><td>month end, by page share</td></tr>
+  </table>
+  <p class="small">Prices: Azure Retail Prices API, France Central, USD, read 11 October 2026 (from v1; not re-verified in this review — re-check before go-live and add a new <code>AzureMeterPrices</code> row when one changes). Phase 1 infra = B1 $13.14 + SQL S0 $18.40 + 20 GB blob $0.38 + Key Vault $0.30. Growth infra = P0v3 $63.51 + SQL S1 $36.80 + blob $0.38 + Key Vault $0.30 = <b>$100.99</b> (v1 left storage and Key Vault out and showed $100.31).</p>
+
+  <h3>The formula (unchanged in shape)</h3>
+<pre>E(c), C(c)   extraction and classification pages of consumer c in the ledger;   E, C = totals of all consumers
+s(c)         = E(c) / E                                               the consumer's page share
+BillE        actual extraction cost of the shared resource
+             pay-as-you-go: pages x $0.030        20,000-page tier: $540 + pages above 20,000 x $0.027
+BillC        actual classification cost;   Infra = rest of rg-docai-prod;   ModelDev = the dev DI resource
+
+Cost(c)      = BillE x s(c)  +  BillC x C(c) / C  +  (Infra + ModelDev) x s(c)
+Sum of Cost(c) = BillE + BillC + Infra + ModelDev      — now guaranteed to the cent (section 17.3)</pre>
+</section>
+
+<!-- ============================== 17 COST EXAMPLES ============================== -->
+<section>
+  <h2>17. Cost calculations — worked examples</h2>
+  <h3>17.1 Example 1 — pilot month, pay-as-you-go, three consumers</h3>
+  <table>
+    <tr><th>Consumer</th><th class="n">Extraction pages</th><th class="n">Classification pages</th><th class="n">Share</th><th class="n">Extraction</th><th class="n">Classification</th><th class="n">Infra share</th><th class="n">Total</th><th class="n">Per extraction page</th></tr>
+    <tr><td>FWD-UNF</td><td class="n">1,200</td><td class="n">400</td><td class="n">60 %</td><td class="n">$36.00</td><td class="n">$1.20</td><td class="n">$19.34</td><td class="n">$56.54</td><td class="n">$0.0471</td></tr>
+    <tr><td>FWD-CPW</td><td class="n">500</td><td class="n">0</td><td class="n">25 %</td><td class="n">$15.00</td><td class="n">$0.00</td><td class="n">$8.06</td><td class="n">$23.06</td><td class="n">$0.0461</td></tr>
+    <tr><td>YARD-UNF</td><td class="n">300</td><td class="n">0</td><td class="n">15 %</td><td class="n">$9.00</td><td class="n">$0.00</td><td class="n">$4.83</td><td class="n">$13.83</td><td class="n">$0.0461</td></tr>
+    <tr class="tot"><td>Total</td><td class="n">2,000</td><td class="n">400</td><td class="n">100 %</td><td class="n">$60.00</td><td class="n">$1.20</td><td class="n">$32.23</td><td class="n">$93.43</td><td class="n">$0.0467</td></tr>
+  </table>
+  <p>Extraction: 2,000 × $0.030 = $60.00. Classification: 400 × $0.003 = $1.20 (FWD-UNF uploaded 400 pages without choosing the line). Infra $32.23 = 3,223 cents: exact shares 1,933.8 / 805.75 / 483.45 cents → whole cents 1,933 / 805 / 483 = 3,221 → the 2 leftover cents go to the largest fractions (.80 and .75) → 19.34 / 8.06 / 4.83. Same as v1, now by rule.</p>
+
+  <h3>17.2 Example 2 — growth month, 20,000-page tier, six consumers (corrected infra)</h3>
+  <table>
+    <tr><th>Consumer</th><th class="n">Extraction pages</th><th class="n">Share</th><th class="n">Extraction (tier)</th><th class="n">Infra share</th><th class="n">Total</th><th class="n">Per page</th></tr>
+    <tr><td>FWD-UNF</td><td class="n">6,000</td><td class="n">24 %</td><td class="n">$162.00</td><td class="n">$24.23</td><td class="n">$186.23</td><td class="n">$0.0310</td></tr>
+    <tr><td>FWD-CPW</td><td class="n">4,000</td><td class="n">16 %</td><td class="n">$108.00</td><td class="n">$16.16</td><td class="n">$124.16</td><td class="n">$0.0310</td></tr>
+    <tr><td>FWD-T3</td><td class="n">5,000</td><td class="n">20 %</td><td class="n">$135.00</td><td class="n">$20.20</td><td class="n">$155.20</td><td class="n">$0.0310</td></tr>
+    <tr><td>FWD-T4</td><td class="n">3,000</td><td class="n">12 %</td><td class="n">$81.00</td><td class="n">$12.12</td><td class="n">$93.12</td><td class="n">$0.0310</td></tr>
+    <tr><td>YARD-UNF</td><td class="n">4,000</td><td class="n">16 %</td><td class="n">$108.00</td><td class="n">$16.16</td><td class="n">$124.16</td><td class="n">$0.0310</td></tr>
+    <tr><td>YARD-CPW</td><td class="n">3,000</td><td class="n">12 %</td><td class="n">$81.00</td><td class="n">$12.12</td><td class="n">$93.12</td><td class="n">$0.0310</td></tr>
+    <tr class="tot"><td>Total</td><td class="n">25,000</td><td class="n">100 %</td><td class="n">$675.00</td><td class="n">$100.99</td><td class="n">$775.99</td><td class="n">$0.0310</td></tr>
+  </table>
+  <ul>
+    <li><code>BillE</code> = $540 + (25,000 − 20,000) × $0.027 = $540 + $135 = <b>$675.00</b> (effective $0.027 a page). Pay-as-you-go would be 25,000 × $0.030 = $750.00, so the tier saves $75.00 this month, shared in proportion.</li>
+    <li>Infra $100.99 = 10,099 cents. Exact shares: 2,423.76 · 1,615.84 · 2,019.80 · 1,211.88 · 1,615.84 · 1,211.88 → whole cents sum to 10,094 → 5 leftover cents go to the five largest fractions (.88, .88, .84, .84, .80).</li>
+  </ul>
+
+  <h3>17.3 Why the rounding rule matters</h3>
+  <div class="callout warn">Rounding each consumer's infra share to the nearest cent separately gives 24.24 + 16.16 + 20.20 + 12.12 + 16.16 + 12.12 = <b>$101.00</b> against a bill of <b>$100.99</b>. Over many months and consumers these cents break the "bill recovered exactly" promise. v2 allocates whole cents first and gives the leftover cents to the largest fractions (largest remainder), then asserts that the allocated amounts plus the Unallocated line equal each bill before the month is closed.</div>
+
+  <h3>17.4 The commitment tier — risk and the month-to-date estimate</h3>
+  <table>
+    <tr><th>Month volume</th><th class="n">Pay-as-you-go</th><th class="n">20,000-page tier</th><th class="n">Effective $/page (tier)</th><th>Better choice</th></tr>
+    <tr><td>15,000 pages</td><td class="n">$450.00</td><td class="n">$540.00</td><td class="n">$0.0360</td><td>pay-as-you-go</td></tr>
+    <tr><td>18,000 pages</td><td class="n">$540.00</td><td class="n">$540.00</td><td class="n">$0.0300</td><td>break-even</td></tr>
+    <tr><td>25,000 pages</td><td class="n">$750.00</td><td class="n">$675.00</td><td class="n">$0.0270</td><td>tier</td></tr>
+  </table>
+  <p>[B1] multiplies ledger pages by the pay-as-you-go price. v1 called it an upper bound; with the tier active it is not (at 15,000 pages it shows $450 while the bill is $540). v2 labels it a <b>PAYG-equivalent estimate</b> and forecasts the tier separately: fixed fee + overage above 20,000 pages. Buy the tier only after two or three months above ~18,000 pages.</p>
+</section>
+
+<!-- ============================== 18 MONTH END / CAPACITY ============================== -->
+<section>
+  <h2>18. Month end, reconciliation gate and capacity cost</h2>
+  <h3>18.1 Month-end procedure (operator, about 15 minutes)</h3>
+  <ol>
+    <li>A few days into the next month, take from Cost Management (<code>rg-docai-prod</code>): extraction cost and quantity, classification cost and quantity, everything else; convert each meter's unit to pages. Take the dev DI cost from <code>rg-docai-dev</code>.</li>
+    <li>[B2] Insert the <code>BillingPeriods</code> row. Any later correction of its numbers clears <code>ReconciledAtUtc</code>.</li>
+    <li>[B3] Reconcile <b>both meters</b>. A meter passes when the ledger is within ±2 % of Azure; zero on both sides passes; ledger pages with zero Azure pages always fail. [B3] also lists the month's <code>Unknown</code> Azure operations (calls that may have been billed without a result). Passing sets <code>ReconciledAtUtc</code> — <b>the hard gate</b>.</li>
+    <li>[B4] Close the month: refused unless reconciled; allocation in cents with largest remainder; costs of a meter that no consumer used go to <code>UnallocatedUsd</code>; a closed month cannot be closed twice.</li>
+    <li>[B5] / [B6] Publish the statements: per consumer, subtotal per company, per product, grand total.</li>
+    <li>Chargeback (later): a price plan on top of the cost; cost and price stay separate numbers.</li>
+  </ol>
+  <p class="small">[B7] corrections: a negative row that reverses one ledger row; a unique index allows only one reversal per row; the reversal is booked in the current open month.</p>
+
+  <h3>18.2 Capacity and load-test cost (corrected volume math)</h3>
+  <table>
+    <tr><th style="width:42%">Quantity</th><th class="n" style="width:16%">v1</th><th class="n" style="width:16%">v2</th><th>How</th></tr>
+    <tr><td>Growth volume</td><td class="n">30,000 pages/month</td><td class="n">30,000 pages/month</td><td>unchanged</td></tr>
+    <tr><td>Pages per working day</td><td class="n">≈ 1,000</td><td class="n">≈ 1,364</td><td>30,000 ÷ 22 working days</td></tr>
+    <tr><td>Documents per day (3-page B/L)</td><td class="n">≈ 350</td><td class="n">≈ 455</td><td>1,364 ÷ 3</td></tr>
+    <tr><td>Busy hour (20 % of the day)</td><td class="n">≈ 70</td><td class="n">≈ 91 documents</td><td>about 1.5 a minute</td></tr>
+    <tr><td>Worker throughput (4 slots, 5–20 s per document)</td><td class="n">12–48 / min</td><td class="n">12–48 / min</td><td>8–32 × the busy hour (v1 said "more than ten times")</td></tr>
+    <tr><td>Load test: 10 × busy hour for 30 minutes</td><td class="n">1,050 pages, $31.50</td><td class="n">≈ 1,365 pages, ≈ $40.95</td><td>910 documents/hour × 0.5 h × 3 pages × $0.030</td></tr>
+  </table>
+  <p>The conclusion holds: the limit is the time Azure takes per document, not throughput. The queue matters for bursts (a user uploading 50 B/Ls at once), and the takeover budget keeps one bad document from blocking a slot.</p>
+
+  <h3>18.3 Cost controls</h3>
+  <ul>
+    <li><b>Idempotency:</b> the same file, for the same consumer, document type and requested line, is analyzed once. A new analysis needs a Failed job or an explicit <code>reprocess</code>.</li>
+    <li><b>Per consumer:</b> <code>MaxPagesPerJob</code> (10) and <code>DailyPageCap</code> (2,000), now counted over every run created today.</li>
+    <li><b>Azure budget alerts</b> on <code>rg-docai-prod</code> at 80 % and 100 %.</li>
+    <li><b>Billing follows Azure work:</b> no succeeded operation without its ledger row; no ledger row without a succeeded operation; a missing price stops the worker instead of dropping the cost.</li>
+  </ul>
+</section>
+
+<!-- ============================== 19 SECURITY ============================== -->
+<section>
+  <h2>19. Security and identity changes</h2>
+  <table>
+    <tr><th style="width:24%">Area</th><th>v2 rule</th><th style="width:16%">Finding</th></tr>
+    <tr><td>Pilot upload</td><td><code>[Authorize]</code> on <code>DocsInController.UploadFile</code>; <code>Submit(IPrincipal …)</code> throws for an anonymous user. Operation-level authorization and CSRF for that action are recorded as go-live preconditions in the code-observations document.</td><td>F10</td></tr>
+    <tr><td>Webhook body</td><td><code>&lt;location path="api/DocAi/Webhook"&gt;</code>: <code>maxAllowedContentLength = 1048576</code> and <code>maxRequestLength = 1024</code> — the site allows 4 GB today. Signature headers checked before the body is read.</td><td>F16</td></tr>
+    <tr><td>Webhook sender</td><td><code>AllowAutoRedirect = false</code>; default trust chain + host-name check; an optional, per-consumer private CA — never a blanket bypass.</td><td>F33, F38</td></tr>
+    <tr><td>Secrets</td><td>Key Vault secret cache 1 h; one rate-limited refresh after a 401 from the consumer.</td><td>F41</td></tr>
+    <tr><td>SQL</td><td>Bootstrap by an Entra admin; <code>docai_runtime</code> with INSERT-only ledger; operator and model-team roles.</td><td>F09, F26</td></tr>
+    <tr><td>App Service</td><td><code>alwaysOn: true</code>; platform health check on <code>/health/live</code> (a dependency outage must not restart the only B1 instance); <code>/health/ready</code> feeds alerts.</td><td>F12, F37</td></tr>
+    <tr><td>Runtime</td><td>.NET 10 LTS (support to November 2028).</td><td>F14</td></tr>
+    <tr><td>Network</td><td>IP allow-list = defence in depth; runbook before tier changes; optional NAT Gateway. A network firewall cannot filter by URL path: allow the IPs to port 443 and add IIS <code>ipSecurity</code> for the webhook path (needs the section unlocked); real path-only exposure needs an L7 proxy.</td><td>F34, F39</td></tr>
+    <tr><td>Personal data</td><td><code>Jobs.FileName</code> cleared at retention; company-side [C8] purges results; logs never hold values, file names, tokens or keys.</td><td>F29, F44</td></tr>
+    <tr><td>Input hygiene</td><td><code>X-Correlation-Id</code> ≤ 64 chars of <code>[A-Za-z0-9-]</code>, else replaced; <code>IsFresh</code> compares Unix seconds without building a date (an extreme timestamp can no longer throw).</td><td>F51, F48</td></tr>
+  </table>
+  <h3>Unchanged and confirmed</h3>
+  <ul>
+    <li>Managed identity everywhere, <code>disableLocalAuth</code> on Document Intelligence with a custom subdomain, shared keys off on Storage, Entra-only SQL, Key Vault RBAC, Azure Policy in Audit then Deny.</li>
+    <li>Hashed 256-bit API keys with two rotation slots; consumer and tenant from the key, never from the body; registered callback URLs; 404 for another consumer's job.</li>
+    <li>The identity verification checklist before go-live: a resource key gets 401, the managed identity gets 202, an account key fails, a SQL password login fails, a removed role fails the readiness probe.</li>
+  </ul>
+</section>
+
+<!-- ============================== 20 ERRORS ============================== -->
+<section>
+  <h2>20. Exceptions, error codes and alerts</h2>
+  <h3>Three kinds of error (unchanged), with v2 additions</h3>
+  <table>
+    <tr><th style="width:14%">Kind</th><th style="width:36%">Examples</th><th>Behaviour</th></tr>
+    <tr><td>Retryable</td><td>429, 5xx, timeouts, a lost lease, deadlock 1205</td><td>Back-off with Retry-After as a minimum; 5 attempts in the worker, 10 sends from the kit. A lost lease uses no attempt: the worker simply stops.</td></tr>
+    <tr><td>Configuration</td><td>401/403 from Azure, a missing role, Key Vault unreachable, <b>no price in force</b>, <b>model registry drift</b></td><td>No attempt used; breaker pauses the worker 5 min; Critical alert.</td></tr>
+    <tr><td>Fatal</td><td>bad file, code not in the catalog, Azure 400, analysis failed, <b>unclassifiable document</b>, <b>crash loop</b></td><td>Failed at once with an error code and a <code>job.failed</code> event for the run.</td></tr>
+  </table>
+  <h3>New and changed error codes</h3>
+  <table>
+    <tr><th style="width:24%">Code</th><th style="width:14%">Raised at</th><th>Meaning</th><th style="width:26%">Consumer action</th></tr>
+    <tr><td><code>UNCLASSIFIED</code> <span class="tag new">new</span></td><td>worker</td><td>The classifier's class has no mapped line, or its confidence is under the threshold</td><td>submit again with the shipping line chosen</td></tr>
+    <tr><td><code>WORKER_CRASH_LOOP</code> <span class="tag new">new</span></td><td>worker</td><td>The job was taken over 3 times (the document crashes the worker)</td><td>report it; the operator investigates</td></tr>
+    <tr><td><code>ANALYSIS_RESULT_MISSING</code> <span class="tag new">new</span></td><td>worker</td><td>Azure answered 404 for a result that should still exist</td><td>submit again later; the operator is alerted</td></tr>
+    <tr><td><code>SUBMIT_EXHAUSTED</code> <span class="tag new">new</span></td><td>kit</td><td>Ten sends failed (network, 5xx, 429)</td><td>submit again; check connectivity</td></tr>
+    <tr><td><code>MODEL_NOT_FOUND</code> <span class="tag chg">changed</span></td><td>worker</td><td>No active model — or Azure answered 404 for the registered model (registry drift alert)</td><td>submit again later</td></tr>
+    <tr><td><code>RETRIES_EXHAUSTED</code> <span class="tag chg">changed</span></td><td>worker</td><td>Five retryable errors, or a second Unknown submission in one run</td><td>submit again later</td></tr>
+    <tr><td><code>PRICE_MISSING</code> <span class="tag new">new</span></td><td>worker, internal</td><td>No <code>AzureMeterPrices</code> row in force; jobs wait</td><td>nothing; the operator is alerted</td></tr>
+  </table>
+  <h3>Alerts</h3>
+  <table>
+    <tr><th style="width:22%">Alert</th><th>Condition</th><th style="width:9%">Severity</th><th style="width:30%">First action</th></tr>
+    <tr><td>Queue stuck</td><td>oldest Queued job over 5 min</td><td>2</td><td>worker health and the breaker</td></tr>
+    <tr><td>Breaker open</td><td>any 401/403 from Azure, or <code>PRICE_MISSING</code></td><td>1</td><td>role assignments, local auth, price rows</td></tr>
+    <tr><td>Failure rate</td><td>over 5 % of an hour's jobs Failed</td><td>2</td><td>group by <code>ErrorCode</code></td></tr>
+    <tr><td>Dead letter</td><td>any delivery DeadLettered</td><td>3</td><td>contact the consumer; replay [S12]</td></tr>
+    <tr><td>Readiness</td><td><code>/health/ready</code> failing 5 min</td><td>1</td><td>the dependency the probe names</td></tr>
+    <tr><td>Budget</td><td>80 % / 100 % of the monthly budget</td><td>3 / 2</td><td>[B1] per consumer</td></tr>
+    <tr><td>Registry drift <span class="tag new">new</span></td><td>POST analyze answered 404</td><td>2</td><td>ModelRegistry vs the models in Azure</td></tr>
+    <tr><td>Crash loop <span class="tag new">new</span></td><td>any <code>WORKER_CRASH_LOOP</code>; any takeover above 1 per hour</td><td>2</td><td>memory, the document, the logs of that job</td></tr>
+    <tr><td>Unknown submissions <span class="tag new">new</span></td><td>any <code>Unknown</code> operation in a day</td><td>3</td><td>check for a double charge at month end</td></tr>
+  </table>
+</section>
+
+<!-- ============================== 21 KIT ============================== -->
+<section>
+  <h2>21. The MVC 4.8 kit</h2>
+    <div class="fig mid"><div class="mermaid">
+flowchart TD
+    A["Docs In upload<br/>[Authorize] on UploadFile"] --> B["Kit Submit(user, file)<br/>refuses an anonymous user"]
+    B --> C["[C1] same file, line, entity?<br/>else [C2] Pending row + copy"]
+    C --> D["Hangfire SendPending<br/>120 s transfer budget"]
+    D --> E{"Status code"}
+    E -- "202 / 200" --> F["[C3] bind job + run;<br/>final status: GET now"]
+    E -- "408 / 429 / 5xx / network" --> G["Pending until NextSubmitAt<br/>10 tries, then SUBMIT_EXHAUSTED"]
+    E -- "400 / 413 / 415 / 422" --> H["Failed with the code"]
+    E -- "401 / 403" --> I["Pause 5 min, critical trace<br/>try not used"]
+    classDef good fill:#ccfbf1,stroke:#0d9488,color:#134e4a
+    classDef bad fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    class F good
+    class H bad
+    </div><div class="cap">Figure 18. Submitting</div></div>
+    <div class="fig mid"><div class="mermaid">
+flowchart TD
+    W["POST /api/DocAi/Webhook"] --> L{"Body over 1 MB?"}
+    L -- yes --> R1["IIS rejects (413)<br/>no code runs"]
+    L -- no --> H{"X-Timestamp and X-Signature<br/>well formed?"}
+    H -- no --> R2["401, body not read"]
+    H -- yes --> B["Read raw body<br/>ConfigureAwait(false)"]
+    B --> V{"Fresh (5 min) and<br/>HMAC valid (2 secrets)?"}
+    V -- no --> R2
+    V -- yes --> S["[C5] store for the bound run"]
+    S --> OK["200 in under a second"]
+    S -- "SQL error" --> E5["500, service retries"]
+    classDef bad fill:#fee2e2,stroke:#dc2626,color:#7f1d1d
+    classDef good fill:#ccfbf1,stroke:#0d9488,color:#134e4a
+    class R1,R2 bad
+    class OK good
+    </div><div class="cap">Figure 19. Receiving — cheap checks first</div></div>
+
+  <h3>What a solution adds, and what it leaves alone</h3>
+  <table>
+    <tr><th style="width:50%">Adds</th><th>Leaves alone</th></tr>
+    <tr><td>4 files in a <code>DocAi</code> folder of the existing web project</td><td>no new project, no new assembly to deploy</td></tr>
+    <tr><td>1 route, where routes are mapped by hand (pilot: <code>WebApiConfig.cs</code>)</td><td>login, membership, cookies, roles, global filters, OWIN</td></tr>
+    <tr><td>1 table, <code>AiDocuments</code></td><td>every existing table and stored procedure</td></tr>
+    <tr><td>2 settings, a secrets file, and a <code>&lt;location&gt;</code> limit for the webhook path</td><td><code>packages.config</code> — HttpClient, JavaScriptSerializer and HMACSHA256 are in .NET Framework 4.8</td></tr>
+    <tr><td>Pilot only: <code>[Authorize]</code> on the one upload action; one Hangfire enqueue and one recurring job</td><td><code>httpRuntime targetFramework</code> is <b>not</b> added (that would change the whole site's behaviour)</td></tr>
+  </table>
+
+  <h3>Code rules for the kit (legacy ASP.NET)</h3>
+  <ul>
+    <li>The pilot's <code>&lt;httpRuntime&gt;</code> has no <code>targetFramework</code>, so ASP.NET runs its legacy synchronization context. Kit I/O uses <code>ConfigureAwait(false)</code> and reads every request value (<code>HttpContext.Current</code>, headers) before the first await.</li>
+    <li>TLS: add TLS 1.2 only when the process is not on <code>SystemDefault</code> — <code>|=</code> on <code>SystemDefault</code> (0) would pin the whole process to TLS 1.2 and stop OS negotiation of newer protocols. The setting is process-wide.</li>
+    <li>One static <code>HttpClient</code>; <code>ConnectionLeaseTimeout</code> of 5 min on the DocAi endpoint so DNS changes are picked up; per-call <code>CancellationTokenSource</code> with a 120 s transfer budget (20 MB over a 5 Mbps uplink takes at least 32 s — v1's 30 s timeout would fail every time).</li>
+    <li>The startup check compares the tenant part of <code>consumerCode</code> from the catalog with <code>Defaults.UnEditableCompanyName</code> and stays off on a mismatch; it retries lazily instead of blocking application start.</li>
+  </ul>
+
+  <h3>Per-solution decisions — the pilot</h3>
+  <table>
+    <tr><th style="width:38%">Decision</th><th>ForwardingUniFreight</th></tr>
+    <tr><td>Where <code>Submit</code> is called</td><td><code>DocsInController.UploadFile</code>, after each file's <code>SaveAs</code></td></tr>
+    <tr><td>What the document belongs to</td><td><code>'Operation'</code>, <code>Operations.ID</code></td></tr>
+    <tr><td>How the file is sent</td><td><code>BackgroundJob.Enqueue(() =&gt; DocAiClient.SendPending(localId))</code></td></tr>
+    <tr><td>Recurring job</td><td>every 5 min: resend due Pending rows, refresh Submitted rows, [C7] file clean-up, [C8] retention</td></tr>
+    <tr><td>Webhook or polling only</td><td>webhook if the server accepts inbound HTTPS from the App Service outbound IPs; otherwise polling only</td></tr>
+    <tr><td>Controller type</td><td>Web API 5.2.3 <code>ApiController</code> (no session lock)</td></tr>
+  </table>
+</section>
+
+<!-- ============================== 22 COVERAGE ============================== -->
+<section>
+  <h2>22. Coverage of the five concerns (recomputed)</h2>
+  <p>Same rule as v1: an item is <b>covered</b> when it has a design, a place in the plan and a check that proves it; <b>partial</b> counts half; <b>later</b> counts zero. v1's percentages were calculated correctly, but several items it marked "covered" were not (the ledger missed billable work, the lease did not fence, the pilot action was not authorized). v2 rebuilds the checklists.</p>
+  <table>
+    <tr><th style="width:4%">#</th><th style="width:22%">Concern</th><th class="n">v1</th><th class="n">v2</th><th>v2 items</th><th style="width:30%">Still open</th></tr>
+    <tr><td>1</td><td>Cost per application on a shared resource</td><td class="n">85 %</td><td class="n"><b>87 %</b></td><td>13 covered, 0 partial, 2 later of 15 · new: ledger per operation, missing price stops, both meters reconciled as a gate, cent rounding, one reversal per row</td><td>Cost Management import (later) · chargeback (later)</td></tr>
+    <tr><td>2</td><td>Performance</td><td class="n">88 %</td><td class="n"><b>91 %</b></td><td>13 covered, 3 partial of 16 · new: Always On, separate analyze/poll limits, appending clustered key, pilot sends off the request</td><td>targets measured in the pilot · load test · scale-out path</td></tr>
+    <tr><td>3</td><td>Security</td><td class="n">88 %</td><td class="n"><b>89 %</b></td><td>19 covered, 3 partial, 1 later of 23 · new: least-privilege SQL roles, webhook body cap, no redirects + trusted TLS, upload guard, admin bootstrap</td><td>webhook IP restriction · pen test · operation-level auth + CSRF on the upload (go-live precondition) · private networking (later)</td></tr>
+    <tr><td>4</td><td>Exception handling and logging</td><td class="n">93 %</td><td class="n"><b>95 %</b></td><td>18 covered, 2 partial of 20 · new: lease fencing, run versioning, poison budget, Unknown submissions, kit status classification, liveness vs readiness</td><td>runbook per alert · each solution's own logging</td></tr>
+    <tr><td>5</td><td>No core authorization change, no new project</td><td class="n">100 %</td><td class="n"><b>100 %</b></td><td>13 covered of 13 · new: webhook limit in one <code>&lt;location&gt;</code> element; same file on two records keeps both links</td><td>—</td></tr>
+  </table>
+  <p class="small">Arithmetic: (13 + 0) ÷ 15 = 86.7 % · (13 + 1.5) ÷ 16 = 90.6 % · (19 + 1.5) ÷ 23 = 89.1 % · (18 + 1) ÷ 20 = 95.0 % · 13 ÷ 13 = 100 %. Concern 5 stays at 100 % because the pilot's <code>[Authorize]</code> is one attribute on one action — login, membership, global filters and OWIN are untouched.</p>
+</section>
+
+<!-- ============================== APPENDIX A ============================== -->
+<section>
+  <h2>Appendix A — findings register</h2>
+  <p class="small">Found by: C = Claude, X = Codex, CX = both. Severity is the value agreed after the debate. "v1 location" refers to the sections and statement labels of the source plan.</p>
+  <table>
+    <tr><th style="width:5%">ID</th><th style="width:7%">Sev.</th><th style="width:5%">By</th><th style="width:14%">v1 location</th><th>Problem</th><th style="width:30%">v2 fix</th></tr>
+    <tr><td>F01</td><td><span class="tag h">High</span></td><td>CX</td><td>§7 [S3]–[S9]</td><td>No lease ownership: a worker that lost its lease still writes; "0 rows = 5th failure" is ambiguous</td><td><code>LeaseToken</code> on every write; exhaustion decided in code</td></tr>
+    <tr><td>F02</td><td><span class="tag h">High</span></td><td>CX</td><td>[S2] [S9] [C5]</td><td>A late failure event of an earlier attempt defeats the requeued job; the result is lost</td><td><code>RunNo</code>; exact run binding; Superseded events</td></tr>
+    <tr><td>F03</td><td><span class="tag h">High</span></td><td>XC</td><td>[S9]–[S12]</td><td>An old sender can acknowledge a re-armed event; a late failure can revert Delivered to Pending; 10 × 15 s exceeds the 2-min lease</td><td>Immutable events; token + Pending guard on [S11]; 5-min lease; parallel sends</td></tr>
+    <tr><td>F04</td><td><span class="tag h">High</span></td><td>CX</td><td>Fig. 7, Jobs, [S4] [S8]</td><td>Classify-then-extract shares one Operation-Location; classifier facts lost on a crash</td><td><code>AzureOperations</code>; <code>Stage</code>; [S18] [S19]</td></tr>
+    <tr><td>F05</td><td><span class="tag h">High</span></td><td>X</td><td>§6, [S4], §15 test 3</td><td>"Crash right after POST → no second POST" cannot be guaranteed</td><td>Sending row before the POST; Unknown state; claim reworded</td></tr>
+    <tr><td>F06</td><td><span class="tag h">High</span></td><td>CX</td><td>[S8] [S9], <code>UX_Usage_Job_Meter</code></td><td>Billable Azure work on failed jobs never reaches the ledger</td><td>Ledger row per succeeded operation</td></tr>
+    <tr><td>F07</td><td><span class="tag h">High</span></td><td>CX</td><td>[S8]</td><td><code>CROSS APPLY</code> on prices silently drops a meter when no price is in force</td><td>THROW; breaker; alert</td></tr>
+    <tr><td>F08</td><td><span class="tag h">High</span></td><td>CX</td><td>[S3] [S9]</td><td>A document that crashes the worker, or a failure that cannot be persisted, loops forever</td><td><code>TakeoverCount</code> ≥ 3 → <code>WORKER_CRASH_LOOP</code>; bounded payloads</td></tr>
+    <tr><td>F09</td><td><span class="tag h">High</span></td><td>CX</td><td>§7 migration, §11</td><td><code>db_ddladmin</code> cannot create users or grant roles; name hard-coded per environment</td><td>Admin bootstrap with <code>WITH OBJECT_ID</code>; grants script</td></tr>
+    <tr><td>F10</td><td><span class="tag h">High</span></td><td>X</td><td>§13 pilot table</td><td><code>DocsInController.UploadFile</code> is anonymous</td><td><code>[Authorize]</code> + kit guard</td></tr>
+    <tr><td>F11</td><td><span class="tag h">High</span></td><td>X</td><td>[C1], Submit</td><td>The same file on a second operation returns the first operation's row</td><td>Dedupe by line + entity</td></tr>
+    <tr><td>F12</td><td><span class="tag h">High</span></td><td>CX</td><td>§1, §4, §15</td><td>No Always On: the hosted worker stops when the app is idle</td><td><code>alwaysOn: true</code> + idle test</td></tr>
+    <tr><td>F13</td><td><span class="tag h">High</span></td><td>C</td><td>[S2], idempotency index</td><td>A job completed with the wrong user-picked line can never be reprocessed</td><td>Requested line in the key; <code>reprocess=true</code></td></tr>
+    <tr><td>F14</td><td><span class="tag h">High</span></td><td>XC</td><td>§1, §4</td><td>.NET 9 support ends 10 Nov 2026</td><td>.NET 10 LTS</td></tr>
+    <tr><td>F15</td><td><span class="tag m">Med.</span></td><td>X</td><td>PayloadJson, ErrorMessage</td><td>A 1,000-char message can exceed <code>nvarchar(2000)</code> JSON; consumer column was 500</td><td>400-char messages; <code>nvarchar(max)</code> payload</td></tr>
+    <tr><td>F16</td><td><span class="tag m">Med.</span></td><td>X</td><td>§13 webhook</td><td>The body is read in full before the 1 MB check; IIS allows 4 GB</td><td><code>&lt;location&gt;</code> limits; header pre-check</td></tr>
+    <tr><td>F17</td><td><span class="tag m">Med.</span></td><td>CX</td><td>[C3]</td><td>A late 202 resets a fast <code>job.failed</code> back to Submitted</td><td>[C3] only from Pending</td></tr>
+    <tr><td>F18</td><td><span class="tag m">Med.</span></td><td>X</td><td>[C6]</td><td>Select + unconditional update: duplicates, and views can postpone refresh forever</td><td>Atomic <code>UPDATE … OUTPUT</code></td></tr>
+    <tr><td>F19</td><td><span class="tag m">Med.</span></td><td>X</td><td>[C1] [C4] [C6]</td><td>After 10 failed sends the row stays Pending forever and blocks a new upload</td><td><code>SUBMIT_EXHAUSTED</code>; retry = new row</td></tr>
+    <tr><td>F20</td><td><span class="tag m">Med.</span></td><td>CX</td><td>[C4], DocAiClient</td><td>Every 4xx is permanent, including 429 and 401</td><td>Status classification; Retry-After</td></tr>
+    <tr><td>F21</td><td><span class="tag m">Med.</span></td><td>X</td><td>[S1] [S2]</td><td>Requeues are not counted in the daily cap; the cap runs before the duplicate lookup</td><td>Cap over <code>JobRuns</code>; lookup first</td></tr>
+    <tr><td>F22</td><td><span class="tag m">Med.</span></td><td>X</td><td>[B3]</td><td>Classification never reconciled; zero Azure pages gives NULL</td><td>Both meters; zero rules; gate</td></tr>
+    <tr><td>F23</td><td><span class="tag m">Med.</span></td><td>CX</td><td>[B4] [B5]</td><td>Cent rounding and zero-use months break full cost recovery</td><td>Largest remainder; Unallocated line</td></tr>
+    <tr><td>F24</td><td><span class="tag m">Med.</span></td><td>X</td><td>[B7]</td><td>Two reversals of one row can both pass <code>NOT EXISTS</code></td><td>Unique reversal index</td></tr>
+    <tr><td>F25</td><td><span class="tag m">Med.</span></td><td>X</td><td>[B1]</td><td>PAYG is not an upper bound under the tier</td><td>Relabelled; separate tier forecast</td></tr>
+    <tr><td>F26</td><td><span class="tag m">Med.</span></td><td>CX</td><td>§7, §11</td><td><code>db_datawriter</code> can rewrite the ledger, keys and models</td><td>Custom roles</td></tr>
+    <tr><td>F27</td><td><span class="tag m">Med.</span></td><td>X</td><td>[S14]</td><td>Activation can retire one line's model and activate another line's</td><td>Group derived from the new model</td></tr>
+    <tr><td>F28</td><td><span class="tag m">Med.</span></td><td>CX</td><td>§7 decisions</td><td>UUIDv7 does not append in a SQL Server clustered index</td><td><code>JobSeq</code> clustered</td></tr>
+    <tr><td>F29</td><td><span class="tag m">Med.</span></td><td>X</td><td>[C7], §10</td><td>The company-side result retention is advertised but not implemented</td><td>[C8]</td></tr>
+    <tr><td>F30</td><td><span class="tag m">Med.</span></td><td>XC</td><td>§6 retry table</td><td>A GET 404 is not proof of expiry; API version not pinned</td><td>24 h rule from acceptance; <code>2024-11-30</code></td></tr>
+    <tr><td>F31</td><td><span class="tag m">Med.</span></td><td>XC</td><td>Fig. 7, §9</td><td>Classifier mapping, threshold and split mode undefined; polling cap below Retry-After</td><td><code>ClassifierClasses</code>; <code>splitMode none</code>; token buckets</td></tr>
+    <tr><td>F32</td><td><span class="tag m">Med.</span></td><td>XC</td><td>§13 HttpClient</td><td>Static client never refreshes DNS</td><td><code>ConnectionLeaseTimeout</code></td></tr>
+    <tr><td>F33</td><td><span class="tag m">Med.</span></td><td>XC</td><td>§13, §16</td><td>Following a redirect to a 200 login page marks a delivery Delivered</td><td><code>AllowAutoRedirect = false</code></td></tr>
+    <tr><td>F34</td><td><span class="tag m">Med.</span></td><td>CX</td><td>§13 step 6, §16</td><td>Outbound IPs are shared and change with the tier</td><td>Defence in depth; runbook; optional NAT</td></tr>
+    <tr><td>F35</td><td><span class="tag m">Med.</span></td><td>C</td><td>§13, §9</td><td>Pilot upload is a sync multi-file request; inline sends stack 30 s timeouts</td><td>Hangfire enqueue + reconciler</td></tr>
+    <tr><td>F36</td><td><span class="tag m">Med.</span></td><td>C</td><td>§13 DocAiClient</td><td>30 s timeout vs a 20 MB file on a slow uplink</td><td>120 s transfer budget</td></tr>
+    <tr><td>F37</td><td><span class="tag m">Med.</span></td><td>C</td><td>§11 readiness</td><td>A platform probe on readiness can restart the only instance during an Azure outage</td><td>Liveness for the platform</td></tr>
+    <tr><td>F38</td><td><span class="tag m">Med.</span></td><td>C</td><td>§16</td><td>Internal-CA certificates on consumer IIS are rejected by the sender</td><td>Trusted chain; optional per-consumer CA</td></tr>
+    <tr><td>F39</td><td><span class="tag m">Med.</span></td><td>C</td><td>§13 step 6</td><td>A network firewall cannot filter by URL path</td><td>IPs to :443 + IIS path rule; L7 for path-only</td></tr>
+    <tr><td>F40</td><td><span class="tag m">Med.</span></td><td>C</td><td>§6 retry table</td><td>POST analyze 404 is unmapped</td><td><code>MODEL_NOT_FOUND</code> + drift alert</td></tr>
+    <tr><td>F41</td><td><span class="tag m">Med.</span></td><td>C</td><td>§5 step 6</td><td>No refresh policy for the cached webhook secret</td><td>1 h TTL + refresh after 401</td></tr>
+    <tr><td>F42</td><td><span class="tag m">Med.</span></td><td>C</td><td>§13 sketches</td><td>Legacy ASP.NET synchronization context in the pilot</td><td><code>ConfigureAwait(false)</code>; no global retarget</td></tr>
+    <tr><td>F43</td><td><span class="tag m">Med.</span></td><td>C</td><td>[S2]</td><td>Serializable range locks can deadlock (1205)</td><td>Retry the whole transaction</td></tr>
+    <tr><td>F44</td><td><span class="tag m">Med.</span></td><td>C</td><td>[S15]</td><td><code>Jobs.FileName</code> (personal data) kept forever after soft delete</td><td>Cleared at retention</td></tr>
+    <tr><td>F45</td><td><span class="tag m">Med.</span></td><td>C</td><td>[C3], §13</td><td>A 200 for an already Completed job waits 10 min for a refresh</td><td>Immediate GET</td></tr>
+    <tr><td>F46</td><td><span class="tag m">Med.</span></td><td>CX</td><td>[C7], §13</td><td>Housekeeping needs a scheduler the plan says is not required</td><td>Hangfire where present; best-effort otherwise</td></tr>
+    <tr><td>F47</td><td><span class="tag l">Low</span></td><td>XC</td><td>§13 TLS line</td><td><code>|= Tls12</code> on <code>SystemDefault</code> pins the process to TLS 1.2</td><td>Guard</td></tr>
+    <tr><td>F48</td><td><span class="tag l">Low</span></td><td>X</td><td>§13 IsFresh</td><td>An extreme timestamp throws before signature rejection</td><td>Unix-seconds comparison</td></tr>
+    <tr><td>F49</td><td><span class="tag l">Low</span></td><td>C</td><td>§11 roles</td><td>The split Worker needs only Blob Data Reader (results are in SQL)</td><td>Role table corrected</td></tr>
+    <tr><td>F50</td><td><span class="tag l">Low</span></td><td>C</td><td>§8, §9</td><td>Growth infra leaves out storage and Key Vault; volume per working day understated</td><td>$100.99; 1,364 pages a working day</td></tr>
+    <tr><td>F51</td><td><span class="tag l">Low</span></td><td>C</td><td>§12 correlation</td><td>An untrusted correlation header goes straight into logs and SQL</td><td>Length and charset check</td></tr>
+    <tr><td>F52</td><td><span class="tag l">Low</span></td><td>C</td><td>IX_Jobs_Queue, BlobPath</td><td><code>IsDeleted</code> outside the queue index; every blob named <code>.pdf</code></td><td>Index filter; real extension</td></tr>
+    <tr><td>F53</td><td><span class="tag l">Low</span></td><td>X</td><td>[S3] [S10]</td><td>READPAST under Azure SQL's default RCSI was never tested (High withdrawn in the debate)</td><td>Integration test with RCSI ON</td></tr>
+  </table>
+</section>
+
+<!-- ============================== APPENDIX B ============================== -->
+<section>
+  <h2>Appendix B — debate outcomes and facts</h2>
+  <table>
+    <tr><th style="width:20%">Topic</th><th style="width:36%">Positions</th><th>Resolution</th></tr>
+    <tr><td>READPAST under RCSI</td><td>Codex: the claims fail on Azure SQL (High). Claude: Hangfire uses the same hints on Azure SQL in production.</td><td>Codex withdrew the High. Keep <code>ROWLOCK, UPDLOCK, READPAST</code>. Codex also showed that Claude's idea of adding <code>READCOMMITTEDLOCK</code> would conflict with <code>ROWLOCK</code> (same hint group). Add an RCSI integration test.</td></tr>
+    <tr><td>TLS line in the kit</td><td>Codex: Medium. Claude: the pilot runs in 4.0 compatibility, so the line is needed there.</td><td>Low; guard against <code>SystemDefault</code>; document that the setting is process-wide.</td></tr>
+    <tr><td>Error-size mismatch</td><td>Codex: High. Claude: the service writes its own messages.</td><td>Medium for the size; the poison loop it can cause is its own High (F08).</td></tr>
+    <tr><td>.NET 9</td><td>Codex: Medium. Claude: raise it.</td><td>High; .NET 10 LTS from the start.</td></tr>
+    <tr><td><code>IsFresh</code> overflow</td><td>Codex: Medium. Claude: an unsigned caller only gets a 500.</td><td>Low; the fix is one line.</td></tr>
+    <tr><td>Run binding rule</td><td>Claude: accept <code>runNo &gt;=</code> the stored one. Codex: that can attach an unrequested run.</td><td>Exact <code>(RemoteJobId, RemoteRunNo)</code>; RunNo grows only for a new authorized analysis.</td></tr>
+    <tr><td>Lease guard</td><td>Codex: add <code>LeaseExpiresAtUtc &gt; now</code>.</td><td>Token only: it changes on every claim, so it fences; an expiry check would make a sole slow owner give up for nothing.</td></tr>
+    <tr><td>Housekeeping</td><td>Claude: piggyback on Refresh. Codex: best-effort only.</td><td>Hangfire where present; best-effort otherwise, stated as such.</td></tr>
+    <tr><td>Webhook path exposure</td><td>Claude: IIS path <code>ipSecurity</code>. Codex: it limits that path, not the others.</td><td>Firewall to :443 + IIS path rule; true path-only exposure needs an L7 proxy or a dedicated binding.</td></tr>
+  </table>
+
+  <h3>Facts confirmed in this review</h3>
+  <ul>
+    <li>Delete Analyze Result exists in Document Intelligence API <code>2024-11-30</code>; results are kept 24 hours from operation completion.</li>
+    <li>S0 defaults: 15 analyze and 50 GET requests per second; ten free custom-neural training hours a month.</li>
+    <li>Always On is available on Basic and is needed for continuous background work; apps can unload after about 20 idle minutes.</li>
+    <li>App Service outbound IPs come from a shared pool per deployment unit and can change with the pricing tier; a NAT Gateway gives a stable address.</li>
+    <li><code>CREATE USER … FROM EXTERNAL PROVIDER</code> supports <code>WITH OBJECT_ID</code>.</li>
+    <li>UUIDv7 does not reduce fragmentation as a SQL Server <code>uniqueidentifier</code> clustered key without byte reordering.</li>
+    <li>.NET 9 support ends 10 November 2026; .NET 10 is the current LTS.</li>
+  </ul>
+  <h3>Still unverified (check before go-live)</h3>
+  <ul>
+    <li>The France Central prices of 11 October 2026 ($30 / $3 per 1,000 pages) and the commitment-tier quote ($540 for 20,000 pages, $27 per 1,000 above).</li>
+    <li>The infrastructure prices and the NAT Gateway price (Azure pricing calculator).</li>
+    <li>Whether Azure bills an analysis that ends in <code>failed</code> (the ledger records succeeded operations only; reconciliation shows any difference).</li>
+  </ul>
+</section>
+
+<!-- ============================== APPENDIX C ============================== -->
+<section>
+  <h2>Appendix C — next steps</h2>
+  <p>Nothing has been implemented. After this explanation is approved, the next step is to write the revised plan document, <code>AI-Extraction-Service-Plan-v2.md</code>, with every fix applied in place, and to verify it.</p>
+  <h3>The v2 document will contain</h3>
+  <ul>
+    <li>§1 / §4: .NET 10, Always On, the new tables and components.</li>
+    <li>§5 / §6: flow, the three request-cycle diagrams, the worker flowchart, the retry rules, the state machines, the API contract with <code>runNo</code> and <code>reprocess</code>, and two HMAC test vectors (below).</li>
+    <li>§7: full DDL, the bootstrap and grants scripts, statements [S1]–[S19] and [C1]–[C8].</li>
+    <li>§8: billing statements [B1]–[B7] with the reconciliation gate and largest-remainder rounding; the corrected examples.</li>
+    <li>§9–§16: performance, security, identity, exceptions, the kit, rules, deliverables and notes, as in sections 18–21 of this document.</li>
+    <li>Appendix: the findings register and the debate outcomes.</li>
+  </ul>
+  <h3>HMAC test vectors</h3>
+  <table>
+    <tr><th style="width:18%">Vector</th><th>Body</th><th style="width:16%">X-Timestamp</th><th style="width:30%">Expected X-Signature</th></tr>
+    <tr><td>1 — algorithm (from v1, unchanged)</td><td>the v1 <code>job.failed</code> line, 326 bytes</td><td><code>1793268922</code></td><td><code>sha256=4dad37deda733dbf91e6907cd9b718ef45ae55cd6b44a4f382e32258f3d31e14</code></td></tr>
+    <tr><td>2 — v2 envelope</td><td><code>job.failed</code> with <code>"runNo":2</code> and <code>UNCLASSIFIED</code>, 346 bytes</td><td><code>1793271763</code></td><td><code>sha256=4489eab28971b0bd17ccc6b66e0e2eba5b12b33c7ddc9d690686afbad068b168</code></td></tr>
+  </table>
+  <p class="small">Secret for both (test value only, never a real secret): <code>ZG9jYWktdGVzdC12ZWN0b3Itc2VjcmV0LTMyYnl0ZXM=</code>. Vector 2 body: <code>{"eventId":"9c4f2a1e-6b3d-4e8a-b7c5-1d2e3f4a5b6c","eventType":"job.failed","jobId":"0192f0a4-7c1e-7b3a-9d2e-5f6a7b8c9d01","runNo":2,"clientRequestId":"3a8e5c71-2b4d-4f9e-8c1a-6d7e8f9a0b12","status":"Failed","error":{"code":"UNCLASSIFIED","message":"Classifier confidence 0.41 is under 0.700"},"result":null,"occurredAtUtc":"2026-10-29T11:02:41Z"}</code></p>
+
+  <h3>How the v2 document will be verified</h3>
+  <ol>
+    <li>Recompute both HMAC vectors.</li>
+    <li>Recompute both cost examples, the rounding rule and every coverage percentage by script.</li>
+    <li>Run the DDL and statements on a SQL Server 2022 container with <code>READ_COMMITTED_SNAPSHOT ON</code>: the scripts parse, constraints accept every statement, an update after a lost lease changes 0 rows, [S8] throws on a missing price, [B4] adds up to the bill.</li>
+    <li>Search the document for leftover v1 claims (".NET 9", "upper bound", "no second POST", <code>db_datawriter</code>).</li>
+    <li>Tests listed in the deliverables:
+      <ul>
+        <li>stale <code>job.failed</code> against run 2, and a webhook that arrives before the submit reply;</li>
+        <li>lease loss mid-poll, a crash between Sending and Accepted, a classifier crash, three takeovers;</li>
+        <li>the claim under RCSI, 429 on submit, the same file on two operations;</li>
+        <li>an unsigned 2 MB webhook, and the sender ignoring a 302.</li>
+      </ul>
+    </li>
+    <li>A final consistency pass by Codex.</li>
+  </ol>
+</section>
+
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs';
+mermaid.initialize({
+  startOnLoad: false, securityLevel: 'loose', theme: 'base',
+  fontFamily: '"Segoe UI", Arial, sans-serif',
+  themeVariables: {
+    fontFamily: '"Segoe UI", Arial, sans-serif', fontSize: '13px',
+    primaryColor: '#eef2ff', primaryBorderColor: '#6366f1', primaryTextColor: '#1e1b4b',
+    secondaryColor: '#f1f5f9', tertiaryColor: '#ffffff', lineColor: '#475569',
+    noteBkgColor: '#fef9c3', noteBorderColor: '#ca8a04', noteTextColor: '#422006',
+    actorBkg: '#eef2ff', actorBorder: '#6366f1', actorTextColor: '#1e1b4b',
+    clusterBkg: '#f8fafc', clusterBorder: '#94a3b8'
+  },
+  flowchart: { htmlLabels: true, useMaxWidth: true, curve: 'basis', padding: 10 },
+  sequence: { useMaxWidth: true, wrap: false, mirrorActors: false, width: 130, actorMargin: 40, messageFontSize: 13, noteFontSize: 12, actorFontSize: 13, boxMargin: 8 },
+  er: { useMaxWidth: true },
+  state: { useMaxWidth: true }
+});
+try { await mermaid.run({ querySelector: '.mermaid' }); }
+catch (e) { document.body.insertAdjacentHTML('afterbegin', '<pre id="mermaid-error">' + String(e) + '</pre>'); }
+document.body.setAttribute('data-ready', '1');
+</script>
+</body>
+</html>

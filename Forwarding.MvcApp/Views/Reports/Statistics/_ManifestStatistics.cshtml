@@ -1,0 +1,124 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);" onclick="LoadViews(id);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="Reports" href="javascript:void(0);" onclick="LoadViews('Statistics')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.Reports
+        </a>
+    </li>
+    <li>
+        <a id="Statistics" href="javascript:void(0);" onclick="LoadViews('Statistics');">
+            @Forwarding.MvcApp.App_Resources.App_Resources.Statistics
+        </a>
+    </li>
+    <li id="liFormName" class="active"></li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-ManifestStatistics">
+    <!-- Region Options & Template  -->
+    <div class="wizard clearfix m-t-n-sm">
+        <ul class="steps">
+            <li data-target="#CustomManifest" id="stepsCustomManifest" onclick="HandleManifestRouting('CustomManifest');"  class="complete active">
+                <span class="badge badge-info">1</span>Custom Manifest
+            </li>
+            <li data-target="#ArabicManifest" id="stepsArabicManifest" onclick="HandleManifestRouting('ArabicManifest');" class="complete">
+                <span class="badge badge-info">2</span>Arabic Manifest
+            </li>
+            <li data-target="#EnglishManifest" id="stepsEnglishManifest" onclick="HandleManifestRouting('EnglishManifest');" class="complete">
+                <span class="badge badge-info">3</span>English Manifest
+            </li>
+        </ul>
+    </div>
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <div class="step-pane active ">
+            <section class="panel panel-default">
+                <header class="panel-heading">
+                    <div id="hExportedTable" class="hide"></div>
+                    <h3 class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.FilterBy</h3>
+                </header>
+                <!--Region the searh, delete, addnew-->
+                <div class="row text-sm wrapper hidden-print m-l">
+                    <div id="div-main-options">
+                        <!--Region Filter-->
+                        &nbsp;&nbsp;&nbsp;
+                        <div class="row">
+
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Vessel</label>
+                                <select id="slVessels" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ShippingLine</label>
+                                <select id="slShippingLines" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Consignee</label>
+                                <select id="slConsignees" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Shipper</label>
+                                <select id="slShippers" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Agent</label>
+                                <select id="slAgents" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.POL</label>
+                                <select id="slPOL" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Incoterm</label>
+                                <select id="slIncoterms" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Service</label>
+                                <select id="slServices" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.FromATA</label>
+                                <input id="txtFilterFromATA" autocomplete="off" type="text" style="background-color:white; cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ToATA</label>
+                                <input id="txtFilterToATA" autocomplete="off" type="text" style="background-color:white; cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                            </div>
+
+                        </div>
+
+                        <br /><br />
+                        <div class="row manifest_section" id="CustomManifest">
+                            <div class="col-sm-3">
+                                <button id="btn-print" type="button" class="btn btn-lightblue btn-sm" onclick="ManifestStatistics_Print('custom');"><i class="fa fa-print"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Print</b></button>
+                            </div>
+
+                        </div>
+                        <div class="row manifest_section hide" id="ArabicManifest">
+                            <div class="col-sm-3">
+                                <button id="btn-print" type="button" class="btn btn-lightblue btn-sm" onclick="ManifestStatistics_Print('arabic');"><i class="fa fa-print"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Print</b></button>
+                            </div>
+
+                        </div>
+                        <div class="row manifest_section hide" id="EnglishManifest">
+                            <div class="col-sm-3">
+                                <button id="btn-print" type="button" class="btn btn-lightblue btn-sm" onclick="ManifestStatistics_Print('english');"><i class="fa fa-print"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Print</b></button>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <!--EOF Region the searh, delete, addnew line-->
+
+            </section>
+        </div>
+    </div>

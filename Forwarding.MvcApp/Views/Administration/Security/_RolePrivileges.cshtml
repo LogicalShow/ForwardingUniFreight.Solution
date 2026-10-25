@@ -1,0 +1,189 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li><a id="hl-homepage" href="javascript:void(0);"><i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+    </a></li>
+    <li><a id="Administration" href="javascript:void(0);" onclick="LoadViews('Security');">@Forwarding.MvcApp.App_Resources.App_Resources.Administration
+    </a></li>
+    <li><a id="Security" href="javascript:void(0);" onclick="LoadViews(id);">@Forwarding.MvcApp.App_Resources.App_Resources.Security
+    </a></li>
+    <li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.RolePrivileges</li>
+</ul>
+<!-- end breadcrumb  -->
+
+
+<!--Role Privileges Division-->
+<div id="div-SecCustomizedRolePrivileges">
+    <!-- Add / Edit Region Modal -->
+    <div class="modal fade" id="SecCustomizedRolePrivilegesModal" tabindex="-1" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="SecCustomizedRolePrivilegesModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modalwidth-70">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.Form &nbsp;<label id="lblSecCustomizedRolePrivilegesShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                    </h3>
+                </div>
+                <!-- Region Edit SecCustomizedPrivileges Form -->
+                <div class="modal-body">
+                    <div class="span7 form vertical-mode pull-in" id="SecCustomizedRolePrivileges-form">
+                        <div id="divSecCustomizedRolePrivileges" class="form-group col-sm-12"></div>
+                    </div>
+                </div>
+                <!-- Endregion Add / Edit Region Form -->
+                <div class="modal-footer">
+                    <a id="btnSecCustomizedRolePrivilegesSave" class="btn btn-primary btn-sm" onclick="SecCustomizedRolePrivileges_UpdateList(false);">
+                        <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save</a>
+                    @*<a id="btnSecCustomizedRolePrivilegesSaveandNew" class="btn btn-primary btn-sm" onclick="SecCustomizedRolePrivileges_Update(true);" style="display:none;">
+                        <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew</a>*@
+                    <button class="btnClose btn btn-link btn-sm" id="btnSecCustomizedRolePrivilegesClose" data-dismiss="modal" aria-hidden="true" >@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+                </div> 
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Region Options & Template  -->
+
+
+<!--Role Privileges Division-->
+<div id="div-RolePrivileges">
+    <!-- Add / Edit Region Modal -->
+    <div class="modal fade" id="RolePrivilegeModal" tabindex="-1" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="RolePrivilegeModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modalwidth-60">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.Form &nbsp;<label id="lblShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                    </h3>
+                </div>
+                <!-- Region Edit RolePrivilege Form -->
+                <div class="modal-body">
+                    <div class="span7 form vertical-mode" id="RolePrivilege-form">
+                        <fieldset>
+                            <div class="form-group pull-in  has-error clearfix">
+                                <input id="hID" type="hidden" />
+                                <!-- start alert message region -->
+                                <div class="alert alert-danger div-error">
+                                    @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                </div>
+                                <!-- end alert message region -->
+
+                                <!-- Region Add / Edit Region Form -->
+                                <div class="form-group col-sm-12">
+                                    <label><input type="checkbox" id="cbCanView" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.CanView</label>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <label><input type="checkbox" id="cbCanAdd" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.CanAdd</label>      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <label><input type="checkbox" id="cbCanEdit" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.CanEdit</label>    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <label><input type="checkbox" id="cbCanDelete" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.CanDelete</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <label id="lblCbHideOthersRecords" class="hide"><input type="checkbox" id="cbHideOthersRecords"onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Hide Others Records</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <!-- Endregion Add / Edit Region Form -->
+                <div class="modal-footer">
+                    <a id="btnSave" class="btn btn-primary btn-sm" onclick="RolePrivileges_Insert(false);">
+                        <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save</a>
+                    <a id="btnSaveandNew" class="btn btn-primary btn-sm" onclick="RolePrivileges_Insert(true);" style="display:none;">
+                        <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew</a>
+                    <button class="btnClose btn btn-link btn-sm" id="btnClose" data-dismiss="modal" aria-hidden="true" >@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+                </div> 
+            </div>
+        </div>
+    </div>
+    <!-- Region Options & Template  -->
+
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 class="m-b-none"><label id="lblRoleName" purpose="dynamicLabel" class="static-text-primary"></label> &nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Privileges
+                </h3>
+            </header>
+            <!--Region the searh, delete, addnew-->
+            <div class="row text-sm wrapper">
+                <div id="div-main-options" class="col-sm-5 m-b-xs">
+                    <button id="btn-Roles" type="button" class="btn btn-sm btn-primary" onclick="SwitchToRolesView();"><i class="fa fa-eye-slash"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.BackToRoles</button>
+                    <div id="div-option-buttons" class="btn-group hide">
+                        <button id="btn-Copy" type="button" class="btn btn-sm btn-default"><i class="fa fa-copy"></i>&nbsp;Copy </button>
+                        <button id="btn-Print" type="button" class="btn btn-sm btn-default"><i class="fa fa-print"></i>&nbsp;Print </button>
+                        <button id="btn-Send" type="button" class="btn btn-sm btn-default"><i class="fa fa-envelope-o"></i>&nbsp;Send </button>
+                    </div>
+                </div>
+                <div id="div-search-option" class="col-sm-7">
+                    @*<div id="div-search-controls" class="input-group col-sm-9">*@
+                    <div id="div-search-controls" class="input-group col-sm-9">
+                        <input id="txt-Search" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search For Modules / Groups / Forms">
+                        <span class="input-group-btn">
+                            <button id="btn-search" class="btn btn-sm btn-primary" type="button" onclick="RolePrivileges_LoadingWithPaging();"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                    <div class="float-right col-sm-1" style="display:none;">
+                        <button id="btn-NewAdd" class="float-right btn btn-warning btn-sm hide" data-toggle="modal" data-target="#RoleModal"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.New</button>
+                    </div>
+                </div>
+            </div>
+            <!--Region the searh, delete, addnew-->
+
+            <!--Region: table header-->
+            <div class="table-responsive">
+                <table id="tblRolePrivileges" class="table table-striped b-t b-light text-sm  table-hover">
+                    <thead>
+                        <tr>
+                            <th id="ID" style="display:none;">
+                                <input id="cb-CheckAll" type="checkbox"/>
+                            </th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Module
+                            </th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Group
+                            </th>
+                            @*<th class="th-sortable" data-toggle="class">@Forwarding.MvcApp.App_Resources.App_Resources.Form*@
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Form
+                            </th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.CanView
+                            </th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.CanAdd
+                            </th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.CanEdit
+                            </th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.CanDelete
+                            </th>
+                            <th class="hide">Hide Others Records
+                            </th>
+                            <th class="rounded-right"></th> @*for Customized Security*@
+                            <th class="rounded-right hide"></th> @*for edit*@
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <!--Region: table header-->
+
+            <!--Region: footer-->
+            <footer class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-4 hidden-xs">
+                        <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                        <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                        </button>
+                    </div>
+                    <div id="div-Text-Total" class="col-sm-4 text-center">
+                        <small class="text-muted inline m-t-sm m-b-sm"> @Forwarding.MvcApp.App_Resources.App_Resources.Showing 
+                            <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                            <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                        </small>
+                    </div>
+                    <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+                </div>
+            </footer>
+            <!--Region: footer-->
+        </section>
+    </div>
+
+</div>
+<!--EOFRole Privileges Division-->

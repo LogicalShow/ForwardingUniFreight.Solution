@@ -1,0 +1,111 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li><a id="hl-homepage" href="javascript:void(0);"><i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+    </a></li>
+    <li><a id="ReceiptsAndPayments" href="javascript:void(0);" onclick="LoadViews('ReceiptsAndPaymentsReports')">@Forwarding.MvcApp.App_Resources.App_Resources.ReceiptsAndPaymentsGroup
+    </a></li>
+    <li><a id="ReceiptsAndPaymentsMasterData" href="javascript:void(0);" onclick="LoadViews('ReceiptsAndPaymentsReports')">@Forwarding.MvcApp.App_Resources.App_Resources.Reports
+    </a></li>
+    <li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.BanksJournal</li>
+</ul>
+<!-- end breadcrumb -->
+
+<div id="div-BanksJournal">
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.BanksJournal
+                </h3>
+            </header>
+            <div class="row text-sm wrapper hidden-print m-t-n-sm">
+                <div class="swapChildrenClass">
+                    <!--Region Filter-->
+                    <div class="form-group col-sm-2">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.From</label>
+                        <input id="txtFromDate" readonly="readonly" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="input-sm datepicker-input form-control" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.To</label>
+                        <input id="txtToDate" readonly="readonly" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="input-sm datepicker-input form-control" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                    </div>
+                    <div class="input-group col-sm-2 m-t-27">
+                        <label class=""><input type="checkbox" id="cbSuppressForZeroes" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.SuppressForZeroes</label><br />
+                    </div>
+                    <div class="input-group col-sm-2 hide">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Status</label>
+                        <select id="slStatus" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm">
+                            <option value="0">@Forwarding.MvcApp.App_Resources.App_Resources.All</option>
+                            <option value="1">@Forwarding.MvcApp.App_Resources.App_Resources.Posted</option>
+                            <option value="2">@Forwarding.MvcApp.App_Resources.App_Resources.UnPosted</option>
+                        </select>
+                    </div>
+                    <div class="input-group col-sm-2">
+                        <br />
+                        <br />
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.IsCollected</label>
+                        &nbsp;  <input type="checkbox" id="cbIsCollected" />
+                    </div>
+                    <div class="col-sm-4 m-t-md">
+                        <button id="btn-ExportToExcel" type="button" onclick="BanksJournal_Print('Excel');" class="btn btn-sm btn-lightblue"><i class="fa fa-table"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.TraExportExcelSheet&nbsp;</b></button>
+                        <button id="btn-Print" type="button" onclick="BanksJournal_Print('Print');" class="btn btn-sm btn-info"><i class="fa fa-print"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Print&nbsp;</b></button>
+                    </div>
+
+                    @*<div class="form-group col-sm-2">
+                    </div>*@
+
+                    <!--EOF Region Filter-->
+                    <div id="hExportedTable" class="hide"></div>
+                </div>
+            </div>
+            <div class="row text-sm wrapper hidden-print m-t-n-sm">
+                <div class="swapChildrenClass">
+                    <section id="secBank" class="m-t m-l col-sm-5 panel panel-default" style="">
+                        <div class="">
+                            <label class="swapChildrenClass"><input type="checkbox" id="cbCheckAllBanks" onchange="BanksJournal_cbCheckAllBanksChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><u>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.SelectAllBanks</u></label><br />
+                        </div>
+                        <div id="divCbBank" style="width:104%; height:370px; font-size:100%; overflow:scroll;">
+                        </div>
+                    </section>
+                    <section id="secCurrency" class="m-t m-l col-sm-3 panel panel-default">
+                        <div class="">
+                            <label class="swapChildrenClass"><input type="checkbox" class="" id="cbCheckAllCurrency" onchange="BanksJournal_cbCheckAllCurrencyChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><u>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Currencies</u></label><br />
+                        </div>
+                        <div id="divCbCurrency" style="width:107%; height:370px; font-size:100%; overflow:scroll;">
+                        </div>
+                    </section>
+                    <section id="" class="m-t m-l col-sm-3 ">
+                        
+                    </section>
+                </div>
+            </div>
+
+            <footer class="panel-footer hide">
+                <div class="row">
+                    <div class="col-sm-4 hidden-xs">
+                        <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                        <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                        </button>
+                    </div>
+                    <div id="div-Text-Total" class="col-sm-4 text-center">
+                        <small class="text-muted inLine m-t-sm m-b-sm">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                            <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                            <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                        </small>
+                    </div>
+                    <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+                </div>
+            </footer>
+        </section>
+    </div>
+</div>

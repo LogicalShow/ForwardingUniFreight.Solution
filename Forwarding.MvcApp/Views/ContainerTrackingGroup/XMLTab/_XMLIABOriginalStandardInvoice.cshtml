@@ -1,0 +1,62 @@
+﻿<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);" onclick="LoadViews(id);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="ContainerTrackingGroup" href="javascript:void(0);" onclick="LoadViews('ContainerTrackingGroup')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.ContainerTracking
+        </a>
+    </li>
+    @*<li><a id="ContainerTrackingTab" href="javascript:void(0);" onclick="LoadViews(ContainerTrackingGroup)">@Forwarding.MvcApp.App_Resources.App_Resources.ContainerTracking
+        </a></li>*@
+    <li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.XMLIABOriginalStandardInvoice </li>
+</ul>
+
+
+<div id="div-ContainerReports">
+
+    <!-- Region Options & Template  -->
+
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+
+        <div class="row">
+            @*<div class="col-sm-12">*@
+            <section class="panel panel-default">
+                <header class="panel-heading font-bold">
+                    <h3 class="m-b-none">
+                        @Forwarding.MvcApp.App_Resources.App_Resources.XMLIABOriginalStandardInvoice
+                    </h3>
+                </header>
+                <div class="panel-body">
+                    <div class="form-group input-group col-sm-3 swapChildrenClass m-l-n hide">
+                        @*<label>@Forwarding.MvcApp.App_Resources.App_Resources.Operations</label>*@
+                        <select id="slMasterOperations" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b input-sm" data-required="false"></select>
+                    </div>
+
+                    <button id="btn-GenerateXML_IABOriginalStandardInvoice" type="button" class="btn btn-lightblue btn-sm hide" onclick="GenerateXML_IABOriginalStandardInvoice();"><i class="fa fa-print"></i><b>&nbsp;Generate IABOriginalStandardInvoice XML</b></button>
+                    
+                    <input id="btnReadFromXML" type="file" style="display:inline;" title="Import Items from XML" class="btn-lightblue btn-sm" onchange="ReadFromXML_IABOriginalStandardInvoice(event, id);" />
+
+                </div>
+
+
+            </section>
+            @*</div>*@
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+</div>
+

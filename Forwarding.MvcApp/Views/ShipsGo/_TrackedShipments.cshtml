@@ -1,0 +1,110 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    @*<li>
+        <a id="PricingModule" href="javascript:void(0);" onclick="LoadViews('Pricing')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.Pricing
+        </a>
+    </li>*@
+    <li class="active">
+        Tracked Shipments
+    </li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-TrackedShipments">
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 id="" class="m-b-none">
+                    <span id="h3TrackedShipments">Tracked Shipments</span>
+                </h3>
+            </header>
+            <!--Region the search, delete, addnew-->
+            <div class="row text-sm wrapper">
+                <div id="div-main-options">
+
+                    <section class="panel panel-default m-t-sm" style="clear:both;">
+                        <!--Region: table header-->
+                        <div id="divTblTrackedShipments" class="table-responsive" style="overflow: scroll; max-width: 1300px;">
+                            <table id="tblTrackedShipments" class="table b-t b-light text-sm table-hover ">
+                                <thead>
+                                    <tr>
+                                        @*<th id="ID">
+            <input id="cb-CheckAll" type="checkbox" />
+        </th>*@
+                                        <th>Customer</th>
+                                        <th>Operation</th>
+                                        <th>Status</th>
+                                        <th>LastChecked</th>
+                                        <th>ReferenceNo</th>
+                                        <th>BLReferenceNo</th>
+                                        <th>ShippingLine</th>
+                                        <th>ContainerNumber</th>
+                                        <th>ContainerTEU</th>
+                                        <th>FromCountry</th>
+                                        <th>Pol</th>
+                                        <th>LoadingDate</th>
+                                        <th>DepartureDate</th>
+                                        <th style="min-width: 240px;">TSPorts</th>
+                                        <th>ToCountry</th>
+                                        <th>Pod</th>
+                                        <th>ArrivalDate</th>
+                                        <th>DischargeDate</th>
+                                        <th>Vessel</th>
+                                        <th>VesselIMO</th>
+                                        <th>VesselLatitude</th>
+                                        <th>VesselLongitude</th>
+                                        <th>GateOutDate</th>
+                                        <th>EmptyReturnDate</th>
+                                        <th>FormatedTransitTime</th>
+                                        <th>ETA</th>
+                                        <th>FirstETA</th>
+                                        <th>BLContainerCount</th>
+                                        <th style="min-width: 200px;">BLContainers</th>
+                                        <th>LiveMapUrl</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <!--Region: EOF table header-->
+                        <!--Region: table footer-->
+                        <footer class="panel-footer">
+                            <div class="row">
+                                <div class="col-sm-4 hidden-xs">
+                                    <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                    </select>
+                                    <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                                        @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                                    </button>
+                                </div>
+                                <div id="div-Text-Total" class="col-sm-4 text-center">
+                                    <small class="text-muted inline m-t-sm-sm">
+                                        @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                                        <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                                        <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                                    </small>
+                                </div>
+                                <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+                            </div>
+                        </footer>
+                        <!--Region: EOF table footer-->
+                    </section>
+                </div><!--EOF Region Main-Options-->
+            </div>
+        </section>
+    </div>
+</div>

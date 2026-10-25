@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="09/20/2023 14:33:35" ReportInfo.Modified="10/24/2023 13:35:19" ReportInfo.CreatorVersion="2018.3.14.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFHqm0rZN8U3ovGdwvYth0uiUdmsDM9GBKvMdM2icdnfm4x8AH0PGT/Cbqkr5oUoCWF6yLR9Gizqj0lLRnXzsHSWUKItqtXetElY+7yBgVtWewgza6tLvuagRQSa5sFIXb">
+      <TableDataSource Name="Table" Alias="Rep_MESDeliveryOrder" DataType="System.Int32" Enabled="true" SelectCommand="exec(@query)">
+        <Column Name="TodayDate" DataType="System.DateTime"/>
+        <Column Name="ClientName" DataType="System.String"/>
+        <Column Name="VesselName" DataType="System.String"/>
+        <Column Name="MasterBL" DataType="System.String"/>
+        <Column Name="HouseNumber" DataType="System.String"/>
+        <Column Name="POLName" DataType="System.String"/>
+        <Column Name="OpenDate" DataType="System.DateTime"/>
+        <Column Name="ID" DataType="System.Int64"/>
+        <Column Name="Name" DataType="System.String"/>
+        <Column Name="NumberOfPackagesOnContainer" DataType="System.Int32"/>
+        <Column Name="DescriptionOfGoods" DataType="System.String"/>
+        <Column Name="GrossWeight" DataType="System.Decimal"/>
+        <Column Name="Volume" DataType="System.Decimal"/>
+        <Column Name="ACIDNumber" DataType="System.String"/>
+        <Column Name="POrCName" DataType="System.String"/>
+        <Column Name="NumberOfPackages" DataType="System.Int32"/>
+        <Column Name="ReleaseDate" DataType="System.DateTime"/>
+        <CommandParameter Name="query" DataType="12" Expression="query" DefaultValue="Rep_MESDeliveryOrder 'WHERE 1=1'"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="Logo" DataType="System.String" Expression="[Logo]"/>
+    <Parameter Name="Logo1" DataType="System.String" Expression="[Logo1]"/>
+  </Dictionary>
+  <ReportPage Name="Page1" FirstPageSource="15" OtherPagesSource="15">
+    <DataBand Name="Data1" Top="354.98" Width="718.2" Height="37.8" DataSource="Table">
+      <TableObject Name="Table4" Left="9.45" Width="699.72" Height="37.8" Border.Lines="All">
+        <TableColumn Name="Column9" Width="116.62"/>
+        <TableColumn Name="Column10" Width="116.62"/>
+        <TableColumn Name="Column11" Width="116.62"/>
+        <TableColumn Name="Column12" Width="116.62"/>
+        <TableColumn Name="Column13" Width="116.62"/>
+        <TableColumn Name="Column14" Width="116.62"/>
+        <TableRow Name="Row10" Height="37.8">
+          <TableCell Name="Cell55" Border.Lines="All" Text="[Rep_MESDeliveryOrder.Name]" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell56" Border.Lines="All" Text="[Rep_MESDeliveryOrder.NumberOfPackagesOnContainer]" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell57" Border.Lines="All" Text="[Rep_MESDeliveryOrder.DescriptionOfGoods]" HorzAlign="Center"/>
+          <TableCell Name="Cell58" Border.Lines="All" Text="[Rep_MESDeliveryOrder.GrossWeight]" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell59" Border.Lines="All" Text="[Rep_MESDeliveryOrder.Volume]" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell60" Text="[Rep_MESDeliveryOrder.POrCName]" HorzAlign="Center" VertAlign="Center"/>
+        </TableRow>
+      </TableObject>
+      <DataHeaderBand Name="DataHeader1" Width="718.2" Height="349.65" Guides="217.35">
+        <TextObject Name="Text1" Left="132.3" Top="94.5" Width="472.5" Height="28.35" Text="Delivery Order No.[Rep_MESDeliveryOrder.ID]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+        <TableObject Name="Table1" Left="85.05" Top="132.3" Width="623.65" Height="151.2">
+          <TableColumn Name="Column1" Width="434.65"/>
+          <TableColumn Name="Column2" Width="189"/>
+          <TableRow Name="Row1">
+            <TableCell Name="Cell1" Text="[Rep_MESDeliveryOrder.TodayDate]:" HorzAlign="Right"/>
+            <TableCell Name="Cell2" Text="اليوم" HorzAlign="Right"/>
+          </TableRow>
+          <TableRow Name="Row2">
+            <TableCell Name="Cell6" Text="[Rep_MESDeliveryOrder.ClientName]:" HorzAlign="Right"/>
+            <TableCell Name="Cell7" Text="الرجاء تسليم السادة" HorzAlign="Right"/>
+          </TableRow>
+          <TableRow Name="Row3">
+            <TableCell Name="Cell11" Text="[Rep_MESDeliveryOrder.VesselName]:" HorzAlign="Right"/>
+            <TableCell Name="Cell12" Text="البضاعة المزكورة الواردة على الباخرة" HorzAlign="Right"/>
+          </TableRow>
+          <TableRow Name="Row4">
+            <TableCell Name="Cell16" Text="[Rep_MESDeliveryOrder.MasterBL]:" HorzAlign="Right"/>
+            <TableCell Name="Cell17" Text="موجب بوليصة كلية رقم " HorzAlign="Right"/>
+          </TableRow>
+          <TableRow Name="Row5">
+            <TableCell Name="Cell21" Text="[Rep_MESDeliveryOrder.ACIDNumber]:" HorzAlign="Right"/>
+            <TableCell Name="Cell22" Text="موجب بوليصة فرعية رقم" HorzAlign="Right"/>
+          </TableRow>
+          <TableRow Name="Row6">
+            <TableCell Name="Cell23" Text="[Rep_MESDeliveryOrder.POLName]:" HorzAlign="Right"/>
+            <TableCell Name="Cell24" Text="الوارد من ميناء" HorzAlign="Right"/>
+          </TableRow>
+          <TableRow Name="Row7">
+            <TableCell Name="Cell25" Text="[Rep_MESDeliveryOrder.OpenDate]:" HorzAlign="Right"/>
+            <TableCell Name="Cell26" Text="بتاريخ" HorzAlign="Right"/>
+          </TableRow>
+          <TableRow Name="Row8">
+            <TableCell Name="Cell27"/>
+            <TableCell Name="Cell28" Text="رقم الطريق" HorzAlign="Right"/>
+          </TableRow>
+        </TableObject>
+        <TableObject Name="Table2" Left="9.45" Top="311.85" Width="699.72" Height="37.8" Border.Lines="All">
+          <TableColumn Name="Column3" Width="116.62"/>
+          <TableColumn Name="Column4" Width="116.62"/>
+          <TableColumn Name="Column5" Width="116.62"/>
+          <TableColumn Name="Column6" Width="116.62"/>
+          <TableColumn Name="Column7" Width="116.62"/>
+          <TableColumn Name="Column8" Width="116.62"/>
+          <TableRow Name="Row9" Height="37.8">
+            <TableCell Name="Cell29" Text="Package Type" HorzAlign="Center" VertAlign="Center"/>
+            <TableCell Name="Cell30" Border.Lines="All" Text="No.of Packages" HorzAlign="Center" VertAlign="Center"/>
+            <TableCell Name="Cell31" Border.Lines="All" Text="Description of Goods" HorzAlign="Center" VertAlign="Center"/>
+            <TableCell Name="Cell32" Border.Lines="All" Text="weight(KG)" HorzAlign="Center" VertAlign="Center"/>
+            <TableCell Name="Cell33" Border.Lines="All" Text="CBM" HorzAlign="Center" VertAlign="Center"/>
+            <TableCell Name="Cell54" Text="Fright" HorzAlign="Center" VertAlign="Center"/>
+          </TableRow>
+        </TableObject>
+        <TextObject Name="Text2" Left="-9450" Top="-9450" Width="94.5" Height="18.9" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      </DataHeaderBand>
+      <DataFooterBand Name="DataFooter1" Top="398.12" Width="718.2" Height="519.75">
+        <TextObject Name="Text3" Left="75.6" Top="9.45" Width="595.35" Height="198.45" Border.Lines="All" Text="تنبيـــــــــــــــــــه هــــــــــــــــــــام&#10;نظراً لأن بضاعتكم قد خزنت على مسئوليتكم و حسابكم فى الأماكن التى عينتها السلطات المختصة لذلك فإننا نرجوكم سحبها فى أقرب فرصة علماً لأنه لا الباخرة و لا وكلائنا مسئولين عن ضياع أو ضرر قد يلحق بالبضائع بمجرد تفريغها أو أثناء إنتظار سحبها من الأمكنة التى قد تكون فرغت بها فالرجاء التخليص فوراً على بضائعكم أو فعل ما ترونه لازماً لحميتها كالتأمين أو ما شابه ذلك.&#10;يعمل بهذا الإذن لمدة ستة شهور من تاريخ صدوره غير مسئولين عن الأوزان و الأحجام المذكورة هنا. &#10;تفرغ هذه البضائع على مسئولية و حساب المستلمين.&#10;يرجى من السادة العملاء الكرام و التى تحتوى الرسالة الخاصة بهم على مواد غذائية أو مواد تدخل فى صناعة الأغذية إخطار الموظف المسئول عند سحب إذن التسليم على أن مشمول الرسالة يحتوى على مواد غذائية واجبة العرض على معمل الفحص الإشعاعى مع دفع المصاريف الخاصة بسحب عينة الإشعاع و ترك صورة من إيصال السداد طرف موظف الوارد المختص وذلك لعدم حدوث تأخير فى سحب العينة من الرسائل الواردة.&#10;يشترط سلامة وصول البضاعة و تفريغها بالمخازن.&#10;و التوكيل غير مسئول عن أى تأخير يحدث نتيجة الإخلال بهذا التنبيه" HorzAlign="Right" VertAlign="Center"/>
+        <TableObject Name="Table5" Left="60.3" Top="224.75" Width="616.48" Height="241.65" Border.Lines="All">
+          <TableColumn Name="Column15" Width="170.06"/>
+          <TableColumn Name="Column16" Width="170.06"/>
+          <TableColumn Name="Column17" Width="188.96"/>
+          <TableColumn Name="Column18" Width="87.4"/>
+          <TableRow Name="Row11" Height="36.45">
+            <TableCell Name="Cell61" Text="#[Rep_MESDeliveryOrder.NumberOfPackages]#" HorzAlign="Right" VertAlign="Center"/>
+            <TableCell Name="Cell62" Text="#العدد" HorzAlign="Center" VertAlign="Center"/>
+            <TableCell Name="Cell63" Text="[Rep_MESDeliveryOrder.VesselName]" HorzAlign="Right" VertAlign="Center"/>
+            <TableCell Name="Cell64" Text=":الباخرة" HorzAlign="Right" VertAlign="Center"/>
+          </TableRow>
+          <TableRow Name="Row12" Height="36.45">
+            <TableCell Name="Cell66" Text="#[Rep_MESDeliveryOrder.Volume]#" HorzAlign="Right" VertAlign="Center" RowSpan="2"/>
+            <TableCell Name="Cell67" Text="وزن/الحجم" HorzAlign="Center" VertAlign="Center"/>
+            <TableCell Name="Cell68" Text="[Rep_MESDeliveryOrder.MasterBL]" HorzAlign="Right" VertAlign="Center"/>
+            <TableCell Name="Cell69" Text="بوليصة" HorzAlign="Right" VertAlign="Center"/>
+          </TableRow>
+          <TableRow Name="Row13" Height="36.45">
+            <TableCell Name="Cell71" VertAlign="Center"/>
+            <TableCell Name="Cell72" Text="[Rep_MESDeliveryOrder.ReleaseDate]" HorzAlign="Right" VertAlign="Center" ColSpan="2"/>
+            <TableCell Name="Cell73" VertAlign="Center"/>
+            <TableCell Name="Cell74" Text="رحلة" HorzAlign="Right" VertAlign="Center"/>
+          </TableRow>
+          <TableRow Name="Row14" Height="36.45">
+            <TableCell Name="Cell76" VertAlign="Center" ColSpan="3"/>
+            <TableCell Name="Cell77" VertAlign="Center"/>
+            <TableCell Name="Cell78" VertAlign="Center"/>
+            <TableCell Name="Cell79" Text="طريق" HorzAlign="Right" VertAlign="Center"/>
+          </TableRow>
+          <TableRow Name="Row15" Height="36.45">
+            <TableCell Name="Cell81" Text="[Rep_MESDeliveryOrder.OpenDate]" HorzAlign="Right" VertAlign="Center" ColSpan="3"/>
+            <TableCell Name="Cell82" VertAlign="Center"/>
+            <TableCell Name="Cell83" VertAlign="Center"/>
+            <TableCell Name="Cell84" Text="تاريخ تخزين" HorzAlign="Right" VertAlign="Center"/>
+          </TableRow>
+          <TableRow Name="Row16" Height="27">
+            <TableCell Name="Cell85" ColSpan="3"/>
+            <TableCell Name="Cell86"/>
+            <TableCell Name="Cell87"/>
+            <TableCell Name="Cell88" Text="مكان التخزين" HorzAlign="Right" VertAlign="Center"/>
+          </TableRow>
+          <TableRow Name="Row17" Height="32.4">
+            <TableCell Name="Cell89" ColSpan="3"/>
+            <TableCell Name="Cell90"/>
+            <TableCell Name="Cell91"/>
+            <TableCell Name="Cell92" Text="طلب التخزين" HorzAlign="Right" VertAlign="Center"/>
+          </TableRow>
+        </TableObject>
+      </DataFooterBand>
+    </DataBand>
+  </ReportPage>
+</Report>

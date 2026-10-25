@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/21/2020 15:56:35" ReportInfo.Modified="01/21/2020 17:09:55" ReportInfo.CreatorVersion="2018.3.14.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqqbHFhVIwocP/yqXnQRvzskfUzdbgTM4o1F3+VxbooXmeeyAAU6DGupT9byu7LEiiAhzhjKD9t18VAn5Syg60YML4C5Ck5Y2pQr4W/iZpda1M7W94ObZhz2/Rd5pzfPhW8z/rxLXRAxNzHsIxLiCF+LGm/ceYW4LHxnPUKWAvzg7NkZaQTDCvNS5qGtPgIYniR+XtCn6clZgjVXo0DJybkg==">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="exec GetListVw_DptEirRpt @WhereClause">
+        <Column Name="ContainerNO" DataType="System.String"/>
+        <Column Name="Size" DataType="System.String"/>
+        <Column Name="EirNo" DataType="System.Int32"/>
+        <Column Name="EirDate" DataType="System.DateTime"/>
+        <Column Name="Customer" DataType="System.String"/>
+        <Column Name="Consignee" DataType="System.String"/>
+        <Column Name="Location" DataType="System.String"/>
+        <Column Name="Load" DataType="System.String"/>
+        <Column Name="Age" DataType="System.Int32"/>
+        <Column Name="Time" DataType="System.String"/>
+        <Column Name="Move" DataType="System.String"/>
+        <Column Name="JobNo" DataType="System.String"/>
+        <Column Name="ShippingLine" DataType="System.String"/>
+        <Column Name="Transporter" DataType="System.String"/>
+        <Column Name="TruckNo" DataType="System.String"/>
+        <Column Name="Driver" DataType="System.String"/>
+        <Column Name="TripMoney" DataType="System.Int32"/>
+        <Column Name="ID" DataType="System.Int64"/>
+        <Column Name="Remarks" DataType="System.String"/>
+        <Column Name="TransAmount" DataType="System.Int32"/>
+        <Column Name="FKID" DataType="System.Int32"/>
+        <Column Name="cntrSize" DataType="System.Int32"/>
+        <Column Name="CntrType" DataType="System.String"/>
+        <Column Name="BookingNo" DataType="System.String"/>
+        <Column Name="YardIsIn" DataType="System.Int32"/>
+        <Column Name="FullCntrType" DataType="System.String"/>
+        <CommandParameter Name="WhereClause" DataType="22" Expression="[WhereClause]"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="WhereClause" DataType="System.String"/>
+    <Total Name="Total" TotalType="Count" Expression="[Table.ContainerNO]" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="Total1" TotalType="Count" Evaluator="Data1" PrintOn="GroupFooter1"/>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="37.8">
+      <TextObject Name="Text1" Left="18.9" Top="18.9" Width="340.2" Height="18.9" Text="Containers Stock Summary" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text12" Left="576.45" Top="18.9" Width="94.5" Height="18.9" Text="[Date]" Format="Date" Format.Format="d" HorzAlign="Center" VertAlign="Center"/>
+    </ReportTitleBand>
+    <GroupHeaderBand Name="GroupHeader1" Top="41.8" Width="718.2" Height="18.9" Condition="[Table.cntrSize]">
+      <TextObject Name="Text2" Width="113.4" Height="18.9" Border.Lines="Left, Top, Bottom" Fill.Color="Gainsboro" Text="[[Table.cntrSize]]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text6" Left="113.4" Width="576.45" Height="18.9" Border.Lines="Right, Top, Bottom" Fill.Color="Gainsboro" Text="Feet Containers" VertAlign="Center"/>
+      <GroupHeaderBand Name="GroupHeader2" Top="64.7" Width="718.2" Condition="[Table.CntrType]">
+        <DataBand Name="Data1" Top="68.7" Width="718.2" DataSource="Table"/>
+        <GroupFooterBand Name="GroupFooter2" Top="72.7" Width="718.2" Height="18.9">
+          <TextObject Name="Text5" Left="245.7" Width="94.5" Height="18.9" Text="[Total]" HorzAlign="Center" VertAlign="Center"/>
+          <TextObject Name="Text3" Width="94.5" Height="18.9" Text="[[Table.CntrType]]" VertAlign="Center"/>
+          <TextObject Name="Text4" Left="94.5" Width="151.2" Height="18.9" Text="[Table.FullCntrType]" VertAlign="Center"/>
+        </GroupFooterBand>
+      </GroupHeaderBand>
+      <GroupFooterBand Name="GroupFooter1" Top="95.6" Width="718.2" Height="18.9">
+        <TextObject Name="Text7" Left="245.7" Width="94.5" Height="18.9" Border.Lines="Top, Bottom" Fill.Color="WhiteSmoke" Text="[Total1]" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text8" Left="56.7" Width="75.6" Height="18.9" Border.Lines="Top, Bottom" Fill.Color="WhiteSmoke" Text="[[Table.cntrSize]]" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text9" Width="56.7" Height="18.9" Border.Lines="Left, Top, Bottom" Fill.Color="WhiteSmoke" Text="Total" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text10" Left="132.3" Width="113.4" Height="18.9" Border.Lines="Top, Bottom" Fill.Color="WhiteSmoke" Text="Feet Containers" VertAlign="Center"/>
+        <TextObject Name="Text11" Left="340.2" Width="349.65" Height="18.9" Border.Lines="Right, Top, Bottom" Fill.Color="WhiteSmoke" HorzAlign="Center" VertAlign="Center"/>
+      </GroupFooterBand>
+    </GroupHeaderBand>
+    <PageFooterBand Name="PageFooter1" Top="118.5" Width="718.2" Height="18.9"/>
+  </ReportPage>
+</Report>

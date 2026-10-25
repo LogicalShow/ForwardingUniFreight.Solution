@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/01/2023 11:07:34" ReportInfo.Modified="02/19/2023 12:27:01" ReportInfo.CreatorVersion="2018.3.14.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqPIEd6mMaVblOTMUz0w4TD4L8sctTDs6ygHebXYXh5pE2Z+UJEQs2ChjFMaFjtC2l1ULS0RJ+xYmZCqQaeCW51OezbXbjwDZDAAqqxX7pYByFyEFILeKDGlYIVvRINEDjVJxFODhRJheg6wNNr5phd/0WnEdpFUqUfiOUpW5Goq85x7jzAePtd7W6vu9x1sUyjfnXSdcpeLfOGldxGCnHkA==">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="Exec (@query)">
+        <Column Name="TruckingOrderCode" DataType="System.String"/>
+        <Column Name="ID" DataType="System.Int64"/>
+        <Column Name="TruckingOrderID" DataType="System.Int64"/>
+        <Column Name="SN" DataType="System.Int32"/>
+        <Column Name="IssueDate" DataType="System.DateTime"/>
+        <Column Name="SL" DataType="System.String"/>
+        <Column Name="BookingNo" DataType="System.String"/>
+        <Column Name="PORT" DataType="System.String"/>
+        <Column Name="WH" DataType="System.String"/>
+        <Column Name="Size" DataType="System.String"/>
+        <Column Name="ContainerNO" DataType="System.String"/>
+        <Column Name="DriverName" DataType="System.String"/>
+        <Column Name="Phone" DataType="System.String"/>
+        <Column Name="TruckNo" DataType="System.String"/>
+        <Column Name="Location" DataType="System.String"/>
+        <Column Name="SealNo" DataType="System.String"/>
+        <Column Name="ReleaseDate" DataType="System.DateTime"/>
+        <Column Name="ArrivalDate" DataType="System.DateTime"/>
+        <Column Name="ReturnDate" DataType="System.DateTime"/>
+        <Column Name="Port2" DataType="System.String"/>
+        <Column Name="StatusName" DataType="System.String"/>
+        <Column Name="Trucker" DataType="System.String"/>
+        <Column Name="TypeName" DataType="System.String"/>
+        <Column Name="Notes" DataType="System.String"/>
+        <Column Name="TareWeight" DataType="System.Decimal"/>
+        <Column Name="NetWeight" DataType="System.Decimal"/>
+        <Column Name="GrossWeight" DataType="System.Decimal"/>
+        <Column Name="OperationNO" DataType="System.String"/>
+        <Column Name="Factory" DataType="System.String"/>
+        <Column Name="CustomLOC" DataType="System.String"/>
+        <Column Name="TruckWeight" DataType="System.String"/>
+        <Column Name="FactoryGateOut" DataType="System.String"/>
+        <Column Name="POD" DataType="System.String"/>
+        <Column Name="Invoice" DataType="System.String"/>
+        <Column Name="FGODate" DataType="System.DateTime"/>
+        <Column Name="ReleaseTime" DataType="System.Int32"/>
+        <Column Name="ArrivalTime" DataType="System.Int32"/>
+        <Column Name="FGOTime" DataType="System.Int32"/>
+        <Column Name="ReturnTime" DataType="System.Int32"/>
+        <CommandParameter Name="@query" DataType="12" Expression="[query]" DefaultValue="SELECT (SELECT TruckingOrderCode FROM Routings WHERE ID=TruckingOrderID) TruckingOrderCode, * FROM TruckingOrderContainers WHERE TruckingOrderID IN (SELECT ID FROM Routings WHERE RoutingTypeID=60 AND TruckingOrderCode IS NOT NULL AND IsFleet=0 AND IsOwnedByCompany=0)"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="1000" PaperHeight="210">
+    <ReportTitleBand Name="ReportTitle1" Width="3704.4" Height="85.05">
+      <TextObject Name="Text1" Left="245.7" Top="47.25" Width="207.9" Height="28.35" Text="Trucking Report" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="89.05" Width="3704.4" Height="37.8" PrintOn="FirstPage">
+      <TextObject Name="Text2" Width="103.95" Height="37.8" Border.Lines="All" Text="Trucking Order Code" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text6" Left="103.95" Width="47.25" Height="37.8" Border.Lines="All" Text="SN" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text8" Left="151.2" Width="94.5" Height="37.8" Border.Lines="All" Text="Operation No" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text10" Left="245.7" Width="94.5" Height="37.8" Border.Lines="All" Text="Factory" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text12" Left="340.2" Width="94.5" Height="37.8" Border.Lines="All" Text="Date" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text14" Left="434.7" Width="94.5" Height="37.8" Border.Lines="All" Text="SL" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text16" Left="529.2" Width="94.5" Height="37.8" Border.Lines="All" Text="Booking No" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text18" Left="623.7" Width="94.5" Height="37.8" Border.Lines="All" Text="PORT" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text19" Left="718.2" Width="94.5" Height="37.8" Border.Lines="All" Text="CUSTOM LOC." HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text20" Left="812.7" Width="94.5" Height="37.8" Border.Lines="All" Text="W / H" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text21" Left="907.2" Width="94.5" Height="37.8" Border.Lines="All" Text="Size" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text22" Left="1001.7" Width="94.5" Height="37.8" Border.Lines="All" Text="ContainerNO" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text23" Left="1096.2" Width="94.5" Height="37.8" Border.Lines="All" Text="Driver Name" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text24" Left="1190.7" Width="94.5" Height="37.8" Border.Lines="All" Text="Phone" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text25" Left="1285.2" Width="94.5" Height="37.8" Border.Lines="All" Text="Truck No" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text26" Left="1379.7" Width="94.5" Height="37.8" Border.Lines="All" Text="Truck Weight" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text27" Left="1474.2" Width="94.5" Height="37.8" Border.Lines="All" Text="Location" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text28" Left="1568.7" Width="94.5" Height="37.8" Border.Lines="All" Text="Seal No" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text29" Left="1663.2" Width="94.5" Height="37.8" Border.Lines="All" Text="Release" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text30" Left="1757.7" Width="94.5" Height="37.8" Border.Lines="All" Text="Release time" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text31" Left="1852.2" Width="94.5" Height="37.8" Border.Lines="All" Text="Arrival" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text32" Left="1946.7" Width="94.5" Height="37.8" Border.Lines="All" Text="Arrival Time" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text33" Left="2041.2" Width="132.3" Height="37.8" Border.Lines="All" Text="Factory Gate out." HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text34" Left="2173.5" Width="113.4" Height="37.8" Border.Lines="All" Text="F.G.O Date" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text35" Left="2286.9" Width="103.95" Height="37.8" Border.Lines="All" Text="F.G.O Time" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text36" Left="2390.85" Width="103.95" Height="37.8" Border.Lines="All" Text="Port" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text37" Left="2494.8" Width="103.95" Height="37.8" Border.Lines="All" Text="POD" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text38" Left="2598.75" Width="103.95" Height="37.8" Border.Lines="All" Text="Trucker" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text39" Left="2702.7" Width="103.95" Height="37.8" Border.Lines="All" Text="Notes" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text40" Left="2806.65" Width="103.95" Height="37.8" Border.Lines="All" Text="INVOICE" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text41" Left="2910.6" Width="103.95" Height="37.8" Border.Lines="All" Text="TareWeight" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text42" Left="3014.55" Width="103.95" Height="37.8" Border.Lines="All" Text="NetWeight" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text43" Left="3118.5" Width="103.95" Height="37.8" Border.Lines="All" Text="GrossWeight" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="130.85" Width="3704.4" Height="47.25" DataSource="Table">
+      <TextObject Name="Text5" Width="103.95" Height="47.25" Border.Lines="All" Text="[Table.TruckingOrderCode]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text7" Left="103.95" Width="47.25" Height="47.25" Border.Lines="All" Text="[Table.SN]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text9" Left="151.2" Width="94.5" Height="47.25" Border.Lines="All" Text="[Table.OperationNO]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text11" Left="245.7" Width="94.5" Height="47.25" Border.Lines="All" Text="[Table.Factory]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text13" Left="340.2" Width="94.5" Height="47.25" Border.Lines="All" Text="[Table.IssueDate]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text15" Left="434.7" Width="94.5" Height="47.25" Border.Lines="All" Text="[Table.SL]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text17" Left="529.2" Width="94.5" Height="47.25" Border.Lines="All" Text="[Table.BookingNo]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text44" Left="623.7" Width="94.5" Height="47.25" Border.Lines="All" Text="[Table.PORT]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text45" Left="718.2" Width="94.5" Height="47.25" Border.Lines="All" Text="[Table.CustomLOC]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text46" Left="812.7" Width="94.5" Height="47.25" Border.Lines="All" Text="[Table.WH]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text47" Left="907.2" Width="94.5" Height="47.25" Border.Lines="All" Text="[Table.Size]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text48" Left="1001.7" Width="94.5" Height="47.25" Border.Lines="All" Text="[Table.ContainerNO]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text49" Left="1096.2" Width="94.5" Height="47.25" Border.Lines="All" Text="[Table.DriverName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text50" Left="1190.7" Width="94.5" Height="47.25" Border.Lines="All" Text="[Table.Phone]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text51" Left="1285.2" Width="94.5" Height="47.25" Border.Lines="All" Text="[Table.TruckNo]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text52" Left="1379.7" Width="94.5" Height="47.25" Border.Lines="All" Text="[Table.TruckWeight]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text53" Left="1474.2" Width="94.5" Height="47.25" Border.Lines="All" Text="[Table.Location]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text54" Left="1568.7" Width="94.5" Height="47.25" Border.Lines="All" Text="[Table.SealNo]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text55" Left="1663.2" Width="94.5" Height="47.25" Border.Lines="All" Text="[Table.ReleaseDate]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text56" Left="1757.7" Width="94.5" Height="47.25" Border.Lines="All" Text="[Table.ReleaseTime]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text57" Left="1852.2" Width="94.5" Height="47.25" Border.Lines="All" Text="[Table.ArrivalDate]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text58" Left="1946.7" Width="94.5" Height="47.25" Border.Lines="All" Text="[Table.ArrivalTime]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text59" Left="2041.2" Width="132.3" Height="47.25" Border.Lines="All" Text="[Table.FactoryGateOut]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text60" Left="2173.5" Width="113.4" Height="47.25" Border.Lines="All" Text="[Table.FGODate]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text61" Left="2286.9" Width="103.95" Height="47.25" Border.Lines="All" Text="[Table.FGOTime]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text62" Left="2390.85" Width="103.95" Height="47.25" Border.Lines="All" Text="[Table.Port2]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text63" Left="2494.8" Width="103.95" Height="47.25" Border.Lines="All" Text="[Table.POD]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text64" Left="2598.75" Width="103.95" Height="47.25" Border.Lines="All" Text="[Table.Trucker]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text65" Left="2702.7" Width="103.95" Height="47.25" Border.Lines="All" Text="[Table.Notes]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text66" Left="2806.65" Width="103.95" Height="47.25" Border.Lines="All" Text="[Table.Invoice]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text67" Left="2910.6" Width="103.95" Height="47.25" Border.Lines="All" Text="[Table.TareWeight]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text68" Left="3014.55" Width="103.95" Height="47.25" Border.Lines="All" Text="[Table.NetWeight]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text69" Left="3118.5" Width="103.95" Height="47.25" Border.Lines="All" Text="[Table.GrossWeight]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="182.1" Width="3704.4" Height="113.4"/>
+  </ReportPage>
+</Report>

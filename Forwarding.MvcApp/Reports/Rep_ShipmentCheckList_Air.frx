@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="09/20/2023 14:33:35" ReportInfo.Modified="10/26/2023 16:28:32" ReportInfo.CreatorVersion="2018.3.14.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection1" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFtvdH3m3xJw0oxVjbxQa7aBoPLbNe1xAGoIRY5MprIvGd7s/fojmYOjmpWKtcyQo4949jT5X4fIh8xtHfGN3YJL6byi2hWnteaYxUHL8rUiPIYptPZOov34NnwDIUClWe">
+      <TableDataSource Name="Table" Alias="ShipmentCheckList_Air" DataType="System.Int32" Enabled="true" SelectCommand="exec (@query)">
+        <Column Name="Code" DataType="System.String"/>
+        <Column Name="ClientName" DataType="System.String"/>
+        <Column Name="CommodityName" DataType="System.String"/>
+        <Column Name="ACIDNumber" DataType="System.String"/>
+        <Column Name="ShippingLineName" DataType="System.String"/>
+        <Column Name="VesselName" DataType="System.String"/>
+        <Column Name="POLName" DataType="System.String"/>
+        <Column Name="PODName" DataType="System.String"/>
+        <Column Name="MasterBL" DataType="System.String"/>
+        <Column Name="ContainerNumbers" DataType="System.String"/>
+        <Column Name="InvoiceNumbers" DataType="System.String"/>
+        <Column Name="NumberOfPackages" DataType="System.Int32"/>
+        <Column Name="AirlineName" DataType="System.String"/>
+        <Column Name="MAWBSuffix" DataType="System.String"/>
+        <Column Name="ReleaseNumber" DataType="System.String"/>
+        <Column Name="GrossWeightSum" DataType="System.Decimal"/>
+        <Column Name="CCReleaseNo" DataType="System.String"/>
+        <Column Name="ContainerTypes" DataType="System.String"/>
+        <Column Name="ShipmentType" DataType="System.Int32"/>
+        <Column Name="TankNumbers" DataType="System.String"/>
+        <Column Name="PartnerName" DataType="System.String"/>
+        <Column Name="InvoiceNumber" DataType="System.Int64"/>
+        <Column Name="HouseBLs" DataType="System.String"/>
+        <Column Name="CommodityName2" DataType="System.String"/>
+        <Column Name="CommodityName3" DataType="System.String"/>
+        <Column Name="HouseNumber" DataType="System.String"/>
+        <Column Name="INVOICENUMBER1" DataType="System.String"/>
+        <CommandParameter Name="query" DataType="12" Expression="[query]" DefaultValue="Rep_ShipmentCheckList ' WHERE 1=1'"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <PageHeaderBand Name="PageHeader1" Width="718.2" Height="1360.8">
+      <TextObject Name="Text1" Top="9.45" Width="699.3" Height="37.8" Fill.Color="Silver" Text="Shipment Check List" HorzAlign="Center" VertAlign="Center" Font="Arial, 16pt, style=Bold"/>
+      <TableObject Name="Table1" Top="56.7" Width="697.03" Height="141.75" RepeatHeaders="false">
+        <TableColumn Name="Column1" Width="183.11"/>
+        <TableColumn Name="Column2" Width="513.92"/>
+        <TableRow Name="Row1" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell1" Text="Operation Code " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell2" Text=": [ShipmentCheckList_Air.Code]" VertAlign="Center"/>
+        </TableRow>
+        <TableRow Name="Row2" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell6" Text="Declaration " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell7" Text=": [ShipmentCheckList_Air.CCReleaseNo]" VertAlign="Center"/>
+        </TableRow>
+        <TableRow Name="Row3" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell11" Text="Client Name " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell12" Text=": [ShipmentCheckList_Air.ClientName]" VertAlign="Center"/>
+        </TableRow>
+        <TableRow Name="Row4" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell16" Text="Description/Commodity " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell17" Text=": [ShipmentCheckList_Air.CommodityName]-[ShipmentCheckList_Air.CommodityName2]-[ShipmentCheckList_Air.CommodityName3]" VertAlign="Center"/>
+        </TableRow>
+        <TableRow Name="Row5" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell21" Text="Customs Broker" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell22" Text=": [ShipmentCheckList_Air.PartnerName]" VertAlign="Center"/>
+        </TableRow>
+      </TableObject>
+      <TextObject Name="Text2" Left="7" Top="210.05" Width="689.85" Height="28.35" Border.Lines="All" Text=" I  -  Basic Data." VertAlign="Center" Font="Arial, 16pt, style=Bold"/>
+      <TableObject Name="Table2" Left="9.45" Top="245.7" Width="689.61" Height="226.8">
+        <TableColumn Name="Column3" Width="174.65"/>
+        <TableColumn Name="Column4" Width="514.96"/>
+        <TableRow Name="Row6" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell23" Text="ACID # " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell24" Text=": [ShipmentCheckList_Air.ACIDNumber]" VertAlign="Center"/>
+        </TableRow>
+        <TableRow Name="Row7" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell28" Text="Air Line " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell29" Text=": [ShipmentCheckList_Air.AirlineName]" VertAlign="Center"/>
+        </TableRow>
+        <TableRow Name="Row9" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell38" Text="Port of Loading " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell39" Text=": [ShipmentCheckList_Air.POLName]" VertAlign="Center"/>
+        </TableRow>
+        <TableRow Name="Row10" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell43" Text="Port of Discharge " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell44" Text=": [ShipmentCheckList_Air.PODName]" VertAlign="Center"/>
+        </TableRow>
+        <TableRow Name="Row12" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell47" Text="Airway Bill # " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell48" Text=": [ShipmentCheckList_Air.MAWBSuffix]-[ShipmentCheckList_Air.HouseNumber]-[ShipmentCheckList_Air.HouseBLs]" VertAlign="Center"/>
+        </TableRow>
+        <TableRow Name="Row13" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell49" Text="Commerical Invoice #  " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell50" Text=": [ShipmentCheckList_Air.INVOICENUMBER1]" VertAlign="Center"/>
+        </TableRow>
+        <TableRow Name="Row14" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell51" Text="Quantity of Cargo  " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell52" Text=": [ShipmentCheckList_Air.NumberOfPackages]" VertAlign="Center"/>
+        </TableRow>
+        <TableRow Name="Row15" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell53" Text="Gross / Weight " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell54" Text=": [ShipmentCheckList_Air.GrossWeightSum]" VertAlign="Center"/>
+        </TableRow>
+      </TableObject>
+      <TextObject Name="Text3" Left="9.45" Top="481.95" Width="689.85" Height="28.35" Border.Lines="All" Text=" II  -  Documents." VertAlign="Center" Font="Arial, 16pt, style=Bold"/>
+      <TableObject Name="Table3" Left="9.45" Top="519.75" Width="689.72" Height="113.4" RepeatHeaders="false">
+        <TableColumn Name="Column5" Width="188.88"/>
+        <TableColumn Name="Column6" Width="500.84"/>
+        <TableRow Name="Row16" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell55" Text="Fees'  Amount " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell56" Text=":"/>
+        </TableRow>
+        <TableRow Name="Row17" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell60" Text="Fee' Received Date " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell61" Text=":"/>
+        </TableRow>
+        <TableRow Name="Row18" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell65" Text="Payment' Date  " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell66" Text=":"/>
+        </TableRow>
+        <TableRow Name="Row19" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell70" Text="Release' Date " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell71" Text=":"/>
+        </TableRow>
+      </TableObject>
+      <TextObject Name="Text4" Left="9.45" Top="642.6" Width="689.85" Height="28.35" Border.Lines="All" Text=" III  -  Operation." VertAlign="Center" Font="Arial, 16pt, style=Bold"/>
+      <TableObject Name="Table4" Left="9.45" Top="680.4" Width="689.53" Height="340.2" RepeatHeaders="false">
+        <TableColumn Name="Column7" Width="193.5"/>
+        <TableColumn Name="Column8" Width="496.03"/>
+        <TableRow Name="Row20" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell72" Text="Arrival' Date " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell73" Text=":" VertAlign="Center"/>
+        </TableRow>
+        <TableRow Name="Row21" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell77" Text="Docs. Received Date " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell78" Text=":" VertAlign="Center"/>
+        </TableRow>
+        <TableRow Name="Row22" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell82" Text="Endorsement Letter Date " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell83" Text=":" VertAlign="Center"/>
+        </TableRow>
+        <TableRow Name="Row23" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell87" Text="D/O Date " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell88" Text=":" VertAlign="Center"/>
+        </TableRow>
+        <TableRow Name="Row24" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell92" Text="1st Stage Date " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell93" Text=":" VertAlign="Center"/>
+        </TableRow>
+        <TableRow Name="Row25" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell94" Text="Customs' Inspection Date " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell95" Text=":" VertAlign="Center"/>
+        </TableRow>
+        <TableRow Name="Row26" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell96" Text="G.O.E.I.C ' Inspection Date " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell97" Text=":" VertAlign="Center"/>
+        </TableRow>
+        <TableRow Name="Row27" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell98" Text="Food Testing Date " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell99" Text=":" VertAlign="Center"/>
+        </TableRow>
+        <TableRow Name="Row28" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell100" Text="Atomic Enenrgy Date " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell101" Text=":" VertAlign="Center"/>
+        </TableRow>
+        <TableRow Name="Row29" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell102" Text="Agriculture' Inspection Date " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell103" Text=":" VertAlign="Center"/>
+        </TableRow>
+        <TableRow Name="Row30" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell104" Text="Food Release Date " VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell105" Text=":" VertAlign="Center"/>
+        </TableRow>
+        <TableRow Name="Row31" MinHeight="28.35" Height="28.35" AutoSize="true">
+          <TableCell Name="Cell106" Text="Line" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell107" Text=":" VertAlign="Center"/>
+        </TableRow>
+      </TableObject>
+    </PageHeaderBand>
+  </ReportPage>
+</Report>

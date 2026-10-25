@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="09/20/2023 14:33:35" ReportInfo.Modified="12/26/2023 15:41:32" ReportInfo.CreatorVersion="2018.3.14.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection1" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFtvdH3m3xJw0oxVjbxQa7aBoPLbNe1xAGoIRY5MprIvGd7s/fojmYOjmpWKtcyQo4949jT5X4fIh8xtHfGN3YJL6byi2hWnteaYxUHL8rUiM4EMeI0GPD15HMgD5QUHcm">
+      <TableDataSource Name="Table1" Alias="Rep_TRMShipperOwnLetter" DataType="System.Int32" Enabled="true" SelectCommand="exec(@query)">
+        <Column Name="BranchLocalName" DataType="System.String"/>
+        <Column Name="TodayDate" DataType="System.String"/>
+        <Column Name="MasterBL" DataType="System.String"/>
+        <Column Name="AgentName" DataType="System.String"/>
+        <Column Name="TankNumbers" DataType="System.String"/>
+        <Column Name="HouseNumber" DataType="System.String"/>
+        <Column Name="Logo" DataType="System.String" PropName="Column" Calculated="true" Expression="[Logo]"/>
+        <Column Name="Logo1" DataType="System.String" PropName="Column" Calculated="true" Expression="[Logo1]"/>
+        <CommandParameter Name="query" DataType="12" Expression="[query]" DefaultValue="Rep_TRMShipperOwnLetter 'WHERE 1=1'"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="Logo" DataType="System.String" Expression="[Logo]"/>
+    <Parameter Name="Logo1" DataType="System.String" Expression="[Logo1]"/>
+  </Dictionary>
+  <ReportPage Name="Page1" FirstPageSource="15" OtherPagesSource="15">
+    <PageHeaderBand Name="PageHeader1" Width="718.2" Height="1048.95">
+      <TextObject Name="Text1" Left="18.9" Top="85.05" Width="378" Height="37.8" Text="[Rep_TRMShipperOwnLetter.BranchLocalName] فى [Rep_TRMShipperOwnLetter.TodayDate]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+      <TextObject Name="Text2" Left="548.1" Top="170.1" Width="141.75" Height="18.9" Text="السيد/ مدير عام الجمارك" HorzAlign="Right" VertAlign="Center" Font="Arial, 12pt"/>
+      <TextObject Name="Text3" Left="425.25" Top="217.35" Width="151.2" Height="18.9" Text=" ,,,تحية طيبة و بعد" HorzAlign="Right" VertAlign="Center" Font="Arial, 12pt"/>
+      <TextObject Name="Text4" Left="94.5" Top="274.05" Width="595.35" Height="28.35" Text="[Rep_TRMShipperOwnLetter.MasterBL] : بخصوص التانك الوارد لبوليصة كليه رقم " HorzAlign="Right" VertAlign="Center" Font="Arial, 12pt"/>
+      <TextObject Name="Text5" Left="122.85" Top="311.85" Width="567" Height="18.9" Text="[Rep_TRMShipperOwnLetter.HouseNumber] : بوليصة فرعية رقم" HorzAlign="Right" VertAlign="Center" Font="Arial, 12pt"/>
+      <TextObject Name="Text6" Left="378" Top="349.65" Width="311.85" Height="18.9" Text="نحط سيادتكم علما بأن هذا التانك الأتى رقمه ملك لموكلينا " HorzAlign="Right" VertAlign="Center" Font="Arial, 12pt"/>
+      <TextObject Name="Text7" Top="396.9" Width="708.75" Height="47.25" CanGrow="true" Text="([Rep_TRMShipperOwnLetter.TankNumbers])" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+      <TextObject Name="Text8" Left="85.05" Top="453.6" Width="604.8" Height="28.35" Text="و سوف يتم صرفهم بمعرفة المستلمين بكشف استخلاص و رجوعهم داخل دائرة الجمركية بمعرفة المستلمين " HorzAlign="Right" VertAlign="Center" Font="Arial, 12pt"/>
+      <TextObject Name="Text9" Left="189" Top="481.95" Width="179.55" Height="18.9" Text=" و لسیادتكم جزیل الشكر" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+      <TextObject Name="Text10" Left="217.35" Top="510.3" Width="113.4" Height="18.9" Text="/ مقدمة لسیادتكم" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+      <TextObject Name="Text11" Left="170.1" Top="538.65" Width="236.25" Height="28.35" Text="وكیل ملاحى /شركة ترانز مصر شیبنج" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt"/>
+      <TextObject Name="Text12" Left="-32.25" Top="583.45" Width="519.75" Height="18.9" Text="([Rep_TRMShipperOwnLetter.AgentName])بصفتنا وكلاء" HorzAlign="Right" VertAlign="Center" Font="Arial, 12pt"/>
+      <PictureObject Name="Picture1" Left="28.35" Width="642.6" Height="75.6" DataColumn="Rep_TRMShipperOwnLetter.Logo"/>
+      <PictureObject Name="Picture2" Top="642.6" Width="718.2" Height="141.75" SizeMode="StretchImage" DataColumn="Rep_TRMShipperOwnLetter.Logo1"/>
+      <TextObject Name="Text13" Left="-9.45" Top="349.65" Width="368.55" Height="18.9" Text="[Rep_TRMShipperOwnLetter.AgentName]" HorzAlign="Right"/>
+    </PageHeaderBand>
+  </ReportPage>
+</Report>

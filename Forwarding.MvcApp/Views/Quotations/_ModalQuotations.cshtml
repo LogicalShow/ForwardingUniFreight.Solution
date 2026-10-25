@@ -1,0 +1,301 @@
+﻿@*DirectionType : 1-Import 2-Export 3-Domestic
+    TransportType : 1-Ocean 2-Air 3-Inland
+    ShipmentType : 1-FCL 2-LCL 3-FTL 4-LTL
+    QuotationType : 1-Ad hoc 2-Rounting Rates*@
+
+<!--Quotations Modal-->
+<div class="modal fade" id="QuotationModal" tabindex="-1" style="z-index: 1040;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="QuotationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-80">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.Quotation @*&nbsp;<label id="lblShown" purpose="dynamicLabel" class="static-text-primary">*@</label>
+                </h3>
+            </div>
+            <!-- Region Add / Edit Region Form -->
+            <div class="modal-body">
+                <div class="span7 form vertical-mode" id="Quotation-form">
+                    <fieldset>
+                        <div class="form-group pull-in  has-error clearfix">
+                            <input id="hQuotationID" type="hidden" />
+                            <input id="hDirectionIconName" type="hidden" />
+                            <input id="hDirectionIconStyle" type="hidden" />
+                            <input id="hTransportIconName" type="hidden" />
+                            <input id="hTransportIconStyle" type="hidden" />
+
+                            <!-- start alert message region -->
+                            @*<div class="alert alert-danger div-error">
+                                    @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                </div>*@
+                            <!-- end alert message region -->
+                            <!--Wizard-->
+                            <div class="row m-l m-r">
+                                <!--Radio Buttons-->
+                                <div class="col-sm-2">
+                                    &emsp;
+                                    <section class="panel panel-default classHideForWarehousing">
+                                        <header class="panel-heading font-bold">@Forwarding.MvcApp.App_Resources.App_Resources.Direction</header>
+                                        <label class="m-l"><input type="radio" id="cbIsImport" onchange="DirectionType_SetIconNameAndStyle();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbDirectionType" value="1">&nbsp;<i class='fa fa-arrow-circle-down import-icon-style' />&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Import</label><br />
+                                        <label class="m-l"><input type="radio" id="cbIsExport" onchange="DirectionType_SetIconNameAndStyle();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbDirectionType" value="2">&nbsp;<i class='fa fa-external-link export-icon-style' />&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Export</label><br />
+                                        <label class="m-l"><input type="radio" id="cbIsDomestic" onchange="DirectionType_SetIconNameAndStyle();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbDirectionType" value="3">&nbsp;<i class='fa fa-home domestic-icon-style' />&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Domestic</label><br />
+                                    </section>
+                                    <section class="panel panel-default classHideForWarehousing">
+                                        <header class="panel-heading font-bold">@Forwarding.MvcApp.App_Resources.App_Resources.TransportMode</header>
+                                        <label class="m-l"><input type="radio" id="cbIsOcean" onchange="Quotations_TransportTypeChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbTransportType" value="1">&nbsp;<i class='fa fa-anchor ocean-icon-style' />&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.IsOcean</label><br />
+                                        <label class="m-l"><input type="radio" id="cbIsAir" onchange="Quotations_TransportTypeChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbTransportType" value="2">&nbsp;<i class='fa fa-plane air-icon-style' />&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.IsAir</label><br />
+                                        <label class="m-l"><input type="radio" id="cbIsInland" onchange="Quotations_TransportTypeChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbTransportType" value="3">&nbsp;<i class='fa fa-truck inland-icon-style' />&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.IsInland</label><br />
+                                    </section>
+                                    <section id="secShipmentType" class="panel panel-default classHideForWarehousing">
+                                        <header class="panel-heading font-bold">@Forwarding.MvcApp.App_Resources.App_Resources.ShipmentType</header>
+                                        <div id="divOceanType">
+                                            <label id="lblFCL" class="m-l"><input type="radio" id="cbIsFCL" onchange="Quotations_ShipmentTypeChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbShipmentType" value="1">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.FCL</label><br />
+                                            <label id="lblLCL" class="m-l"><input type="radio" id="cbIsLCL" onchange="Quotations_ShipmentTypeChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbShipmentType" value="2">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.LCL</label>
+                                        </div>
+                                        <div id="divInlandType" class="hide">
+                                            <label class="m-l"><input type="radio" id="cbIsFTL" onchange="Quotations_ShipmentTypeChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbShipmentType" value="3">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.FTL</label><br />
+                                            <label class="m-l"><input type="radio" id="cbIsLTL" onchange="Quotations_ShipmentTypeChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbShipmentType" value="4">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.LTL</label>
+                                        </div>
+                                        <div class="classFlexiAndTank">
+                                            <label class="m-l"><input type="radio" id="cbIsFlexi" onchange="Quotations_ShipmentTypeChanged();" onfocus=" DisableEnterKey(id);" onkeypress=" DisableEnterKey(id);" name="cbShipmentType" value="10">&nbsp;<span id="spanCbIsFlexi">Flexi</span></label><br />
+                                        </div>
+                                        <div class="classFlexiAndTank">
+                                            <label class="m-l"><input type="radio" id="cbIsTank" onchange="Quotations_ShipmentTypeChanged();" onfocus=" DisableEnterKey(id);" onkeypress=" DisableEnterKey(id);" name="cbShipmentType" value="20">&nbsp;<span id="spanCbIsTank">Tank</span></label><br />
+                                        </div>
+                                    </section>
+                                </div>
+                                <div class="col-sm-10">
+                                    <!--1st row-->
+                                    <div class="col-sm-6">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Branch</label>
+                                        <select id="slQuotationBranch" class="form-control m-b input-sm"></select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Salesman</label>
+                                        <select id="slQuotationSalesman" name="slQuotationSalesman" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);"></select>
+                                    </div>
+                                    <div class="form-group col-sm-3">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.OperationMan</label>
+                                        <select id="slOperationEditOperationMan" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"></select>
+                                    </div>
+                                    <div class="col-sm-6 m-t-xs">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.OpenDate</label>
+                                        <input id="txtOpenDate" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" readonly="readonly" style="background-color:white; cursor:text;" class="datepicker-input form-control input-sm" data-required="true" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                                        @*<br />*@
+                                    </div>
+                                    <!--EOF 1st row-->
+                                    <!--2nd row-->
+                                    <div id="divShipper" class="classHideForSalesLead">
+                                        <div class="form-group col-sm-4 m-t-xs">
+                                            <label id="lblShippers">@Forwarding.MvcApp.App_Resources.App_Resources.Shipper</label>
+                                            <select id="slShippers" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b input-sm"></select>
+                                        </div>
+                                        <div class="col-sm-2 m-t-sm">
+                                            <br />
+                                            <button id="btn-NewAddShipper" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#CustomerModal"><i class="fa fa-plus"></i></button>
+                                            <button id="btn-EditShipper" class="btn btn-lightblue btn-sm" data-toggle="modal" data-target="#CustomerModal"><i class="fa fa-pencil"></i></button>
+                                        </div>
+                                    </div>
+                                    <div id="divConsignee" class="hide classHideForSalesLead classHideForWarehousing">
+                                        <div class="form-group col-sm-4 m-t-xs">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Consignee</label>
+                                            <select id="slConsignees" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b input-sm"></select>
+                                        </div>
+                                        <div class="col-sm-2 m-t-sm">
+                                            <br />
+                                            <button id="btn-NewAddConsignee" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#CustomerModal"><i class="fa fa-plus"></i></button>
+                                            <button id="btn-EditConsignee" class="btn btn-lightblue btn-sm" data-toggle="modal" data-target="#CustomerModal"><i class="fa fa-pencil"></i></button>
+                                        </div>
+                                    </div>
+
+                                    <div id="divQuotationAgent" class="classHideForSalesLead classHideForWarehousing">
+                                        <div class="form-group col-sm-4 m-t-xs">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Agent</label>
+                                            <select id="slAgents" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b input-sm"></select>
+                                        </div>
+                                        <div class="col-sm-2 m-t-sm">
+                                            <br />
+                                            <button id="btn-NewAddAgent" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#AgentModal"><i class="fa fa-plus"></i></button>
+                                            <button id="btn-EditAgent" class="btn btn-lightblue btn-sm" data-toggle="modal" data-target="#AgentModal"><i class="fa fa-pencil"></i></button>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 hide classShowForWarehousing">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.MainCriteria</label>
+                                        <select id="slMainCriteria" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"><option value=""><--Slect--></option></select>
+                                    </div>
+                                    <div class="col-sm-6 hide classShowForWarehousing">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.SubCriteria</label>
+                                        <select id="slSubCriteria" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"><option value=""><--Slect--></option></select>
+                                    </div>
+                                    <div id="divExporter" class="hide classShowForNAJ">
+                                        <div class="form-group col-sm-4 m-t-xs">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Exporter</label>
+                                            <select id="slExporter" data-required="false" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b input-sm"></select>
+                                        </div>
+                                    </div>
+                                    <div id="divQuotationSalesLead" class="">
+                                        <div class="form-group col-sm-4 m-t-xs">
+                                            <label>Sales Lead</label>
+                                            <select id="slSalesLead" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b input-sm" data-required="false"></select>
+                                        </div>
+                                        <div class="col-sm-2 m-t-sm">
+                                            <br />
+                                            <button id="btn-NewAddSalesLead" class="btn btn-warning btn-sm hide" data-toggle="modal" data-target="#SalesLeadModal"><i class="fa fa-plus"></i></button>
+                                            <button id="btn-EditSalesLead" class="btn btn-lightblue btn-sm hide" data-toggle="modal" data-target="#SalesLeadModal"><i class="fa fa-pencil"></i></button>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6"><br /></div>
+                                    <!--EOF 2nd row-->
+                                    <!--3rd row-->
+                                    <div class="form-group col-sm-6 m-t-n hide">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.POLCountry</label>
+                                        <select id="slPOLCountries" name="slPOLCountries" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b input-sm" onchange="POL_GetList();" data-required="false"></select>
+                                    </div>
+                                    <div class="form-group col-sm-6 m-t-n hide">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.PODCountry</label>
+                                        <select id="slPODCountries" name="slPODCountries" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b input-sm" onchange="POD_GetList();" data-required="false"></select>
+                                    </div>
+                                    <!--EOF 3rd row-->
+                                    <!--4th row-->
+                                    <div class="form-group col-sm-6 hide">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.POL</label>
+                                        <select id="slPOL" name="slPOL" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b input-sm" data-required="false"></select>
+                                    </div>
+                                    <div class="form-group col-sm-6 hide">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.POD</label>
+                                        <select id="slPOD" name="slPOD" class="form-control m-b input-sm" data-required="false"></select>
+                                    </div>
+                                    <!--EOF 4th row-->
+                                    <!--5th row-->
+                                    <div class="form-group col-sm-6 hide">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.LineOrTrucker</label>
+                                        <select id="slLines" name="slLines" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b input-sm" data-required="false"></select>
+                                    </div>
+                                    <div class="form-group col-sm-6 hide">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.ExpirationDate</label>
+                                        <input id="txtQuotationExpirationDate" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" readonly="readonly" style="background-color:white; cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                                        <br />
+                                    </div>
+
+                                    <!--EOF 5th row-->
+                                    <!--6th row-->
+                                    @*<div id="divFCL" class="form-group col-sm-6 m-t-n-xs">
+            <div class ="form-group col-sm-5">
+                <label>@Forwarding.MvcApp.App_Resources.App_Resources.PackageTypes</label>
+                <select id="slPackageTypes1" name="slPackageTypes1" class="form-control m-b" data-required="false"></select>
+            </div>
+            <div class="form-group col-sm-3">
+                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Quantity</label>
+                <input type="text" id="txtQuatity1" onkeypress="CheckValueIsInteger(id);" onfocus="CheckValueIsInteger(id);" class="form-control parsley-validated" data-type="number" data-required="false" maxlength="3" placeholder="0" />
+            </div>
+            <div class="form-group col-sm-4">
+                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Cost</label>
+                <input type="text" id="txtCost1" name="Cost1" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);"  data-type="number"  class="form-control parsley-validated" data-required="false" maxlength="11" placeholder="0.0" />
+            </div>
+            <div class ="form-group col-sm-5">
+                <select id="slPackageTypes2" name="slPackageTypes2" class="form-control m-b" data-required="false"></select>
+            </div>
+            <div class="form-group col-sm-3">
+                <input type="text" id="txtQuatity2" onkeypress="CheckValueIsInteger(id);" onfocus="CheckValueIsInteger(id);" class="form-control parsley-validated" data-type="number" data-required="false" maxlength="3" placeholder="0" />
+            </div>
+            <div class="form-group col-sm-4">
+                <input type="text" id="txtCost2" name="Cost2" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);"  data-type="number"  class="form-control parsley-validated" data-required="false" maxlength="11" placeholder="0.0" />
+            </div>
+
+            <div class ="form-group col-sm-5">
+                <select id="slPackageTypes3" name="slPackageTypes3" class="form-control m-b" data-required="false"></select>
+            </div>
+            <div class="form-group col-sm-3">
+                <input type="text" id="txtQuatity3" onkeypress="CheckValueIsInteger(id);" onfocus="CheckValueIsInteger(id);" class="form-control parsley-validated" data-type="number" data-required="false" maxlength="3" placeholder="0" />
+            </div>
+            <div class="form-group col-sm-4">
+                <input type="text" id="txtCost3" name="Cost3" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);"  data-type="number"  class="form-control parsley-validated" data-required="false" maxlength="11" placeholder="0.0" />
+            </div>
+        </div>
+
+        <div id="divLCL" class="form-group col-sm-6 m-t-n-xs hide">
+            <div class="form-group col-sm-12">
+                <div class="form-group m-t-sm m-l-n col-sm-6">
+                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.GrossWeight</label>
+                </div>
+                <div class="form-group col-sm-6">
+                    <input type="text" id="txtGrossWeight" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);"  data-type="number"  class="form-control parsley-validated" data-required="false" maxlength="11" placeholder="0.0" />
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <div class="form-group m-t-sm m-l-n col-sm-6">
+                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Volume</label>
+                </div>
+                <div class="form-group col-sm-6">
+                    <input type="text" id="txtVolume" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);"  data-type="number"  class="form-control parsley-validated" data-required="false" maxlength="11" placeholder="0.0" />
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <div class="form-group m-t-sm m-l-n col-sm-6">
+                    <label id="lblWtMsr">@Forwarding.MvcApp.App_Resources.App_Resources.WtMsr</label>
+                    <label id="lblChargeableWeight" class="hide">@Forwarding.MvcApp.App_Resources.App_Resources.ChargeableWeight</label>
+                </div>
+                <div class="form-group col-sm-6">
+                    <input type="text" id="txtWtMsr" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);"  data-type="number"  class="form-control parsley-validated" data-required="false" maxlength="11" placeholder="0.0" />
+                </div>
+            </div>
+            <div class="form-group col-sm-12">
+                <div class="form-group m-t-sm m-l-n col-sm-6">
+                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.NumberOfPackages</label>
+                </div>
+                <div class="form-group col-sm-6">
+                    <input type="text" id="txtNumberOfPackages" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated" data-required="false" maxlength="250" placeholder="0" style="text-transform:uppercase" />
+                </div>
+            </div>
+        </div>*@
+                                    <div class="form-group col-sm-6 m-t-n-xs classHideForWarehousing">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.DescriptionOfGoods</label>
+                                        @*<div id="divGoodsDescription" contenteditable="true" class="form-group col-sm-12 m-t-n-xs textDivGoodsDescription"></div>*@
+                                        <textarea id="divGoodsDescription" maxlength="250" class="form-group col-sm-12 m-t-xs textDivGoodsDescription" style="text-transform:uppercase"></textarea>
+                                    </div>
+                                    <div class="form-group col-sm-2" style="clear:both;">
+                                        <label><input type="checkbox" id="cbIsWarehousing" onchange="uncheckOthers(this.id); Quotation_cbIsWarehousingChange();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Warehousing</label>
+                                    </div>
+                                    <div class="form-group col-sm-3 hide classShowForAKS" style="clear:both;">
+                                        <label><input type="checkbox" id="cbIsLoadingDischarging" onchange="uncheckOthers(this.id); Quotation_cbIsLoadingDischargingChange();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Loading Discharging</label>
+                                    </div>
+                                    <div class="form-group col-sm-3 hide classShowForAKS" style="clear:both;">
+                                        <label><input type="checkbox" id="cbIsPackingRemovals" onchange="uncheckOthers(this.id); Quotation_cbIsLoadingDischargingChange();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Packing Removals</label>
+                                    </div>
+                                    <div class="form-group col-sm-3 hide classShowForAKS" style="clear:both;">
+                                        <label><input type="checkbox" id="cbIsSurvey" onchange="uncheckOthers(this.id); Quotation_cbIsLoadingDischargingChange();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Survey</label>
+                                    </div>
+                                    <div class="form-group col-sm-3 hide classShowForAKS" style="clear:both;">
+                                        <label><input type="checkbox" id="cbIsLashing" onchange="uncheckOthers(this.id); Quotation_cbIsLoadingDischargingChange();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Lashing</label>
+                                    </div>
+                                    <div class="form-group col-sm-2">
+                                        <label><input type="checkbox" id="cbIsSalesLead" onchange="Quotation_cbIsSalesLeadChange();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Sales Lead</label>
+                                    </div>
+                                    <div class="form-group col-sm-2 classHideForWarehousing">
+                                        <label><input type="checkbox" id="cbDangerousGoods" onchange="" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.DangerousGoods</label>
+                                    </div>
+                                    <!--EOF 6th row-->
+                                    <!--7th row-->
+                                    <!--EOF 7th row-->
+                                </div>
+                                <!--EOF Radio Buttons-->
+                            </div>
+                            <!--EOF Wizard-->
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <!-- Endregion Add / Edit Region Form -->
+            <div class="modal-footer">
+                <button type="button" id="btnSaveQuotation" class="btn btn-primary btn-sm" onclick="Quotations_Insert(false);">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                </button>
+                @*<a id="btnSaveandNewQuotation" class="btn btn-primary btn-sm" onclick="Quotations_Insert(true);">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew</a>*@
+                <button class="btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF Quotations Modal-->

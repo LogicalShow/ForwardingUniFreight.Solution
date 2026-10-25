@@ -1,0 +1,642 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="ReceiptsAndPayments" href="javascript:void(0);" onclick="LoadViews('Integration')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.ReceiptsAndPaymentsGroup
+        </a>
+    </li>
+    <li>
+        <a id="RecAndPaySettlements" href="javascript:void(0);" onclick="LoadViews('Integration')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.Integration
+        </a>
+    </li>
+    <li class="active lblPayment_Custody">@Forwarding.MvcApp.App_Resources.App_Resources.PaymentRequestIntegration</li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-PaymentRequestIntegration">
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 class="m-b-none lblPayment_Custody">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.PaymentRequestIntegration
+                </h3>
+            </header>
+            <!--Region the searh, delete, addnew-->
+            <div class="row text-sm wrapper hidden-print ">
+                <div id="div-main-options" class="col-sm-5 m-b-xs">
+                    <button id="btn-NewAdd" class="btn btn-warning btn-sm swapChildrenClass hide"  onclick="GetUserIDFromCustudy();" data-toggle="modal" data-target="#PaymentRequestIntegrationModal"><i class="fa fa-plus"></i><b>@Forwarding.MvcApp.App_Resources.App_Resources.New</b></button>
+                    <button id="btn-FilterOptions" class="btn btn-primary btn-sm" data-toggle="modal" onclick="" data-target="#FilterOptionsModal"><i class="fa fa-filter"></i> @Forwarding.MvcApp.App_Resources.App_Resources.FilterOptions</button>
+                    <div id="div-option-buttons" class="btn-group hide">
+                        <button id="btn-Copy" type="button" class="btn btn-sm btn-default"><i class="fa fa-copy"></i>&nbsp;Copy </button>
+                        <button id="btn-Print" type="button" class="btn btn-sm btn-default"><i class="fa fa-print"></i>&nbsp;Print </button>
+                        <button id="btn-Send" type="button" class="btn btn-sm btn-default"><i class="fa fa-envelope-o"></i>&nbsp;Send </button>
+                    </div>
+                </div>
+                <div id="div-search-option" class="col-sm-7">
+                    <div id="div-search-controls" class="input-group col-sm-9 hide">
+                        <input id="txt-Search" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="">
+                        <span class="input-group-btn">
+                            <button id="btn-search" class="btn btn-sm btn-primary" type="button" onclick="PaymentRequestIntegration_LoadingWithPaging();"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                    <div class="float-right col-sm-3">
+                        <button id="btn-Approve" type="button" class="float-right btn btn-primary btn-sm m-r" onclick="PaymentRequestIntegration_ApproveList();"><i class="fa fa-check-square-o"></i> @Forwarding.MvcApp.App_Resources.App_Resources.Approve</button>
+                    </div>
+                   <div class="float-right col-sm-4">
+                       <button id="btn-UnApprove" type="button" class="float-right btn btn-danger btn-sm m-r" onclick="PaymentRequestIntegration_UnApproveList();"><i class="fa fa-minus-square"></i>UnApprove -فك الاعتماد </button>
+                </div>
+
+
+                    <div class="float-right col-sm-3">
+                        <button id="btn-Delete" type="button" class="float-right btn btn-sm btn-danger m-r-n swapChildrenClass hide"><i class="fa fa-trash-o"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete&nbsp;</b></button>
+                    </div>
+                </div>
+            </div>
+            <!--Region the searh, delete, addnew-->
+            <!--Region: table header-->
+            <div class="table-responsive">
+                <table id="tblPaymentRequestIntegration" class="table table-striped b-t b-light text-sm  table-hover">
+                    <thead>
+                        <tr>
+                            <th id="ID" style="width:5%;">
+                                <input id="cb-CheckAll" type="checkbox" />
+                            </th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Code</th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Operation</th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Name</th>
+                            <th> @Forwarding.MvcApp.App_Resources.App_Resources.Date</th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.TotalEstimatedCost</th>
+                            <th class="hideWithCustodySettlement">@Forwarding.MvcApp.App_Resources.App_Resources.TotalActualCost</th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Currency</th>
+                            <th> @Forwarding.MvcApp.App_Resources.App_Resources.Notes</th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Posted</th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Status</th>
+                            <th class="rounded-right"></th>
+                            <th class="rounded-right"></th>
+                            <th class="rounded-right"></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <!--Region: table header-->
+            <!--Region: footer-->
+            <footer class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-4 hidden-xs">
+                        <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                        <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                        </button>
+                    </div>
+                    <div id="div-Text-Total" class="col-sm-4 text-center">
+                        <small class="text-muted inline m-t-sm m-b-sm">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                            <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                            <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                        </small>
+                    </div>
+                    <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+                </div>
+            </footer>
+            <!--Region: footer-->
+        </section>
+    </div>
+</div>
+
+
+<!-- Add / Edit Region Modal -->
+<div class="modal fade" id="PaymentRequestIntegrationModal" tabindex="-1" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="PaymentRequestIntegrationModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modalwidth-100 m-t-n-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;</button>*@
+                <div class="m-b-none" style="font-size: 24px;">
+                    <div class="lblPayment_Custody" style="display: inline;">@Forwarding.MvcApp.App_Resources.App_Resources.PaymentRequestIntegration</div> &nbsp;<label id="lblShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                    <div class="m-b-none float-right" style="font-size: 14px;">
+                        <label >Status:</label>
+                        <label id="lblStatusValue" purpose="dynamicLabel" class="static-text-primary ">Pending</label>
+                    </div>
+                 </div>
+
+            </div>   
+            <!-- Region Add / Edit Region Form -->
+            <div class="modal-body">
+                <div class="span7 form vertical-mode" id="PaymentRequestIntegration-form">
+                    <fieldset>
+                        <div class="form-group pull-in has-error clearfix">
+                            <input id="hID" type="hidden" />
+                            <!-- start alert message region -->
+                            @*<div class="alert alert-danger div-error">
+            @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+        </div>*@
+                            <!-- end alert message region -->
+                            <!-- Region Add / Edit Region Form -->
+                            <div class="row swapChildrenClass">
+                                <div class="form-group col-sm-2">
+                                    <label> @Forwarding.MvcApp.App_Resources.App_Resources.Code</label>
+                                    <input type="text" id="txtCode" autocomplete="off" disabled="disabled" class="form-control parsley-validated input-sm" data-required="false" maxlength="200" placeholder="Auto-Generated" style="text-transform:uppercase;" />
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label> @Forwarding.MvcApp.App_Resources.App_Resources.OperationNumber</label>
+                                    <input type="text" id="txOperationNumber" autocomplete="off"  class="form-control parsley-validated input-sm" data-required="true" maxlength="200" placeholder="Auto-Generated" style="text-transform:uppercase;" />
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <input tabindex="" class=" DisableWithCustody" type="radio" name="nameType" id="cbIsCustody" checked="checked" onchange="" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><b>@Forwarding.MvcApp.App_Resources.App_Resources.Custody</b>
+                                    <div >
+                                        <select id="slCustody" onchange="" class="form-control m-b input-sm classDisableForDetails DisableWithCustody" data-required="false"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <input tabindex="" class=" DisableWithCustody" type="radio" name="nameType" id="cbIsSupplier" checked="checked" onchange="" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><b>@Forwarding.MvcApp.App_Resources.App_Resources.Supplier</b>
+                                    <div >
+                                        <select id="slSupplier" onchange="" class="form-control m-b input-sm classDisableForDetails DisableWithCustody" data-required="false"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <input tabindex="" class=" DisableWithCustody" type="radio" name="nameType" id="cbIsClosingOperation" checked="checked" onchange="" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><b>Closing Operation</b>
+                                    <div >
+                                        <select id="slClosingOperation" onchange="" class="form-control m-b input-sm classDisableForDetails DisableWithCustody" data-required="false"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <input tabindex="" class=" DisableWithCustody" type="radio" name="nameType" id="cbIsTrucker" checked="checked" onchange="" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><b>@Forwarding.MvcApp.App_Resources.App_Resources.Trucker</b>
+                                    <div >
+                                        <select id="slTrucker" onchange="" class="form-control m-b input-sm classDisableForDetails DisableWithCustody" data-required="false"></select>
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="row swapChildrenClass">
+                                    <div class="form-group col-sm-2 ">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.HouseNumber</label>
+                                        <select id="slHouseNumber" class="form-control m-b input-sm " data-required="false"></select>
+                                    </div>
+                                    <div class="form-group col-sm-2 ">
+                                        <label>TR Supplier(Containers)</label>
+                                        <select id="slTruckingOrders" class="form-control m-b input-sm " data-required="false"></select>
+                                    </div>
+                                    <div class="form-group col-sm-2">
+                                        <label>تاريخ الطلب</label>
+                                        <input id="txtRequestDate" type="text" readonly="readonly" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="datepicker-input form-control input-sm  DisableWithCustody" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                                    </div>
+                                    <div class="form-group col-sm-2 hideWithCustodySettlement hide">
+                                        <label>تاريخ التسوية</label>
+                                        <input id="txtSettlementDate" type="text" readonly="readonly" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="datepicker-input form-control input-sm  DisableWithCustody" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                                    </div>
+                                    <div class="form-group col-sm-2 hide">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Status</label>
+                                        <input type="text" id="txtStatus" autocomplete="off" disabled="disabled" class="form-control parsley-validated input-sm" data-required="false" maxlength="200" placeholder="InProgress" style="text-transform:uppercase;" />
+                                    </div>
+                                    <div class="form-group col-sm-2 hide hideWithCustodySettlement">
+                                        <label> @Forwarding.MvcApp.App_Resources.App_Resources.TotalActualCost</label>
+                                        <input type="text" disabled="disabled" id="txtTotalActualCost" autocomplete="off" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="11" placeholder="0.0" />
+                                    </div>
+                                    <div class="form-group col-sm-2 hide">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.TotalEstimatedCost</label>
+                                        <input type="text" disabled="disabled" id="txtAmount" autocomplete="off" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="11" placeholder="0.0" />
+                                    </div>
+                                    <div class="form-group col-sm-2 hide  ">
+                                        <label>مبلغ التسوية</label>
+                                        <input type="text" disabled="disabled" id="txtSettlementAmount" autocomplete="off" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="11" placeholder="0.0" />
+                                    </div>
+                                    <div class="form-group col-sm-2 hide">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Currency</label>
+                                        <select id="slCurrency" class="form-control m-b input-sm DisableWithCustody" data-required="true"></select>
+                                    </div>
+                                </div>
+                            <div class="row swapChildrenClass">
+                                <div class="form-group col-sm-3 hidden">
+                                    <label>Payment</label>
+                                    <input type="text" id="txtPayment" autocomplete="off" class="form-control parsley-validated input-sm DisableWithCustody" data-required="false" maxlength="200" placeholder="Notes" style="text-transform:uppercase" />
+                                </div>
+                            </div>
+                            <div class="row swapChildrenClass">
+                                <div class="col-sm-1  m-t-27 swapChildrenClass">
+                                    <input tabindex="" class=" DisableWithCustody" type="radio" name="nameCashOrCheck" id="cbIsCash" checked="checked" onchange="" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><b>@Forwarding.MvcApp.App_Resources.App_Resources.Cash</b>
+                                </div>
+                                <div class="col-sm-1 m-t-27 swapChildrenClass">
+                                    <input tabindex="" class="DisableWithCustody" type="radio" name="nameCashOrCheck" id="cbIsCheck" onchange="" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><b> @Forwarding.MvcApp.App_Resources.App_Resources.Cheque</b>
+                                </div>
+                               
+                                <div class="form-group col-sm-6">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</label>
+                                    <input type="text" id="txtNotes" autocomplete="off" class="form-control parsley-validated input-sm DisableWithCustody" data-required="false" maxlength="200" placeholder="Notes" style="text-transform:uppercase" />
+                                </div>
+                                <div class="form-group col-sm-1 m-t-27 hide">
+                                    <label><input type="checkbox" id="cbIsPosted">&nbsp;Posted</label>
+                                </div>
+                            </div>
+                            <!--
+        <div id="divFinalize" class="col-sm-3 m-t-md">
+            <button id="btn-Finalize" class="btn btn-lightblue btn-sm m-t-xxs classDisableForPosted" data-toggle="modal" data-target="" onclick="PaymentRequestIntegration_Finalize();"><i class="fa fa-hand-o-right"></i>&nbsp;Finalize</button>
+            @*<button id="btn-GenerateDefaultLocations" class="btn btn-info btn-sm m-t-xxs" data-toggle="modal" data-target="" onclick="PaymentRequestIntegrationDetails_GenerateDefaultLocations();"><i class="fa fa-hand-o-down"></i>&nbsp;Default Locations</button>*@
+        </div>
+    -->
+                            <!--Details-->
+                            <div id="divPaymentRequestIntegrationDetailsBtns" class="col-sm-12 m-t" style="clear:both;">
+                                    <div id="divPaymentRequestIntegrationDetailsBtns" class="col-sm-12 m-t" style="clear:both;">
+                                        <button id="btn-AddPaymentRequestIntegrationDetails" class="btn btn-warning btn-sm classDisableForPosted" data-toggle="modal" data-target="" onclick="Details_NewRow();"><i class="fa fa-plus"></i> @Forwarding.MvcApp.App_Resources.App_Resources.AddDetails</button>
+                                        <button id="btn-DeletePaymentRequestIntegrationDetails" title="Delete Details" type="button" class="float-right btn btn-sm btn-danger classDisableForPosted" onclick="PaymentRequestIntegrationDetails_DeleteList();"><i class="fa fa-trash-o"></i>@Forwarding.MvcApp.App_Resources.App_Resources.Delete</button>
+                                    </div>
+
+                                    <div id="divPaymentRequestIntegrationDetails" class="col-sm-12 m-t-xs">
+                                        <section class="panel panel-default">
+                                            <header class="panel-heading font-bold text-ul"> @Forwarding.MvcApp.App_Resources.App_Resources.Details</header>
+                                            <!--Region: table header-->
+                                            <div class="table-responsive" style="width:100%; height:300px; overflow:scroll;">
+                                                <table id="tblPaymentRequestIntegrationDetails" class="table table-striped b-t b-light text-sm  table-hover ">
+                                                    <thead class="swapChildrenClass">
+                                                        <tr>
+                                                            <th id="HeaderDeletePaymentRequestIntegrationDetailsID" style="width:5%;">
+                                                                <input id="cb-CheckAll-PaymentRequestIntegrationDetails" type="checkbox" />
+                                                            </th>
+                                                            <th class="hide">@Forwarding.MvcApp.App_Resources.App_Resources.OperationNo</th>
+                                                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.ChargeTypes</th>
+                                                            <th class="classShowForDepartementHouse hide"> @Forwarding.MvcApp.App_Resources.App_Resources.HouseNumber</th>
+                                                            @* <th class=""> رقم الشهادة</th>*@
+                                                            <th class="classShowForDepartementTrOr hide"> @Forwarding.MvcApp.App_Resources.App_Resources.TruckingOrders</th>
+                                                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.ChooseProcessItems</th>
+                                                
+                                                            <th class="hide">@Forwarding.MvcApp.App_Resources.App_Resources.Supplier</th>
+                                                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.TotalEstimatedCost</th>
+                                                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Currency</th>
+                                                            <th class=" hide">@Forwarding.MvcApp.App_Resources.App_Resources.Coupon</th>
+                                                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.SupplierInvoiceNumber</th>
+
+                                                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</th>
+                                                            <th class="rounded-right hide"></th>
+                                                        </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                    <!--Region: EOF table header-->
+                                    <!--Region: table footer-->
+                                    <footer class="panel-footer ">
+                                        <div class="col-sm-12 m-t-n-sm swapChildrenClass">
+                                        <div class="col-sm-12 text-right swapChildrenClass">
+                                            <b>&emsp;Estimated Cost:</b><label id="lblCostByCurrency" @*purpose="dynamicLabel"*@ class="static-text-blue"></label>
+                                         </div>
+                                        </div>
+                                    </footer>
+                                    <!--Region: EOF table footer-->
+                                </section>
+                                                </div>
+
+                            </div>
+
+                            <!--EOF Details-->
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer m-t-n-lg">
+                    <button type="button" id="btnSave" class="btn btn-primary btn-sm classDisableForPosted" onclick="AlarmUsers_SavePaymentRequestIntegration();" @*onclick="PaymentRequestIntegration_Save(false);"*@>
+                        <span class="glyphicon glyphicon-save"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Save
+                    </button>
+                    <button type="button" id="btnPrint" class="btn btn-lightblue btn-sm" onclick="PaymentRequestIntegration_Print(0);">
+                        <span class="fa fa-print"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Print
+                    </button>
+                    <button type="button" id="btnSaveAndAddNew" class="btn btn-primary btn-sm classDisableForPosted hide" onclick="">
+                        <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew
+                    </button>
+                    <button class="btnClose btn btn-link btn-sm" id="btnClose" onclick="" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+                </div>
+            </div>
+            <!-- Endregion Add / Edit Region Form -->
+            
+        </div>
+    </div>
+</div>
+<!-- Region Options & Template  -->
+<!--PaymentRequestIntegrationDetailsModal-->
+<div class="modal fade" id="PaymentRequestIntegrationDetailsModal" tabindex="-1" style="z-index: 1050;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="PaymentRequestIntegrationDetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-60">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;</button>*@
+                <h3 class="m-b-none">
+                    Invoice Details&nbsp;<label id="lblPaymentRequestIntegrationDetailsShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region Add / Edit PaymentRequestIntegrationDetails Form -->
+                <div class="span7 form vertical-mode" id="PaymentRequestIntegrationDetails-form">
+                    <fieldset>
+                        <div class="form-group pull-in  has-error clearfix">
+                            <input id="hPaymentRequestIntegrationDetailsID" type="hidden" />
+                            <!-- start alert message region -->
+                            @*<div class="alert alert-danger div-error">
+                                    @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                </div>*@
+                            <!-- end alert message region -->
+                            <div class="form-group col-sm-6">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Item</label>
+                                <select id="slPaymentRequestIntegrationDetailsChargeType" class="form-control m-b input-sm" data-required="true"></select>
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Receive</label>
+                                <select id="slPaymentRequestIntegrationDetailsReceive" class="form-control m-b input-sm" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Pickup</label>
+                                <select id="slPaymentRequestIntegrationDetailsPickup" class="form-control m-b input-sm" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-6 hide">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Contract</label>
+                                <select id="slPaymentRequestIntegrationDetailsContract" class="form-control m-b input-sm" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label>Space/Pallet</label>
+                                <input type="text" id="txtPaymentRequestIntegrationDetailsSpacePerPallet" autocomplete="off" onchange="PaymentRequestIntegrationDetails_CalculateAmount();" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="11" placeholder="0.0" />
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Days</label>
+                                <input type="text" id="txtPaymentRequestIntegrationDetailsDays" autocomplete="off" onchange="PaymentRequestIntegrationDetails_CalculateAmount();" onkeypress="CheckValueIsInteger(id);" onfocus="CheckValueIsInteger(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="11" placeholder="0.0" />
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Rate</label>
+                                <input type="text" id="txtPaymentRequestIntegrationDetailsRate" autocomplete="off" onchange="PaymentRequestIntegrationDetails_CalculateAmount();" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="11" placeholder="0.0" />
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Total</label>
+                                <input type="text" id="txtPaymentRequestIntegrationDetailsAmount" autocomplete="off" disabled="disabled" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" class="form-control parsley-validated input-sm" data-required="true" maxlength="11" placeholder="0.0" />
+                            </div>
+
+                            <div class="form-group col-sm-9">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</label>
+                                <input type="text" id="txtPaymentRequestIntegrationDetailsNotes" autocomplete="off" class="form-control parsley-validated input-sm" data-required="false" maxlength="200" placeholder="Notes" style="text-transform:uppercase" />
+                            </div>
+                            @*<div class="col-sm-6 m-t-27 ">
+                                    <label><input type="checkbox" id="cbIsReligional" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Religional</label><br />
+                                </div>*@
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- End Region Add / Edit EditCharge Form -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSavePaymentRequestIntegrationDetails" class="btn btn-primary btn-sm classDisableForFinalized" onclick="PaymentRequestIntegrationDetails_Save(false);">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                </button>
+                <button type="button" id="btnSaveAndNewPaymentRequestIntegrationDetails" class="btn btn-primary btn-sm classDisableForFinalized" onclick="PaymentRequestIntegrationDetails_Save(true);">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew
+                </button>
+                <button class="btnClose btn btn-link btn-sm" id="btnPaymentRequestIntegrationDetailsClose" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF PaymentRequestDetailsModal-->
+<!--UploadFiles-->
+<div class="modal fade" id="UploadFilesModal" tabindex="-1" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="bUploadFilesLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-80">
+        <div class="modal-content m-t-n-lg">
+            <div class="step-pane" id="tabUploadFiles">
+                <!--Upload Region Controls-->
+                <input id="inputFileUpload_PaymentRequestIntegration" type="file" multiple="multiple" class="btn-primary btn-sm " />
+                <div id="divUpload" class="m-t">
+                    <input id="btnUploadFile" onclick="GeneralUpload_UploadFile();" class="btn btn-warning btn-sm" type="button" value="Upload Files" />
+                    <progress></progress>
+                </div>
+                <button id="btn-DeleteDocsIn" type="button" class="float-right btn btn-sm btn-danger m-t-n-lg swapChildrenClass" onclick="GeneralUpload_DeleteList();"><i class="fa fa-trash-o"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete&nbsp;</b></button>
+
+                <!--End Upload Region Controls-->
+
+                <section class="panel panel-default m-t">
+                    <!--Region: table header-->
+                    <div class="table-responsive">
+                        <table id="tblUploadedFiles_PaymentRequestIntegration" class="table table-striped b-t b-light text-sm  table-hover">
+                            <thead>
+                                <tr class="swapChildrenClass">
+                                    <th id="HeaderDeleteUploadedFiles_PaymentRequestIntegration" style="width:5%;">
+                                        <input id="cb-CheckAll-UploadedFiles_PaymentRequestIntegration" type="checkbox" />
+                                    </th>
+                                    <th>
+                                        @Forwarding.MvcApp.App_Resources.App_Resources.Serial
+                                    </th>
+                                    <th>
+                                        @Forwarding.MvcApp.App_Resources.App_Resources.FileName
+                                    </th>
+                                    <th class="rounded-right"></th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <!--Region: table footer-->
+                    <footer class="panel-footer">
+                        <div class="modal-footer m-t-n-lg">
+
+                            <button class="btnClose btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true"><b>@Forwarding.MvcApp.App_Resources.App_Resources.Close</b></button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+                        </div>
+
+                    </footer>
+                    <!--Region: EOF table footer-->
+                    <!--Region: EOF table header-->
+                </section>
+            </div>
+            <!-- Endregion Add / Edit Region Form -->
+
+        </div>
+    </div>
+</div>
+<!--EOFUploadFiles-->
+<!--FilterOptionsModal-->
+<div class="modal fade" id="FilterOptionsModal" tabindex="-1" @*style="z-index: 3000;"*@ data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="FilterOptionsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-100">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" title="Close">
+                    &times;
+                </button>
+                <div id="hExportedTable" class="hide"></div>
+                <h3 class="m-b-none">
+                    <label id="lblShownFilterOptions" class="static-text-primary">Filter Options</label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region FilterOptions Form -->
+                <button id="btn-ClearAllFilterOptions" type="button" class="btn btn-warning btn-sm m-l m-t-n-sm hide" onclick=""><i class="fa "></i><b>&nbsp;Clear All</b></button>
+                <div class="span7 form vertical-mode m-t-sm" id="FilterOptions-form">
+                    <fieldset>
+                        <div class="row hide">
+                            <div id="div-FilterOptions-controls" class="input-group m-l col-sm-5">
+                                <input id="txtFilterOptions" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search" />
+                                <span class="input-group-btn">
+                                    <button id="btn-FilterOptions-PaymentRequestIntegration" class="btn btn-sm btn-primary" type="button"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div id="divFilterOptions" class="m-t-n classSearchOptions">
+                            <div class="form-group col-sm-2 hide">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Warehouse</label>
+                                <select id="slFilterWarehouse" class="form-control m-b input-sm" data-required="true"></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>Payment Request Code. - رقم طلب الصرف</label>
+                                <input type="text" id="txtFilterCodeSerial" autocomplete="off" class="form-control input-sm" maxlength="200" placeholder=" Code" style="text-transform:uppercase">
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Status</label>
+                                <select id="slFilterStatus" class="form-control input-sm"></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>Booking Number</label>
+                                <input type="text" id="txtFilterBookingNumber" autocomplete="off" class="form-control input-sm" maxlength="200" placeholder="Booking Number" style="text-transform:uppercase">
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>Operation Number</label>
+                                <input type="text" id="txtFilterOperationNumber" autocomplete="off" class="form-control input-sm" maxlength="200" placeholder="Operation Number" style="text-transform:uppercase">
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Custody</label>
+                                <select id="slFilterCustody" class="form-control input-sm"></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>Vendor</label>
+                                <select id="slFilterVendor" class="form-control input-sm"></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.FromDate</label>
+                                <input id="txtFilterFromRequestDate" autocomplete="off" type="text" style="background-color:white; cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ToDate</label>
+                                <input id="txtFilterToRequestDate" autocomplete="off" type="text" style="background-color:white; cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                            </div>
+
+
+                            <div class="col-sm-6 m-t-md">
+                                <button id="btn-print" type="button" class="btn btn-lightblue btn-sm hide" onclick="PaymentRequestIntegration_Print('Print');"><i class="fa fa-print"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Print</b></button>
+                                <button id="btn-ExportToExcel" type="button" onclick="PaymentRequestIntegration_Print('Excel');" class="btn btn-sm btn-info hide"><i class="fa fa-table"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.TraExportExcel&nbsp;</b></button>
+                                <button id="btn-ClearFilters" type="button" onclick="ClearAll('#FilterOptionsModal');" class="btn btn-sm btn-warning"><i class="fa fa-eraser"></i><b>&nbsp;Clear Filters&nbsp;</b></button>
+                                @*<button id="btn-SelectOptions" type="button" class="btn btn-info btn-sm" onclick="OptionsStatistics_SelectOptions();"><i class="fa fa-check-square-o"></i><b>&nbsp;Select Options</b></button>
+                                    <button id="btn-SelectColumns" type="button" class="btn btn-warning btn-sm" onclick="OptionsStatistics_SelectColumns();"><i class="fa fa-print"></i><b>&nbsp;Add / Remove Columns</b></button>*@
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+                <!-- Endegion FilterOptions Form -->
+            </div>
+            <div class="modal-footer m-t-n">
+                <!--sherif-->
+
+                <button type="button" data-dismiss="modal" onclick="PaymentRequestIntegration_LoadingWithPaging();" id="btnFilterOptionsApply" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-search"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Search
+                </button>
+                @*<button class=" btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+<select id="slOperation" class="hide"></select>
+<select id="slHouse" class="hide"></select>
+<select id="slCertificateNumber" class="hide"></select>
+<select id="slTruckingOrder" class="hide"></select>
+<select id="slPartenerType" class="hide"></select>
+<select id="slPartener" class="hide"></select>
+
+
+
+
+<select id="slChargeType" class="hide"></select>
+<select id="slSupplier" class="hide"><option value="">Select Supplier</option></select>
+<!--EOF FilterOptionsModal-->
+<!--EOF Quotations Modal-->
+<!--CheckboxesListModal-->
+<div class="modal fade" id="CheckboxesListModal" tabindex="-1" style="z-index: 3000;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="CheckboxesListModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-90">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.Select &nbsp;<label id="lblShownItems" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region CheckboxesList Form -->
+                <div class="span7 form vertical-mode" id="CheckboxesList-form">
+                    <fieldset>
+                        @*<div class="row">
+                            <div id="div-search-controls" class="input-group m-l col-sm-5">
+                                <input id="txtSearchItems" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search" />
+                                <span class="input-group-btn">
+                                    <button id="btn-SearchItems" class="btn btn-sm btn-primary" type="button"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div><br />*@
+
+                        <div id="divCheckboxesList">
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- Endegion CheckboxesList Form -->
+            </div>
+            <div class="modal-footer">
+                <!--sherif-->
+                <button type="button" id="btnCheckboxesListApply" onclick="AlarmUsers_PaymentRequestIntegration();" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-save"></span>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                </button>
+                <button class=" btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF CheckboxesListModal-->
+<!--CheckboxesListModal_SavePaymentRequestIntegration-->
+<div class="modal fade" id="CheckboxesListModal_SavePaymentRequestIntegration" tabindex="-1" style="z-index: 3000;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="CheckboxesListModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-90">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.Select &nbsp;<label id="lblShownItems_SavePaymentRequestIntegration" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region CheckboxesList Form -->
+                <div class="span7 form vertical-mode" id="CheckboxesList-form">
+                    <fieldset>
+                        @*<div class="row">
+                            <div id="div-search-controls" class="input-group m-l col-sm-5">
+                                <input id="txtSearchItems" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search" />
+                                <span class="input-group-btn">
+                                    <button id="btn-SearchItems" class="btn btn-sm btn-primary" type="button"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div><br />*@
+
+
+                        <div id="divCheckboxesList_SavePaymentRequestIntegration">
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- Endegion CheckboxesList Form -->
+            </div>
+            <div class="modal-footer">
+                <!--sherif-->
+                <button type="button" id="btnCheckboxesListApply" onclick="PaymentRequestIntegration_Save();" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-save"></span>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                </button>
+                <button class=" btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF CheckboxesListModal_SavePaymentRequestIntegration-->

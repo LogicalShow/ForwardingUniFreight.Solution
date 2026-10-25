@@ -1,0 +1,351 @@
+﻿@*@{ Culture = UICulture = ViewBag.CutlureID; }*@
+<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);" onclick="LoadViews(id);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="VehicleModule" href="javascript:void(0);" onclick="LoadViews('VehicleModule')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.VehicleModule
+    </a>
+</li>
+@*<li><a id="ContainerTrackingTab" href="javascript:void(0);" onclick="LoadViews(ContainerTrackingGroup)">@Forwarding.MvcApp.App_Resources.App_Resources.ContainerTracking
+    </a></li>*@
+<li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.VehicleTracking </li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-VehicleTracking">
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.VehicleTracking
+                </h3>
+            </header>
+            <!--Region the searh, delete, addnew-->
+            <div class="row text-sm wrapper hidden-print m-t-n-xs">
+                <div id="div-main-options" class="col-sm-9 m-b-xs">
+                    <button id="btn-Inspect" class="hide btn btn-warning btn-sm swapChildrenClass" data-toggle="modal" onclick="VehicleTracking_InitializeModal(10, 0);" data-target="#VehicleTrackingModal"><i class="fa fa-crosshairs"></i><b>&nbsp;Inspect&nbsp;</b></button>
+                    <button id="btn-SendToWarehouse" class="hide btn btn-lightblue btn-sm swapChildrenClass" data-toggle="modal" onclick="VehicleTracking_InitializeModal(20, 0);" data-target="#VehicleTrackingModal"><i class="fa fa-crosshairs"></i><b>&nbsp;Send To Warehouse&nbsp;</b></button>
+                    <button id="btn-Receive" class="hide btn btn-primary btn-sm swapChildrenClass" data-toggle="modal" onclick="VehicleTracking_InitializeModal(45, 0);" data-target="#VehicleTrackingModal"><i class="fa fa-crosshairs"></i><b>&nbsp;Receive&nbsp;</b></button>
+                    <button id="btn-Pickup" class="hide btn btn-success btn-sm swapChildrenClass" data-toggle="modal" onclick="VehicleTracking_InitializeModal(50, 0);" data-target="#VehicleTrackingModal"><i class="fa fa-crosshairs"></i><b>&nbsp;Pickup&nbsp;</b></button>
+                    <button id="btn-Return" class="hide btn btn-danger btn-sm swapChildrenClass" data-toggle="modal" onclick="VehicleTracking_InitializeModal(60, 0);" data-target="#VehicleTrackingModal"><i class="fa fa-mail-reply"></i><b>&nbsp;Return&nbsp;</b></button>
+                    <button id="btn-CutOff" class="btn btn-warning btn-sm swapChildrenClass" data-toggle="modal" onclick="VehicleCutOff_FillModal();" data-target="#"><i class="fa fa-calendar"></i><b>&nbsp;Cut-Off&nbsp;</b></button>
+                    <button id="btn-PrintVehicleAction" class="btn btn-info btn-sm swapChildrenClass" data-toggle="modal" data-target="#VehicleTrackingPrintModal"><i class="fa fa-print"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Print&nbsp;</b></button>
+                
+                    <div id="div-option-buttons" class="btn-group hide">
+                        <button id="btn-Copy" type="button" class="btn btn-sm btn-default"><i class="fa fa-copy"></i>&nbsp;Copy </button>
+                        <button id="btn-Print" type="button" class="btn btn-sm btn-default"><i class="fa fa-print"></i>&nbsp;Print </button>
+                        <button id="btn-Send" type="button" class="btn btn-sm btn-default"><i class="fa fa-envelope-o"></i>&nbsp;Send </button>
+                    </div>
+                </div>
+                <div id="div-search-option" class="col-sm-3">
+                    <div id="div-search-controls" class="input-group col-sm-9">
+                        <input id="txt-Search" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="">
+                        <span class="input-group-btn">
+                            <button id="btn-search" class="btn btn-sm btn-primary" type="button" onclick="VehicleTracking_LoadingWithPaging();"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                    <div class="float-right col-sm-1">
+                        <button id="btn-Delete" type="button" class="float-right btn btn-sm btn-danger m-r-n swapChildrenClass hide"><i class="fa fa-trash-o"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete&nbsp;</b></button>
+                    </div>
+                </div>
+            
+                <div class="col-sm-6 hide">
+                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Warehouse</label>
+                    <select id="slWarehouse_Temp" class="form-control input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                </div>
+
+            </div>
+            <!--Region the searh, delete, addnew-->
+            <!--Region: table header-->
+            <div class="table-responsive m-t-n-sm">
+                <table id="tblVehicleTracking" class="table table-striped b-t b-light text-sm  table-hover">
+                    <thead>
+                        <tr>
+                            <th id="ID" style="width:5%;">
+                                <input id="cb-CheckAll" type="checkbox" />
+                            </th>
+                            <th>Line</th>
+                            <th>Action</th>
+                            <th>Date</th>
+                            <th>Chassis/Barcode</th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</th>
+                            <th>Engine/Serial</th>
+                            <th>Item Code</th>
+                            <th>Item Desc</th>
+                            <th>PaintType/Color</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Doc</th>
+                            <th class="rounded-right hide"></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <!--Region: table header-->
+            <!--Region: footer-->
+            <footer class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-4 hidden-xs">
+                        <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                        <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                        </button>
+                    </div>
+                    <div id="div-Text-Total" class="col-sm-4 text-center">
+                        <small class="text-muted inline m-t-sm m-b-sm">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                            <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                            <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                        </small>
+                    </div>
+                    <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+                </div>
+            </footer>
+            <!--Region: footer-->
+        </section>
+    </div>
+</div>
+
+
+<!--VehicleTrackingModal-->
+<div class="modal fade" id="VehicleTrackingModal" tabindex="-1" style="z-index: 1050;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="VehicleTrackingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-100">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="m-b-none">
+                    Vehicle Tracking&nbsp;<label id="lblVehicleTrackingShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region Add / Edit VehicleTracking Form -->
+                <div class="span7 form vertical-mode" id="VehicleTracking-form">
+                    <fieldset>
+                        <div class="form-group pull-in  has-error clearfix">
+                            <!-- start alert message region -->
+                            @*<div class="alert alert-danger div-error">
+                                    @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                </div>*@
+                            <!-- end alert message region -->
+                            <div class="form-group col-sm-2 m-t-n">
+                                <label>Action</label>
+                                <select id="slVehicleAction" disabled onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm m-t-xs"><option value=""><--Select--></option></select>
+                            </div>
+
+                            <div class="form-group col-sm-3 m-t-n hide">
+                                <label>T/C</label>
+                                <select id="slTrucker" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm m-t-xs"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-2 m-t-n hide">
+                                <label>Warehouse</label>
+                                <select id="slWarehouse" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="VehicleActionDetails_slWarehouseChanged();" class="form-control input-sm m-t-xs"><option value=""><--Select--></option></select>
+                            </div>
+
+                            <div class="form-group col-sm-2 m-t-n input-group">
+                                <label>Chassis/Dispatch</label>
+                                <input id="txtVehicleTrackingDetailsChassisNumber_Search" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control m-t-xs" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="">
+                                <span class="input-group-btn ">
+                                    <button id="btnVehicleTrackingDetailsChassisNumber_Search" class="btn btn-sm btn-warning m-t-27" title="Add Vehicle" type="button" onclick="VehicleTrackingDetails_AddVehicle();"><i class="fa fa-plus">Add</i></button>
+                                </span>
+                            </div>
+
+                            <div id="divSearchOption" class="col-sm-3">
+                                <label class="m-t-sm"> <input type="radio" name="nameSearchOption" onchange="VehicleTrackingDetails_SearchOptionChanged();" id="cbIsByChassis" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"> By Chassis</label>
+                                <label class="m-l-lg m-t-sm"> <input type="radio" name="nameSearchOption" checked="checked" id="cbIsByDispatch" onchange="VehicleTrackingDetails_SearchOptionChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"> By Dispatch</label>
+                            </div>
+
+                            <div class="form-group col-sm-12" style="clear:both;">
+                                <section class="panel panel-default">
+                                    @*<header class="panel-heading font-bold text-ul">Serials</header>*@
+                                    <!--Region: table header-->
+                                    <div class="table-responsive" style="width:100%; height:450px; overflow:scroll;">
+                                        <table id="tblVehicleTrackingDetails" class="table table-striped b-t b-light text-sm  table-hover ">
+                                            <thead>
+                                                <tr>
+                                                    <th id="HeaderDeleteVehicleTrackingDetailsID" style="width:3%;">
+                                                        <input id="cb-CheckAll-VehicleTrackingDetails" type="checkbox" />
+                                                    </th>
+                                                    <th style="width:3%;">Line</th>
+                                                    <th>Chassis/Barcode</th>
+                                                    <th style="width:20%;">@Forwarding.MvcApp.App_Resources.App_Resources.Notes</th>
+                                                    <th>Engine/Serial</th>
+                                                    <th>Dispatch No</th>
+                                                    <th class="hide">Item Code</th>
+                                                    <th>Item Desc</th>
+                                                    <th>PaintType/Color</th>
+                                                    <th>Customer</th>
+                                                    <th>From</th>
+                                                    <th>To</th>
+                                                    <th style="width:3%;">Doc</th>
+                                                    <th class="hide">@Forwarding.MvcApp.App_Resources.App_Resources.ActionDate</th>
+                                                    <th class="rounded-right hide"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                    <!--Region: EOF table header-->
+                                    <!--Region: table footer-->
+                                    <footer class="panel-footer hide">
+                                        <div class="col-sm-12 m-t-n-sm swapChildrenClass">
+                                            <!--
+                                                <div class="col-sm-6 swapChildrenClass"><b>&emsp;Row Max Weight(KGM)</b><label id="lblRowMaxWeight" @*purpose="dynamicLabel"*@ class="static-text-blue"></label></div>
+                                                <div class="col-sm-6 text-right swapChildrenClass"><b>&emsp;Row Max Volume(CBM)</b><label id="lblRowMaxVolume" @*purpose="dynamicLabel"*@ class="static-text-blue"></label></div>
+                                            -->
+                                        </div>
+                                    </footer>
+                                    <!--Region: EOF table footer-->
+                                </section>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- End Region Add / Edit EditCharge Form -->
+            </div>
+            <div class="modal-footer m-t-n-lg">
+                <button id="btn-GenerateDefaultSerial" class="btn btn-lightblue btn-sm classDisableForFinalized hide" data-toggle="modal" data-target="" onclick="VehicleTrackingDetails_GenerateDefaultSerial();"><i class="fa fa-hand-o-down"></i>&nbsp;Generate Default Serials</button>
+                <button type="button" id="btnSaveVehicleTrackingDetails" class="btn btn-primary btn-sm classDisableForFinalized" onclick="VehicleTrackingDetails_Save(false);">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                </button>
+                <button type="button" id="btnSaveAndNewVehicleTrackingDetails" class="btn btn-primary btn-sm classDisableForFinalized hide" onclick="VehicleTrackingDetails_Save(true);">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew
+                </button>
+                <button class="btnClose btn btn-link btn-sm" id="btnVehicleTrackingDetailsClose" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF VehicleTrackingModal-->
+
+
+<!--VehicleTrackingPrintModal-->
+<div class="modal fade" id="VehicleTrackingPrintModal" tabindex="-1" style="z-index: 1050;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="VehicleTrackingPrintModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-40">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="m-b-none">
+                    Vehicle Tracking&nbsp;<label id="lblVehicleTrackingPrintShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region Add / Edit VehicleTrackingPrint Form -->
+                <div class="span7 form vertical-mode" id="VehicleTrackingPrint-form">
+                    <fieldset>
+                        <div class="form-group col-sm-6 m-t">
+                            <label>Doc No. :</label>
+                            @*<select id="slMoveToOperation" class="form-control input-sm"></select>*@
+                            <input type="text" id="txtVehicleActionCodeSerial" autocomplete="off" onkeypress="DisableEnterKey(id);" onfocus="DisableEnterKey(id);" class="form-control input-sm" style="text-transform:uppercase;" placeholder="Doc.No." />
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- End Region Add / Edit EditCharge Form -->
+            </div>
+            <div class="modal-footer">
+                <button id="btn-VehicleTrackingPrint" class="btn btn-lightblue btn-sm" data-toggle="modal" data-target="" onclick="VehicleTracking_Print();"><i class="fa fa-print"></i>&nbsp;Print</button>
+                <button class="btnClose btn btn-link btn-sm" id="btnVehicleTrackingPrintClose" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF VehicleTrackingPrintModal-->
+
+
+<!--VehicleCuttoffModal-->
+<div class="modal fade" id="VehicleCuttoffModal" tabindex="-1" style="z-index: 1050;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="VehicleCuttoffModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-50">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="m-b-none">
+                    CutOff&nbsp;<label id="lblVehicleCuttoffShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region Add / Edit VehicleCuttoff Form -->
+                <div class="span7 form vertical-mode" id="VehicleCuttoff-form">
+                    <fieldset>
+                        <div class="form-group col-sm-6 m-t">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Customer</label>
+                            <select id="slCustomerCutoff" class="form-control input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"><option value=""><--Select--></option></select>
+                        </div>
+                        <div class="form-group col-sm-6 m-t">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.TransactionType</label>
+                            <select id="slTransactionTypeCutoff" class="form-control input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"><option value=""><--Select--></option></select>
+                        </div>
+                        <div class="form-group col-sm-6 m-t">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.PaymentTerm</label>
+                            <select id="slPaymentTermCutoff" class="form-control input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"><option value=""><--Select--></option></select>
+                        </div>
+                        <div class="form-group col-sm-6 m-t">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Tax</label>
+                            <select id="slTaxTypeCutoff" class="form-control input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"><option value=""><--Select--></option></select>
+                        </div>
+                        <div class="form-group col-sm-3 m-t">
+                            <label>Month</label>
+                            <select id="slMonthCutoff" class="form-control input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="true">
+                                <option value="01">01</option>
+                                <option value="02">02</option>
+                                <option value="03">03</option>
+                                <option value="04">04</option>
+                                <option value="05">05</option>
+                                <option value="06">06</option>
+                                <option value="07">07</option>
+                                <option value="08">08</option>
+                                <option value="09">09</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-3 m-t">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Year</label>
+                            <select id="slYearCutoff" class="form-control input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="true"><option value=""><--Select--></option></select>
+                        </div>
+                        @*<div class="form-group col-sm-6 m-t">
+                            <label>CutOff Date</label>
+                            <input id="txtVehicleCutOffDate" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" readonly="readonly" style="cursor:text;" class="datepicker-input form-control input-sm" data-required="true" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                        </div>*@
+                        <div class="form-group col-sm-6 m-t">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Chassisnumber</label>
+                            <input type="text" id="txtChassisNumberCutoff" autocomplete="off" onkeypress="DisableEnterKey(id);" onfocus="DisableEnterKey(id);" class="form-control input-sm" style="text-transform:uppercase;" placeholder="" />
+                        </div>
+                    </fieldset>
+                </div>
+                <div id="hExportedDiv" class="hide"></div>
+
+                <label id="lblInvoiceNumbers"></label>
+                <!-- End Region Add / Edit EditCharge Form -->
+            </div>
+            <div class="modal-footer">
+                <button id="btn-POReceipt" class="btn btn-danger btn-sm swapChildrenClass" data-toggle="modal" onclick="VehicleCutOff_POReceipt();" data-target="#"><i class="fa fa-undo"></i><b>&nbsp;PO Receipt&nbsp;</b></button>
+                <button id="btn-UndoAging" class="btn btn-danger btn-sm swapChildrenClass" data-toggle="modal" onclick="VehicleCutOff_UndoAging();" data-target="#"><i class="fa fa-undo"></i><b>&nbsp;Undo Aging&nbsp;</b></button>
+                <button id="btn-ReadAging" class="btn btn-info btn-sm swapChildrenClass" data-toggle="modal" onclick="VehicleCutOff_ReadAging();" data-target="#"><i class="fa fa-arrow-circle-down"></i><b>&nbsp;Read Aging&nbsp;</b></button>
+                <button id="btn-PreviewCutOff" class="btn btn-warning btn-sm swapChildrenClass" data-toggle="modal" onclick="VehicleCutOff_PreviewInvoice();" data-target="#"><i class="fa fa-eye"></i><b>&nbsp;Preview Days in Excel&nbsp;</b></button>
+                <button id="btn-VehicleCuttoffSave" class="btn btn-lightblue btn-sm" data-toggle="modal" data-target="" onclick="VehicleCutOff_GenerateInvoice();"><i class="fa fa-bolt"></i>&nbsp;Generate Invoices</button>
+                <button class="btnClose btn btn-link btn-sm" id="btnVehicleCuttoffClose" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF VehicleCuttoffModal-->

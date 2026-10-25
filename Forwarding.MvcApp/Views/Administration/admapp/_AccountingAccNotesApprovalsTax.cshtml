@@ -1,0 +1,412 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="Administration" href="javascript:void(0);" onclick="LoadViews('Settings')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.Administration
+        </a>
+    </li>
+    <li>
+        <a id="admapp" href="javascript:void(0);" onclick="LoadViews(id)">
+            @Forwarding.MvcApp.App_Resources.App_Resources.admapp
+        </a>
+    </li>
+    <li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.AccountingAccNotesApprovalsTax</li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-AccNotes">
+    <!-- Region Options & Template  -->
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 id="h3AccountingAccNotesApprovalsTax_SetApproval " class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.AccountingAccNotesApprovalsTax</h3>
+            </header>
+            <!--Region the searh, delete, addnew-->
+            <div class="row text-sm wrapper hidden-print ">
+                @*<div id="div-main-options" class="col-sm-2 m-b-xs">
+                        <button id="btn-NewAdd-Remove" class="btn btn-warning btn-sm swapChildrenClass hide" data-toggle="modal" data-target="#OperationPayableApprovalModal"><i class="fa fa-plus"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.New&nbsp;</b></button>
+                        <div id="div-option-buttons" class="btn-group hide">
+                            <button id="btn-Copy" type="button" class="btn btn-sm btn-default"><i class="fa fa-copy"></i>&nbsp;Copy </button>
+                            <button id="btn-Print" type="button" class="btn btn-sm btn-default"><i class="fa fa-print"></i>&nbsp;Print </button>
+                            <button id="btn-Send" type="button" class="btn btn-sm btn-default"><i class="fa fa-envelope-o"></i>&nbsp;Send </button>
+                        </div>
+                    </div>    *@
+
+                <div id="div-search-option" class="col-sm-12 swapChildrenClass">
+
+                    <div class="input-group col-sm-2">
+                        <!--<select id="slOperation" @*onchange="AccountingAccNotesApprovalsTax_SetApproval _LoadingWithPaging();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>-->
+                        <input id="txtOperation" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Operation">
+                        <span class="input-group-btn">
+                            <button id="btn-filter-Operation" title="Filter" class="btn btn-sm btn-lightblue" type="button" onclick="AccountingAccNotesApprovalsTax_LoadingWithPaging();"><i class="fa fa-filter"></i></button>
+                        </span>
+                    </div>
+
+                    <div class="input-group col-sm-3">
+                        <select id="slPartnerType" onchange="AccountingAccNotesApprovalsTax_PartnerTypeChanged();" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                        <span class="input-group-btn">
+                            <button id="btn-filter-PartnerType" title="Filter" class="btn btn-sm btn-lightblue" type="button" onclick="AccountingAccNotesApprovalsTax_PartnerTypeChanged();"><i class="fa fa-filter"></i></button>
+                        </span>
+                    </div>
+
+                    <div class="input-group col-sm-3">
+                        <select id="slPartner" @*onchange="AccountingAccNotesApprovalsTax_SetApproval _LoadingWithPaging();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b input-sm" data-required="false"></select>
+                        <span class="input-group-btn">
+                            <button id="btn-filter" title="Filter" class="btn btn-sm btn-lightblue" type="button" onclick="AccountingAccNotesApprovalsTax_LoadingWithPaging();"><i class="fa fa-filter"></i></button>
+                        </span>
+                    </div>
+
+                    <div class=" input-group col-sm-2 ">
+                        <select id="slApprovalStatus" @*onchange="AccountingAccNotesApprovalsTax_SetApproval _LoadingWithPaging();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b input-sm" data-required="false">
+                            <option value="">@Forwarding.MvcApp.App_Resources.App_Resources.AllStates</option>
+                            <option value="1">@Forwarding.MvcApp.App_Resources.App_Resources.Approved</option>
+                            <option value="0" selected>@Forwarding.MvcApp.App_Resources.App_Resources.UnApproved</option>
+                        </select>
+                        <span class="input-group-btn">
+                            <button id="btn-filterByApprovalStatus" title="Filter" class="btn btn-sm btn-lightblue" type="button" onclick="AccountingAccNotesApprovalsTax_LoadingWithPaging();"><i class="fa fa-filter"></i></button>
+                        </span>
+                    </div>
+
+                    <div class="input-group col-sm-2 swapChildrenClass">
+                        <input id="txt-Search" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="">
+                        <span class="input-group-btn">
+                            <button id="btn-search" title="Search" class="btn btn-sm btn-primary" type="button" onclick="AccountingAccNotesApprovalsTax_LoadingWithPaging();"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+
+                    @*<div class="form-group input-group col-sm-2 m-t-xs swapChildrenClass">
+                            <label><input type="checkbox" checked="checked" id="cbHideApprovedOperationPayable" onchange="AccountingAccNotesApprovalsTax_SetApproval _LoadingWithPaging();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Hide Approved</label>
+                        </div>
+                        <div class="float-right col-sm-2 hide">
+                            <button id="btn-Delete-Remove" type="button" class="float-right btn btn-sm btn-danger m-r-n swapChildrenClass hide"><i class="fa fa-trash-o"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete&nbsp;</b></button>
+                        </div>*@
+                </div>
+            </div>
+            <!--EOF Region the searh, delete, addnew line-->
+            <!--Region: table header-->
+            <div class="row text-sm wrapper hidden-print ">
+                <div class="col-sm-12 swapChildrenClass" id="div-search-option">
+                    <div class="col-sm-3">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Account</label>
+                        <select id="slAccountCharge" style="" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="input-sm form-control" onchange="Details_FillSlSubAccountCharge('slSubAccountCharge', 0)"></select>
+                    </div>
+                    <div class="col-sm-3">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.SubAccount</label>
+                        <select id="slSubAccountCharge" class="input-sm form-control" onchange="" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                    </div>
+                    <div class="input-group col-sm-3">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.CostCenter</label>
+
+                        <select id="slCostCenter" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="classAccountingOption col-sm-12 input-sm hide"></select>
+                    </div>
+                    <br/>
+                    <div class=" col-sm-5">
+                        <button id="btn-ApproveAllSelected" type="button" class="btn btn-primary btn-sm" onclick="AccountingAccNotesApprovalsTax_SetApproval(true);"><i class="fa fa-check-square-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.ApproveSelected</button>
+
+                        <button id="btn-UnApproveAllSelected" type="button" class="btn btn-danger btn-sm" onclick="AccountingAccNotesApprovalsTax_SetApproval(false);"><i class="fa fa-minus-square"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.UnApproveSelected</button>
+
+                        <button id="btn-AccNoteOptions" type="button" class="btn btn-sm btn-info" onclick="Invoices_PrintOptions();"><i class="fa fa-print"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.PrintOptions</button>
+                    </div>
+                    <div class="col-sm-4"></div>
+                </div>
+            </div>
+            @*<label class="m-l m-t-n"><input type="checkbox" id="cbPrintBankDetailsForNewAccNote" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Print Bank Details</label>
+                <label class="m-l m-t-n"><input type="checkbox" id="cbPrintHeaderAccNote" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Print Header</label>*@
+            <button id="btn-DeleteAccNote-remove" type="button" class="float-right btn btn-sm btn-danger m-t-n m-r hide" onclick="AccNotes_DeleteList();"><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete</button>
+            @* to return delete from here check that no payments are made/ to make it more easy don't allow multi-check *@
+            <div class="table-responsive m-t-xs">
+                <table id="tblAccNotes" class="table table-striped b-t b-light text-sm table-hover">
+                    <thead>
+                        <tr>
+                            <th id="HeaderDeleteAccNoteID">
+                                <input id="cb-CheckAll-AccNotes" type="checkbox" />
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Code
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.PartnerName
+                            </th>
+                            <th class="hide">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.PartnerType
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Total
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Currency
+                            </th>
+                            <th class="hide">
+                                Note Date
+                            </th>
+                            <th class="">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.DueDate
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.OperationNo
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.HBL
+                            </th>
+                            <th class="hide">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Status
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Invoice
+                            </th>
+                            <th>
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Approved
+                            </th>
+                            <th class="rounded-right"></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <!--Region: table header-->
+            <!--Region: footer-->
+            <footer class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-4 hidden-xs">
+                        <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                        <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                        </button>
+                    </div>
+                    <div id="div-Text-Total" class="col-sm-4 text-center">
+                        <small class="text-muted inline m-t-sm m-b-sm">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                            <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                            <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                        </small>
+                    </div>
+                    <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+                </div>
+            </footer>
+            <!--Region: footer-->
+        </section>
+    </div>
+</div>
+
+
+<!--EditAccNoteModal-->
+<div class="modal fade" id="EditAccNoteModal" tabindex="-1" style="z-index: 1040;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="EditAccNoteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-100">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.AccNotes &nbsp;<label id="lblEditedAccNoteShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region EditAccNote Form -->
+                <div class="span7 form vertical-mode" id="EditAccNote-form">
+                    <fieldset>
+                        <input id="hEditedAccNoteID" type="hidden" />
+                        <input id="hEditedAccNoteOperationID" type="hidden" />
+                        <input id="hEditedAccNoteMasterOperationID" type="hidden" />
+                        <input id="hEditedAccNoteTypeID" type="hidden" />
+                        <div class="form-group pull-in has-error clearfix">
+
+
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Invoice</label>
+                                <select id="slEditAccNoteInvoice" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="AccNotes_InvoiceChanged('Edit');" class="input-sm form-control" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.BillTo</label>
+                                <select id="slEditAccNotePartner" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="InvoiceAddressTypes_GetList(null, 'slEditAccNoteAddressTypes', 'slEditAccNotePartner', null);" class="input-sm form-control" data-required="true"></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.AddressType</label>
+                                <select id="slEditAccNoteAddressTypes" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="input-sm form-control" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-2 hide">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Code</label>
+                                <input type="text" id="txtEditAccNoteCode" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="input-sm form-control parsley-validated" data-required="false" data-minlength="1" maxlength="30" placeholder="Generated Automatically" disabled="disabled" style="text-transform:uppercase" />
+                            </div>
+                            @*<div class="form-group col-sm-2 hide">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.CustomerReference</label>
+                                    <input type="text" id="txtEditAccNoteCustomerReference" class="input-sm form-control parsley-validated" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" data-required="false" data-minlength="0" maxlength="10" placeholder="Ref No." style="text-transform:uppercase"/>
+                                </div>*@
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.NoteDate</label>
+                                <input id="txtEditAccNoteDate" readonly="readonly" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text; background-color:white;" class="input-sm datepicker-input form-control" data-required="true" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</label>
+                                <input type="text" id="txtEditAccNoteRemarks" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="input-sm form-control parsley-validated" data-required="false" maxlength="100" placeholder="Notes" style="text-transform:uppercase" />
+                            </div>
+
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.AmtWOVAT</label>
+                                <input type="text" id="txtEditAccNoteAmountWithoutVAT" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="7" placeholder="Amount" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.VAT</label>
+                                <select id="slEditAccNoteTax" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="AccNotes_ChangeAmountInAccNoteEdit(false, false);" class="form-control input-sm" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-1">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Perc</label>
+                                <input type="text" id="txtEditAccNoteTaxPercentage" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="4" placeholder="Tax (%)" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-1">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.VATAmt</label>
+                                <input type="text" id="txtEditAccNoteTaxAmount" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="7" placeholder="Tax Amount" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.TaxDiscount</label>
+                                <select id="slEditAccNoteDiscount" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="AccNotes_ChangeAmountInAccNoteEdit(false, false);" class="form-control input-sm" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-1">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Perc</label>
+                                <input type="text" id="txtEditAccNoteDiscountPercentage" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="4" placeholder="Discount (%)" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-1">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.DiscAmt</label>
+                                <input type="text" id="txtEditAccNoteDiscountAmount" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="7" placeholder="Discount Amount" style="text-transform:uppercase" />
+                            </div>
+
+
+                            <div class="form-group col-sm-1">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Total</label>
+                                <input type="text" id="txtEditAccNoteAmount" disabled="disabled" class="input-sm form-control parsley-validated" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="10" placeholder="0.00" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-1">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Currency</label>@*the bool parameter in Invoices_CurrencyChanged() is true for edit to set the control names*@
+                                <select id="slEditAccNoteCurrency" disabled="disabled" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="AccNotes_CurrencyChanged(true);" class="input-sm form-control" data-required="true"></select>
+                            </div>
+                            <div class="form-group col-sm-2 hide">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ExchangeRate</label>
+                                <input type="text" id="txtEditAccNoteMasterDataExchangeRate" disabled="disabled" class="input-sm form-control parsley-validated" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="3" placeholder="Exchange Rate" style="text-transform:uppercase" />
+                            </div>
+
+                            <div id="div-searchAccNote-controls" class="input-group col-sm-4 float-right hide">
+                                <input id="txtSearchAccNoteItems" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control m-t-md" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search Item Code/Name">
+                                <span class="input-group-btn">
+                                    <button id="btn-SearchAccNoteItems" class="input-sm btn btn-md btn-primary m-t-md" type="button"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                        <button id="btn-AddAccNoteItem" class="btn btn-warning btn-sm" data-toggle="modal"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.AddItems</button>
+                        <button id="btn-DeleteAccNoteItem" type="button" class="float-right btn btn-sm btn-danger" onclick="AccNotes_Update(true, true);"><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.RemoveItems</button>
+                        <div id="divEditAccNote" class="m-t-sm">
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- Endegion EditAccNote Form -->
+            </div>
+            <div class="modal-footer m-t-n-lg">
+                <!--sherif-->
+                <button type="button" id="btnSaveEditAccNote" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-save"></span>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                </button>
+                <button class="btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF EditAccNoteModal-->
+<!--CheckboxesListModal-->
+<div class="modal fade" id="CheckboxesListModal" tabindex="-1" style="z-index: 3000;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="CheckboxesListModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-90">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.SelectItems &nbsp;<label id="lblShownItems" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region CheckboxesList Form -->
+                <div class="span7 form vertical-mode" id="CheckboxesList-form">
+                    <fieldset>
+                        <div class="row">
+                            <div id="div-search-controls-checkboxeslist" class="input-group m-l col-sm-5">
+                                <input id="txtSearchItems" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search" />
+                                <span class="input-group-btn">
+                                    <button id="btn-SearchItems" class="btn btn-sm btn-primary" type="button"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div><br />
+
+                        <div id="divCheckboxesList">
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- Endegion CheckboxesList Form -->
+            </div>
+            <div class="modal-footer">
+                <!--sherif-->
+                <button type="button" id="btnCheckboxesListApply" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-save"></span>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                </button>
+                <button class=" btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF CheckboxesListModal-->
+<!--PrintInvoiceOptionsModal-->
+<div class="modal fade" id="PrintInvoiceOptionsModal" tabindex="-1" style="z-index: 1040;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="PrintInvoiceOptionsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-70">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                <h3 class="m-b-none">
+                    Print Options&nbsp;<label id="lblPrintInvoiceOptionsShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region PrintInvoiceOptions Form -->
+                <div class="span7 form vertical-mode" id="PrintInvoiceOptions-form">
+                    <fieldset>
+                        <div class="fprm-group col-sm-12 m-t">
+                            <label class=""><input type="checkbox" id="cbPrintHeaderInvoice" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Print Header</label>&emsp;
+                            <label class=""><input type="checkbox" id="cbPrintFooterInvoice" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Print Footer</label>&emsp;
+                            <label class=""><input type="checkbox" id="cbPrintMBL" checked onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Print MB/L</label>&emsp;
+                            <label class=""><input type="checkbox" id="cbPrintHBL" checked onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Print HB/L</label>&emsp;
+                            <label class=""><input type="checkbox" id="cbPrintArabicItems" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Arabic Items</label>&emsp;
+                            <label class=""><input type="checkbox" id="cbAddNotesToItems" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Add Notes to Items</label>&emsp;
+                            <label class="hide"><input type="checkbox" id="cbPrintUSDTotal" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;EGP To USD</label>&emsp;
+                            <label class="hide"><input type="checkbox" id="cbPrintReceivableNotes" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Print Receivable Notes</label>
+                            <br /><br />
+                            <label class=""><input type="checkbox" id="cbPrintLeftSignature" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Left Signature</label>&emsp;
+                            <label class=""><input type="checkbox" id="cbPrintMiddleSignature" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Middle Signature</label>&emsp;
+                            <label class=""><input type="checkbox" id="cbPrintRightSignature" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Right Signature</label>&emsp;
+                            <label class=""><input type="checkbox" id="cbPrintStamp" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Stamp</label>&emsp;
+                        </div>
+                        <div class="form-group col-sm-9 m-t">
+                            <label class=""><input type="radio" checked="checked" id="cbPrintBankDetailsFromDefaults" onchange="Invoices_PrintBankDetailsOptionChanged();" name="nameCbPrintBankDetailsOption" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Print default bank details</label>&emsp;
+                            <label class=""><input type="radio" id="cbPrintBankDetailsFromTemplate" onchange="Invoices_PrintBankDetailsOptionChanged();" name="nameCbPrintBankDetailsOption" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Print template bank details</label>&emsp;
+                            <label class=""><input type="radio" id="cbPrintBankDetailsNone" onchange="Invoices_PrintBankDetailsOptionChanged();" name="nameCbPrintBankDetailsOption" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Don't print bank details</label>
+                        </div>
+                        <div class="form-group col-sm-3 m-t m-l-n-lg">
+                            <select id="slBankTemplate" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm hide"></select>
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- Endegion PrintInvoiceOptions Form -->
+            </div>
+            <div class="modal-footer">
+                <!--sherif-->
+                <button type="button" data-dismiss="modal" id="btnSavePrintInvoiceOptions" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-save"></span>&nbsp;OK
+                </button>
+                @*<button class=" btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF PrintInvoiceOptionsModal-->

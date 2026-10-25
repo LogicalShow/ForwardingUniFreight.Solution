@@ -1,0 +1,108 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="liGroupName" href="javascript:void(0);" onclick="LoadViews('3PL')">
+            @Forwarding.MvcApp.App_Resources.App_Resources._3PL
+        </a>
+    </li>
+    <li>
+        <a id="liTabName" href="javascript:void(0);" onclick="LoadViews('WarehousingTransactions')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.WarehousingTransactions
+        </a>
+    </li>
+    <li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.ProductReallocation</li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-Reserve">
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.ProductReallocation
+                </h3>
+            </header>
+            <!--Region From-->
+            <div class="row text-sm wrapper hidden-print ">
+                <label for="div-from-options" class="note-form-label">From</label>
+                <div id="div-from-options" class="col-sm-12 m-b-xs">
+                    <div class="form-group col-sm-2">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Warehouse</label>
+                        <select id="slFromWarehouse" onchange="UpdateComboBoxes();" class="form-control m-b input-sm" data-required="false"></select>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Area</label>
+                        <select id="slFromArea" onchange="UpdateComboBoxes();" class="form-control m-b input-sm" data-required="false"></select>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Location</label>
+                        <select id="slFromLocation" onchange="GetAvailableProducts();" class="form-control m-b input-sm" data-required="false"></select>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label>Pallet ID</label>
+                        <input type="text" id="txtPalletID" autocomplete="off" class="form-control parsley-validated input-sm" data-required="false" maxlength="200" placeholder="" style="text-transform:uppercase" onchange="GetAvailableProducts();"/>
+                    </div>
+                    <div class="form-group col-sm-4" style="padding:22px">
+                        <button id="btnAddNewMovement" class="btn btn-warning btn-sm" data-target="#" data-toggle="button" onclick="AddNewMovement();"><i class="fa fa-plus"></i>&nbsp;Add New Movement&nbsp;</button>
+                    </div>
+                    <div class="form-group col-sm-2" style="float:right">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Customer</label>
+                        <select id="slCustomer" onchange="GetAvailableProducts();" class="form-control m-b input-sm" data-required="false"></select>
+                    </div>
+                </div>
+            </div>
+            <!--EOF Region From-->
+            <!--Region To-->
+            <div class="row text-sm wrapper hidden-print ">
+                <label for="div-to-options" class="note-form-label">To</label>
+                <div id="div-to-options" class="col-sm-12 m-b-xs">
+                    <div class="form-group col-sm-2">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Warehouse</label>
+                        <select id="slToWarehouse" onchange="UpdateComboBoxes();" class="form-control m-b input-sm" data-required="false"></select>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Area</label>
+                        <select id="slToArea" onchange="UpdateComboBoxes();" class="form-control m-b input-sm" data-required="false"></select>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Location</label>
+                        <select id="slToLocation" onchange="" class="form-control m-b input-sm" data-required="false"></select>
+                    </div>
+                    <div class="form-group col-sm-4" style="padding:22px">
+                        <button id="btnConfirmMovement" class="btn btn-primary btn-sm" data-target="#" data-toggle="button" onclick="ConfirmMovement();"><i class="fa fa-save"></i>&nbsp;Save&nbsp;</button>
+                    </div>
+                </div>
+            </div>
+            <!--EOF Region To-->
+            <!--Region ResponsiveTable-->
+            <div class="table-responsive" style="overflow-x:scroll;overflow-y:scroll;">
+                <hr />
+                <h4 class="text-center">@Forwarding.MvcApp.App_Resources.App_Resources.Items</h4>
+                <table id="tblItems" class="table b-t b-light text-sm table-hover">
+                    <thead>
+                        <tr>
+                            <th class="" data-toggle="class"></th>
+                            <th class="" data-toggle="class">@Forwarding.MvcApp.App_Resources.App_Resources.Product</th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Quantity</th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.AvailableQuantity</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <!--EOF Region ResponsiveTable-->
+            <!--Region HiddenSelectLists-->
+            <select id="hidden_slItems" style="visibility:hidden" class="input-sm form-control" data-required="false" onchange=""></select>
+            <!--EOF Region HiddenSelectLists-->
+        </section>
+    </div>
+</div>

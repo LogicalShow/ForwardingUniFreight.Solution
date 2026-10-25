@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/03/2022 13:02:22" ReportInfo.Modified="12/10/2024 15:18:39" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+    
+
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFxRuX0SEZR+Qy5O9rl1EtG+KmpLe+QEb/nNLMsHoRO5wWScxbuUFa01UiPZqQG9jSPsmxyDkczLwALQJBNI11bZM3zI+oNRkHM6d+dVC6HPJhtqiOV5mh5+/4ChQKYTRsHKrRUMddYyqaEmC3Qz1ifw==">
+      <TableDataSource Name="Table" Alias="Rep_InvoicesSR" DataType="System.Int32" Enabled="true" SelectCommand="exec (@query)">
+        <Column Name="Logo" DataType="System.String" PropName="Column" Calculated="true" Expression="[Logo]"/>
+        <Column Name="ID" DataType="System.Int64"/>
+        <Column Name="PartnerName" DataType="System.String"/>
+        <Column Name="ClientTaxID" DataType="System.String"/>
+        <Column Name="InvoiceType" DataType="System.String"/>
+        <Column Name="InvoiceNumber" DataType="System.String"/>
+        <Column Name="CrNoteRef" DataType="System.String"/>
+        <Column Name="InvoiceDate" DataType="System.DateTime"/>
+        <Column Name="AmountWithoutVAT" DataType="System.Decimal"/>
+        <Column Name="TaxAmount" DataType="System.Decimal"/>
+        <Column Name="Amount" DataType="System.Decimal"/>
+        <Column Name="TaxPercentage" DataType="System.Decimal"/>
+        <Column Name="CurrencyCode" DataType="System.String"/>
+        <Column Name="ExchangeRate" DataType="System.Decimal"/>
+        <Column Name="LocalAmountWithoutVal" DataType="System.Decimal"/>
+        <Column Name="LocalTaxAmount" DataType="System.Decimal"/>
+        <Column Name="LocalAmount" DataType="System.Decimal"/>
+        <Column Name="Trade" DataType="System.String"/>
+        <Column Name="ChargeCode" DataType="System.String"/>
+        <Column Name="PaidAmount" DataType="System.Decimal"/>
+        <Column Name="RemainingAmount" DataType="System.Decimal"/>
+        <Column Name="OperationNumber" DataType="System.String"/>
+        <Column Name="IsInvoice" DataType="System.Int32"/>
+        <Column Name="IsDeleted" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="InvoiceTypeID" DataType="System.Int32"/>
+        <Column Name="CurrencyID" DataType="System.Int32"/>
+        <Column Name="CreatorUser" DataType="System.String"/>
+        <Column Name="ReceiptCode" DataType="System.String"/>
+        <Column Name="Diff" DataType="System.Decimal"/>
+        <Column Name="ReferenceNo" DataType="System.String"/>
+        <CommandParameter Name="@query" DataType="12" Expression="[query]" DefaultValue="Rep_InvoicesSR ' WHERE 1=1 '"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="Logo" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="455" PaperHeight="296.9" LeftMargin="0" TopMargin="0" RightMargin="0" BottomMargin="0" FirstPageSource="15" OtherPagesSource="15" UnlimitedHeight="true">
+    <DataBand Name="Data1" Top="37.06" Width="1719.9" Height="21.74" CanShrink="true" DataSource="Table">
+      <TableObject Name="Table1" Left="9.08" Top="0.17" Width="1694.23" Height="21.57" Border.Lines="All" Fill.Color="Silver">
+        <TableColumn Name="Column42" Width="116.92"/>
+        <TableColumn Name="Column43" Width="92.09"/>
+        <TableColumn Name="Column44" Width="81.33"/>
+        <TableColumn Name="Column45" Width="61.32"/>
+        <TableColumn Name="Column46" Width="85.72"/>
+        <TableColumn Name="Column47"/>
+        <TableColumn Name="Column48"/>
+        <TableColumn Name="Column49"/>
+        <TableColumn Name="Column50"/>
+        <TableColumn Name="Column51"/>
+        <TableColumn Name="Column52"/>
+        <TableColumn Name="Column53"/>
+        <TableColumn Name="Column54"/>
+        <TableColumn Name="Column55"/>
+        <TableColumn Name="Column56"/>
+        <TableColumn Name="Column57"/>
+        <TableColumn Name="Column58"/>
+        <TableColumn Name="Column59"/>
+        <TableColumn Name="Column60"/>
+        <TableColumn Name="Column69"/>
+        <TableColumn Name="Column68"/>
+        <TableColumn Name="Column67"/>
+        <TableColumn Name="Column63"/>
+        <TableColumn Name="Column61"/>
+        <TableRow Name="Row7" MaxHeight="18900" Height="21.57" AutoSize="true">
+          <TableCell Name="Cell87" Border.Lines="All" Fill.Color="White" Text="[Rep_InvoicesSR.PartnerName]" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell88" Border.Lines="All" Fill.Color="White" Text="[Rep_InvoicesSR.ClientTaxID]" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell89" Border.Lines="All" Fill.Color="White" Text="[Rep_InvoicesSR.InvoiceType]" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell90" Border.Lines="All" Fill.Color="White" Text="[Rep_InvoicesSR.InvoiceNumber]" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell91" Border.Lines="All" Fill.Color="White" Text="[Rep_InvoicesSR.CrNoteRef]" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell92" Border.Lines="All" Fill.Color="White" Text="[FormatDateTime([Rep_InvoicesSR.InvoiceDate],&quot;MM/dd/yyyy&quot;)]" Format="Date" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell93" Border.Lines="All" Fill.Color="White" Text="[Rep_InvoicesSR.AmountWithoutVAT]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell94" Border.Lines="All" Fill.Color="White" Text="[Rep_InvoicesSR.TaxAmount]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell95" Border.Lines="All" Fill.Color="White" Text="[Rep_InvoicesSR.Amount]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell96" Border.Lines="All" Fill.Color="White" Text="[Rep_InvoicesSR.TaxPercentage] %" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell97" Border.Lines="All" Fill.Color="White" Text="[Rep_InvoicesSR.CurrencyCode]" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell98" Border.Lines="All" Fill.Color="White" Text="[Rep_InvoicesSR.ExchangeRate]" Format="Number" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell99" Border.Lines="All" Fill.Color="White" Text="[Rep_InvoicesSR.LocalAmountWithoutVal]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell100" Border.Lines="All" Fill.Color="White" Text="[Rep_InvoicesSR.LocalTaxAmount]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell101" Border.Lines="All" Fill.Color="White" Text="[Rep_InvoicesSR.LocalAmount]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell102" Border.Lines="All" Fill.Color="White" Text="[Rep_InvoicesSR.Trade]" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell103" Border.Lines="All" Fill.Color="White" Text="[Rep_InvoicesSR.ChargeCode]" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell104" Border.Lines="All" Fill.Color="White" Text="[Rep_InvoicesSR.PaidAmount]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell105" Border.Lines="All" Fill.Color="White" Text="[Rep_InvoicesSR.RemainingAmount]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell114" Border.Lines="All" Fill.Color="White" Text="[Rep_InvoicesSR.ReceiptCode]" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell113" Border.Lines="All" Fill.Color="White" Text="[Rep_InvoicesSR.ReferenceNo]" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell112" Border.Lines="All" Fill.Color="White" Text="[Rep_InvoicesSR.Diff]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell108" Border.Lines="All" Fill.Color="White" Text="[Rep_InvoicesSR.CreatorUser]" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell106" Border.Lines="All" Fill.Color="White" Text="[Rep_InvoicesSR.OperationNumber]" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 10pt, style=Bold"/>
+        </TableRow>
+      </TableObject>
+      <DataHeaderBand Name="DataHeader1" Width="1719.9" Height="35.73">
+        <TableObject Name="Table2" Left="8.89" Top="1.88" Width="1694.23" Height="33.85" Border.Lines="All" Fill.Color="Silver">
+          <TableColumn Name="Column11" Width="116.92"/>
+          <TableColumn Name="Column12" Width="92.09"/>
+          <TableColumn Name="Column13" Width="81.33"/>
+          <TableColumn Name="Column14" Width="61.32"/>
+          <TableColumn Name="Column25" Width="85.72"/>
+          <TableColumn Name="Column27"/>
+          <TableColumn Name="Column28"/>
+          <TableColumn Name="Column29"/>
+          <TableColumn Name="Column30"/>
+          <TableColumn Name="Column31"/>
+          <TableColumn Name="Column32"/>
+          <TableColumn Name="Column33"/>
+          <TableColumn Name="Column34"/>
+          <TableColumn Name="Column35"/>
+          <TableColumn Name="Column36"/>
+          <TableColumn Name="Column37"/>
+          <TableColumn Name="Column38"/>
+          <TableColumn Name="Column39"/>
+          <TableColumn Name="Column40"/>
+          <TableColumn Name="Column66"/>
+          <TableColumn Name="Column65"/>
+          <TableColumn Name="Column64"/>
+          <TableColumn Name="Column62"/>
+          <TableColumn Name="Column41"/>
+          <TableRow Name="Row6" Height="33.85">
+            <TableCell Name="Cell26" Border.Lines="All" Fill.Color="Silver" Text="Client Name" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell27" Border.Lines="All" Fill.Color="Silver" Text="Client Tax ID" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell28" Border.Lines="All" Fill.Color="Silver" Text="Invoice Type" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell29" Border.Lines="All" Fill.Color="Silver" Text="Inv No." HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell70" Border.Lines="All" Fill.Color="Silver" Text="Cr Note Ref" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell72" Border.Lines="All" Fill.Color="Silver" Text="Inv Date" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell73" Border.Lines="All" Fill.Color="Silver" Text="Amount Without VAT" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell74" Border.Lines="All" Fill.Color="Silver" Text="Vat Amount" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell75" Border.Lines="All" Fill.Color="Silver" Text="Total Amount" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell76" Border.Lines="All" Fill.Color="Silver" Text="VAT %" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell77" Border.Lines="All" Fill.Color="Silver" Text="Currency" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell78" Border.Lines="All" Fill.Color="Silver" Text="Exchange Rate" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell79" Border.Lines="All" Fill.Color="Silver" Text="Local Amount Without VAT" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell80" Border.Lines="All" Fill.Color="Silver" Text="Local VAT Amount" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell81" Border.Lines="All" Fill.Color="Silver" Text="Local Total Amount" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell82" Border.Lines="All" Fill.Color="Silver" Text="Trade" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell83" Border.Lines="All" Fill.Color="Silver" Text="Charge Code" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell84" Border.Lines="All" Fill.Color="Silver" Text="Paid Amount" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell85" Border.Lines="All" Fill.Color="Silver" Text="Remaining Amount" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell111" Border.Lines="All" Fill.Color="Silver" Text="Receipt Number" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell110" Border.Lines="All" Fill.Color="Silver" Text="Bank Reference" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell109" Border.Lines="All" Fill.Color="Silver" Text="Difference" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell107" Border.Lines="All" Fill.Color="Silver" Text="User" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell86" Border.Lines="All" Fill.Color="Silver" Text="Operation No" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          </TableRow>
+        </TableObject>
+      </DataHeaderBand>
+    </DataBand>
+  </ReportPage>
+</Report>

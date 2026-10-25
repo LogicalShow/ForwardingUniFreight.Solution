@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="02/24/2020 13:10:47" ReportInfo.Modified="03/03/2020 13:59:51" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqH8PF3dxkYYkh6pEphET1UY9ELQ1bIn4/M9D56Jt38xADja7dz7sl3CqUQ3LeC+MSQ/B6GxQJNOfAtMrjca9wIX3mSgJAHVJ84iudCLI1HBQjaJLuhFgVzl0HKyu/NNSXbd19GbmiL8VOwsJEUy09dpHFeTrFEyWld3RSFLCv5NCxIZGr8Al9fnaWz/OWMQAZYtou861PLetn6gSGtrspM93UjXQ8QYiDnqcTxeRsrQw=">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="exec  [dbo].[PR_GetBatchesDetails] @ItemID, @StoreID , @Date , @TransactionID">
+        <Column Name="ID" DataType="System.Int32"/>
+        <Column Name="StageID" DataType="System.Int32"/>
+        <Column Name="FinalProductID" DataType="System.Int64"/>
+        <Column Name="ParentStageID" DataType="System.Int32"/>
+        <Column Name="IsDeleted" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="OrderNo" DataType="System.Int32"/>
+        <Column Name="StageName" DataType="System.String"/>
+        <Column Name="Notes" DataType="System.String"/>
+        <Column Name="DID" DataType="System.Int32"/>
+        <Column Name="ProductID" DataType="System.Int64"/>
+        <Column Name="Percentage" DataType="System.Decimal"/>
+        <Column Name="ExpectedQty" DataType="System.Decimal"/>
+        <Column Name="ProductStageID" DataType="System.Int32"/>
+        <Column Name="UnitID" DataType="System.Int32"/>
+        <Column Name="UnitName" DataType="System.String"/>
+        <Column Name="Density" DataType="System.Decimal"/>
+        <Column Name="DIsDeleted" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="ISIn" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="FinalProduct_ItemID" DataType="System.Int64"/>
+        <Column Name="CostPrice" DataType="System.Decimal"/>
+        <Column Name="ActualQty" DataType="System.Decimal"/>
+        <Column Name="CostLiter" DataType="System.Decimal"/>
+        <Column Name="QtyFactor" DataType="System.Int32"/>
+        <Column Name="FinalItemName" DataType="System.String"/>
+        <Column Name="ItemName" DataType="System.String"/>
+        <Column Name="StartDate" DataType="System.DateTime"/>
+        <Column Name="FinishedDate" DataType="System.DateTime"/>
+        <Column Name="Code" DataType="System.String"/>
+        <Column Name="FromStore" DataType="System.String"/>
+        <Column Name="ToStore" DataType="System.String"/>
+        <Column Name="TransDate" DataType="System.DateTime"/>
+        <CommandParameter Name="ItemID" DataType="22" Expression="[ItemID]" DefaultValue="1454"/>
+        <CommandParameter Name="StoreID" DataType="22" Expression="[StoreID]" DefaultValue="1"/>
+        <CommandParameter Name="Date" DataType="33" Expression="[Date]" DefaultValue="02/16/2020"/>
+        <CommandParameter Name="TransactionID" DataType="22" Expression="[TransactionID]" DefaultValue="1088"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="ItemID" DataType="System.Int32" Expression="1454"/>
+    <Parameter Name="StoreID" DataType="System.Int32" Expression="1"/>
+    <Parameter Name="Date" DataType="System.DateTime" Expression="02/14/2020"/>
+    <Parameter Name="TransactionID" DataType="System.Int32" Expression="1110" Description="TransactionID"/>
+  </Dictionary>
+  <ReportPage Name="Page1" BackPage="true">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="141.75">
+      <TextObject Name="Text31" Top="9.45" Width="718.2" Height="37.8" Border.Lines="Top, Bottom" Border.Style="Dash" Text="Batches - أمـــر تـشغــيل" HorzAlign="Center" VertAlign="Center" Font="Britannic Bold, 24pt, style=Bold"/>
+      <TextObject Name="Text22" Left="359.1" Top="56.7" Width="151.2" Height="18.9" Cursor="SizeNS" Text="[Table.TransDate]" Format="Custom" Format.Format="dd/MM/yyyy" Font="Arial, 9pt"/>
+      <TextObject Name="Text19" Left="103.95" Top="56.7" Width="122.85" Height="18.9" Text="[Table.Code]" Font="Arial, 9pt"/>
+      <TextObject Name="Text25" Left="18.9" Top="56.7" Width="94.5" Height="18.9" Border.Lines="Left" Text="Code           :" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text26" Left="264.6" Top="56.7" Width="103.95" Height="18.9" Border.Lines="Left" Text="Date                  :" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text30" Left="264.6" Top="85.05" Width="103.95" Height="18.9" Border.Lines="Left" Text="To Store           :" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text20" Left="94.5" Top="85.05" Width="122.85" Height="18.9" Text="[Table.FromStore]" Format="Custom" Format.Format="dd/MM/yyyy" Font="Arial, 9pt"/>
+      <TextObject Name="Text21" Left="359.1" Top="85.05" Width="151.2" Height="18.9" Text="[Table.ToStore]" Font="Arial, 9pt"/>
+      <TextObject Name="Text29" Left="18.9" Top="85.05" Width="85.05" Height="18.9" Border.Lines="Left" Text="From Store :" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text23" Left="94.5" Top="113.4" Width="122.85" Height="18.9" Text="[Table.StartDate]" Format="Custom" Format.Format="dd/MM/yyyy" Font="Arial, 9pt"/>
+      <TextObject Name="Text24" Left="359.1" Top="113.4" Width="151.2" Height="18.9" Text="[Table.FinishedDate]" Format="Custom" Format.Format="dd/MM/yyyy" Font="Arial, 9pt"/>
+      <TextObject Name="Text27" Left="18.9" Top="113.4" Width="85.05" Height="18.9" Border.Lines="Left" Text="Start Date   :" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text28" Left="264.6" Top="113.4" Width="103.95" Height="18.9" Border.Lines="Left" Text="Finished Date :" Font="Arial, 9pt, style=Bold"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="144.61" Width="718.2"/>
+    <GroupHeaderBand Name="GroupHeader2" Top="147.46" Width="718.2" Height="56.7" StartNewPage="true" Condition="[Table.StageName]">
+      <TextObject Name="Text2" Left="18.9" Top="9.45" Width="368.55" Height="37.8" Border.Lines="All" Text="[[Table.StageName]]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text32" Left="18.9" Top="9.45" Width="94.5" Height="37.8" Border.Lines="All" Text="Stage :" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <GroupHeaderBand Name="GroupHeader3" Top="207.02" Width="718.2" Height="37.8" Condition="[Table.ISIn]" SortOrder="Descending">
+        <TextObject Name="Text3" Left="18.9" Width="94.5" Height="18.9" Border.Lines="All" Fill.Color="LightGray" BeforePrintEvent="Text3_BeforePrint" Text="[[Table.ISIn]]" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text5" Left="18.9" Top="18.9" Width="179.55" Height="18.9" Border.Lines="Left, Top, Bottom" Fill.Color="LightGray" Text="Product" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text7" Left="198.45" Top="18.9" Width="94.5" Height="18.9" Border.Lines="Left, Top, Bottom" Fill.Color="LightGray" Text="Unit" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text8" Left="292.95" Top="18.9" Width="132.3" Height="18.9" Border.Lines="Left, Top, Bottom" Fill.Color="LightGray" Text="Percentage" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text10" Left="425.25" Top="18.9" Width="122.85" Height="18.9" Border.Lines="Left, Top, Bottom" Fill.Color="LightGray" Text="Qty" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text12" Left="548.1" Top="18.9" Width="151.2" Height="18.9" Border.Lines="All" Fill.Color="LightGray" Text="Density" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <DataBand Name="Data1" Top="247.68" Width="718.2" Height="18.9" DataSource="Table">
+          <TextObject Name="Text4" Left="18.9" Width="179.55" Height="18.9" Border.Lines="All" CanGrow="true" Text="[Table.ItemName]" HorzAlign="Center" VertAlign="Center"/>
+          <TextObject Name="Text6" Left="198.45" Width="94.5" Height="18.9" Border.Lines="All" CanGrow="true" Text="[Table.UnitName]" HorzAlign="Center" VertAlign="Center"/>
+          <TextObject Name="Text1" Left="292.95" Width="132.3" Height="18.9" Border.Lines="All" CanGrow="true" Text="[Table.Percentage]" HorzAlign="Center" VertAlign="Center" WordWrap="false"/>
+          <TextObject Name="Text11" Left="548.1" Width="151.2" Height="18.9" Border.Lines="All" CanGrow="true" Text="[Table.Density]" HorzAlign="Center" VertAlign="Center" WordWrap="false"/>
+          <TextObject Name="Text9" Left="425.25" Width="122.85" Height="18.9" Border.Lines="All" CanGrow="true" Text="[Table.ActualQty]" HorzAlign="Center" VertAlign="Center" WordWrap="false"/>
+        </DataBand>
+        <GroupFooterBand Name="GroupFooter3" Top="269.44" Width="718.2" Height="9.45"/>
+      </GroupHeaderBand>
+      <GroupFooterBand Name="GroupFooter2" Top="281.74" Width="718.2"/>
+    </GroupHeaderBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="284.6" Width="718.2" Height="510.3">
+      <CheckBoxObject Name="CheckBox16" Left="680.4" Top="302.4" Width="18.9" Height="18.9" Border.Lines="All" Checked="false"/>
+      <CheckBoxObject Name="CheckBox15" Left="680.4" Top="283.5" Width="18.9" Height="18.9" Border.Lines="All" Checked="false"/>
+      <CheckBoxObject Name="CheckBox14" Left="680.4" Top="264.6" Width="18.9" Height="18.9" Border.Lines="All" Checked="false"/>
+      <CheckBoxObject Name="CheckBox13" Left="680.4" Top="245.7" Width="18.9" Height="18.9" Border.Lines="All" Checked="false"/>
+      <CheckBoxObject Name="CheckBox12" Left="680.4" Top="226.8" Width="18.9" Height="18.9" Border.Lines="All" Checked="false"/>
+      <CheckBoxObject Name="CheckBox11" Left="680.4" Top="207.9" Width="18.9" Height="18.9" Border.Lines="All" Checked="false"/>
+      <CheckBoxObject Name="CheckBox10" Left="680.4" Top="189" Width="18.9" Height="18.9" Border.Lines="All" Checked="false"/>
+      <CheckBoxObject Name="CheckBox9" Left="680.4" Top="170.1" Width="18.9" Height="18.9" Border.Lines="All" Checked="false"/>
+      <CheckBoxObject Name="CheckBox8" Left="680.4" Top="151.2" Width="18.9" Height="18.9" Border.Lines="All" Checked="false"/>
+      <CheckBoxObject Name="CheckBox7" Left="680.4" Top="132.3" Width="18.9" Height="18.9" Border.Lines="All" Checked="false"/>
+      <CheckBoxObject Name="CheckBox6" Left="680.4" Top="113.4" Width="18.9" Height="18.9" Border.Lines="All" Checked="false"/>
+      <CheckBoxObject Name="CheckBox5" Left="680.4" Top="94.5" Width="18.9" Height="18.9" Border.Lines="All" Checked="false"/>
+      <CheckBoxObject Name="CheckBox4" Left="680.4" Top="75.6" Width="18.9" Height="18.9" Border.Lines="All" Checked="false"/>
+      <CheckBoxObject Name="CheckBox3" Left="680.4" Top="56.7" Width="18.9" Height="18.9" Border.Lines="All" Checked="false"/>
+      <CheckBoxObject Name="CheckBox2" Left="680.4" Top="37.8" Width="18.9" Height="18.9" Border.Lines="All" Checked="false"/>
+      <CheckBoxObject Name="CheckBox1" Left="680.4" Top="18.9" Width="18.9" Height="18.9" Border.Lines="All" Checked="false"/>
+      <TextObject Name="Text18" Left="18.9" Width="94.5" Height="18.9" Text="Notes :" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text17" Left="18.9" Top="18.9" Width="652.05" Height="491.4" Border.Lines="All" CanGrow="true" Text="[Table.Notes]" Font="Arial, 9pt, style=Bold"/>
+      <CheckBoxObject Name="CheckBox17" Left="680.4" Top="321.3" Width="18.9" Height="18.9" Border.Lines="All" Checked="false"/>
+      <CheckBoxObject Name="CheckBox18" Left="680.4" Top="340.2" Width="18.9" Height="18.9" Border.Lines="All" Checked="false"/>
+      <CheckBoxObject Name="CheckBox19" Left="680.4" Top="359.1" Width="18.9" Height="18.9" Border.Lines="All" Checked="false"/>
+      <CheckBoxObject Name="CheckBox20" Left="680.4" Top="378" Width="18.9" Height="18.9" Border.Lines="All" Checked="false"/>
+      <CheckBoxObject Name="CheckBox21" Left="680.4" Top="396.9" Width="18.9" Height="18.9" Border.Lines="All" Checked="false"/>
+      <CheckBoxObject Name="CheckBox22" Left="680.4" Top="415.8" Width="18.9" Height="18.9" Border.Lines="All" Checked="false"/>
+      <CheckBoxObject Name="CheckBox23" Left="680.4" Top="434.7" Width="18.9" Height="18.9" Border.Lines="All" Checked="false"/>
+      <CheckBoxObject Name="CheckBox24" Left="680.4" Top="453.6" Width="18.9" Height="18.9" Border.Lines="All" Checked="false"/>
+      <CheckBoxObject Name="CheckBox25" Left="680.4" Top="472.5" Width="18.9" Height="18.9" Border.Lines="All" Checked="false"/>
+      <CheckBoxObject Name="CheckBox26" Left="680.4" Top="491.4" Width="18.9" Height="18.9" Border.Lines="All" Checked="false"/>
+    </ReportSummaryBand>
+    <PageFooterBand Name="PageFooter1" Top="797.76" Width="718.2" Height="94.5"/>
+  </ReportPage>
+</Report>

@@ -1,0 +1,539 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 5.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="InfoSysTech [IST], Developed By Sherif Anwar Abdelaziz and Mohamed Ahmed Abd El-mougood">
+    <meta name="description" content="Forwarding System , HMS , InfoSysTech , IST " />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    <!-- [CSS Files] -->
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/CSS/font-awesome.css")" type="text/css" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/CSS/app.v2.css")" type="text/css" />
+    @*<link rel="stylesheet" href="@Url.Content("~/Content/CSS/app.v2 - NewColour.css")" type="text/css" />*@
+    @*<link rel="stylesheet" href="@Url.Content("~/Content/CSS/"+@Forwarding.MvcApp.App_Resources.App_Resources.CSSFile)" type="text/css" />*@<!--the arabic file will be nearer so it will apply-->
+    <link rel="stylesheet" href="@Url.Content("~/Content/CSS/datepicker.css")" type="text/css" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/CSS/jquery.contextMenu.css")" type="text/css" />
+    <link rel="stylesheet" href="@Url.Content("~/Content/CSS/sweet-alert.css")" type="text/css" />
+    <link rel="stylesheet" href="@Url.Content("~/Scripts/nestable/nestable.css")" type="text/css" />
+    <link rel="stylesheet" href="@Url.Content("~/Scripts/fuelux/fuelux.css")" type="text/css" />
+    <link rel="stylesheet" href="@Url.Content("~/Scripts/utilities/bootstrap-datetimepicker.min.css")" type="text/css" />
+    <link rel="stylesheet" href="@Url.Content("~/Scripts/utilities/bootstrap-datetimepicker.css")" type="text/css" />
+    @*<link rel="stylesheet" href="@Url.Content("~/Scripts/utilities/bootstrap-datetimepicker.min.css")" type="text/css" />
+        <link href="~/Scripts/utilities/bootstrap-datetimepicker.css" rel="stylesheet" />*@
+    <link href="~/Content/CSS/barchart.css" rel="stylesheet" />
+    @*<link href="~/Content/CSS/jquery-ui.css" rel="stylesheet" />*@
+    @*<link rel="stylesheet" href="@Forwarding.MvcApp.App_Resources.App_Resources.CSSFile" type="text/css" />*@
+    <!--/ [CSS Files] -->
+    <!-- [Java Script Files] -->
+    <script src="@Url.Content("~/Scripts/utilities/jquery-1.10.2.js")" type="text/javascript"></script>
+    @*<script src="@Url.Content("~/Scripts/jquery-ui-1.10.4.js")" type="text/javascript"></script>*@
+    <script src="@Url.Content("~/Scripts/utilities/jquery.scrollTo.min.js")" type="text/javascript"></script>
+    @*<script src="~/Scripts/utilities/bootstrap-datetimepicker.js"></script>*@
+    <link rel="stylesheet" href="@Url.Content("~/Scripts/utilities/TextSearch/select2.css")" type="text/css" />
+    <script src="~/Scripts/utilities/TextSearch/select2.js"></script>
+    <script src="~/Scripts/utilities/TextSearch/jquery-editable-select.js"></script>
+    <script src="~/Scripts/utilities/TextSearch/jquery-1.10.2.intellisense.js"></script>
+
+    <script src="@Url.Content("~/Scripts/utilities/bootstrap-paginator.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/mainapp.master.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/utilities/bootstrap-datepicker.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/utilities/bootstrap-hijri-datepicker.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/utilities/jquery.tableToExcel.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/utilities/jquery.table2excel.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/utilities/jquery.contextMenu.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/utilities/sweet-alert.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/utilities/jquery.highlight-5.js")" type="text/javascript"></script>
+
+    <script src="~/Scripts/utilities/moment-hijri.js"></script>
+    <script src="~/Scripts/PlugIns/MostaaTextArea.js"></script>
+    <script src="~/Scripts/utilities/Inputmask/inputmask.js"></script>
+    <script src="~/Scripts/utilities/Inputmask/jquery.inputmask.js"></script>
+    <script src="~/Scripts/utilities/Inputmask/bindings/inputmask.binding.js"></script>
+    <script src="~/Scripts/utilities/xlsx/xlsx.core.min.js"></script>
+    <script src="~/Scripts/utilities/xlsx/jszip.min.js"></script>
+
+    <script src="@Url.Content("~/Scripts/nestable/jquery.nestable.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/nestable/demo.js")" type="text/javascript"></script>
+
+    @*for wizard*@
+    <script src="@Url.Content("~/Scripts/fuelux/fuelux.js")" type="text/javascript"></script>
+    @* for reading Excel *@
+    <script src="@Url.Content("~/Scripts/utilities/xls.js")" type="text/javascript"></script>
+    <!--sherif: chart scripts-->
+    <!-- Sparkline Chart -->
+    <script src="@Url.Content("~/Scripts/charts/sparkline/jquery.sparkline.min.js")" type="text/javascript"></script>
+    <!-- Easy Pie Chart -->
+    <script src="@Url.Content("~/Scripts/charts/easypiechart/jquery.easy-pie-chart.js")" type="text/javascript"></script>
+    <!-- Flot -->
+    <script src="@Url.Content("~/Scripts/charts/flot/jquery.flot.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/charts/flot/jquery.flot.tooltip.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/charts/flot/jquery.flot.resize.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/charts/flot/jquery.flot.orderBars.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/charts/flot/jquery.flot.pie.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/charts/flot/jquery.flot.grow.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/charts/flot/demo.js")" type="text/javascript"></script>
+
+    <link href="~/Scripts/utilities/FancyTree/skin-win8/ui.fancytree.css" rel="stylesheet" />
+    <script src="~/Scripts/utilities/FancyTree/jquery.fancytree-all-deps.js"></script>
+    <script src="~/Scripts/utilities/FancyTree/modules/jquery.fancytree.childcounter.js"></script>
+    <script src="~/Scripts/utilities/FancyTree/modules/jquery.fancytree.filter.js"></script>
+    <script src="~/Scripts/utilities/FancyTree/modules/jquery.fancytree.menu.js"></script>
+    <script src="~/Scripts/utilities/FancyTree/modules/jquery.fancytree.multi.js"></script>
+    <script src="~/Scripts/utilities/FancyTree/modules/jquery.fancytree.logger.js"></script>
+
+
+    <script src="~/Scripts/utilities/jquery-barcode.js"></script>
+    <script src="~/Scripts/utilities/barchart.js"></script>
+    <script src="~/Scripts/utilities/Chart.min.js"></script>
+    @*<link href="~/Scripts/utilities/Charts/TableBarChart.css" rel="stylesheet" />
+        <script src="~/Scripts/utilities/Charts/TableBarChart.js"></script>*@
+    <link href="~/Scripts/utilities/Charts/bar.chart.min.css" rel="stylesheet" />
+    <script src="~/Scripts/utilities/Charts/jquery.bar.chart.min.js"></script>
+    <script src="~/Scripts/utilities/Charts/jqBarGraph.1.1.js"></script>
+
+    <link href="~/Scripts/utilities/summernote-0.8.16-dist/summernote-lite.css" rel="stylesheet" />
+    <script src="~/Scripts/utilities/summernote-0.8.16-dist/summernote-lite.js"></script>
+    <script src='https://d3js.org/d3.v4.min.js'></script>
+    <link href="~/Scripts/utilities/tooltipster-master/dist/css/tooltipster.bundle.css" rel="stylesheet" />
+    <link href="~/Scripts/utilities/tooltipster-master/dist/css/tooltipster.main.css" rel="stylesheet" />
+    <script src="~/Scripts/utilities/tooltipster-master/dist/js/tooltipster.main.js"></script>
+    <script src="~/Scripts/utilities/tooltipster-master/dist/js/tooltipster.bundle.js"></script>
+
+    <link href="~/Scripts/utilities/TouchDragDrop/css/jquery.dragon-slider.css" rel="stylesheet" />
+    <script src="~/Scripts/utilities/TouchDragDrop/jquery.dragon.js"></script>
+    <link href="~/Scripts/utilities/CoolDragDrop/CoolDragDrop.css" rel="stylesheet" />
+
+    <script src="~/Scripts/utilities/CoolDragDrop/CoolDragDrop.js"></script>
+    <script src="~/Scripts/utilities/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/Scripts/utilities/bootstrap-datetimepicker.js"></script>
+    <!--sherif: EOF chart scripts-->
+    <!--sherif: parsley -->
+    @*<script src="@Url.Content("~/Scripts/parsley/parsley.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/parsley/parsley.extend.js")" type="text/javascript"></script>*@
+    <!--sherif:EOF parsley -->
+    <!--/ [Java Script Files] -->
+    <!--[if lt IE 9]>
+    <script src="@Url.Content("~/Scripts/ie/html5shiv.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/ie/respond.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/ie/excanvas.js")" type="text/javascript"></script>
+    <![endif]-->
+    <!-- Validation Libraries -->
+    <!-- Validation Libraries -->
+    <!-- media-queries.js -->
+    <!--[if lt IE 9]>
+    <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js" type="text/javascript"></script>
+    <![endif]-->
+    <!-- html5.js -->
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]-->
+</head>
+<body onload="">
+    @{
+        Culture = UICulture = ViewBag.CutlureID;
+    }
+
+    @*  <link href="~/Views/WebSite/WebSite.css" rel="stylesheet" />*@
+    <input id="hf_ChangeLanguage" type="hidden" value="@ViewBag.CutlureID" />
+    <input id="hf_CanView" type="hidden" value="@ViewBag.CanView" />
+    <input id="hf_CanAdd" type="hidden" value="@ViewBag.CanAdd" />
+    <input id="hf_CanEdit" type="hidden" value="@ViewBag.CanEdit" />
+    <input id="hf_CanDelete" type="hidden" value="@ViewBag.CanDelete" />
+    <input id="hDefaultCompanyName" type="hidden" />
+    <input id="hDefaultCountryID" type="hidden" />
+    <input id="hDefaultCountryName" type="hidden" />
+    <input id="hDefaultCurrencyID" type="hidden" />
+    <input id="hDefaultForeignCurrencyID" type="hidden" />
+    <input id="hDefaultBranchID" type="hidden" />
+    <input id="hDefaultCurrencyCode" type="hidden" />
+    <input id="hLoggedUserID" type="hidden" />
+    <input id="hLoggedUserDepartmentID" type="hidden" />
+    <input id="hLoggedUserNameNotLogin" type="hidden" />
+    <input id="hUserBranchID" type="hidden" />
+    <input id="hIsCreditlimitexceptionperiod" type="hidden" />
+
+    <input id="hDefaultImportOceanDays" type="hidden" />
+    <input id="hDefaultImportAirDays" type="hidden" />
+    <input id="hDefaultImportInlandDays" type="hidden" />
+    <input id="hDefaultExportOceanDays" type="hidden" />
+    <input id="hDefaultExportAirDays" type="hidden" />
+    <input id="hDefaultExportInlandDays" type="hidden" />
+    <input id="hDefaultDomesticOceanDays" type="hidden" />
+    <input id="hDefaultDomesticAirDays" type="hidden" />
+    <input id="hDefaultDomesticInlandDays" type="hidden" />
+    <input id="hDefaultUnEditableCompanyName" type="hidden" />
+    <input id="hCashAccountID" type="hidden" />
+    <input id="hCashSubAccountID" type="hidden" />
+    <select id="hReadySlBranches" class="hide"></select>
+    <select id="hReadySlCommodities" class="hide"></select>
+    <select id="hReadySlTrackingStatge" class="hide"></select>
+    <select id="hReadySlCustomers" class="hide"></select>
+    <select id="hReadySlPorts" class="hide"></select>
+    <select id="hReadySlPartners" class="hide"></select>
+    <select id="hReadySlCurrencies" class="hide"></select>
+    <select id="hReadySlOptions" class="hide"></select>
+    <select id="hReadySlMainClients" class="hide"></select>
+    <select id="hReadySlAgents" class="hide"></select>
+
+
+    <form id="mainForm">
+        <section class="vbox">
+            <header class="bg-dark  dk header navbar navbar-fixed-top-xs">
+                @*<div class="navbar-header aside-md">*@
+                <div class="navbar-header" title="Full Screen" id="ul-left-menu">
+                    <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen,open" data-target="#nav,html">
+                        <i class="fa fa-bars"></i>
+                    </a>
+
+                    <a href="#" class="navbar-brand" data-toggle="fullscreen">
+                        <img id="imgPortalComponyLogo" class="hide" style="width:225px;min-height: 60px;" src="~/Content/Images/PortalCompanyLogo.png" />
+                        <img id="imgSysLogo" src="@Url.Content("~/Content/Images/logo.png")" class="m-r-sm " />
+                        <span id="spanCompanyName" style="color: rgb(255, 184, 0)"></span> - <span id="spanProjectName"></span>
+                    </a>
+                    <span id="ul-left-menu-Contains">
+                        <a class="navbar-brand m-l-n" title="Customer Name" href="#">
+                            <i id="portalUserLogo" class="fa fa-user " style="color: rgb(255, 255, 255); font-size:23px;"><b id="HeaderCustomerName"></b></i>
+                        </a>
+                        <a href="#" onclick="SendTestEmail();" class="hide">Send Test Email</a>
+
+                        <a class="btn btn-link visible-xs" data-toggle="dropdown" data-target=".nav-user">
+                            <i class="fa fa-cog"></i>
+                        </a>
+                        @*<span id="HeaderYoutubeLink hide">
+                                <a target="_blank" class="navbar-brand m-l-n" title="IST YouTube Explanation Channel" href="https://www.youtube.com/channel/UChwpwriaj15uWwzHgZxPTog/featured?view_as=subscriber">
+
+                                    <i class="fa fa-youtube" style="color: rgb(255, 255, 255); font-size:16px;"><b>YouTube Training Process</b></i>
+                                </a>
+                            </span>*@
+
+
+
+                    </span>
+                </div>
+                <ul id="ul-right-menu" class="nav navbar-nav navbar-right hidden-xs" ">
+                    <li>
+                        <h4 id="hSystemDate">
+                            <span id="lCurrentSystemDate"></span>
+                        </h4>
+                    </li>
+
+
+                    <li id="liRenewalWarning" class="m-t text-danger font-bold"></li>
+                    @*<li class="hidden-xs" id="liChequeAlarm"><a href="#" class="dropdown-toggle dk action-bar" data-toggle="dropdown" title="Under-Collect Cheques Notifications">*@
+                    <li class="hide" id="liChequeAlarm">
+                        <a href="#" class="dropdown-toggle dk action-bar" data-toggle="dropdown" title="Under-Collect Cheques Notifications">
+                            <i class="fa fa-money"></i><span id="spanAccPaymentNotificationsCount" class="badge badge-sm up bg-danger m-l-n-sm count">*</span>
+                        </a>
+                        <section class="dropdown-menu aside-xl">
+                            <section class="panel bg-white">
+                                <header class="panel-heading b-dark bg-dark">
+                                    <strong><span id="spanAccPayment1stRowNotifications" class=" pull-left">Notifications will be shown here</span>&nbsp; </strong>
+                                </header>
+                                <div id="divAccPaymentNotificationAchors" class="list-group list-group-alt animated fadeInRight"></div>
+                                <footer class="panel-footer text-sm hide"> <a href="#" class="pull-right"><i class="fa fa-cog"></i></a> <a href="#notes" data-toggle="class:show animated fadeInRight">See all the notifications</a> </footer>
+                            </section>
+                        </section>
+                    </li>
+
+                    <li id="headerForms" style="width:250px;top:10px;" class="">
+                        <select id="slForms" onchange="LoadViews(this.options[this.selectedIndex].getAttribute('imagename'))" class="form-control input-sm" data-required="false"><option value=""><--Select Screen--></option></select>
+                    </li>
+
+                    <li id="headerNotification" class="">
+                        <a href="#" class="dropdown-toggle dk action-bar" data-toggle="dropdown" title="Emails & Operations Notifications">
+                            <i class="fa fa-bell"></i><span id="spanNotificationsCount" class="badge badge-sm up bg-danger m-l-n-sm count">*</span>
+                        </a>
+                        <section class="dropdown-menu aside-xl">
+                            <section class="panel bg-white">
+                                <header class="panel-heading b-dark bg-dark">
+                                    <strong><span id="span1stRowNotifications" class=" pull-left">Notifications will be shown here</span>&nbsp; </strong>
+                                </header>
+                                <div id="divNotificationAchors" class="list-group list-group-alt animated fadeInRight" style="height:400px;overflow-y:scroll;">
+                                    @*<a href="#" onclick="Transport_EditByDblClick(103);" class="media list-group-item" style="display: block;">
+                                            <span class="media-body block m-b-none"> السياحة الداخلية : <span>رحلة شرم الشيخ</span><br><small class="text-muted">File # KTO H 2016/06/1 - Transport Form # 8595</small></span>
+                                        </a>
+                                        <a href="#" class="media list-group-item">
+                                            <span class="media-body block m-b-none pull-left"> Use awesome animate.css <small class="text-muted">10 minutes ago</small> </span>
+                                        </a>
+                                        <a href="#" class="media list-group-item">
+                                            <span class="media-body block m-b-none pull-left"> 1.0 initial released <small class="text-muted">1 hour ago</small> </span>
+                                        </a>*@
+                                </div>
+                                <footer class="panel-footer text-sm hide"> <a href="#" class="pull-right"><i class="fa fa-cog"></i></a> <a href="#notes" data-toggle="class:show animated fadeInRight">See all the notifications</a> </footer>
+                            </section>
+                        </section>
+                    </li>
+
+                    @*<li class="hidden-xs">*@
+                    <li id="headerLanguages" class="">
+                        <a href="#" class="dropdown-toggle dk action-bar" data-toggle="dropdown"><i class="fa fa-globe fa-2x"></i></a>
+                        <section id="LanguageSection" class="dropdown-menu">
+                            <section class="panel bg-white">
+                                <div class="list-group list-group-alt animated fadeInRight">
+
+                                    @*    @Html.ActionLink("French", "SetFrenchCulture", "Culture")
+                                        @Html.ActionLink("Spanish", "SetSpanishCulture", "Culture")
+                                    *@
+                                    <a id="lbtnLanguageEn" href="/Home/SetEnglishCulture" class="media list-group-item" style="cursor: pointer;">
+                                        <span class="pull-left thumb-sm">
+                                            <img src="@Url.Content("~/Content/Images/flag-uk.png")" alt="English" class="img-circle">
+                                        </span><span class="media-body block m-b-none">English</span>
+                                    </a>
+                                    <a id="lbtnLanguageAr" href="/Home/SetArabicCulture" class="media list-group-item" style="cursor: pointer;">
+                                        <span class="pull-left thumb-sm">
+                                            <img src="@Url.Content("~/Content/Images/flag-egypt.png")" alt="عربي" class="img-circle">
+                                        </span><span class="media-body block m-b-none">عربي</span>
+                                    </a>
+                                    <a id="lbtnLanguageCh" href="/Home/SetChineseCulture" class="media list-group-item" style="cursor: pointer;">
+                                        <span class="pull-left thumb-sm">
+                                            <img src="@Url.Content("~/Content/Images/flag-china.png")" alt="عربي" class="img-circle">
+                                        </span><span class="media-body block m-b-none">Chinese</span>
+                                    </a>
+                                    @*<a id="lbtnlanguagefr" href="/home/setfrenchculture" class="media list-group-item" style="cursor: pointer;">
+                                            <span class="pull-left thumb-sm">
+                                                <img src="@Url.Content("~/content/images/flag-fr.png")" alt="French" class="img-circle">
+                                            </span><span class="media-body block m-b-none">Français</span>
+                                        </a>*@
+                                </div>
+                            </section>
+                        </section>
+                    </li>
+                    <li id="headerFavoriteReports" class="">
+                        <a href="#" onclick="LoadViews('SubFavoriteReports');" class="dropdown-toggle dk action-bar" data-toggle="dropdown" title=" Favorite Reports "><i class="fa fa-trello fa-2x"></i></a>
+                    </li>
+                    @*<li class="dropdown hidden-xs"><a id="hl-search" href="#" class="dropdown-toggle dker action-bar"
+                            data-toggle="dropdown"><i class="fa fa-fw fa-search"></i></a>
+                            <section id="sec-quicksearch" class="dropdown-menu aside-xl animated fadeInUp">
+                                <section class="panel bg-white">
+                                    <form role="search">
+                                        <div class="form-group wrapper m-b-none">
+                                            <div class="input-group">
+                                                <input id="txt-Search" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase"  type="text" class="form-control" placeholder="Search" />
+                                                <span class="input-group-btn">
+                                                    <button type="submit" class="btn btn-info btn-icon">
+                                                        <i class="fa fa-search"></i>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </section>
+                            </section>
+                        </li>*@
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="thumb-sm avatar pull-left">
+                                <img src="@Url.Content("~/Content/Images/avatar.jpg")" alt="Profile Image" />
+                            </span>
+                            <span id="sp-LoginName" style="color:whitesmoke;"><b>@WebSecurity.CurrentUserName.ToUpper()</b></span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul id="ul-usersettinginfo" class="dropdown-menu animated fadeInRight">
+                            @*<li><a href="#">Settings</a> </li>*@
+                            <li><a href="#ChangePasswordModal" onclick="ClearAll('#ChangePasswordModal');" data-toggle="modal">Change Password</a> </li>
+                            @*<li><a href="#"><span class="badge bg-danger pull-right">0</span> Notifications </a>
+                                </li>*@
+                            @*<li><a href="#"><span id="sp-Help">Help</span>
+                                </a></li>*@
+                            <li class="divider"></li>
+                            <li>
+                                <a id="anchorLogout" href="/Login/Logout"><span id="sp-Logout">Logout</span></a>
+                            </li>
+                            <!--  data-toggle="ajaxModal"  -->
+                        </ul>
+                    </li>
+                    <li id="liOpenNewTab" class="dropdown hidden-xs" onclick="OpenNewTab();" title="New Tab">
+                        @*<a href="#" class="dropdown-toggle dker action-bar">*@
+                        <a href="#" class="dropdown-toggle action-bar">
+                            <i style="color:whitesmoke;" class="fa fa-fw fa-plus"></i>
+                        </a>
+                    </li>
+                </ul>
+                @*<span style="color:whitesmoke;" class="float-right m-t-md"><b>Welcome, @WebSecurity.CurrentUserName.ToUpper()</b></span>*@
+            </header>
+            <section>
+                <section class="hbox stretch">
+                    <!-- .aside -->
+                    @*<aside class="bg-dark lter aside hidden-print" id="nav">*@
+                    <aside class="bg-dark lter aside-customized hidden-print" id="nav">
+                        <section class="vbox">
+                            <section id="navigation-left-bar" class="w-f scrollable">
+                                <div id="div-mainmenu" class="slim-scroll" @*data-height="auto"*@ data-height="fixed" data-disable-fade-out="true"
+                                     data-distance="0" data-size="5px" data-color="#333333">
+                                    <!-- nav sherif-->
+                                    <nav id='nav-mainmenu' class='nav-primary hidden-xs bg-dark'>
+                                        <ul id="ulMainMenu" class='nav'></ul>
+                                        <ul id="ulOperationsSubMenu" class='nav hide'></ul>
+                                    </nav>
+                                    <!-- / nav -->
+                                </div>
+                            </section>
+                            <footer class="footer lt hidden-xs b-t b-dark" @*style="position:fixed;"*@>
+                                @*<div id="chat" class="dropup">
+                                        <section class="dropdown-menu on aside-md m-l-n">
+                                            <section class="panel bg-white">
+                                                <header class="panel-heading b-b b-dark">Active chats</header>
+                                                <div class="panel-body animated fadeInRight">
+                                                    <p class="text-sm">
+                                                        No active chats.
+                                                    </p>
+                                                    <p>
+                                                        <a href="#" class="btn btn-sm btn-default">Start a chat</a>
+                                                    </p>
+                                                </div>
+                                            </section>
+                                        </section>
+                                    </div>
+                                    <div id="invite" class="dropup">
+                                        <section class="dropdown-menu on aside-md m-l-n">
+                                            <section class="panel bg-white">
+                                                <header class="panel-heading b-b b-dark">
+                                                    John <i class="fa fa-circle text-success"></i>
+                                                </header>
+                                                <div class="panel-body animated fadeInRight">
+                                                    <p class="text-sm">
+                                                        No contacts in your lists.
+                                                    </p>
+                                                    <p>
+                                                        <a href="#" class="btn btn-sm btn-facebook"><i class="fa fa-fw fa-facebook"></i>Invite
+                                                        from Facebook</a>
+                                                    </p>
+                                                </div>
+                                            </section>
+                                        </section>
+                                    </div>*@
+                                <a href="#nav" data-toggle="class:nav-xs" class="pull-right btn btn-sm btn-default btn-icon">
+                                    <i class="fa fa-angle-left text"></i><i class="fa fa-angle-right text-active"></i>
+                                </a>
+                                @*<div class="btn-group hidden-nav-xs">
+                                        <button type="button" title="Chats" class="btn btn-icon btn-sm btn-default" data-toggle="dropdown"
+                                            data-target="#chat">
+                                            <i class="fa fa-comment-o"></i>
+                                        </button>
+                                    </div>*@
+                            </footer>
+                        </section>
+                    </aside>
+
+                    <!-- /.aside -->
+                    <section id="content" style="overflow-x:scroll;">
+                        <section class="vbox">
+                            <section id="sec-content" class="scrollable padder">
+                                <div id="div-content">
+                                    @RenderSection("featured", required: false)
+                                    <section class="content-wrapper main-content clear-fix">
+                                        @RenderBody()
+                                    </section>
+                                </div>
+                                <!-- //Dimming DIV -->
+                                <div id="page-cover-page">
+                                    <img src="@Url.Content("~/Content/images/progress.gif")" alt="" style="width: 100%; height: 0.5%; top: 0px;" />
+                                    <div id="div-loading">
+                                        <img src="@Url.Content("~/Content/images/Company_logo.png")" alt="InfoSysTech" />
+                                    </div>
+                                </div>
+                            </section>
+                        </section>
+                        <a href="#" class="hide nav-off-screen-block" data-toggle="class:nav-off-screen"
+                           data-target="#nav"></a>
+                    </section>
+                    <aside class="bg-dark lter b-l aside-md hide" id="notes">
+                        <div class="wrapper">
+                            Notification
+                        </div>
+                    </aside>
+
+
+
+
+
+                    @*<aside id="asideSearch" class="aside-sm b-l hide">
+                            <section class="vbox">
+                                <header class="bg-light dk header"> <p>@Forwarding.MvcApp.App_Resources.App_Resources.Search </p> </header>
+                            <section class="scrollable bg-white">
+                                <div class="list-group list-group-alt no-radius no-borders">
+                                    <a class="list-group-item" href="#"> <i class="fa fa-circle text-success text-xs"></i> <span>Cris Labiso</span> </a>
+                                    <a class="list-group-item" href="#"> <i class="fa fa-circle text-muted text-xs"></i> <span>Daniel Sandvid</span> </a>
+                                </div>
+                            </section>
+                                <footer class="footer text-center b-t">
+                                    <button class="btn btn-primary btn-sm" type="button"><i class="fa fa-filter"></i> @Forwarding.MvcApp.App_Resources.App_Resources.Filter</button>
+                                </footer>
+                            </section>
+                        </aside>*@
+                    <aside id="asideSearch" class="aside-sm b-l hide">
+                        <section class="vbox">
+                            <header class="bg-light dk header"> <p><b><u>Filter Options</u></b></p> </header>
+                            <section class="scrollable bg-white">
+                                <div id="divSearchControls" class="list-group list-group-alt no-radius no-borders">
+                                </div>
+                            </section>
+                            <footer class="footer text-left b-t">
+                                <button id="btnFilterOptions" class="btn btn-primary btn-sm" type="button"><i class="fa fa-filter"></i> @Forwarding.MvcApp.App_Resources.App_Resources.Filter</button>
+                            </footer>
+                        </section>
+                    </aside>
+
+
+
+
+                </section>
+            </section>
+        </section>
+        <script src="@Url.Content("~/Scripts/app.v2.js")" type="text/javascript"></script>
+        <div id="loading" class="hidden">
+            <img src="@Url.Content("~/Content/Images/avatar.jpg")" />
+        </div>
+        <!-- //Dimming DIV -->
+        <div id="page-cover-master"></div>
+    </form>
+    @*<footer>
+            <span id="siteseal"><script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=l0j80iF4X4gIMn8M7VQNNsrMt7k6SNyXOsLafOmjz5UG3QY4kbnzHGJqhk4b"></script></span>
+        </footer>*@
+</body>
+</html>
+
+
+<!--ChangePasswordModal-->
+<div class="modal fade" id="ChangePasswordModal" tabindex="-1" style="z-index:2000;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="ChangePasswordModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-50">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="m-b-none">
+                    Change Password&nbsp;<label id="lblChangePasswordShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                    @*<button type="button" class="close" title="Close" data-dismiss="modal" onclick="MAWBStockSelect_ResetFunctionsNames();" aria-hidden="true">&times;</button>*@
+                </h3>
+            </div>
+            <!-- Region Add / Edit Region Form -->
+            <div class="modal-body">
+                <div class="span7 form vertical-mode" id="ChangePassword-form">
+                    <fieldset>
+                        <div class="form-group col-sm-6 has-error">
+                            <label>Old Password</label>
+                            <input type="password" id="pwdOldPassword" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="true" data-minlength="6" maxlength="50" placeholder="min 6 letters" style="text-transform:uppercase">
+                        </div>
+                        <div class="form-group col-sm-6 has-error" style="clear:both;">
+                            <label>New Password</label>
+                            <input type="password" id="pwdPassword" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="true" data-minlength="6" maxlength="50" placeholder="min 6 letters" style="text-transform:uppercase">
+                        </div>
+                        <div class="form-group col-sm-6 has-error" style="clear:both;">
+                            <label>Confirm Password</label>
+                            <input type="password" id="pwdConfirmPassword" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="true" data-minlength="6" maxlength="50" placeholder="min 6 letters" style="text-transform:uppercase">
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <!-- Endregion Add / Edit Region Form -->
+            <div class="modal-footer">
+                <button type="button" id="btnChangePassword" class="btn btn-primary btn-sm" onclick="ChangePassword();">
+                    <span class="fa fa-eye"></span>&nbsp;Change Password
+                </button>
+                @*<button type="button" id="btnSaveandNew" class="btn btn-primary btn-sm" onclick="MAWBStockSelect_Insert(true);">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew</button>*@
+                <button class="btnClose btn btn-link btn-sm" id="btnClose" title="Close" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF ChangePasswordModal-->

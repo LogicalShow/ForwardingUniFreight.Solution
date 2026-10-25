@@ -1,0 +1,115 @@
+﻿@{
+
+    Layout = "~/Views/GlobalReports/_GlobalReportsLayout.cshtml";
+
+}
+
+@*<script src="~/Scripts/GlobalReports/Global_AccountingReports/InvoicesReports_Global.js"></script>*@
+<script src="~/Scripts/Reports/AccountingReports/InvoicesReports.js"></script>
+
+
+
+<input type="hidden" id="txtFromDate" value="@ViewBag.txtFromDate" />
+<input type="hidden" id="txtToDate" value="@ViewBag.txtToDate" />
+<input type="hidden" id="txtFromDueDate" value="@ViewBag.txtFromDueDate" />
+<input type="hidden" id="txtToDueDate" value="@ViewBag.txtToDueDate" />
+<input type="hidden" id="cbGroupByBranch" />
+<input type="hidden" id="cbIncludeDetails" />
+<input type="hidden" id="cbGroupByBranch"  />
+
+<input type="hidden" id="cbSOA" />
+<input type="hidden" id="cbCustomer" checked="checked" />
+<input type="hidden" id="cbCustomerReference" checked="checked" />
+<input type="hidden" id="cbOperationCode" checked="checked" />
+<input type="hidden" id="cbInvoiceDate" checked="checked" />
+<input type="hidden" id="cbDueDate" checked="checked" />
+<input type="hidden" id="cbWithoutVAT" />
+<input type="hidden" id="cbWithoutDiscount" />
+<input type="hidden" id="cbPaidAmount" />
+<input type="hidden" id="cbRemaining" />
+<input type="hidden" id="cbOperationDate" checked="checked" />
+<input type="hidden" id="cbPaymentDate" />
+<input type="hidden" id="cbDaysDifference" />
+<input type="hidden" id="cbAging" checked=@ViewBag.cbAging />
+<input type="hidden" id="lbl-filter-import" class="" />
+<input type="hidden" id="lbl-filter-export" class="" />
+<input type="hidden" id="lbl-filter-domestic" class="" />
+<input type="hidden" id="lbl-filter-ocean" class="" />
+<input type="hidden" id="lbl-filter-air" class="" />
+<input type="hidden" id="lbl-filter-inland" class="" />
+<input type="hidden" id="lbl-filter-direct" class="" />
+<input type="hidden" id="lbl-filter-house" class="" />
+<input type="hidden" id="lbl-filter-master" class="" />
+<input type="hidden" id="txtSearchOperation" value="" />
+<input type="hidden" id="txtCustomerReference" value="" />
+<input type="hidden" id="txtSearchInvoice" value="" />
+
+
+<select id="slPartnerType" class="hide"><option value="@ViewBag.slPartnerType" selected></option></select>
+<select id="slPartner" class="hide"><option value="@ViewBag.slPartner" selected></option></select>
+<select id="slBranch" class="hide"><option value="" selected></option></select>
+<select id="slCurrency" class="hide"><option value="" selected></option></select>
+<select id="slApprovalStatus" class="hide"><option value="" selected></option></select>
+<select id="slDiscountType" class="hide"><option value="" selected></option></select>
+<select id="slVATType" class="hide"><option value="" selected></option></select>
+<select id="slInvoiceType" class="hide"><option value="" selected></option></select>
+<select id="slInvoiceStatus" class="hide"><option value="" selected></option></select>
+
+
+            @*<input type="hidden" id="txtFromDate"  value="@ViewBag.txtFromDate" />
+            <input type="hidden" id="txtToDate"  value="@ViewBag.txtToDate" />
+            <input type="hidden" id="txtFromDueDate" value="@ViewBag.txtFromDueDate" />
+            <input type="hidden" id="txtToDueDate" value="@ViewBag.txtToDueDate" />
+            <input type="hidden" id="cbGroupByBranch" checked=@ViewBag.cbGroupByBranch />
+            <input type="hidden" id="cbIncludeDetails" checked=@ViewBag.cbIncludeDetails />
+            <input type="hidden" id="cbGroupByBranch" checked=@ViewBag.cbGroupByBranch />
+
+            <input type="hidden" id="cbSOA" checked=@ViewBag.cbSOA />
+            <input type="hidden" id="cbCustomer" checked=@ViewBag.cbCustomer />
+            <input type="hidden" id="cbCustomerReference" checked=@ViewBag.cbCustomerReference />
+            <input type="hidden" id="cbOperationCode" checked=@ViewBag.cbOperationCode />
+            <input type="hidden" id="cbInvoiceDate" checked=@ViewBag.cbInvoiceDate />
+            <input type="hidden" id="cbDueDate" checked=@ViewBag.cbDueDate />
+            <input type="hidden" id="cbWithoutVAT" checked=@ViewBag.cbWithoutVAT />
+            <input type="hidden" id="cbWithoutDiscount" checked=@ViewBag.cbWithoutDiscount />
+            <input type="hidden" id="cbPaidAmount" checked=@ViewBag.cbPaidAmount />
+            <input type="hidden" id="cbRemaining" checked=@ViewBag.cbRemaining />
+            <input type="hidden" id="cbOperationDate" checked=@ViewBag.cbOperationDate />
+            <input type="hidden" id="cbPaymentDate" checked=@ViewBag.cbPaymentDate />
+            <input type="hidden" id="cbDaysDifference" checked=@ViewBag.cbDaysDifference />
+            <input type="hidden" id="cbAging" checked=@ViewBag.cbAging />
+            <input type="hidden" id="lbl-filter-import" class="@ViewBag.lbl_filter_import" />
+            <input type="hidden" id="lbl-filter-export" class="@ViewBag.lbl_filter_export" />
+            <input type="hidden" id="lbl-filter-domestic" class="@ViewBag.lbl_filter_domestic" />
+            <input type="hidden" id="lbl-filter-ocean" class="@ViewBag.lbl_filter_ocean" />
+            <input type="hidden" id="lbl-filter-air" class="@ViewBag.lbl_filter_air" />
+            <input type="hidden" id="lbl-filter-inland" class="@ViewBag.lbl_filter_inland" />
+            <input type="hidden" id="lbl-filter-direct" class="@ViewBag.lbl_filter_direct" />
+            <input type="hidden" id="lbl-filter-house" class="@ViewBag.lbl_filter_house" />
+            <input type="hidden" id="lbl-filter-master" class="@ViewBag.lbl_filter_master" />
+            <input type="hidden" id="txtSearchOperation" value="@ViewBag.txtSearchOperation" />
+            <input type="hidden" id="txtCustomerReference" value="@ViewBag.txtCustomerReference" />
+            <input type="hidden" id="txtSearchInvoice" value="@ViewBag.txtSearchInvoice" />
+           
+
+
+
+
+<select id="slPartnerType" class="hide"><option value="@ViewBag.slPartnerType" selected>@ViewBag.slPartnerType_text</option></select>
+<select id="slPartner" class="hide"><option value="@ViewBag.slPartner" selected>@ViewBag.slPartner_text</option></select>
+<select id="slBranch" class="hide"><option value="@ViewBag.slBranch" selected>@ViewBag.slBranch_text</option></select>
+<select id="slCurrency" class="hide"><option value="@ViewBag.slCurrency" selected>@ViewBag.slCurrency_text</option></select>
+<select id="slApprovalStatus" class="hide"><option value="@ViewBag.slApprovalStatus" selected>@ViewBag.slApprovalStatus_text</option></select>
+<select id="slDiscountType" class="hide"><option value="@ViewBag.slDiscountType" selected>@ViewBag.slDiscountType_text</option></select>
+<select id="slVATType" class="hide"><option value="@ViewBag.slVATType" selected>@ViewBag.slVATType_text</option></select>
+<select id="slInvoiceType" class="hide"><option value="@ViewBag.slInvoiceType" selected>@ViewBag.slInvoiceType_text</option></select>
+<select id="slInvoiceStatus" class="hide"><option value="@ViewBag.slInvoiceStatus" selected>@ViewBag.slInvoiceStatus_text</option></select>*@
+
+ @*//document.getElementById("hReadySlBranches").options*@
+
+<input type="hidden"  id="hExportedTable" />
+
+<div id="ReportBody" style="background-color: white!important;">
+
+</div>
+

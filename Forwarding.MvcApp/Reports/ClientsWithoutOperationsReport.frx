@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/29/2024 21:31:52" ReportInfo.Modified="02/04/2024 17:42:09" ReportInfo.CreatorVersion="2018.3.14.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFNzyHYDuoBNaNSZlSNPhWGsQpK5Wj9ZCP6aThjKb0xSvilkz5SBdVkcPHI4B1NWErCXqPdaHPnW+bh48UiQOaWRL8hSA+yGhespriYYnqCwoPnugx+Pjsgn4qWiUk2N+h">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="exec (@query)">
+        <Column Name="ClientName" DataType="System.String"/>
+        <CommandParameter Name="@query" DataType="12" Expression="[query]" DefaultValue="select distinct ClientName from vwOperations"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="dummy" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" RawPaperSize="9">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="56.7">
+      <TextObject Name="Text1" Left="245.7" Top="9.45" Width="226.8" Height="37.8" Text="Operations Cutsomers" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="60.7" Width="718.2" Height="56.7">
+      <TextObject Name="Text3" Left="9.45" Top="28.35" Width="463.05" Height="28.35" Border.Lines="All" Fill.Color="WhiteSmoke" Text="ClientName" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="121.4" Width="718.2" Height="28.35" DataSource="Table">
+      <TextObject Name="Text2" Left="9.45" Width="463.05" Height="28.35" Border.Lines="All" Text="[Table.ClientName]" VertAlign="Center" Font="Arial, 12pt"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="153.75" Width="718.2" Height="18.9"/>
+  </ReportPage>
+</Report>

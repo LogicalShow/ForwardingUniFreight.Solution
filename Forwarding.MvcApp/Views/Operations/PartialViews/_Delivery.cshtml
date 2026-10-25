@@ -1,0 +1,87 @@
+﻿<div class="step-pane" id="Delivery">
+
+    <section class="panel panel-default m-t-n-sm" id="secTblDeliveredFiles">
+        <header class="panel-heading hide">
+            <h3 class="m-b-none">
+                @Forwarding.MvcApp.App_Resources.App_Resources.Document
+            </h3>
+        </header>
+        <!--Region the searh, delete, addnew-->
+        <div class="row swapChildrenClass">
+            <div class="col-sm-2">
+                <button id="Deliverybtn-NewAdd" onclick="Documents_NewRow(); " class="btn btn-warning btn-sm" data-toggle="modal" data-target=""><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.New</button>
+            </div>
+            <div class="col-sm-4">
+                <div id="div-search-controls" class="hide input-group col-sm-9 ">
+                    <input id="txt-Search" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="">
+                    <span class="input-group-btn">
+                        <button id="btn-search" class="btn btn-sm btn-primary" type="button" onclick="AdditionalServices_LoadingWithPaging();">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-4">
+                <button id="btn-DeliveryDeleteOperationDocuments" title="Delete Details" type="button" class="float-right btn btn-sm btn-danger classDisableForPosted" onclick="Documents_DeleteList();"><i class="fa fa-trash-o"></i>&nbsp;Delete - حذف</button>
+                <button id="btn-SaveAllSelected" title="Save All Selected" type="button" class="float-right btn btn-sm btn-primary hide" onclick="Documents_SaveAllSelected();"><i class="fa fa-save"></i>&nbsp;Save All Selected</button>
+                <button id="btn-PrintDelivery" class="float-right btn btn-lightblue btn-sm " data-toggle="modal" data-target="#" onclick='Delivery_PrintAll();'><i class="fa fa-print"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Print</button>
+
+            </div>
+        </div>
+        <!--Region the searh, delete, addnew-->
+        <!--Region: table header-->
+        <select class="hide" id="slhidden_DeliveryDocumentInfo"></select>
+        <select class="hide" id="slhidden_DeliveryReceivingDegree"></select>
+        <select class="hide" id="slhidden_DeliveryUsers"></select>
+        <div class="table-responsive">
+            <table id="tblDeliveredFiles" class="table table-striped b-t b-light text-sm  table-hover">
+                <thead>
+                    <tr>
+                        <th class="" id="HeaderDeliverDocumentsID" style="width:5%;">
+                            <input id="cb-CheckAll-DeliveryDocuments" type="checkbox" />
+                        </th>
+                        <th>@Forwarding.MvcApp.App_Resources.App_Resources.Document</th>
+                        <th>@Forwarding.MvcApp.App_Resources.App_Resources.Employee</th>
+                        <th>@Forwarding.MvcApp.App_Resources.App_Resources.DocumentNo</th>
+                        <th>@Forwarding.MvcApp.App_Resources.App_Resources.DocumentDate</th>
+                        @*<th>@Forwarding.MvcApp.App_Resources.App_Resources.ReceivingDegree</th>*@
+                        <th>@Forwarding.MvcApp.App_Resources.App_Resources.DeliveryDate</th>
+                        <th>@Forwarding.MvcApp.App_Resources.App_Resources.Recipient</th>
+                        <th>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</th>
+                        <th>@Forwarding.MvcApp.App_Resources.App_Resources.Save</th>
+                        @*<th>@Forwarding.MvcApp.App_Resources.App_Resources.Upload</th>*@
+                        @*<th>@Forwarding.MvcApp.App_Resources.App_Resources.Print</th>*@
+                        <th class="rounded-right hide"></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+        </div>
+        <!--Region: table header-->
+    </section>
+
+    <br /> <br />
+    <section class="panel panel-default m-t-n-sm" id="secTblAdditionalServices">
+        <header class="panel-heading hide">
+            <h3 class="m-b-none">
+                @Forwarding.MvcApp.App_Resources.App_Resources.Document
+            </h3>
+        </header>
+        <!--Region the searh, delete, addnew-->
+        <div class="row">
+            <div class="col-sm-4">
+            </div>
+            <div class="col-sm-2">
+
+            </div>
+            <div class="col-sm-4">
+            </div>
+            <div class="col-sm-2">
+            </div>
+        </div>
+        <!--Region the searh, delete, addnew-->
+    </section>
+
+</div>

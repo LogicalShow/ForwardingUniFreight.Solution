@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/03/2022 13:02:22" ReportInfo.Modified="10/21/2023 13:16:47" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+    
+
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFtHJVZLL/i3PN7CkdFc/1A7YXJU6T13VfFIAjI9Ib2eHK43COXIAb1+oG8abaGcWEZGpgJFPBP3+b+JobTIAbFImpu7AL5/m4I+6ScGE9e6WjDfiveqdM4GY1NsEAX+IAb1vIINrFl1evGbsHFoQGiQ==">
+      <TableDataSource Name="Table" Alias="ReceiveItemsWithDefectedItems" DataType="System.Int32" Enabled="true" SelectCommand="exec (@query)">
+        <Column Name="Logo" DataType="System.String" PropName="Column" Calculated="true" Expression="[Logo]"/>
+        <Column Name="WarehouseName" DataType="System.String"/>
+        <Column Name="CustomerName" DataType="System.String"/>
+        <Column Name="ReceiveDate" DataType="System.DateTime"/>
+        <Column Name="Logo" DataType="System.Int32" PropName="Column" Calculated="true" Expression="[Logo]"/>
+        <Column Name="ReceiveCode" DataType="System.String"/>
+        <Column Name="AreaName" DataType="System.String"/>
+        <Column Name="LocationCode" DataType="System.String"/>
+        <Column Name="DefectionReason" DataType="System.String"/>
+        <Column Name="PurchaseItemName" DataType="System.String"/>
+        <CommandParameter Name="@query" DataType="12" Expression="[query]" DefaultValue="Rep_3PL_ReceiveOrdersWithDefectedItems ' WHERE 1=1 '"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="Logo" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9">
+    <DataBand Name="Data1" Top="145.75" Width="1047.06" Height="33.1" CanGrow="true" DataSource="Table">
+      <TableObject Name="Table1" Left="5.85" Top="-0.75" Width="1037.5" Height="33.85">
+        <TableColumn Name="Column29" Width="123.17"/>
+        <TableColumn Name="Column30" Width="126.75"/>
+        <TableColumn Name="Column31" Width="126.75"/>
+        <TableColumn Name="Column32" Width="134.62"/>
+        <TableColumn Name="Column33" Width="145.78"/>
+        <TableColumn Name="Column34" Width="126.75"/>
+        <TableColumn Name="Column35" Width="126.93"/>
+        <TableColumn Name="Column36" Width="126.75"/>
+        <TableRow Name="Row9" Height="33.85">
+          <TableCell Name="Cell74" Border.Lines="All" Text="[ReceiveItemsWithDefectedItems.ReceiveCode]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell75" Border.Lines="All" Text="[ReceiveItemsWithDefectedItems.PurchaseItemName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell76" Border.Lines="All" Text="[ReceiveItemsWithDefectedItems.WarehouseName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell77" Border.Lines="All" Text="[ReceiveItemsWithDefectedItems.AreaName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell78" Border.Lines="All" Text="[ReceiveItemsWithDefectedItems.LocationCode]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell79" Border.Lines="All" Text="[ReceiveItemsWithDefectedItems.CustomerName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell80" Border.Lines="All" Text="[IIf(FormatDateTime([ReceiveItemsWithDefectedItems.ReceiveDate],&quot;dd/MM/yyyy&quot;) == &quot;01/01/0001&quot;,&quot;&quot;,FormatDateTime([ReceiveItemsWithDefectedItems.ReceiveDate],&quot;dd/MM/yyyy&quot;))]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell81" Border.Lines="All" Text="[ReceiveItemsWithDefectedItems.DefectionReason]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+        </TableRow>
+      </TableObject>
+      <DataHeaderBand Name="DataHeader1" Width="1047.06" Height="141.75" RepeatOnEveryPage="true">
+        <PictureObject Name="Picture1" Left="6.92" Top="3.67" Width="1029.65" Height="50.42" DataColumn="ReceiveItemsWithDefectedItems.Logo"/>
+        <TextObject Name="Text1" Left="403.52" Top="55.2" Width="236.45" Height="18.9" Text="3PL Statistics Report" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+        <TextObject Name="Text2" Left="333.51" Top="83.12" Width="376.48" Height="18.9" Text="Receive orders with defected items" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+        <TableObject Name="Table2" Left="5.68" Top="107.9" Width="1037.46" Height="33.85">
+          <TableColumn Name="Column11" Width="123.72"/>
+          <TableColumn Name="Column12" Width="126.56"/>
+          <TableColumn Name="Column13" Width="126.56"/>
+          <TableColumn Name="Column27" Width="134.42"/>
+          <TableColumn Name="Column28" Width="146.52"/>
+          <TableColumn Name="Column14" Width="126.56"/>
+          <TableColumn Name="Column15" Width="126.56"/>
+          <TableColumn Name="Column16" Width="126.56"/>
+          <TableRow Name="Row6" Height="33.85">
+            <TableCell Name="Cell26" Border.Lines="All" Fill.Color="Silver" Text="Order Code" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell27" Border.Lines="All" Fill.Color="Silver" Text="Product" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell28" Border.Lines="All" Fill.Color="Silver" Text="Warehouse Name" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell72" Border.Lines="All" Fill.Color="Silver" Text="Area" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell73" Border.Lines="All" Fill.Color="Silver" Text="Location Code" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell29" Border.Lines="All" Fill.Color="Silver" Text="Customer Name" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell30" Border.Lines="All" Fill.Color="Silver" Text="Receive Date" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell51" Border.Lines="All" Fill.Color="Silver" Text="Defection Reason" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          </TableRow>
+        </TableObject>
+      </DataHeaderBand>
+    </DataBand>
+  </ReportPage>
+</Report>

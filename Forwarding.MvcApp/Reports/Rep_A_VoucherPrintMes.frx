@@ -1,0 +1,376 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/22/2020 10:00:35" ReportInfo.Modified="04/22/2025 11:46:56" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+
+    private void Text64_AfterData(object sender, EventArgs e)
+    {
+      txtRef.Visible=false;
+      txtrefervalue.Visible=false;
+        
+      Text77.Visible=false;
+      Text44.Visible=false;
+        
+      Text80.Visible=false;
+      Text47.Visible=false;
+    
+      if (((Int32)Report.GetColumnValue(&quot;Rep_A_Voucher_Print.VoucherType&quot;))==10)
+      {
+        Text64.Text=&quot;Cash Collection Receipt&quot;;
+      }
+      else if(((Int32)Report.GetColumnValue(&quot;Rep_A_Voucher_Print.VoucherType&quot;))==20)
+      {
+        Text64.Text=&quot;Cash Payment Receipt&quot;;
+      }
+      else if(((Int32)Report.GetColumnValue(&quot;Rep_A_Voucher_Print.VoucherType&quot;))==30)
+      {
+        Text64.Text=&quot;Bank Collection Receipt&quot;;
+      }
+      else if(((Int32)Report.GetColumnValue(&quot;Rep_A_Voucher_Print.VoucherType&quot;))==40)
+      {
+        Text64.Text=&quot;Bank Payment Receipt&quot;;
+      }
+    }
+
+    private void Text77_AfterData(object sender, EventArgs e)
+    {
+      if (((Int32)Report.GetColumnValue(&quot;Rep_A_Voucher_Print.VoucherType&quot;))==30 || ((Int32)Report.GetColumnValue(&quot;Rep_A_Voucher_Print.VoucherType&quot;))==40)
+      {
+        Text77.Visible=true;
+        Text44.Visible=true;
+        Text87.Visible=true;
+        Text80.Visible=true;
+        Text90.Visible=true;
+        Text47.Visible=true;
+        Text78.Visible=true;
+        Text88.Visible=true;
+        Text45.Visible=true;
+        
+        Text79.Visible=false;
+        Text89.Visible=false;
+        Text46.Visible=false;
+        
+        Text104.Visible=true;
+        Text105.Visible=true;
+        Text4.Visible=true;
+
+        Text106.Visible=true;
+        Text107.Visible=true;
+        Text3.Visible=true;
+        
+        if ((bool)Report.GetColumnValue(&quot;Rep_A_Voucher_Print.IsTransfer&quot;))
+        {
+          txtdepodate.Visible=false;
+          txtdepodatevalue.Visible=false;
+        
+          txtRef.Visible=false;
+          txtrefervalue.Visible=false;
+        
+          Text77.Visible=false;
+          Text44.Visible=false;
+        
+          Text80.Visible=false;
+          Text47.Visible=false;
+        
+        }
+        else
+        {
+          if ((bool)Report.GetColumnValue(&quot;Rep_A_Voucher_Print.IsCheck&quot;))
+          {
+            txtdepodate.Visible=false;
+            txtdepodatevalue.Visible=false;
+          
+            txtRef.Visible=false;
+            txtrefervalue.Visible=false;
+          
+            txttransfdate.Visible=false;
+            txttransfdatevalue.Visible=false;
+                    
+            txtIBAN.Visible=false; 
+            txtibanvalue.Visible=false;
+          }
+          else
+          {
+            Text77.Visible=false;
+            Text44.Visible=false;
+        
+            Text80.Visible=false;
+            Text47.Visible=false;
+          
+            txttransfdate.Visible=false;
+            txttransfdatevalue.Visible=false;
+          
+          
+            txtIBAN.Visible=false; 
+            txtibanvalue.Visible=false;     
+            
+            txtdepodate.Visible=true;
+            txtdepodatevalue.Visible=true;
+          
+            txtRef.Visible=true;
+            txtrefervalue.Visible=true;
+          }
+      
+        }
+
+      }
+      else
+      {
+        Text77.Visible=false;
+        Text44.Visible=false;
+        Text87.Visible=false;
+        Text80.Visible=false;
+        Text90.Visible=false;
+        Text47.Visible=false;
+        Text78.Visible=false;
+        Text88.Visible=false;
+        Text45.Visible=false;
+        Text104.Visible=false;
+        Text105.Visible=false;
+        Text4.Visible=false;
+
+        
+        Text106.Visible=false;
+        Text107.Visible=false;
+        Text3.Visible=false;
+        
+        txtdepodate.Visible=false;
+        txtdepodatevalue.Visible=false;
+          
+        txtRef.Visible=false;
+        txtrefervalue.Visible=false;
+          
+        txttransfdate.Visible=false;
+        txttransfdatevalue.Visible=false;
+                    
+        txtIBAN.Visible=false; 
+        txtibanvalue.Visible=false;
+        
+        Text79.Visible=true;
+        Text89.Visible=true;
+        Text46.Visible=true;
+      }
+    }
+
+    private void Text58_AfterData(object sender, EventArgs e)
+    {
+      if (((Decimal)Report.GetColumnValue(&quot;Rep_A_Voucher_Print.TaxValue&quot;))&gt;0)
+      {
+        Text58.Visible=true;
+        Text54.Visible=true;
+
+      }
+      else
+      {
+        Text58.Visible=false;
+        Text54.Visible=false;  
+      }
+    }
+
+    private void Text66_AfterData(object sender, EventArgs e)
+    {
+      if (((Decimal)Report.GetColumnValue(&quot;Rep_A_Voucher_Print.TaxValue2&quot;)) &gt;0)
+      {
+        Text66.Visible=true;
+        Text56.Visible=true;
+
+      }
+      else
+      {
+        Text66.Visible=false;
+        Text56.Visible=false;
+      }
+    }
+
+    private void Text108_AfterData(object sender, EventArgs e)
+    {
+      if (((String)Report.GetColumnValue(&quot;Rep_A_Voucher_Print.Currency_Code&quot;)==&quot;EGP&quot;))
+      {
+        Text108.Visible=true;
+        Text98.Visible=true;
+
+      }
+      else
+      {
+        Text108.Visible=false;
+        Text98.Visible=true;
+  
+      }
+    }
+
+    private void Text98_BeforePrint(object sender, EventArgs e)
+    {
+      if (((String)Report.GetColumnValue(&quot;Rep_A_Voucher_Print.Currency_Code&quot;)==&quot;EGP&quot;))
+      {
+        Text98.Text=&quot;&quot;;
+        Text108.Visible=true;
+        Text98.Visible=false;
+      }
+    }
+
+    private void txtibanvalue_AfterData(object sender, EventArgs e)
+    {
+
+    }
+
+    private void CheckBox1_AfterData(object sender, EventArgs e)
+    {
+ 
+    }
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFHqm0rZN8U3ovGdwvYth0uiUdmsDM9GBKvMdM2icdnfklNMjMNrhb+YH/+nfAY3K3tQ1ZfvL+FurXFWUYCaJb8VhW2e5vkGIpGjE2zruyLxjWArKCJeqYt5dua+jzkSDr">
+      <TableDataSource Name="Table" Alias="Rep_A_Voucher_Print" DataType="System.Int32" Enabled="true" SelectCommand="exec Rep_A_Voucher_Print @VoucherIDs">
+        <Column Name="ID" DataType="System.Int64"/>
+        <Column Name="Code" DataType="System.String"/>
+        <Column Name="VoucherDate" DataType="System.DateTime"/>
+        <Column Name="VoucherType" DataType="System.Int32"/>
+        <Column Name="VoucherTypeName" DataType="System.String"/>
+        <Column Name="ChequeNo" DataType="System.String"/>
+        <Column Name="ChequeDate" DataType="System.DateTime"/>
+        <Column Name="ReceivingBank" DataType="System.String"/>
+        <Column Name="ChargedPerson" DataType="System.String"/>
+        <Column Name="ExchangeRate" DataType="System.Decimal"/>
+        <Column Name="Notes" DataType="System.String"/>
+        <Column Name="Currency_Code" DataType="System.String"/>
+        <Column Name="Value" DataType="System.Decimal"/>
+        <Column Name="Description" DataType="System.String"/>
+        <Column Name="Account_Name" DataType="System.String"/>
+        <Column Name="Account_Number" DataType="System.String"/>
+        <Column Name="SubAccount_Number" DataType="System.String"/>
+        <Column Name="SubAccount_Name" DataType="System.String"/>
+        <Column Name="CostCenterNumber" DataType="System.String"/>
+        <Column Name="CostCenterName" DataType="System.String"/>
+        <Column Name="TaxID" DataType="System.Int32"/>
+        <Column Name="TaxName1" DataType="System.String"/>
+        <Column Name="TaxValue" DataType="System.Decimal"/>
+        <Column Name="TaxName2" DataType="System.String"/>
+        <Column Name="TaxValue2" DataType="System.Decimal"/>
+        <Column Name="Total" DataType="System.Decimal"/>
+        <Column Name="TotalAfterTax" DataType="System.Decimal"/>
+        <Column Name="Safe" DataType="System.String"/>
+        <Column Name="TransType" DataType="System.String"/>
+        <Column Name="OtherSideBankName" DataType="System.String"/>
+        <Column Name="DepartementName" DataType="System.String"/>
+        <Column Name="IBAN" DataType="System.String"/>
+        <Column Name="ReferenceNo" DataType="System.String"/>
+        <Column Name="DepositeDate" DataType="System.DateTime"/>
+        <Column Name="TransferDate" DataType="System.DateTime"/>
+        <Column Name="isTransfer" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="isCheck" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="UserCreate" DataType="System.String"/>
+        <Column Name="UserFirstApprove" DataType="System.String"/>
+        <Column Name="UserSecondApprove" DataType="System.String"/>
+        <CommandParameter Name="@VoucherIDs" DataType="22" Expression="[VoucherIDs]"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="VoucherIDs" DataType="System.String"/>
+    <Total Name="Total" Expression="[Rep_A_Voucher_Print.Value]" Evaluator="Data1"/>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2"/>
+    <PageHeaderBand Name="PageHeader1" Top="4.71" Width="718.2" Height="264.6">
+      <TextObject Name="Text79" Left="9.45" Top="160.65" Width="94.5" Height="18.9" Text="Safe" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text46" Left="113.4" Top="160.65" Width="255.15" Height="18.9" Text="[Rep_A_Voucher_Print.Safe]" VertAlign="Center"/>
+      <TextObject Name="Text89" Left="103.95" Top="160.65" Width="9.45" Height="18.9" Text=":" Format="Date" Format.Format="d" VertAlign="Center"/>
+      <TextObject Name="Text78" Left="9.45" Top="160.65" Width="94.5" Height="18.9" Text="Bank" Font="Microsoft Sans Serif, 11pt, style=Bold"/>
+      <TextObject Name="Text81" Left="425.25" Top="160.65" Width="94.5" Height="18.9" Text="Currency" Font="Microsoft Sans Serif, 11pt, style=Bold"/>
+      <TextObject Name="Text45" Left="113.4" Top="151.2" Width="255.15" Height="37.8" Text="[Rep_A_Voucher_Print.ReceivingBank]" VertAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text88" Left="103.95" Top="160.65" Width="9.45" Height="18.9" Text=":" Format="Date" Format.Format="d" VertAlign="Center"/>
+      <TextObject Name="Text91" Left="519.75" Top="160.65" Width="9.45" Height="18.9" Text=":" Format="Date" Format.Format="d" VertAlign="Center"/>
+      <TextObject Name="Text48" Left="529.2" Top="160.65" Width="179.55" Height="18.9" Text="[Rep_A_Voucher_Print.Currency_Code]" VertAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text76" Left="9.45" Top="132.3" Width="94.5" Height="18.9" Text="From" Font="Microsoft Sans Serif, 11pt, style=Bold"/>
+      <TextObject Name="Text43" Left="113.4" Top="113.4" Width="302.4" Height="37.8" CanBreak="false" Text="[Rep_A_Voucher_Print.ChargedPerson]" VertAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text86" Left="103.95" Top="132.3" Width="9.45" Height="18.9" Text=":" Format="Date" Format.Format="d" VertAlign="Center"/>
+      <TextObject Name="Text75" Left="9.45" Top="94.5" Width="94.5" Height="18.9" Text="Receipt Date" Font="Microsoft Sans Serif, 11pt, style=Bold"/>
+      <TextObject Name="Text42" Left="113.4" Top="94.5" Width="179.55" Height="18.9" Text="[Rep_A_Voucher_Print.VoucherDate]" Format="Custom" Format.Format="dd/MM/yyyy" VertAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text85" Left="103.95" Top="94.5" Width="9.45" Height="18.9" Text=":" Format="Date" Format.Format="d" VertAlign="Center"/>
+      <TextObject Name="Text82" Left="198.45" Top="47.25" Width="94.5" Height="28.35" Text="No." HorzAlign="Right" VertAlign="Center" Font="Microsoft Sans Serif, 14pt, style=Bold"/>
+      <TextObject Name="Text52" Left="292.95" Top="47.25" Width="349.65" Height="28.35" Text="[Rep_A_Voucher_Print.Code]" VertAlign="Center" Font="Microsoft Sans Serif, 14pt"/>
+      <TextObject Name="Text64" Left="9.45" Width="699.3" Height="37.8" AfterDataEvent="Text64_AfterData" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text14" Left="160.65" Top="236.25" Width="132.3" Height="28.35" Border.Lines="Left, Top, Bottom" Text="Sub-Account" HorzAlign="Center" VertAlign="Center" Font="Microsoft Sans Serif, 11pt, style=Bold"/>
+      <TextObject Name="Text22" Left="415.8" Top="236.25" Width="226.8" Height="28.35" Border.Lines="Left, Top, Bottom" Text="Description" HorzAlign="Center" VertAlign="Center" Font="Microsoft Sans Serif, 11pt, style=Bold"/>
+      <TextObject Name="Text41" Left="642.6" Top="236.25" Width="66.15" Height="28.35" Border.Lines="All" Text="Value" HorzAlign="Center" VertAlign="Center" Font="Microsoft Sans Serif, 11pt, style=Bold"/>
+      <TextObject Name="Text83" Left="9.45" Top="236.25" Width="151.2" Height="28.35" Border.Lines="Left, Top, Bottom" Text="Account" HorzAlign="Center" VertAlign="Center" Font="Microsoft Sans Serif, 11pt, style=Bold"/>
+      <TextObject Name="Text84" Left="292.95" Top="236.25" Width="122.85" Height="28.35" Border.Lines="Left, Top, Bottom" Text="CostCenter" HorzAlign="Center" VertAlign="Center" Font="Microsoft Sans Serif, 11pt, style=Bold"/>
+      <TextObject Name="Text104" Left="9.45" Top="198.45" Width="94.5" Height="18.9" Text="Paying Bank" Font="Microsoft Sans Serif, 11pt, style=Bold"/>
+      <TextObject Name="Text105" Left="103.95" Top="198.45" Width="9.45" Height="18.9" Text=":" Format="Date" Format.Format="d" VertAlign="Center"/>
+      <TextObject Name="Text106" Left="425.25" Top="198.45" Width="94.5" Height="18.9" Text="Type" Font="Microsoft Sans Serif, 11pt, style=Bold"/>
+      <TextObject Name="Text107" Left="519.75" Top="198.45" Width="9.45" Height="18.9" Text=":" Format="Date" Format.Format="d" VertAlign="Center"/>
+      <TextObject Name="Text3" Left="529.2" Top="198.45" Width="179.55" Height="18.9" Text="[Rep_A_Voucher_Print.TransType]" VertAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text4" Left="113.4" Top="198.45" Width="255.15" Height="18.9" Text="[Rep_A_Voucher_Print.OtherSideBankName]" VertAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text77" Left="425.25" Top="103.95" Width="94.5" Height="18.9" AfterDataEvent="Text77_AfterData" Text="Check No" Font="Microsoft Sans Serif, 11pt, style=Bold"/>
+      <TextObject Name="Text80" Left="425.25" Top="132.3" Width="94.5" Height="18.9" Text="Check Date" Font="Microsoft Sans Serif, 11pt, style=Bold"/>
+      <TextObject Name="Text44" Left="529.2" Top="103.95" Width="179.55" Height="18.9" AfterDataEvent="Text44_AfterData" Text="[Rep_A_Voucher_Print.ChequeNo]" VertAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text87" Left="519.75" Top="103.95" Width="9.45" Height="18.9" Text=":" Format="Date" Format.Format="d" VertAlign="Center"/>
+      <TextObject Name="Text90" Left="519.75" Top="132.3" Width="9.45" Height="18.9" Text=":" Format="Date" Format.Format="d" VertAlign="Center"/>
+      <TextObject Name="txtibanvalue" Left="529.2" Top="103.95" Width="179.55" Height="18.9" AfterDataEvent="txtibanvalue_AfterData" Text="[Rep_A_Voucher_Print.IBAN]"/>
+      <TextObject Name="txtIBAN" Left="425.25" Top="103.95" Width="94.5" Height="18.9" AfterDataEvent="Text77_AfterData" Text="IBAN" Font="Microsoft Sans Serif, 11pt, style=Bold"/>
+      <TextObject Name="txtrefervalue" Left="529.2" Top="103.95" Width="179.55" Height="18.9" Text="[Rep_A_Voucher_Print.ReferenceNo]"/>
+      <TextObject Name="txtRef" Left="425.25" Top="103.95" Width="94.5" Height="18.9" AfterDataEvent="Text77_AfterData" Text="Rer No" Font="Microsoft Sans Serif, 11pt, style=Bold"/>
+      <TextObject Name="txtdepodate" Left="425.25" Top="132.3" Width="103.95" Height="18.9" AfterDataEvent="Text77_AfterData" Text="Deposit Date" Font="Microsoft Sans Serif, 11pt, style=Bold"/>
+      <TextObject Name="txttransfdate" Left="425.25" Top="132.3" Width="113.4" Height="18.9" AfterDataEvent="Text77_AfterData" Text="Transfer Date" Font="Microsoft Sans Serif, 11pt, style=Bold"/>
+      <TextObject Name="txtdepodatevalue" Left="538.65" Top="132.3" Width="179.55" Height="18.9" Text="[Rep_A_Voucher_Print.DepositeDate]" Format="Custom" Format.Format="dd/MM/yyyy"/>
+      <TextObject Name="Text47" Left="529.2" Top="132.3" Width="179.55" Height="18.9" Text="[Rep_A_Voucher_Print.ChequeDate]" Format="Custom" Format.Format="dd/MM/yyyy" VertAlign="Center" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="txttransfdatevalue" Left="557.55" Top="132.3" Width="189" Height="18.9" Text="[Rep_A_Voucher_Print.TransferDate]" Format="Custom" Format.Format="dd/MM/yyyy"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="274.01" Width="718.2" Height="92.96" CanGrow="true" CanShrink="true" CanBreak="true" DataSource="Table" KeepTogether="true">
+      <TextObject Name="Text9" Left="9.45" Width="151.2" Height="92.96" Border.Lines="Left, Top, Bottom" CanGrow="true" GrowToBottom="true" CanBreak="false" Text="[Rep_A_Voucher_Print.Account_Name]" HorzAlign="Center" VertAlign="Center" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Text11" Left="160.65" Width="132.3" Height="92.96" Border.Lines="Left, Top, Bottom" CanGrow="true" GrowToBottom="true" CanBreak="false" Text="[Rep_A_Voucher_Print.SubAccount_Name]" HorzAlign="Center" VertAlign="Center" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Text16" Left="292.95" Width="122.85" Height="92.96" Border.Lines="Left, Top, Bottom" CanGrow="true" GrowToBottom="true" CanBreak="false" Text="[Rep_A_Voucher_Print.CostCenterName]" HorzAlign="Center" VertAlign="Center" Font="Microsoft Sans Serif, 9pt"/>
+      <TextObject Name="Text19" Left="415.8" Width="226.8" Height="92.96" Border.Lines="Left, Top, Bottom" CanGrow="true" CanShrink="true" GrowToBottom="true" CanBreak="false" Text="[Rep_A_Voucher_Print.Description]&#13;&#10;" HorzAlign="Center" VertAlign="Center" Font="Microsoft Sans Serif, 8pt"/>
+      <TextObject Name="Text24" Left="642.6" Width="66.15" Height="92.96" Border.Lines="All" CanGrow="true" GrowToBottom="true" CanBreak="false" Text="[Rep_A_Voucher_Print.Value]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Microsoft Sans Serif, 9pt" Trimming="EllipsisCharacter"/>
+    </DataBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="371.68" Width="718.2" Height="321.3">
+      <TextObject Name="Text53" Left="604.8" Top="9.45" Width="103.95" Height="18.9" Text="[Total]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" Font="Microsoft Sans Serif, 10pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text92" Left="510.3" Top="9.45" Width="94.5" Height="18.9" Text="Total" HorzAlign="Right" Font="Microsoft Sans Serif, 11pt, style=Bold"/>
+      <TextObject Name="Text54" Left="311.85" Top="37.8" Width="292.95" Height="18.9" Text="[Rep_A_Voucher_Print.TaxName1]" HorzAlign="Right" Font="Microsoft Sans Serif, 11pt, style=Bold"/>
+      <TextObject Name="Text56" Left="321.3" Top="66.15" Width="283.5" Height="18.9" Text="[Rep_A_Voucher_Print.TaxName2]" HorzAlign="Right" Font="Microsoft Sans Serif, 11pt, style=Bold"/>
+      <TextObject Name="Text58" Left="604.8" Top="37.8" Width="103.95" Height="18.9" AfterDataEvent="Text58_AfterData" Text="[Rep_A_Voucher_Print.TaxValue]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Microsoft Sans Serif, 10pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text97" Left="510.3" Top="94.5" Width="94.5" Height="18.9" Text="Net Total" HorzAlign="Right" Font="Microsoft Sans Serif, 11pt, style=Bold"/>
+      <TextObject Name="Text60" Left="604.8" Top="94.5" Width="103.95" Height="18.9" Text="[Rep_A_Voucher_Print.TotalAfterTax]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Microsoft Sans Serif, 10pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text66" Left="604.8" Top="66.15" Width="103.95" Height="18.9" AfterDataEvent="Text66_AfterData" Text="[Rep_A_Voucher_Print.TaxValue2]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Microsoft Sans Serif, 10pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text99" Left="9.45" Top="103.95" Width="47.25" Height="18.9" Text="Notes" Font="Microsoft Sans Serif, 11pt, style=Bold"/>
+      <TextObject Name="Text62" Left="56.7" Top="103.95" Width="340.2" Height="28.35" Text="[Rep_A_Voucher_Print.Notes]" Font="Microsoft Sans Serif, 10pt"/>
+      <ShapeObject Name="Shape1" Left="463.05" Top="189" Width="245.7" Height="132.3"/>
+      <TextObject Name="Text100" Left="538.65" Top="198.45" Width="94.5" Height="18.9" Text="Received By" Font="Microsoft Sans Serif, 10pt, style=Bold"/>
+      <LineObject Name="Line2" Left="463.05" Top="226.8" Width="245.7" Diagonal="true"/>
+      <TextObject Name="Text101" Left="472.5" Top="236.25" Width="56.7" Height="18.9" Text="Name" Font="Microsoft Sans Serif, 10pt, style=Bold"/>
+      <LineObject Name="Line3" Left="538.65" Top="245.7" Width="160.65" Border.Style="Dot" Diagonal="true"/>
+      <TextObject Name="Text102" Left="472.5" Top="264.6" Width="56.7" Height="18.9" Text="ID" Font="Microsoft Sans Serif, 10pt, style=Bold"/>
+      <LineObject Name="Line4" Left="538.65" Top="274.05" Width="160.65" Border.Style="Dot" Diagonal="true"/>
+      <TextObject Name="Text103" Left="472.5" Top="292.95" Width="66.15" Height="18.9" Text="Signature" Font="Microsoft Sans Serif, 10pt, style=Bold"/>
+      <LineObject Name="Line5" Left="548.1" Top="302.4" Width="151.2" Border.Style="Dot" Diagonal="true"/>
+      <TextObject Name="Text98" Left="9.45" Top="151.2" Width="699.04" Height="28.78" Border.Lines="All" Border.Color="Transparent" BeforePrintEvent="Text98_BeforePrint" Text="[ToWords([Rep_A_Voucher_Print.TotalAfterTax],[Rep_A_Voucher_Print.Currency_Code])]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="0" Format.DecimalSeparator="." Format.GroupSeparator="," Format.CurrencySymbol="$" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Center" VertAlign="Center" Font="Microsoft Sans Serif, 10pt, style=Bold"/>
+      <TextObject Name="Text108" Left="9.45" Top="151.2" Width="689.59" Height="28.78" Border.Lines="All" Border.Color="Transparent" AfterDataEvent="Text108_AfterData" Text="[ToWordsEnGb([Rep_A_Voucher_Print.TotalAfterTax])]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="0" Format.DecimalSeparator="." Format.GroupSeparator="," Format.CurrencySymbol="$" Format.PositivePattern="0" Format.NegativePattern="0" HorzAlign="Center" VertAlign="Center" Font="Microsoft Sans Serif, 10pt, style=Bold"/>
+      <TextObject Name="Text5" Left="9.45" Top="245.7" Width="132.3" Height="18.9" CanGrow="true" Text="[Rep_A_Voucher_Print.UserCreate]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text6" Left="170.1" Top="245.7" Width="132.3" Height="18.9" CanGrow="true" Text="[Rep_A_Voucher_Print.UserFirstApprove]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text7" Left="321.3" Top="245.7" Width="132.3" Height="18.9" CanGrow="true" Text="[Rep_A_Voucher_Print.UserSecondApprove]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text8" Left="9.45" Top="217.35" Width="132.3" Height="18.9" Text="User Create" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text109" Left="170.1" Top="217.35" Width="132.3" Height="18.9" Text="First Approve" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text110" Left="321.3" Top="217.35" Width="132.3" Height="18.9" Text="Second Approve" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+    </ReportSummaryBand>
+    <PageFooterBand Name="PageFooter1" Top="697.68" Width="718.2" Height="18.9">
+      <TextObject Name="Text1" Left="9.45" Width="189" Height="18.9" Text="[Date]" Font="Microsoft Sans Serif, 10pt"/>
+      <TextObject Name="Text2" Left="567" Width="141.75" Height="18.9" Text="[Page]" HorzAlign="Right" Font="Microsoft Sans Serif, 10pt"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

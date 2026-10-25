@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>FORWARDING - Login Page</title>
+    <link href="@Url.Content("~/Content/CSS/login.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/utilities/jquery-1.10.2.js")"></script>
+    <script src="@Url.Content("~/Scripts/utilities/ga.js")"></script>
+    <script src="@Url.Content("~/Scripts/login.js")"></script>
+
+</head>
+<body>
+    <!--WRAPPER-->
+    <div id="ParentLogin">
+
+        <div class="FirstLog"></div>
+
+        <div id="wrapper">
+            <!--SLIDE-IN ICONS-->
+            @*<div class="user-icon"></div>
+                <div class="pass-icon"></div>*@
+            <!--END SLIDE-IN ICONS-->
+            <!--LOGIN FORM-->
+            <form id="login-form"
+                  method="post"
+                  action="@Url.Action("CheckIsValidUser", "Login")"
+                  name="login-form"
+                  class="login-form glass-card">
+
+                <!--HEADER-->
+                <div class="header logoParent">
+                    <img src="@Url.Content("~/Content/images/NewLOGO.svg")" alt="IST Software Logo" />
+                    <h5 class="NewHeader">Welcome to IST Software</h5>
+                    <h4 class="NewSecondHeader">Enter your username and password to continue.</h4>
+                </div>
+                <!--END HEADER-->
+                <!--CONTENT-->
+                <div class="content">
+
+                    <div class="role-toggle">
+                        <div class="role-tabs">
+                            <input type="radio" id="cbIsUSer" name="loginaa" checked />
+                            <label for="cbIsUSer" class="role-tab">Employee</label>
+
+                            <input type="radio" id="cbIsCustomer" name="loginaa" />
+                            <label for="cbIsCustomer" class="role-tab">Client</label>
+                        </div>
+                        <span id="lblErrorMessage" class="error-message"></span>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="txtUserName">Username</label>
+                        <input type="text"
+                               id="txtUserName"
+                               name="username"
+                               class="input-default"
+                               placeholder="Enter your username" />
+                    </div>
+
+                    <div class="input-group password-group">
+                        <label for="txtPassword">Password</label>
+                        <input type="password"
+                               id="txtPassword"
+                               class="input-default"
+                               name="password"
+                               placeholder="Enter your password" />
+                        <span class="toggle-pass" onclick="togglePassword()">
+                            <img src="@Url.Content("~/Content/images/Showpass.png")" />
+                        </span>
+                        <a id="ResetPassword" href="">Forgot Password ?</a>
+                    </div>
+
+                </div>
+                <!--END CONTENT-->
+                <!--FOOTER-->
+                <div class="footer">
+                    <input type="button"
+                           id="CheckIsValidUser"
+                           name="CheckIsValidUser"
+                           class="Loginbutton"
+                           value="Sign in" />
+
+                    <div id="copyright">
+                        <div class="m-t">
+                            Copyright &copy; 2028
+                            <a href="http://www.istegy.com" class="CpRight" target="_blank">infoSysTech</a>
+                            <a id="CheckIsValidUser_PageDirectly" style="color:blueviolet"></a>
+                        </div>
+                    </div>
+                </div>
+                <!--END FOOTER-->
+
+            </form>
+            <!--END LOGIN FORM-->
+        </div>
+        <!--END WRAPPER-->
+
+    </div>
+    <!--END ParentLogin-->
+    <!--GRADIENT-->
+    @*<div class="gradient"></div>*@
+    <!--END GRADIENT-->
+</body>
+</html>
+
+</html>
+

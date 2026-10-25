@@ -1,0 +1,252 @@
+﻿<style>
+    .cardBox {
+        width: 70%;
+        height: 100px;
+        border: 1px solid black;
+        border-radius: 10px;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 12pt;
+        font-weight: bold;
+        text-align: center;
+        flex-direction: column;
+        margin: 10px
+    }
+
+    .progressCard {
+        width: 94%;
+        height: 130px;
+        background-color: white;
+        border: 1px solid black;
+        border-radius: 10px;
+        position: relative;
+        margin: 12px
+    }
+
+    .type {
+        color: white;
+        padding: 2px;
+        border-radius: 2px;
+        background-color: lightgray;
+        position: relative;
+        left: 18px;
+    }
+
+    .rightContent {
+        font-size: 12pt;
+        font-weight: bold;
+        text-align: right
+    }
+
+    .textDone {
+        color: green;
+    }
+
+    .progressCircle {
+        width: 20px;
+        height: 20px;
+        background-color: lightgray;
+        border-radius: 10px;
+        position: absolute;
+        top: 20px;
+        left: 12px
+    }
+
+    .name {
+        font-size: 18pt;
+        position: relative;
+        left: 18px
+    }
+
+    #ContainerNumber, #txtSearchKey {
+        border-radius: 45px;
+        height: 50px;
+        text-align: center;
+    }
+
+    .general_data {
+        font-size: 18pt;
+        color: green
+    }
+
+    #searchWithBL:hover {
+        transform: scale(1.5);
+    }
+</style>
+<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);" onclick="LoadViews(id);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="SG" href="javascript:void(0);">
+            @Forwarding.MvcApp.App_Resources.App_Resources.ShipsGo
+        </a>
+    </li>
+
+</ul>
+<!-- end breadcrumb  -->
+<!--Hidden Fields-->
+<!--EOF Hidden Fields-->
+<div id="div-Data">
+    <div id="div-Options">
+        <div id="div-Action" class="radius-top-left-right">
+        </div>
+    </div>
+    <section class="panel panel-default">
+        <header class="panel-heading">
+            <h3 class="m-b-none">
+                @Forwarding.MvcApp.App_Resources.App_Resources.ShipsGo
+            </h3>
+        </header>
+        <!--Region the searh, delete, addnew-->
+        <br>
+        <div class="modal-body" style="background-color:#f5f5f6;height:100%">
+
+            <div style="display:flex;flex-direction:column;justify-content:center;align-items:center">
+                @*<iframe src="https://shipsgo.com/iframe/where-is-my-container/TEST1234567" id="IframeShipsgoLiveMap" style="height: 500px;width: 70%;margin:5px;border-radius:10px;border:1px solid black"></iframe>*@
+
+                <!--<div style="width:50%">
+        <i class="fa fa-search fa-lg" style="cursor:pointer;right: 17px;float: right;position: relative;top: 32px;" onclick="getContainerData();"></i>-->
+                @*<i class="fa fa-search fa-lg" style="cursor:pointer;right: 17px;float: right;position: relative;top: 32px;"></i>*@
+                <!--<input type="text" class="form-control" placeholder="Container No" id="ContainerNumber">
+    </div>-->
+                <div class="form-group col-sm-3 m-t-25 m-l">
+                    <label class="m-l"><input type="radio" id="cbSearchByContainerNumber" checked="checked" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbShipsGoSearchType" value="1">&nbsp;Container Number</label>
+                    <label class="m-l"><input type="radio" id="cbSearchByBLNumber" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbShipsGoSearchType" value="2">&nbsp;BL Number</label>
+                </div>
+                <div style="width:50%">
+                    <i id="searchWithBL" class="fa fa-search fa-lg" style="cursor:pointer;right: 17px;float: right;position: relative;top: 32px;" onclick="getContainerData();"></i>
+                    @*<i class="fa fa-search fa-lg" style="cursor:pointer;right: 17px;float: right;position: relative;top: 32px;"></i>*@
+                    <input type="text" class="form-control" placeholder="Enter your shipment number" id="txtSearchKey">
+                </div>
+
+
+                <div id="containerData" class="hide" style="display:flex;width:100%">
+                    <div style="width:60%;margin:30px">
+                        <div style="display: grid; grid-template-columns: auto auto; padding: 5px ">
+                            <div class="cardBox">Shipping Line <br /><span id="ShippingLine" class="general_data"></span></div>
+                            <div class="cardBox">Status <br /><span id="Status" class="general_data"></span></div>
+                            <div class="cardBox">From Country <br /><span id="From" class="general_data"></span></div>
+                            <div class="cardBox">To Country <br /><span id="To" class="general_data"></span></div>
+                            <div class="cardBox">Containers Count <br /><span id="ContainersCount" class="general_data"></span></div>
+
+                        </div>
+
+                    </div>
+                    <div style="height:100%;color:black;background-color:#f5f5f6;width:40%;margin:30px">
+                        <div style="display:flex;justify-content:space-around;padding:5px">
+                            <div class="cardBox">Delay <br /><span id="Delay"></span></div>
+                            <div class="cardBox">TOTAL TT <br /><span id="TotalTT"></span></div>
+                            <div class="cardBox">ETA <br /><span id="ETA"></span></div>
+                        </div>
+
+                        <div id="POL" class="progressCard">
+                            <div class="progressCircle"></div>
+                            <div style="display:flex;margin:23px">
+                                <div class="leftContent" style="width:50%;height:100px">
+                                    <span class="type">POL</span><br />
+                                    <span class="name"></span>
+                                </div>
+                                <div class="rightContent" style="width:50%;height:100px">
+                                    <span>Loading Date</span><br />
+                                    <span class="LoadingDate"></span><br />
+                                    <span>Departure Date</span><br />
+                                    <span class="DepartureDate"></span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div id="TS1" class="progressCard hide">
+                            <div class="progressCircle" style=""></div>
+                            <div style="display:flex;margin:23px">
+                                <div class="leftContent" style="width:50%;height:100px">
+                                    <span class="type">1.Ts</span><br />
+                                    <span class="name"></span>
+                                </div>
+                                <div class="rightContent" style="width:50%;height:100px">
+                                    <span>Arrival Date</span><br />
+                                    <span class="ArrivalDate"></span><br />
+                                    <span>Departure Date</span><br />
+                                    <span class="DepartureDate"></span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div id="TS2" class="progressCard hide">
+                            <div class="progressCircle" style=""></div>
+                            <div style="display:flex;margin:23px">
+                                <div class="leftContent" style="width:50%;height:100px">
+                                    <span class="type">2.Ts</span><br />
+                                    <span class="name"></span>
+                                </div>
+                                <div class="rightContent" style="width:50%;height:100px">
+                                    <span>Arrival Date</span><br />
+                                    <span class="ArrivalDate"></span><br />
+                                    <span>Departure Date</span><br />
+                                    <span class="DepartureDate"></span>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div id="POD" class="progressCard">
+                            <div class="progressCircle" style=""></div>
+                            <div style="display:flex;margin:23px">
+                                <div class="leftContent" style="width:50%;height:100px">
+                                    <span class="type">POD</span><br />
+                                    <span class="name"></span>
+                                </div>
+                                <div class="rightContent" style="width:50%;height:100px">
+                                    <span>Arrival Date</span><br />
+                                    <span class="ArrivalDate"></span><br />
+                                    <span>Discharge Date</span><br />
+                                    <span class="DischargeDate"></span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+        <div id="divContainersData" class="table-responsive has-error hide" style="width:100%; height:300px; overflow:scroll;">
+            <table id="tblContainersData" class="table table-striped b-t b-light text-sm  table-hover ">
+                <thead>
+                    <tr>
+                        <th>
+                            No.
+                        </th>
+                        <th>
+                            Container Code
+                        </th>
+
+                        <th>Container TEU</th>
+                        <th>
+                            Live Map Url
+                        </th>
+                        <th>BL Gate Out Date</th>
+                        <th>
+                            BL Empty Return Date
+                        </th>
+
+                        <th class="rounded-right hide"></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+    </section>
+</div>
+<!--By: Mustafa Mahmoud-->

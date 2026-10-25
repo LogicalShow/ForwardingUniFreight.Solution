@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="07/03/2024 01:20:07" ReportInfo.Modified="07/03/2024 04:44:53" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {                              
+    private void Data1_AfterData(object sender, EventArgs e)
+    {                                                                                           
+      txtExtraTotal.Text = Convert.ToString(Convert.ToDecimal(txtBouns.Text)+Convert.ToDecimal(txtExtra.Text));
+      txtDeductTotal.Text = Convert.ToString(Convert.ToDecimal(txtDeduct.Text)+Convert.ToDecimal(txtLoan.Text));
+      txtTotal.Text = Convert.ToString(Convert.ToDecimal(txtExtraTotal.Text) + (Convert.ToDecimal(Report.GetParameterValue(&quot;Days&quot;)) * Convert.ToDecimal(txtSalary.Text)) - Convert.ToDecimal(txtDeductTotal.Text));
+    }
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFSSxhiP6CTXC7kHqaWdA+92cnCOpUrEy9a4rjPETpQfs/tW1ESZeKkAZM5wrmQ3cJ/4JxXdxwIpcYXK8ko/uR4mw4YbtNpt9X8K+r+OvQKbMEDUAskfadeis/15i7fB7N">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="exec (@query)">
+        <Column Name="ID" DataType="System.Int32"/>
+        <Column Name="Name" DataType="System.String"/>
+        <Column Name="Salary" DataType="System.Decimal"/>
+        <Column Name="Date" DataType="System.DateTime"/>
+        <Column Name="Bonus" DataType="System.Decimal"/>
+        <Column Name="Extra" DataType="System.Decimal"/>
+        <Column Name="Deduct" DataType="System.Decimal"/>
+        <Column Name="Loan" DataType="System.Decimal"/>
+        <CommandParameter Name="query" DataType="12" Size="4000" Expression="[query]" DefaultValue="select * from vwST_PaySlipReport"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="query" DataType="System.String"/>
+    <Parameter Name="DateFrom" DataType="System.String"/>
+    <Parameter Name="DateTo" DataType="System.String"/>
+    <Parameter Name="Days" DataType="System.Int32"/>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="9.45"/>
+    <PageHeaderBand Name="PageHeader1" Top="13.45" Width="718.2" Height="9.45"/>
+    <DataBand Name="Data1" Top="26.9" Width="718.2" Height="226.8" AfterDataEvent="Data1_AfterData" DataSource="Table">
+      <ShapeObject Name="Shape1" Width="718.2" Height="217.35" Border.Shadow="true" Border.ShadowWidth="6"/>
+      <TextObject Name="Text1" Left="670.95" Top="9.45" Width="37.8" Height="18.9" Text="الفترة" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text2" Left="623.7" Top="9.45" Width="37.8" Height="18.9" Text=": من" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text3" Left="529.2" Top="9.45" Width="94.5" Height="18.9" Text="[DateFrom]" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text4" Left="368.55" Top="9.45" Width="37.8" Height="18.9" Text=": الى" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text5" Left="274.05" Top="9.45" Width="94.5" Height="18.9" Text="[DateTo]" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text6" Left="85.05" Top="9.45" Width="66.15" Height="18.9" Text=": عدد الايام" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="txtDays" Left="9.45" Top="9.45" Width="75.6" Height="18.9" Text="[Days]" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text8" Left="623.7" Top="37.8" Width="85.05" Height="18.9" Text=": الاسم" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text9" Left="292.95" Top="37.8" Width="330.75" Height="18.9" Text="[Table.Name]" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text10" Left="85.05" Top="37.8" Width="66.15" Height="18.9" Text=": المرتب" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="txtSalary" Left="9.45" Top="37.8" Width="75.6" Height="18.9" Text="[Table.Salary]" Format="Number" Format.UseLocale="true" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text12" Left="623.7" Top="66.15" Width="85.05" Height="18.9" Text=": (+) يضاف" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text13" Left="66.15" Top="66.15" Width="85.05" Height="18.9" Text=": (-) يخصم" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text14" Left="604.8" Top="94.5" Width="103.95" Height="18.9" Text="مكافأة" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="txtBouns" Left="529.2" Top="94.5" Width="75.6" Height="18.9" Text="[Table.Bonus]" Format="Number" Format.UseLocale="true" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text16" Left="604.8" Top="122.85" Width="103.95" Height="18.9" Text="اضافي" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="txtExtra" Left="529.2" Top="122.85" Width="75.6" Height="18.9" Text="[Table.Extra]" Format="Number" Format.UseLocale="true" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text18" Left="604.8" Top="151.2" Width="103.95" Height="18.9" Text="اجمالي الاضافات" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="txtExtraTotal" Left="529.2" Top="151.2" Width="75.6" Height="18.9" Format="Number" Format.UseLocale="true" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text20" Left="85.05" Top="94.5" Width="103.95" Height="18.9" Text="عجز" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="txtDeduct" Left="9.45" Top="94.5" Width="75.6" Height="18.9" Text="[Table.Deduct]" Format="Number" Format.UseLocale="true" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text22" Left="85.05" Top="122.85" Width="103.95" Height="18.9" Text="سلفة" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="txtLoan" Left="9.45" Top="122.85" Width="75.6" Height="18.9" Text="[Table.Loan]" Format="Number" Format.UseLocale="true" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text24" Left="85.05" Top="151.2" Width="103.95" Height="18.9" Text="اجمالي الخصومات" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="txtDeductTotal" Left="9.45" Top="151.2" Width="75.6" Height="18.9" Format="Number" Format.UseLocale="true" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text26" Left="604.8" Top="189" Width="103.95" Height="18.9" Text="الاجمالي المستحق" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="txtTotal" Left="529.2" Top="189" Width="75.6" Height="18.9" Format="Number" Format.UseLocale="true" HorzAlign="Right" Font="Arial, 12pt"/>
+      <TextObject Name="Text28" Left="302.4" Top="189" Width="103.95" Height="18.9" Text="التوقيع" HorzAlign="Right" Font="Arial, 12pt"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="257.7" Width="718.2" Height="9.45"/>
+  </ReportPage>
+</Report>

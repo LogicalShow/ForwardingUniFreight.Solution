@@ -1,0 +1,140 @@
+﻿<!--SelectContainersAndPackagesModal-->
+<div class="modal fade" id="SelectContainersAndPackagesModal" tabindex="-1" style="z-index: 3000;" data-keyboard="false" data-backdrop="false" role="dialog" aria-labelledby="SelectContainersAndPackagesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-80">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.SelectContainersPackages
+                </h3>
+            </div>
+            <div class="modal-body">
+                 Region SelectContainersAndPackages Form 
+                <div class="span7 form vertical-mode" id="SelectContainersAndPackages-form">
+                    <fieldset>
+                        <div class="row">
+                            <div id="div-search-controls" class="input-group m-l col-sm-5">
+                                <input id="txtSearchContainersAndPackages" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search Code / Name" />
+                                <span class="input-group-btn">
+                                    <button id="btn-SearchContainersAndPackages" class="btn btn-sm btn-primary" type="button"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div><br />
+
+                        <div id="divSelectContainersAndPackages">
+                        </div>
+                    </fieldset>
+                </div>
+                 Endegion SelectContainersAndPackages Form 
+            </div>
+            <div class="modal-footer">
+                sherif
+                <button type="button" id="btnSelectContainersAndPackagesApply" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-save"></span>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                </button>
+                <button class=" btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--SelectContainersAndPackagesModal-->
+
+<!--SelectContainersAndPackagesModal-->
+
+<!--EOF SelectContainersAndPackagesModal-->
+<!-- Add / Edit EditCharge Modal -->
+<div class="modal fade" id="EditContainerOrPackageModal" tabindex="-1" data-keyboard="false" data-backdrop="false" role="dialog" aria-labelledby="EditContainerOrPackageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-60">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;</button>*@
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.Type &nbsp;<label id="lblContainersAndPackageshown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region Add / Edit Form -->
+                <div class="span7 form vertical-mode" id="EditCharge-form">
+                    <fieldset>
+                        <div class="form-group pull-in  has-error clearfix">
+                            <input id="hContainerOrPackageID" type="hidden" />
+                            <!-- start alert message region -->
+                            <div class="alert alert-danger div-error">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                            </div>
+                            <!-- end alert message region -->
+                            <!--Region Containers in case of FCL or FTL-->
+                            <div id="divContainersInfo">
+                                <div class="form-group col-sm-6">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.ContainerType</label>
+                                    <input id="txtContainerType" readonly="readonly" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated" data-required="false" maxlength="100" placeholder="" style="text-transform:uppercase" />
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Quantity</label>
+                                    <input type="text" id="txtContainersQuantity" onkeypress="CheckValueIsInteger(id);" onfocus="CheckValueIsInteger(id);" class="form-control parsley-validated" data-type="number" data-required="false" maxlength="8" placeholder="0" />
+                                </div>
+                            </div>
+                            <!--EOF Region Containers in case of FCL or FTL-->
+                            <!--Region Packages in case of LCL or LTL or IsAir-->
+                            <div id="divPackagesInfo">
+                                <div class="form-group col-sm-4">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.PackageType</label>
+                                    <input id="txtPackageType" readonly="readonly" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated" data-required="false" maxlength="100" placeholder="" style="text-transform:uppercase" />
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Quantity</label>
+                                    <input type="text" id="txtPackagesQuantity" onkeypress="CheckValueIsInteger(id);" onfocus="CheckValueIsInteger(id);" onchange="CalculateVolume();" class="form-control parsley-validated" data-type="number" data-required="false" maxlength="8" placeholder="0" />
+                                </div>
+                                <div class="col-sm-6"><div><br /><br /><br /><br /></div></div>
+                                <div class="form-group col-sm-2">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Length</label>
+                                    <input type="text" id="txtLength" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onchange="CalculateVolume();" data-type="number" class="form-control parsley-validated" data-required="false" maxlength="11" placeholder="0.0" />
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Width</label>
+                                    <input type="text" id="txtWidth" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onchange="CalculateVolume();" data-type="number" class="form-control parsley-validated" data-required="false" maxlength="11" placeholder="0.0" />
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Height</label>
+                                    <input type="text" id="txtHeight" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onchange="CalculateVolume();" data-type="number" class="form-control parsley-validated" data-required="false" maxlength="11" placeholder="0.0" />
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Volume</label>
+                                    <input type="text" id="txtVolume" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" data-type="number" class="form-control parsley-validated" data-required="false" maxlength="11" placeholder="0.0" />
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.VolumetricWeightAbbrev</label>
+                                    <input type="text" id="txtVolumetricWeight" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" data-type="number" class="form-control parsley-validated" data-required="false" maxlength="11" placeholder="0.0" />
+                                </div>
+                                <div class="form-group col-sm-2 hide">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.NetWeight</label>
+                                    <input type="text" id="txtNetWeight" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" data-type="number" class="form-control parsley-validated" data-required="false" maxlength="11" placeholder="0.0" />
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.GrossWeightAbbrev</label>
+                                    <input type="text" id="txtGrossWeight" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" data-type="number" class="form-control parsley-validated" data-required="false" maxlength="11" placeholder="0.0" />
+                                </div>
+                                @*<div class="form-group col-sm-4">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.ChargeableWeight</label>
+                                        <input type="text" id="txtChargeableWeight" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);"  data-type="number"  class="form-control parsley-validated" data-required="false" maxlength="11" placeholder="0.0" />
+                                    </div>*@
+
+                            </div>
+                            <!--EOF Region Packages in case of LCL or LTL or IsAir-->
+                        </div>
+
+                    </fieldset>
+                </div>
+                <!-- Endegion Add / Edit Form -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSaveContainerOrPackage" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                </button>
+                <button class="btnClose btn btn-link btn-sm" id="btnClose" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Region Options & Template  -->

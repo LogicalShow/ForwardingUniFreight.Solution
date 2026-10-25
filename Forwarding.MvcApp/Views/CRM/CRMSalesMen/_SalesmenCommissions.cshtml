@@ -1,0 +1,83 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="liGroupName" href="javascript:void(0);" onclick="LoadViews('CRMSalesMen')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.CRM
+    </a>
+</li>
+<li>
+    <a id="liTabName" href="javascript:void(0);" onclick="LoadViews('CRMSalesMen')">
+        Targets & Commissions
+    </a>
+</li>
+<li id="liFormName" class="active">@Forwarding.MvcApp.App_Resources.App_Resources.SalesmenCommissions</li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-SalesmenCommissions">
+    <!-- Region Options & Template  -->
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <div id="hExportedTable" class="hide"></div>
+                <h3 class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.FilterBy</h3>
+                @*<h3 class="m-b-none">Best Print Using Internet Explorer</h3>*@
+            </header>
+            <!--Region the searh, delete, addnew-->
+            <div class="row text-sm wrapper hidden-print m-l">
+                <div id="div-main-options">
+                    <div class="form-group col-sm-3">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Salesman</label>
+                        <select id="slFilterSalesman" class="form-control m-b input-sm" data-required="true"></select>
+                    </div>
+                    <div class="form-group col-sm-3">
+                        <label>Target Type</label>
+                        <select id="slFilterTargetType" class="form-control m-b input-sm" data-required="false" onchange="CommissionTarget_TargetTypeChanged();"></select>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label>Year</label>
+                        <select id="slFilterTargetYear" class="form-control m-b input-sm" data-required="true"></select>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label>From Month</label>
+                        <select id="slFilterFromTargetMonth" class="form-control m-b input-sm" data-required="true"></select>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label>To Month</label>
+                        <select id="slFilterToTargetMonth" class="form-control m-b input-sm" data-required="true"></select>
+                    </div>
+                    <div class="col-sm-3 m-t-md hide">
+                        <button id="btn-ClearFilters" type="button" onclick="ClearAll('#FilterOptionsModal');" class="btn btn-sm btn-warning"><i class="fa fa-eraser"></i><b>&nbsp;Clear Filters&nbsp;</b></button>
+                        @*<button id="btn-SelectOptions" type="button" class="btn btn-info btn-sm" onclick="OptionsStatistics_SelectOptions();"><i class="fa fa-check-square-o"></i><b>&nbsp;Select Options</b></button>
+                            <button id="btn-SelectColumns" type="button" class="btn btn-warning btn-sm" onclick="OptionsStatistics_SelectColumns();"><i class="fa fa-print"></i><b>&nbsp;Add / Remove Columns</b></button>*@
+                    </div>
+
+                    <div class="col-sm-5" style="clear:both;">
+                        <label class="m-t-sm"> <input type="radio" name="nameReportOption" checked="checked" id="cbFixedAmountTarget" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"> Fixed Amount</label>
+                        <label class="m-l m-t-sm"> <input type="radio" name="nameReportOption" id="cbPercentageTarget" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"> Percentage</label>
+                        <label class="m-l m-t-sm"> <input type="radio" name="nameReportOption" id="cbPercentageTarget_BusinessVolume" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"> Business Volume</label>
+                        <label class="m-l m-t-sm"> <input type="checkbox" id="cbGroupByMonth" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"> Group by months</label>
+                        <label class="m-t-sm hide classShowForHOR"> <input type="checkbox" id="cbFilterInvoiceDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"> Invoice Date</label>
+                        <label class="m-t-sm hide classShowForHOR"> <input type="checkbox" id="cbFilterApprovedInvoices" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"> Approved Invoices OP</label>
+                    </div>
+
+                    <button id="btn-print" type="button" class="btn btn-lightblue btn-sm" onclick="SalesReport_Print('Print');"><i class="fa fa-print"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Print</b></button>
+                    <button id="btn-ExportToExcel" type="button" onclick="SalesReport_Print('Excel');" class="btn btn-sm btn-info"><i class="fa fa-table"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.TraExportExcel&nbsp;</b></button>
+
+                </div>
+            </div>
+            <!--EOF Region the searh, delete, addnew line-->
+
+
+        </section>
+    </div>
+</div>

@@ -1,0 +1,1062 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="liGroupName" href="javascript:void(0);" onclick="LoadViews('ReceiptsAndPaymentsTransactions');">
+            @Forwarding.MvcApp.App_Resources.App_Resources.ReceiptsAndPaymentsGroup
+        </a>
+    </li>
+    <li>
+        <a id="liTabName" href="javascript:void(0);" onclick="LoadViews('ReceiptsAndPaymentsTransactions');">
+            @Forwarding.MvcApp.App_Resources.App_Resources.RecAndPayTransactions
+        </a>
+    </li>
+    <li>@Forwarding.MvcApp.App_Resources.App_Resources.DebitAndCreditClose</li>
+    @*<li id="li_InOrOut" class="active"></li>*@
+</ul>
+<!-- end breadcrumb  -->
+
+
+
+<div id="divHidden" class=""></div>
+
+
+<div class="form-group col-sm-2">
+    <label><u>Select Operation:</u></label>
+    <input type="hidden" id="hOperationID" />
+    <select id="slFilterOperation" class="form-control input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);"><option value=""><--Select--></option></select>
+</div>
+<div class="col-sm-2">
+    <button type="button" class="btn btn-primary btn-sm m-t-25" onclick="DebitAndCreditClose_FillModal();">
+        <span class="glyphicon glyphicon-save"></span>&nbsp;Edit&nbsp;
+    </button>
+</div>
+<!--SelectChargesModal-->
+<div class="modal fade" id="SelectChargesModal" tabindex="-1" style="z-index: 1050;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="SelectChargesModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-100">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.Charges &nbsp;<label id="lblShownOperationCode" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+                <h6 id="h6ChargesHeader_Quotation" class="m-b-none hide">
+                    <div class="form-group float-right">
+                        <!--i need those Divs for not to start from a new line-->
+                        @Forwarding.MvcApp.App_Resources.App_Resources.Salesman&nbsp;<label id="lblSalesman_Quotation" purpose="dynamicLabel" class="static-text-blue"></label>
+                    </div>
+                    <label id="lblDirection_Quotation" purpose="" class=""></label>
+                    <label id="lblTransport_Quotation" purpose="" class=""></label>
+                    @Forwarding.MvcApp.App_Resources.App_Resources.Client&nbsp;<label id="lblClient_Quotation" purpose="" class="static-text-primary"></label>
+                    @Forwarding.MvcApp.App_Resources.App_Resources.Route&nbsp;<label id="lblRouting_Quotation" purpose="" class="static-text-primary"></label>
+                    &nbsp;&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Expiration&nbsp;<label id="lblExpirationDate_Quotation" purpose="" class="static-text-blue"></label>
+                    @*&nbsp;&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Direction&nbsp;<label id="lblDirection_Quotation" purpose=""></label>*@
+                    @*&nbsp;&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Transport&nbsp;<label id="lblTransport_Quotation" purpose=""></label>*@
+                    @*<br />@Forwarding.MvcApp.App_Resources.App_Resources.Code&nbsp;<label id="lblQuotationCode_Quotation" purpose="" class="static-text-blue"></label>*@
+                    @*&nbsp;&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Stage&nbsp;<label id="lblStage_Quotation" purpose="" class="static-text-blue"></label>*@
+                    <br />@Forwarding.MvcApp.App_Resources.App_Resources.Type&nbsp;<label id="lblShipmentType_Quotation" purpose="" class="static-text-blue"></label>
+                </h6>
+                <h6 id="h6ChargesHeader_TO" class="m-b-none hide">
+                    @*<label id="lblDirection_TO" purpose="" class=""></label>
+                        <label id="lblTransport_TO" purpose="" class=""></label>
+                        @Forwarding.MvcApp.App_Resources.App_Resources.Client&nbsp;<label id="lblClient_TO" purpose="" class="static-text-primary"></label>*@
+                    &nbsp;&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.BillNo&nbsp;<label id="lblBillNumber_TO" purpose="" class="static-text-primary"></label>
+                    <br />Gate-In Port&nbsp;<label id="lblGateInPort_TO" purpose="" class="static-text-blue"></label>
+                    &nbsp;&nbsp;Gate-In Date&nbsp;<label id="lblGateInDate_TO" purpose="" class="static-text-blue"></label>
+                    &nbsp;&nbsp;Gate-Out Port&nbsp;<label id="lblGateOutPort_TO" purpose="" class="static-text-blue"></label>
+                    &nbsp;&nbsp;Gate-Out Date&nbsp;<label id="lblGateOutDate_TO" purpose="" class="static-text-blue"></label>
+                    <br />Stuffing Date&nbsp;<label id="lbStuffingDate_TO" purpose=""></label>
+                    @*&nbsp;&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Transport&nbsp;<label id="lblTransport_TO" purpose=""></label>*@
+                    @*<br />@Forwarding.MvcApp.App_Resources.App_Resources.Code&nbsp;<label id="lblQuotationCode_TO" purpose="" class="static-text-blue"></label>*@
+                    @*&nbsp;&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Stage&nbsp;<label id="lblStage_TO" purpose="" class="static-text-blue"></label>*@
+                    <br />@Forwarding.MvcApp.App_Resources.App_Resources.BookingNumber&nbsp;<label id="lblBookingNumber_TO" purpose="" class="static-text-blue"></label>
+                </h6>
+            </div>
+            <div class="modal-body">
+                <!-- Region SelectCharges Form -->
+                <div class="span7 form vertical-mode" id="SelectCharges-form">
+                    <fieldset style="min-width: auto;">
+                        <div class="row">
+                            <div id="div-search-controls" class="input-group m-l col-sm-5">
+                                <input id="txtSearchCharges" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search Code / Name">
+                                <span class="input-group-btn">
+                                    <button id="btn-SearchCharges" class="btn btn-sm btn-primary" type="button"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                            <div id="div-search-controls-sl" class="input-group col-sm-3 hide classShowForGBL">
+                                <select id="slSearchCharges" onfocus="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="input-sm form-control">
+                                    <option value=""><--All--></option>
+                                    <option value="10">1 Ton</option>
+                                    <option value="20">3 Tons</option>
+                                    <option value="30">5 Tons</option>
+                                    <option value="40">Canter</option>
+                                    <option value="50">Car Carriers</option>
+                                    <option value="60">Container</option>
+                                    <option value="70">Flatbed</option>
+                                    <option value="80">Gen Set Truck</option>
+                                    <option value="90">Pickup</option>
+                                    <option value="100">Towing</option>
+                                </select>
+                                <span class="input-group-btn">
+                                    <button id="btn-SearchCharges-sl" class="btn btn-sm btn-primary" type="button"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                        <br />
+                        <div id="divSelectCharges">
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- Endegion SelectCharges Form -->
+            </div>
+            <div class="modal-footer">
+                <!--sherif-->
+                <button type="button" id="btnAddNewCharge" class="btn btn-warning btn-sm hide" onclick="Operations_InsertFromOperations('ChargeType');">
+                    <span class="glyphicon glyphicon-plus"></span>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.New
+                </button>
+                <button type="button" id="btnSelectChargesApply" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-save"></span>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                </button>
+                <button class="btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF SelectChargesModal-->
+<!-- EditChargeModal -->
+<div class="modal fade" id="EditChargeModal" tabindex="-1" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="EditChargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-80">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;</button>*@
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.ChargeType &nbsp;<label id="lblChargeShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region Add / Edit EditCharge Form -->
+                <div class="span7 form vertical-mode" id="EditCharge-form">
+                    <fieldset>
+                        <div class="form-group pull-in  has-error clearfix">
+                            <input id="hChargeID" type="hidden" />
+                            <!-- start alert message region -->
+                            @*<div class="alert alert-danger div-error">
+                                    @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                </div>*@
+                            <!-- end alert message region -->
+                            @*<div class="form-group col-sm-4">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.ChargeType</label>
+                                    <input id="txtChargeType" disabled="disabled" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated input-sm" data-required="true" maxlength="100" placeholder="" style="text-transform:uppercase" />
+                                </div>*@
+                            <div class="form-group col-sm-4">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ChargeType</label>
+                                <select id="slChargeType" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="true"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-4 hide">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.CalculationType</label>
+                                <input type="text" id="txtCalculationType" disabled="disabled" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="100" placeholder="" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.CalculationType</label>
+                                <select id="slCalculationType" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="fasle"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Quantity</label>
+                                <input type="text" id="txtCostQuantity" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onchange="CalculateChargesCost();" class="form-control parsley-validated input-sm" data-required="true" maxlength="10" placeholder="0" />
+                            </div>
+
+                            <div class="col-sm-2"><br /><br /><br /><br /></div>
+                            <div class="form-group col-sm-2 m-t-n-sm">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.CostPrice</label>
+                                <input type="text" id="txtCostPrice" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onchange="CalculateChargesCost();" class="form-control parsley-validated input-sm classCostPriceField" data-required="true" maxlength="10" placeholder="0.0" />
+                            </div>
+                            <div class="form-group col-sm-2 m-t-n-sm">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.CostAmount</label>
+                                <input type="text" id="txtCostAmount" disabled="disabled" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" class="form-control parsley-validated input-sm" data-required="true" maxlength="10" placeholder="0.0" />
+                            </div>
+                            <div class="form-group col-sm-2 m-t-n-sm">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.CostCur</label>
+                                <select id="slChargeCostCurrency" name="slChargeCostCurrency" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm classCostPriceField" data-required="true"></select>
+                            </div>
+
+                            @*<br /><br /><br /><br />*@
+                            <div class="form-group col-sm-2 m-t-n-sm">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.SalePrice</label>
+                                <input type="text" id="txtSalePrice" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onchange="CalculateChargesCost();" class="form-control parsley-validated input-sm classSalePriceField" data-required="true" maxlength="10" placeholder="0.0" />
+                            </div>
+                            <div class="form-group col-sm-2 m-t-n-sm">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.SaleAmount</label>
+                                <input type="text" id="txtSaleAmount" disabled="disabled" name="txtSaleAmount" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" class="form-control parsley-validated input-sm" data-required="true" maxlength="10" placeholder="0.0" />
+                            </div>
+                            <div class="form-group col-sm-2 hide">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.SaleQuantity</label>
+                                <input type="text" id="txtSaleQuantity" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onchange="CalculateChargesCost();" class="form-control parsley-validated input-sm" data-required="true" maxlength="10" placeholder="0" />
+                            </div>
+                            <div class="form-group col-sm-2 m-t-n-sm">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.SaleCur</label>
+                                <select id="slChargeSaleCurrency" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm classSalePriceField" data-required="true"></select>
+                            </div>
+
+                            <div class="form-group col-sm-3">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.PartnerType</label>
+                                <select id="slChargeOperationPartnerTypes" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b input-sm" onchange="QuotationCharges_PartnerTypeChanged(0, 0);" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Supplier</label>
+                                <select id="slChargeSupplier" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b input-sm" data-required="false" onchange="FillSupplierSites(null,'slChargeOperationPartnerTypes','slChargeSupplier','slChargSites');"></select>
+                            </div>
+
+                            <div class="form-group col-sm-4 hide classShowForGBL">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Sites</label>
+                                <select id="slChargSites" class="form-control input-sm" data-required="false"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="col-sm-2">
+                                <label id="lblPackageType">@Forwarding.MvcApp.App_Resources.App_Resources.PackageType</label>
+                                <label id="lblContainerType">@Forwarding.MvcApp.App_Resources.App_Resources.ContainerType</label>
+                                <select id="slContainerOrPackage" name="slContainerOrPackage" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false" class="form-control input-sm"></select>
+                            </div>
+                            <div id="divDemurrage" class="form-group col-sm-2 hide">
+                                <label>Demurrage/Day</label>
+                                <input type="text" id="txtDemurrageDays" onkeypress="CheckValueIsInteger(id);" onfocus="CheckValueIsInteger(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="2" placeholder="" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>Order</label>
+                                <input type="text" id="txtViewOrder" onkeypress="CheckValueIsInteger(id);" onfocus="CheckValueIsInteger(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="8" placeholder="" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>AdditionalAmount</label>
+                                <input type="text" id="txtAdditionalAmount" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onchange="" class="form-control parsley-validated input-sm" data-required="false" maxlength="10" placeholder="0" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>P/C</label>
+                                <select id="slChargePOrC" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false">
+                                    <option value=""><--Select--></option>
+                                    <option value="1">Collect</option>
+                                    <option value="3">Prepaid</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>Bill To</label>
+                                <select id="slChargeBillTo" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"></select>
+                            </div>
+                            @*<div class="form-group col-sm-2 hide ClsHsCode">
+                                    <label>HS Code</label>
+                                    <input type="text" id="txtHsCode" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="200" placeholder="Hs" style="text-transform:uppercase" />
+                                </div>
+
+                                <div class="form-group col-sm-2 hide ClsCustomDuties">
+                                    <label>Custom Duties</label>
+                                    <input type="text" id="txtCustomDuties" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="10" placeholder="0.0" />
+                                </div>
+                                <div class="form-group col-sm-2 hide ClsWTH">
+                                    <label>WTH</label>
+                                    <input type="text" id="txtWTH" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="10" placeholder="0.0" />
+                                </div>
+                                <div class="form-group col-sm-2 hide ClsBankFeeCharges">
+                                    <label>Bank Fee Charges</label>
+                                    <input type="text" id="txtBankFeeCharges" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="10" placeholder="0.0" />
+                                </div>
+                                <div class="form-group col-sm-2 hide ClsCommission">
+                                    <label>commission</label>
+                                    <input type="text" id="txtcommission" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="10" placeholder="0.0" />
+                                </div>*@
+                            @*<div class="form-group col-sm-9">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</label>
+                                    <input type="text" id="txtChargeNotes" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="100" placeholder="" style="text-transform:uppercase"/>
+                                </div>*@
+                            <div class="form-group col-sm-7">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</label>
+                                <textarea id="txtChargeNotes" maxlength="1000" class="form-control col-sm-12 textDivOperations input-sm" style="text-transform:uppercase; height:100px!Important;"></textarea>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+                <!-- Endegion Add / Edit EditCharge Form -->
+            </div>
+            <div class="modal-footer m-t-n">
+                <button type="button" id="btnSaveCharge" class="btn btn-primary btn-sm classHideForAcceptedOrDeclined classHideForQuotationApproval">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                </button>
+                <button class="btnClose btn btn-link btn-sm" id="btnClose" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF EditChargeModal -->
+<!-- EditPayableModal -->
+<div class="modal fade" id="EditPayableModal" tabindex="-1" style="z-index: 1050;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="EditPayableModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-80">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;</button>*@
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.Payable &nbsp;<label id="lblPayableShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region Add / Edit EditPayable Form -->
+                <div class="span7 form vertical-mode" id="EditPayable-form">
+                    <fieldset>
+                        <div class="form-group pull-in  has-error clearfix">
+                            <input id="hPayableID" type="hidden" />
+                            <!-- start alert message region -->
+                            @*<div class="alert alert-danger div-error">
+                                    @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                </div>*@
+                            <!-- end alert message region -->
+                            @*<div class="form-group col-sm-6">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.ChargeType</label>
+                                    <input id="txtPayableType" disabled="disabled" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text"  class="form-control parsley-validated input-sm" data-required="true" maxlength="100" placeholder="" style="text-transform:uppercase" />
+                                </div>*@
+                            <div class="form-group col-sm-4">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ChargeTypes</label>
+                                <select id="slPayableChargeType" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="true"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Bill</label>
+                                <select id="slPayableBill" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-4 hide">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ContainerTank</label>
+                                <select id="slPayableTank" class="form-control input-sm" data-required="false"><option value=""><--Select--></option></select>
+                            </div>
+                            @*<div class="form-group col-sm-2 hide">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.POrC</label>
+                                    <select id="slPayablePOrC" name="slPayablePOrC" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"></select>
+                                </div>*@
+                            <div class="form-group col-sm-4" style="clear:both;">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Supplier</label>
+                                <select id="slPayableSupplier" onchange="Payables_SetDueDate('txtPayableIssueDate', 'txtPayableEntryDate', 'slPayableSupplier'); Payables_PayableSupplierChanged('slPayableSupplier', 'txtPayableSupplierInvoiceNo', 'txtPayableSupplierReceiptNo'); FillSupplierSites(null, 'slPayableSupplier', 'slPayableSupplier', 'slSites');" class="form-control input-sm" data-required="false"></select>
+                            </div>
+
+                            <div class="form-group col-sm-2 hide classShowForGBL">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Sites</label>
+                                <select id="slSites" class="form-control input-sm" data-required="false"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-2 hide">
+                                <label>Trucking Order</label>
+                                <select id="slPayableTruckingOrder" class="form-control input-sm" data-required="false"><option value=""><--Select--></option></select>
+                            </div>
+
+                            <div class="form-group col-sm-2 hideForAWB">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.IssueDate</label>
+                                <input id="txtPayableIssueDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="datepicker-input form-control parsley-validated input-sm" data-required="false" maxlength="10" data-date-format="dd/mm/yyyy" style="cursor:text;" placeholder="Select Date" readonly="readonly" />
+                            </div>
+                            <div class="form-group col-sm-2 hide">
+                                <label id="lblPayableUOM">@Forwarding.MvcApp.App_Resources.App_Resources.UOM</label>
+                                <select id="slPayableUOM" class="form-control input-sm" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-2 hideForAWB">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Quantity</label>
+                                <input type="text" id="txtPayableQuantity" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onchange="CalculatePayablesAmount();" class="form-control parsley-validated input-sm" data-required="true" maxlength="10" placeholder="0" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.CostPrice</label>
+                                <input type="text" id="txtPayableUnitPrice" name="txtPayableUnitPrice" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onchange="CalculatePayablesAmount();" class="form-control parsley-validated input-sm" data-required="true" maxlength="10" placeholder="0.0" />
+                            </div>
+
+
+
+
+
+
+                            <div class="form-group col-sm-2 hideForAWB">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.AmtWOVAT</label>
+                                <input type="text" id="txtPayableAmountWithoutVAT" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="false" maxlength="7" placeholder="Amount" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2 hideForAWB">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.VAT</label>
+                                <select id="slPayableTax" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="CalculatePayablesAmount(false, false);" class="form-control input-sm" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-2 hideForAWB">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Perc</label>
+                                <input type="text" id="txtPayableTaxPercentage" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="false" maxlength="4" placeholder="Tax (%)" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2 hideForAWB">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.VATAmt</label>
+                                <input type="text" id="txtPayableTaxAmount" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="false" maxlength="7" placeholder="Tax Amount" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2 hideForAWB">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.WHT</label>
+                                <select id="slPayableDiscount" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="CalculatePayablesAmount();" class="form-control input-sm" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-2 hideForAWB">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Perc</label>
+                                <input type="text" id="txtPayableDiscountPercentage" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="false" maxlength="4" placeholder="WHT (%)" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2 hideForAWB">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.WHT_Amt</label>
+                                <input type="text" id="txtPayableDiscountAmount" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="false" maxlength="7" placeholder="WHT.Amt" style="text-transform:uppercase" />
+                            </div>
+
+
+
+
+
+
+
+
+                            <div class="form-group col-sm-2 hideForAWB">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.TotalCost</label>
+                                <input type="text" id="txtPayableAmount" disabled="disabled" name="txtPayableAmount" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" class="form-control parsley-validated input-sm" data-required="true" maxlength="10" placeholder="0.0" />
+                            </div>
+                            <div class="form-group col-sm-2 hideForAWB">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ExchangeRate</label>
+                                <input type="text" id="txtPayableExchangeRate" disabled="disabled" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" class="form-control parsley-validated input-sm" data-required="true" maxlength="10" placeholder="0.0" />
+                            </div>
+                            @*<div class="form-group col-sm-4">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Name</label>
+                                    <input type="text" id="txtName" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="true" maxlength="50" placeholder="ex. Alexandria" style="text-transform:uppercase"/>
+                                </div>*@
+
+                            <div class="form-group col-sm-2 hideForAWB">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Currency</label>
+                                <select id="slPayableCurrency" name="slPayableCurrency" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="Payables_CurrencyChanged();" class="form-control input-sm" data-required="true"></select>
+                            </div>
+                            <div class="form-group col-sm-2 hideForAWB">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.InitialSaleValueAbbrev</label>
+                                <input type="text" id="txtPayableInitialSalePrice" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="20" placeholder="0.0" />
+                            </div>
+                            <div class="form-group col-sm-2 hideForAWB">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.SupplierInvoiceNumber</label>
+                                <input id="txtPayableSupplierInvoiceNo" onchange="Payables_PayableSupplierInvoiceOrReceiptNoChanged(slPayableSupplier, txtPayableSupplierInvoiceNo, txtPayableSupplierReceiptNo);" type="text" class="form-control parsley-validated input-sm" data-required="false" maxlength="20" placeholder="Inv. No." style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2 hideForAWB">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ReceiptNo</label>
+                                <input id="txtPayableSupplierReceiptNo" onchange="Payables_PayableSupplierInvoiceOrReceiptNoChanged(slPayableSupplier, txtPayableSupplierInvoiceNo, txtPayableSupplierReceiptNo);" type="text" class="form-control parsley-validated input-sm" data-required="false" maxlength="20" placeholder="Rec. No." style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2 hideForAWB">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.DueDate</label>
+                                <input id="txtPayableEntryDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="datepicker-input form-control parsley-validated input-sm" data-required="false" maxlength="10" data-date-format="dd/mm/yyyy" style="cursor:text;" placeholder="Select Date" readonly="readonly" />
+                            </div>
+                            <div class="form-group col-sm-3 hide ">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Chassisnumber</label>
+                                <select id="slPayableOperationVehicle" class="form-control input-sm" data-required="false"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-3 hide ">
+                                <label>Truck</label>
+                                <select id="slPayableTruckingOrder" class="form-control input-sm" data-required="false"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-2 hideForAWB">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.BillTo</label>
+                                <select id="slPayableBillTo" class="form-control input-sm" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.POrC</label>
+                                <select id="slPayablePOrC" class="form-control input-sm" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-2 hide classShowForMESCO classShowForMesco">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.category</label>
+                                <select id="slPayableCategory" class="form-control input-sm" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-2 m-t-md hideForAWB">
+                                <button id="btn-SetDefaultNote" class="btn btn-lightblue btn-sm" data-toggle="modal" data-target="#" onclick="Payables_SetDefaultNote();"><i class="fa fa-edit"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.DefaultNote</button>
+                            </div>
+                            <div class="form-group col-sm-2 hide">
+                                <label><input type="checkbox" id="cbIsOfficial" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Is Official</label>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</label>
+                                <textarea id="txtPayableNotes" maxlength="1000" class="form-control col-sm-12 textDivOperations input-sm" style="text-transform:uppercase; height:180px!Important;"></textarea>
+                            </div>
+
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- Endegion Add / Edit EditCharge Form -->
+            </div>
+            <div class="modal-footer m-t-n">
+                <button type="button" id="btnSavePayable" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                </button>
+                <button class="btnClose btn btn-link btn-sm" id="btnPayableClose" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+            <div class="m-t-n-xxl m-l-md">
+                @Forwarding.MvcApp.App_Resources.App_Resources.CreatedBy&nbsp;<label id="lblPayableCreatedBy" purpose="dynamicLabel" class="static-text-blue"></label>
+                / @Forwarding.MvcApp.App_Resources.App_Resources.CreationDate&nbsp;<label id="lblPayableCreationDate" purpose="dynamicLabel" class="static-text-blue"></label>
+                <br>
+                @Forwarding.MvcApp.App_Resources.App_Resources.UpdatedBy<label id="lblPayableUpdatedBy" purpose="dynamicLabel" class="static-text-blue"></label>
+                / @Forwarding.MvcApp.App_Resources.App_Resources.ModificationDate&nbsp;<label id="lblPayableModificationDate" purpose="dynamicLabel" class="static-text-blue"></label>
+                <br />
+            </div>
+            <br />
+        </div>
+    </div>
+</div>
+<!--EOF EditPayableModal -->
+<!-- EditReceivableModal -->
+<div class="modal fade" id="EditReceivableModal" tabindex="-1" style="z-index: 1050;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="EditReceivableModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-80">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;</button>*@
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.Receivable &nbsp;<label id="lblReceivableShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region Add / Edit EditReceivable Form -->
+                <div class="span7 form vertical-mode" id="EditReceivable-form">
+                    <fieldset>
+                        <div class="form-group pull-in  has-error clearfix">
+                            <input id="hReceivableID" type="hidden" />
+
+                            <!-- start alert message region -->
+                            @*<div class="alert alert-danger div-error">
+                                    @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                </div>*@
+                            <!-- end alert message region -->
+                            @*<div class="form-group col-sm-6">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.ChargeType</label>
+                                    <input id="txtReceivableType" disabled="disabled" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text"  class="form-control parsley-validated input-sm" data-required="true" maxlength="100" placeholder="" style="text-transform:uppercase" />
+                                </div>*@
+                            <div class="form-group col-sm-4">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ChargeType</label>
+                                <select id="slReceivableChargeType" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="true"><option value=""><--Select--></option></select>
+                            </div>
+
+                            @*<div class="form-group col-sm-6">
+                                    <br /><br /><br /><br />
+                                </div>*@
+                            <div class="form-group col-sm-4 m-t-n-sm hide">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.POrC</label>
+                                <select id="slReceivablePOrC" name="slReceivablePOrC" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-4 m-t-n-sm hide">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Supplier</label>
+                                <select id="slReceivableSupplier" name="slReceivableSupplier" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-4 m-t-n-sm hide">
+                                <label id="lblReceivableUOM">@Forwarding.MvcApp.App_Resources.App_Resources.UOM</label>
+                                <select id="slReceivableUOM" name="slReceivableUOM" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"></select>
+                            </div>
+
+                            <div class="form-group col-sm-2">
+                                <label>Issue Date</label>
+                                <input id="txtReceivableIssueDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="datepicker-input form-control parsley-validated input-sm" data-required="false" maxlength="10" data-date-format="dd/mm/yyyy" style="cursor:text;" placeholder="Select Date" readonly="readonly" />
+                            </div>
+                            <div class="form-group col-sm-2 hide classShowForFIV">
+                                <label>ForeignSalePrice</label>
+                                <input type="text" id="txtReceivableUnitPrice_Foreign" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onchange="CalculateReceivablesAmount_Foreign();" class="form-control parsley-validated input-sm" data-required="false" maxlength="10" placeholder="0.0" />
+                            </div>
+                            <div class="form-group col-sm-2 hide classShowForFIV">
+                                <label>ForeignEx.Rate</label>
+                                <input type="text" id="txtReceivableExchangeRate_Foreign" disabled="disabled" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="10" placeholder="0.0" />
+                            </div>
+                            <div class="form-group col-sm-2 hide classShowForFIV">
+                                <label>Foreign Currency</label>
+                                <select id="slReceivableCurrency_Foreign" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="CalculateReceivablesAmount_Foreign();" class="form-control input-sm" data-required="false"></select>
+                            </div>
+
+                            <div class="form-group col-sm-2 hide classShowForDGL">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Bill</label>
+                                <select id="slReceivableBill" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"><option value=""><--Select--></option></select>
+                            </div>
+
+                            <div class="form-group col-sm-3 hide">
+                                <label>Container/Tank</label>
+                                <select id="slReceivableTank" class="form-control input-sm" data-required="false"><option value=""><--Select--></option></select>
+                            </div>
+
+                            <div class="form-group col-sm-2" style="clear:both;">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Quantity</label>
+                                <input type="text" id="txtReceivableQuantity" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onchange="CalculateReceivablesAmount();" class="form-control parsley-validated input-sm" data-required="true" maxlength="10" placeholder="0" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.SalePrice</label>
+                                <input type="text" id="txtReceivableUnitPrice" name="txtReceivableUnitPrice" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onchange="CalculateReceivablesAmount();" class="form-control parsley-validated input-sm classDisableForFIV" data-required="true" maxlength="10" placeholder="0.0" />
+                            </div>
+
+
+                            <div class="form-group col-sm-2 hide classShowForTaxOnItems">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.AmtWOVAT</label>
+                                <input type="text" id="txtReceivableAmountWithoutVAT" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="false" maxlength="7" placeholder="Amount" style="text-transform:uppercase" />
+                            </div>
+
+                            <div class="form-group col-sm-2 hide classShowForTaxOnItems">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.VAT</label>
+                                <select id="slReceivableTax" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="CalculateReceivablesAmount(false, false);" class="form-control input-sm" data-required="false"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-2 hide classShowForTaxOnItems">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Perc</label>
+                                <input type="text" id="txtReceivableTaxPercentage" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="false" maxlength="4" placeholder="Tax (%)" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2 hide classShowForTaxOnItems">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.VATAmt</label>
+                                <input type="text" id="txtReceivableTaxAmount" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="false" maxlength="7" placeholder="Tax Amount" style="text-transform:uppercase" />
+                            </div>
+
+                            <div class="form-group col-sm-2 hide classShowForTaxOnItems">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.DeductedTax</label>
+                                <select id="slReceivableDiscount" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="CalculateReceivablesAmount(false, false);" class="form-control input-sm" data-required="false"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-2 hide classShowForTaxOnItems">
+                                <label>Deduction Perc.</label>
+                                <input type="text" id="txtReceivableDiscountPercentage" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="false" maxlength="4" placeholder="Deduction (%)" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2 hide classShowForTaxOnItems">
+                                <label>Deducted Amt</label>
+                                <input type="text" id="txtReceivableDiscountAmount" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="false" maxlength="7" placeholder="Deduction Amount" style="text-transform:uppercase" />
+                            </div>
+
+
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.SaleAmount</label>
+                                <input type="text" id="txtReceivableAmount" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="false" maxlength="7" placeholder="Sale Amount" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ExchangeRate</label>
+                                <input type="text" id="txtReceivableExchangeRate" disabled="disabled" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" class="form-control parsley-validated input-sm" data-required="true" maxlength="10" placeholder="0.0" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Currency</label>
+                                <select id="slReceivableCurrency" name="slReceivableCurrency" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="Receivables_CurrencyChanged();" class="form-control input-sm classDisableForFIV" data-required="true"></select>
+                            </div>
+                            <div class="form-group col-sm-2 hide ">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Chassisnumber</label>
+                                <select id="slReceivableOperationVehicle" class="form-control input-sm" data-required="false"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-2 hide ">
+                                <label>Truck</label>
+                                <select id="slReceivableTruckingOrder" class="form-control input-sm" data-required="false"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-4" id="ReceivableBillTo">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.BillTo</label>
+                                <input id="txtReceivableBillTo" disabled="disabled" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated input-sm" data-required="false" maxlength="100" placeholder="" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-4 hide">
+                                <label>Bill</label>
+                                <select id="slBill" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"><option value=""><--Select--></option></select>
+                            </div>
+
+                            @*<div class="form-group col-sm-8 m-t-xs">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</label>
+                                    <input id="txtReceivableNotes" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text"  class="form-control parsley-validated input-sm" data-required="false" maxlength="100" placeholder="" style="text-transform:uppercase" />
+                                </div>*@
+                            <div class="form-group col-sm-2 hideForAWB">
+                                <label>Manual Charge Type</label>
+                                <input id="txtReceivableManualChargeType" type="text" class="form-control parsley-validated input-sm" data-required="false" maxlength="1000" placeholder="Charge Type" />
+                            </div>
+                            <div class="form-group col-sm-2 hide classShowForMESCO classShowForMesco">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.category</label>
+                                <select id="slReceivableCategory" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-2 hide m-t-lg">
+                                <label><input type="checkbox" id="cbIsOfficialReceivable" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" onchange="IsOfficialStatusChanged();">&nbsp;Is Official</label>
+                            </div>
+                            <div class="form-group col-sm-2 hide m-t-lg">
+                                <label><input disabled="disabled" type="checkbox" id="cbIsCRMReceivable" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Is From CRM</label>
+                            </div>
+                            <div class="form-group col-sm-1 hide m-t-lg">
+                                <label><input type="checkbox" id="cbIsReceipt" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Receipt</label>
+                            </div>
+                            <div class="form-group col-sm-8 m-t-xs">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</label>
+                                <textarea id="txtReceivableNotes" maxlength="1000" class="form-control col-sm-12 textDivOperations input-sm" style="text-transform:uppercase; height:250px!Important;"></textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- Endegion Add / Edit EditCharge Form -->
+            </div>
+            <div class="modal-footer m-t-n">
+                @*<button type="button" id="btnPrintReceivable" class="btn btn-info btn-sm hide" onclick="Receivables_Print();">
+                    <span class="glyphicon glyphicon-print"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Print</button>*@
+                <button type="button" id="btnSaveReceivable" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                </button>
+                <button class="btnClose btn btn-link btn-sm" id="btnReceivableClose" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+            <div class="m-t-n-xxl m-l-md">
+                @Forwarding.MvcApp.App_Resources.App_Resources.CreatedBy&nbsp;<label id="lblReceivableCreatedBy" purpose="dynamicLabel" class="static-text-blue"></label>
+                / @Forwarding.MvcApp.App_Resources.App_Resources.CreationDate&nbsp;<label id="lblReceivableCreationDate" purpose="dynamicLabel" class="static-text-blue"></label>
+                <br>
+                @Forwarding.MvcApp.App_Resources.App_Resources.UpdatedBy<label id="lblReceivableUpdatedBy" purpose="dynamicLabel" class="static-text-blue"></label>
+                / @Forwarding.MvcApp.App_Resources.App_Resources.ModificationDate&nbsp;<label id="lblReceivableModificationDate" purpose="dynamicLabel" class="static-text-blue"></label>
+                <br />
+            </div>
+            <br />
+        </div>
+    </div>
+</div>
+<!--EOF EditReceivableModal -->
+<!--OperationChargeModal-->
+<div class="modal fade" id="OperationChargeModal" tabindex="-1" style="z-index:1020;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="OperationChargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-100">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.Charges &nbsp;<label id="lblOperationChargeShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <!-- Region Add / Edit Region Form -->
+            <div class="modal-body">
+                <div class="span7 form vertical-mode" id="OperationCharge-form">
+                    <fieldset>
+                        <div class="form-group  has-error clearfix">
+                            <!-- start alert message region -->
+                            @*<div class="alert alert-danger div-error">
+                                    @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                </div>*@
+                            <!-- end alert message region -->
+                            <!--Charges-->
+                            @*<button id="btn-OperationsFromShipment" type="button" class="btn btn-sm btn-primary m-t-n-xs" onclick="SwitchToOperationsView();"><i class="fa fa-desktop"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.BackToOperations</button>*@
+                            <div id="divPayBtns" class="col-sm-6 m-t-n-sm">
+                                <button id="btn-AddPayables" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#SelectChargesModal" onclick="DebitAndCreditClose_Payables_GetAvailableCharges();"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.AddPayables</button>
+                                <button id="btn-NewCreditNote" class="btn btn-primary btn-sm " data-toggle="modal" onclick="AccNotes_ClearAllControls(100);"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.AddCreditNote</button>
+                                <button id="btn-MultiRowEditPayables" class="btn btn-info btn-sm hide" data-toggle="modal" data-target="#SelectChargesModal" onclick="Payables_MultiRowEdit();"><i class="fa fa-pencil"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.MultiEdit</button>
+                                <button id="btn-DeletePayable" type="button" class="float-right btn btn-sm btn-danger" onclick="DebitAndCreditClose_Payables_DeleteList ();"><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete</button>
+                            </div>
+                            <div id="divRecBtns" class="col-sm-6 m-t-n-sm">
+                                <button id="btn-AddReceivables" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#SelectChargesModal" onclick="DebitAndCreditClose_Receivables_GetAvailableCharges();"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.AddReceivables</button>
+                                <button id="btn-NewDebitNote" class="btn btn-primary btn-sm" data-toggle="modal" onclick="AccNotes_ClearAllControls(90);"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.AddDebitNote</button>
+                                <button id="btn-MultiRowEditReceivables" class="btn btn-info btn-sm hide" data-toggle="modal" data-target="#SelectChargesModal" onclick="Receivables_MultiRowEdit();"><i class="fa fa-pencil"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.MultiEdit</button>
+                                <button id="btn-DeleteReceivable" type="button" class="float-right btn btn-sm btn-danger" onclick="Receivables_DeleteList();"><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete</button>
+                            </div>
+
+
+                            <div id="divPayables" class="col-sm-6 m-t-xs">
+                                <section class="panel panel-default">
+                                    <header class="panel-heading font-bold text-ul">@Forwarding.MvcApp.App_Resources.App_Resources.Payables</header>
+                                    <!--Region: table header-->
+                                    <div class="table-responsive" style="width:100%; height:450px; overflow:scroll;">
+                                        <table id="tblPayables" class="table table-striped b-t b-light text-sm  table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th id="HeaderDeletePayableID">
+                                                        <input id="cb-CheckAll-Payables" type="checkbox" />
+                                                    </th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.ChargeType</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.Qty</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.UnitPriceAbbrev</th>
+                                                    <th class="PayableOldCostPrice hide">@Forwarding.MvcApp.App_Resources.App_Resources.OldPrice</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.Cost</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.ExchangeRateAbbrev</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.Cur</th>
+                                                    <th class="rounded-right hide"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                    <!--Region: EOF table header-->
+                                    <!--Region: table footer-->
+                                    <footer class="panel-footer">
+                                        <span id="spanNoPayables" class="hide">No Paybles.</span>
+                                    </footer>
+                                    <!--Region: EOF table footer-->
+                                </section>
+                            </div>
+
+
+                            <div id="divReceivables" class="col-sm-6 m-t-xs">
+                                <section class="panel panel-default">
+                                    <header class="panel-heading font-bold text-ul">@Forwarding.MvcApp.App_Resources.App_Resources.Receivables</header>
+                                    <!--Region: table header-->
+                                    <div class="table-responsive" style="width:100%; height:450px; overflow:scroll;">
+                                        <table id="tblReceivables" class="table table-striped b-t b-light text-sm  table-hover ">
+                                            <thead>
+                                                <tr>
+                                                    <th id="HeaderDeleteReceivableID">
+                                                        <input id="cb-CheckAll-Receivables" type="checkbox" />
+                                                    </th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.ChargeType</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.Qty</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.UnitPriceAbbrev</th>
+                                                    <th class="ReceivableOldSalePrice hide">@Forwarding.MvcApp.App_Resources.App_Resources.OldPrice</th>
+                                                    <th>Tax</th>
+                                                    <th>Deduction</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.SaleAmount</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.ExchangeRateAbbrev</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.Cur</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.AccNotes</th>
+                                                    
+                                                    <th class="rounded-right hide"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                    <!--Region: EOF table header-->
+                                    <!--Region: table footer-->
+                                    <footer class="panel-footer">
+                                        <span id="spanNoReceivables" class="hide">No Receivables.</span>
+                                    </footer>
+                                    <!--Region: EOF table footer-->
+                                </section>
+                            </div>
+
+                            <!--EOF Charges-->
+
+
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <!-- Endregion Add / Edit Region Form -->
+            <div class="modal-footer m-t-n-lg">
+                <!--<button type="button" id="btnSaveOperationCharge" class="btn btn-primary btn-sm" @*onclick="OperationCharges_Insert(false);"*@>
+        <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save</button>
+    <a id="btnSaveandNewQRCharge" class="btn btn-primary btn-sm" @*onclick="QRCharge_Insert(true);"*@>
+        <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew</a>-->
+                <button class="btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+                <button id="btn-Instructions" class="btn btn-success btn-sm px-3 py-2 fw-bold" type="button" onclick="UpDateQuoteAfterClose();" aria-label="Update CRM Quotation">
+                    <i class="fa fa-sync-alt me-1" aria-hidden="true"></i> Update CRM Quotation
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF OperationChargeModal-->
+<!--EditAccNoteModal-->
+<div class="modal fade" id="EditAccNoteModal" tabindex="-1" style="z-index: 1040;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="EditAccNoteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-100">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.DCNote &nbsp;<label id="lblEditedAccNoteShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region EditAccNote Form -->
+                <div class="span7 form vertical-mode" id="EditAccNote-form">
+                    <fieldset>
+                        <input id="hEditedAccNoteID" type="hidden" />
+                        <input id="hEditedAccNoteOperationID" type="hidden" />
+                        <input id="hEditedAccNoteMasterOperationID" type="hidden" />
+                        <input id="hEditedAccNoteTypeID" type="hidden" />
+                        <div class="form-group pull-in has-error clearfix">
+
+
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Invoice</label>
+                                <select id="slEditAccNoteInvoice" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="AccNotes_InvoiceChanged('Edit');" class="input-sm form-control" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.BillTo</label>
+                                <select id="slEditAccNotePartner" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="InvoiceAddressTypes_GetList(null, 'slEditAccNoteAddressTypes', 'slEditAccNotePartner', null);" class="input-sm form-control" data-required="true"></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.AddressType</label>
+                                <select id="slEditAccNoteAddressTypes" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="input-sm form-control" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-2 hide">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Code</label>
+                                <input type="text" id="txtEditAccNoteCode" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="input-sm form-control parsley-validated" data-required="false" data-minlength="1" maxlength="30" placeholder="Generated Automatically" disabled="disabled" style="text-transform:uppercase" />
+                            </div>
+                            @*<div class="form-group col-sm-2 hide">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.CustomerReference</label>
+                                    <input type="text" id="txtEditAccNoteCustomerReference" class="input-sm form-control parsley-validated" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" data-required="false" data-minlength="0" maxlength="10" placeholder="Ref No." style="text-transform:uppercase"/>
+                                </div>*@
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.NoteDate</label>
+                                <input id="txtEditAccNoteDate" readonly="readonly" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text; background-color:white;" class="input-sm datepicker-input form-control" data-required="true" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</label>
+                                <input type="text" id="txtEditAccNoteRemarks" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="input-sm form-control parsley-validated" data-required="false" maxlength="100" placeholder="Notes" style="text-transform:uppercase" />
+                            </div>
+
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.AmtWOVAT</label>
+                                <input type="text" id="txtEditAccNoteAmountWithoutVAT" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="7" placeholder="Amount" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.VAT</label>
+                                <select id="slEditAccNoteTax" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="AccNotes_ChangeAmountInAccNoteEdit(false, false);" class="form-control input-sm" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-1">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Perc</label>
+                                <input type="text" id="txtEditAccNoteTaxPercentage" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="4" placeholder="Tax (%)" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-1">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.VATAmt</label>
+                                <input type="text" id="txtEditAccNoteTaxAmount" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="7" placeholder="Tax Amount" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.WHT</label>
+                                <select id="slEditAccNoteDiscount" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="AccNotes_ChangeAmountInAccNoteEdit(false, false);" class="form-control input-sm" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-1">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Perc</label>
+                                <input type="text" id="txtEditAccNoteDiscountPercentage" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="4" placeholder="Discount (%)" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-1">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.WHT_Amt</label>
+                                <input type="text" id="txtEditAccNoteDiscountAmount" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="7" placeholder="Discount Amount" style="text-transform:uppercase" />
+                            </div>
+
+
+                            <div class="form-group col-sm-1">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Total</label>
+                                <input type="text" id="txtEditAccNoteAmount" disabled="disabled" class="input-sm form-control parsley-validated" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="10" placeholder="0.00" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-1">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Currency</label>@*the bool parameter in Invoices_CurrencyChanged() is true for edit to set the control names*@
+                                <select id="slEditAccNoteCurrency" disabled="disabled" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="AccNotes_CurrencyChanged(true);" class="input-sm form-control" data-required="true"></select>
+                            </div>
+                            <div class="form-group col-sm-2 hide">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ExchangeRate</label>
+                                <input type="text" id="txtEditAccNoteMasterDataExchangeRate" disabled="disabled" class="input-sm form-control parsley-validated" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="3" placeholder="Exchange Rate" style="text-transform:uppercase" />
+                            </div>
+
+                            <div id="div-searchAccNote-controls" class="input-group col-sm-4 float-right hide">
+                                <input id="txtSearchAccNoteItems" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control m-t-md" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search Item Code/Name">
+                                <span class="input-group-btn">
+                                    <button id="btn-SearchAccNoteItems" class="input-sm btn btn-md btn-primary m-t-md" type="button"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                        <button id="btn-AddAccNoteItem" class="btn btn-warning btn-sm" data-toggle="modal"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.AddItems</button>
+                        <button id="btn-DeleteAccNoteItem" type="button" class="float-right btn btn-sm btn-danger" onclick="AccNotes_Update(true, true);"><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.RemoveItems</button>
+                        <div id="divEditAccNote" class="m-t-sm">
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- Endegion EditAccNote Form -->
+            </div>
+            <div class="modal-footer m-t-n-lg">
+                <!--sherif-->
+                <button type="button" id="btnSaveEditAccNote" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-save"></span>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                </button>
+                <button class="btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF EditAccNoteModal-->
+<!--AccNoteModal-->
+<div class="modal fade" id="AccNoteModal" tabindex="-1" style="z-index: 1040;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="AccNoteModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modalwidth-80">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;</button>*@
+                <h3 class="m-b-none">
+                    Credit/Debit Note &nbsp;<label id="lblAccNoteShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region Add / Edit AccNote Form -->
+                <div class="span7 form vertical-mode" id="AccNote-form">
+                    <fieldset>
+                        <div class="form-group pull-in  has-error clearfix">
+                            @*<input id="hAccNoteID" type="hidden" />*@
+                            <!-- start alert message region -->
+                            <div class="alert alert-danger div-error">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                            </div>
+                            <!-- end alert message region -->
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Code</label>
+                                <input type="text" id="txtAccNoteCode" disabled="disabled" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" data-minlength="1" maxlength="15" placeholder="Automated" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.NoteType</label>
+                                <select id="slAccNoteType" disabled="disabled" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="true">
+                                    <option value="90">@Forwarding.MvcApp.App_Resources.App_Resources.Debit</option>
+                                    <option value="100">@Forwarding.MvcApp.App_Resources.App_Resources.Credit</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Operation</label>
+                                <select id="slAccNoteOperations" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="AccNotes_AccNoteOperationChanged('slAccNoteOperations');" class="form-control input-sm" data-required="true"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Invoice</label>
+                                <select id="slAccNoteInvoice" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="AccNotes_InvoiceChanged('');" class="form-control input-sm" data-required="false"><option value=""><--Select--></option></select>
+                            </div>
+
+                            <div class="form-group col-sm-4">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.BillTo</label>
+                                <select id="slAccNotePartner" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="InvoiceAddressTypes_GetList(null, 'slAccNoteAddressTypes', 'slAccNotePartner', null); AccNote_FillAgentPayables('slAccNotePartner', 'slAccNotePayable');" class="form-control input-sm" data-required="true"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.AddressType</label>
+                                <select id="slAccNoteAddressTypes" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Currency</label>
+                                <select id="slAccNoteCurrency" disabled="disabled" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="(false);" class="form-control input-sm" data-required="true"></select>
+                            </div>
+                            <div class="form-group col-sm-6 hide">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ExchangeRate</label>
+                                <input type="text" id="txtAccNoteMasterDataExchangeRate" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="9" placeholder="Exchange Rate" style="text-transform:uppercase" />
+                            </div>
+
+
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.VAT</label>
+                                <select id="slAccNoteTax" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Perc</label>
+                                <input type="text" id="txtAccNoteTaxPercentage" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="4" placeholder="Tax (%)" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.VATAmt</label>
+                                <input type="text" id="txtAccNoteTaxAmount" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="7" placeholder="Tax Amount" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.WHT</label>
+                                <select id="slAccNoteDiscount" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Perc</label>
+                                <input type="text" id="txtAccNoteDiscountPercentage" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="4" placeholder="Discount (%)" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.WHT_Amt</label>
+                                <input type="text" id="txtAccNoteDiscountAmount" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="7" placeholder="Discount Amount" style="text-transform:uppercase" />
+                            </div>
+
+
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.AmtWOVAT</label>
+                                <input type="text" id="txtAccNoteAmountWithoutVAT" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="7" placeholder="Amount w/o VAT" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Total</label>
+                                <input type="text" id="txtAccNoteAmount" disabled="disabled" class="form-control parsley-validated input-sm" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" onkeypress="CheckValueIsDecimal(id);" data-required="true" maxlength="3" placeholder="0.00" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.NoteDate</label>
+                                <input id="txtAccNoteDate" readonly="readonly" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text; background-color:white;" class="datepicker-input form-control input-sm" data-required="true" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                            </div>
+                            @* khasm el wakeel *@
+                            <div class="form-group col-sm-2 hide">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Payable</label>
+                                <select id="slAccNotePayable" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-4">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</label>
+                                <input type="text" id="txtAccNoteRemarks" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="100" placeholder="Notes" style="text-transform:uppercase" />
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- Endegion Add / Edit Country Form -->
+            </div>
+            <div class="modal-footer">
+                <!--sherif-->
+                <button type="button" id="btnSaveAccNote" class="btn btn-primary btn-sm" onclick="AccNotes_Insert(false);">
+                    <span class="glyphicon glyphicon-save"></span>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                </button>
+                @*<button type="button" id="btnSaveandNewAccNote" class="btn btn-primary btn-sm" onclick="AccNotes_Insert(true);">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew</button>*@
+                <button class="btnClose btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF AccNoteModal-->

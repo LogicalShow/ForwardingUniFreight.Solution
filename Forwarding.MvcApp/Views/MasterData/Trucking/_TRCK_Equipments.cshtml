@@ -1,0 +1,851 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li><a id="hl-homepage" href="javascript:void(0);"><i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+    </a></li>
+    <li><a id="MasterData" href="javascript:void(0);" onclick="LoadViews('Trucking')">@Forwarding.MvcApp.App_Resources.App_Resources.MasterData
+    </a></li>
+    <li><a id="Trucking" href="javascript:void(0);" onclick="LoadViews(id)">@Forwarding.MvcApp.App_Resources.App_Resources.Trucking
+    </a></li>
+    <li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.Equipment</li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-TRCK_Equipments">
+    <!-- Region Options & Template  -->
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 id="h3TRCK_DriverTitle" class="m-b-none Drivers_or_DriverAssistant">@Forwarding.MvcApp.App_Resources.App_Resources.Equipment</h3>
+            </header>
+            <!--Region the searh, delete, addnew-->
+            <div class="row text-sm wrapper hidden-print ">
+                <div id="div-main-options" class="col-sm-5 m-b-xs">
+                    <button id="btn-NewAdd" class="btn btn-warning btn-sm hide" data-toggle="modal" data-target="#TRCK_EquipmentModal"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.New</button>
+                    <button id="btn-ExportLicenseExpiration" onclick="ExportExpiredLicense();" title="Export expiration less than 30 days" class="btn btn-lightblue btn-sm" data-toggle="modal" data-target="#"><i class="fa fa-table"></i>&nbsp;License Expiration</button>
+                    <div id="div-option-buttons" class="btn-group hide">
+                        <button id="btn-Copy" type="button" class="btn btn-sm btn-default"><i class="fa fa-copy"></i>&nbsp;Copy </button>
+                        <button id="btn-Print" type="button" class="btn btn-sm btn-default"><i class="fa fa-print"></i>&nbsp;Print </button>
+                        <button id="btn-Send" type="button" class="btn btn-sm btn-default"><i class="fa fa-envelope-o"></i>&nbsp;Send </button>
+                    </div>
+                </div>
+                <div id="div-search-option" class="col-sm-7">
+                    <div id="div-search-controls" class="input-group col-sm-9">
+                        <input id="txt-Search" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase"  type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search Code / Name / Local Name">
+                        <span class="input-group-btn">
+                            <button id="btn-search" class="btn btn-sm btn-primary" type="button" onclick="TRCK_Equipments_LoadingWithPaging();"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                    <div class="float-right col-sm-1">
+                        <button id="btn-Delete" type="button" class="float-right btn btn-sm btn-danger m-r-n hide"><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete</button>
+                    </div>
+                </div>
+            </div>
+            <!--EOF Region the searh, delete, addnew line-->
+            
+            <!--TRCK_Equipments Modal-->
+            <div class="modal fade" id="TRCK_EquipmentModal" tabindex="-1" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="TRCK_EquipmentModalLabel" aria-hidden="true">
+                <div class="modal-dialog modalwidth-90">
+                    <div class="modal-content m-t-n-lg">
+                        <div class="modal-header">
+                            <h3 class="m-b-none">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.TRCK_Equipments &nbsp;<label id="lblShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                        </h3>
+                    </div>
+                    <!-- Region Add / Edit Region Form -->
+                    <div class="modal-body">
+                        <div class="span7 form vertical-mode" id="TRCK_Equipment-form">
+                            <fieldset>
+                                <div class="form-group pull-in  has-error clearfix m-t-n-md">
+                                    <input id="hTRCK_EquipmentID" type="hidden" />
+                                    <!--Wizard-->
+                                    <div class="wizard clearfix">
+                                        <ul class="steps">
+                                            <li data-target="#BasicData" id="stepsBasicData" class="active"><span class="badge badge-info">1</span>@Forwarding.MvcApp.App_Resources.App_Resources.BasicData</li>
+                                            <li data-target="#tabAccounting" id="stepsAccounting" class="complete classAccountingOption"><span class="badge badge-info">2</span>@Forwarding.MvcApp.App_Resources.App_Resources.Accounting</li>
+                                            <li data-target="#tabTRCK_EquipmentLicenses" id="stepsTRCK_EquipmentLicenses" class="complete"><span class="badge badge-info">3</span>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_LicensesDetails</li> 
+                                            <li data-target="#tabTRCK_LinkItems" id="stepsTRCK_LinkItems" class="complete"><span class="badge badge-info">3</span>Link Items</li> 
+                                        </ul>
+                                        <div class="actions" style="display:none;">
+                                            <!--Next & Previous buttons-->
+                                            <button type="button" class="btn btn-default btn-xs btn-prev" disabled="disabled">@Forwarding.MvcApp.App_Resources.App_Resources.Prev</button>
+                                            <button type="button" class="btn btn-default btn-xs btn-next" data-last="Finish">@Forwarding.MvcApp.App_Resources.App_Resources.Next</button>
+                                        </div>
+                                    </div>
+                                    <div class="step-content">
+                                        <!--Basic Data-->
+                                        <div class="step-pane active" id="BasicData">
+                                            <!-- start alert message region -->
+                                            <div class="alert alert-danger div-error">
+                                                @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                            </div>
+                                            <!-- end alert message region -->
+                                            <!-- Add / Edit Basic Data -->
+                                            <div class="row  col-sm-12 m-t-n-sm">
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Code</label>
+                                                    <input type="text" id="txtCode" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" data-minlength="1" maxlength="10" placeholder="Generated Automatically" disabled="disabled" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>Equip. Number / VIN</label>
+                                                    <input type="text" id="txtName" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="true" maxlength="50" placeholder="ex. SEA WINGS USA" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3 hide">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.LocalName</label>
+                                                    <input type="text" id="txtLocalName" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="ex. SEA WINGS USA" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_EquipmentModel</label>
+                                                    <select id="slEquipmentModel" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                                                </div>
+                                                <div class="form-group col-sm-2">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Type</label>
+                                                    <select id="slEquipmentType" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onchange="TRCK_Equipments_EquipmentTypeChanged();" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"><option value="0"><--Select--></option></select>
+                                                </div>
+                                                <div class="form-group col-sm-1">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Chairs</label>
+                                                    <input type="text" disabled id="txtNumberOfChairs" onkeypress="CheckValueIsInteger(id);" onfocus="CheckValueIsInteger(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="10" placeholder="" />
+                                                </div>
+                                            </div>
+                                            <div class="row  col-sm-12">
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_PlateNo</label>
+                                                    <input type="text" id="txtPlateNo" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Plate No." style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_ChassisNo</label>
+                                                    <input type="text" id="txtChassisNo" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Chassis No." style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Counter</label>
+                                                    <input type="text" id="txtFirstCounter" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Counter." style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_ExaminationExpireDate</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon" style="background-color: #428bca;color:white;"><span class="fa fa-calendar"></span></span>
+                                                        <input type="text" id="txtExaminationExpireDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row  col-sm-12">
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_OriginCountry</label>
+                                                    <select id="slOriginCountry" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_ManufacturDate</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon" style="background-color: #428bca;color:white;"><span class="fa fa-calendar"></span></span>
+                                                        <input type="text" id="txtManufacturDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_LicenseNumber </label>
+                                                    <input type="text" id="txtLicenseNumber" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="License Number" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>Licencse Expir.Date</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon" style="background-color: #428bca;color:white;"><span class="fa fa-calendar"></span></span>
+                                                        <input type="text" id="txtLicenseNumberExpireDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row  col-sm-12">
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_Color </label>
+                                                    <input type="text" id="txtColor" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Color" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_Length </label>
+                                                    <input type="text" id="txtLength" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Length" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_Width </label>
+                                                    <input type="text" id="txtWidth" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Width" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_Height </label>
+                                                    <input type="text" id="txtHeight" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Height" style="text-transform:uppercase" />
+                                                </div>
+                                            </div>
+                                            <div class="row  col-sm-12">
+                                                <div class="form-group col-sm-2">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_NoOfPrimaryWheels </label>
+                                                    <input type="text" id="txtNoOfPrimaryWheels" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="No Of Primary Wheels" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-2">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_NoOfAdditionalWheels </label>
+                                                    <input type="text" id="txtNoOfAdditionalWheels" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="No Of Additional Wheels" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-2">
+                                                    <label>Wheel Size</label>
+                                                    <input type="text" id="txtWheelSize" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-2">
+                                                    <label>Model</label>
+                                                    <input type="text" id="txtModel" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-2">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_GrossWeight</label>
+                                                    <input type="text" id="txtGrossWeight" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Gross Weight" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-2">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_AllowedWeight </label>
+                                                    <input type="text" id="txtAllowedWeight" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Allowed Weight" style="text-transform:uppercase" />
+                                                </div>
+                                            </div>
+                                            <div class="row  col-sm-12">
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_AxeCount </label>
+                                                    <input type="text" id="txtAxeCount" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Axe Count" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_TaxEndDate</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon" style="background-color: #428bca;color:white;"><span class="fa fa-calendar"></span></span>
+                                                        <input type="text" id="txtTaxEndDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_InsuranceBill</label>
+                                                    <input type="text" id="txtInsuranceBill" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Insurance Bill" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_InsuranceCompany</label>
+                                                    <select id="slInsuranceCompany" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                                                </div>
+
+                                            </div>
+                                            <div class="row  col-sm-12">
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_ServiceCenter</label>
+                                                    <select id="slServiceCenter" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_Trailer</label>
+                                                    <select id="slTrailers" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_MotorNo</label>
+                                                    <input type="text" id="txtMotorNo" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Motor No." style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.NumberOfChambers</label>
+                                                    <input type="number" id="txtNumberOfChambers" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Chambers No." style="text-transform:uppercase" />
+                                                </div>
+                                            </div>
+                                            <div class="row  col-sm-12">
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.ChambersVolumeInLiters</label>
+                                                    <input type="number" id="txtChambersVolumeInLiters" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Chambers Volume in liters." style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TankerEmptyWeight</label>
+                                                    <input type="number" id="txtTankerEmptyWeight" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Tanker Empty Weight." style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Outlet</label>
+                                                    <select id="slOutlet" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false">
+                                                        <option value="0">Select Outlet</option>
+                                                        <option value="1">single </option>
+                                                        <option value="2">separate </option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-sm-3  m-t-lg">
+                                                    <label><input type="checkbox" id="cbIsHeating" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Heating</label><br />
+                                                </div>
+                                               
+                                                @*NumberOfChambers ChambersVolumeInLiters TankerEmptyWeight Heating  Heatable Epump Compressor Outlet GroundOperated	ATP*@ 
+                                            </div>
+                                            <div class="col-sm-12" style="clear:both">
+                                                <div class="form-group col-sm-2">
+                                                    <label><input type="checkbox" id="cbIsHeatable" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Heatable</label><br />
+                                                </div>
+                                                <div class="form-group col-sm-2">
+                                                    <label><input type="checkbox" id="cbIsEpump" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Epump</label><br />
+                                                </div>
+                                                <div class="form-group col-sm-2">
+                                                    <label><input type="checkbox" id="cbIsCompressor" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Compressor</label><br />
+                                                </div>
+                                                <div class="form-group col-sm-2">
+                                                    <label><input type="checkbox" id="cbIsGroundOperated" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.GroundOperated</label><br />
+                                                </div>
+                                                <div class="form-group col-sm-2">
+                                                    <label><input type="checkbox" id="cbIsATP" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.ATP</label>
+                                                </div>
+                                                <div class="form-group col-sm-2">
+                                                    <label><input type="checkbox" id="cbIsGPS" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;GPS</label>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-12">
+                                                <div class="form-group col-sm-2">
+                                                    <label>Company</label>
+                                                    <select id="slCompany" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"><option value=""><--Select--></option></select>
+                                                </div>
+                                                <div class="form-group col-sm-2">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_WorkingDate</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon" style="background-color: #428bca;color:white;"><span class="fa fa-calendar"></span></span>
+                                                        <input type="text" id="txtWorkingDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-sm-2">
+                                                    <label>Insurance Value</label>
+                                                    <input type="text" id="txtInsuranceValue" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-2">
+                                                    <label>Insurance Date</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon" style="background-color: #428bca;color:white;"><span class="fa fa-calendar"></span></span>
+                                                        <input type="text" id="txtInsuranceDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</label>
+                                                    <input type="text" id="txtNotes" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="500" placeholder="" style="text-transform:uppercase" />
+                                                </div>
+
+                                                <div class="form-group col-sm-1  m-t-lg">
+                                                    <label><input type="checkbox" id="cbIsInactive" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.IsInactive</label><br />
+                                                </div>
+                                            </div>
+                                            <!--EOF Add / Edit Basic Data -->
+                                        </div>
+                                        <!--EOF Basic Data-->
+                                        <!--Accounting-->
+                                        <div class="step-pane" id="tabAccounting">
+                                            <!-- start alert message region -->
+                                            <div class="alert alert-danger div-error">
+                                                @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                            </div>
+                                            <!-- end alert message region -->
+                                            <div class="form-group col-sm-6">
+                                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ClientGroup</label>
+                                                <select id="slSubAccountGroup" class="form-control m-b input-sm" onchange="FillSlAccountFromGroup('slAccount', 'slSubAccountGroup', 'slSubAccount', 0, 0);" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Account</label>
+                                                <select id="slAccount" class="form-control m-b input-sm" @*onchange="FillSlSubAccount('slSubAccount', 'slAccount', 0, 0);"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.SubAccount</label>
+                                                <select id="slSubAccount" class="form-control m-b input-sm" disabled="disabled" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.CostCenter</label>
+                                                <select id="slCostCenter" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                                            </div>
+                                            <!--The id of the next div is used to fill the Accounting in the textareas-->
+                                            <div id="bodyAccounting"></div>
+                                        </div>
+                                        <!--Accounting-->
+                                        <!--Equipment Licenses-->
+                                        <div class="step-pane" id="tabTRCK_EquipmentLicenses">
+                                            <!-- start alert message region -->
+                                            <div class="alert alert-danger div-error">
+                                                @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                            </div>
+                                            <!-- end alert message region -->
+                                            <!--The id of the next div is used to fill the TRCK_EquipmentLicenses -->
+                                            <div id="bodyTRCK_EquipmentLicenses">
+                                                <div class="col-sm-2 m-l-n">
+                                                    <button id="btn-NewAddTRCK_EquipmentLicenses" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#TRCK_EquipmentLicensesModal" onclick="TRCK_EquipmentLicenses_ClearAllControls();"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Add</button>
+                                                </div>
+                                                <div class="col-sm-3 m-l">
+                                                    <input id="txtTRCK_EquipmentLicensesSearch" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase; border-color:#cccccc;" type="text" class="input-sm form-control" maxlength="8" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search License Number">
+                                                </div>
+                                                <button id="btn-TRCK_EquipmentLicensesSearch" class="btn btn-sm btn-primary m-l-n" type="button" onclick="TRCK_EquipmentLicenses_LoadingWithPagingForModal();"><i class="fa fa-search"></i></button>
+                                                <button id="btn-DeleteTRCK_EquipmentLicenses" type="button" class="float-right btn btn-sm btn-danger" onclick="TRCK_EquipmentLicenses_Delete();"><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete</button>
+                                                <br /> <br />
+                                                <section class="panel panel-default" style="overflow: scroll; width: auto; height: 330px;">
+                                                    <!--Region: table header-->
+                                                    <div class="table-responsive">
+                                                        <table id="tblTRCK_EquipmentLicenses" class="table table-striped b-t b-light text-sm  table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="width:5%;" id="HeaderDeletetblTRCK_EquipmentLicensesID">
+                                                                        <input id="cb-CheckAll-TRCK_EquipmentLicenses" type="checkbox" />
+                                                                    </th>
+                                                                    <th>
+                                                                        @Forwarding.MvcApp.App_Resources.App_Resources.TRCK_LicenseNumber
+                                                                    </th>
+                                                                    <th>
+                                                                        @Forwarding.MvcApp.App_Resources.App_Resources.ExpirationDate
+                                                                    </th>
+                                                                    <th class="rounded-right hide"></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody></tbody>
+                                                        </table>
+                                                    </div>
+
+                                                    <footer class="panel-footer"></footer>
+                                                    <!--Region: EOF table footer-->
+                                                </section>
+
+                                                <div class="row">
+                                                    <div id="div-Text-Total-Modal" class="col-sm-4 text-center">
+                                                        <small class="text-muted inline">
+                                                            @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                                                            <span id="spn-first-page-row-Modal"></span>- <span id="spn-last-page-row-Modal"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                                                            <span id="spn-total-count-Modal"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                                                        </small>
+                                                    </div>
+                                                    <div id="div-Pager-Modal" class="col-sm-4 text-right text-center-xs"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--EOF Equipment Licenses-->
+
+                                        <div class="step-pane" id="tabTRCK_LinkItems">
+                                            <!-- start alert message region -->
+                                            <div class="alert alert-danger div-error">
+                                                @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                            </div>
+                                            <!-- end alert message region -->
+                                            <!--The id of the next div is used to fill the TRCK_LinkItems -->
+                                            <div id="bodyTRCK_LinkItems">
+                                                <div class="row col-sm-12">
+                                                    <div class="content">
+                                                        <!-- Nav pills -->
+                                                        <ul class="nav nav-pills" role="tablist">
+                                                            <li class="nav-item active">
+                                                                <a class="nav-link active" data-toggle="pill" href="#Items">Items</a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" data-toggle="pill" href="#Wheels">Wheels</a>
+                                                            </li>
+                                                        </ul>
+
+                                                        <!-- Tab panes -->
+                                                        <div class="tab-content">
+                                                            <div id="Items" class="container tab-pane active">
+                                                                <form>
+                                                                    <div id="divEquipmentItemsBtns" class="col-sm-12 m-t" style="clear:both;">
+                                                                        <button id="btn-AddEquipmentItems" class="btn btn-warning btn-sm classDisableForPosted" data-toggle="modal" data-target="" onclick="EquipmentItems_NewRow();"><i class="fa fa-plus"></i>&nbsp;Add - اضافة </button>
+                                                                        <button id="btn-DeleteEquipmentItems" title="Delete Details" type="button" class="float-right btn btn-sm btn-danger classDisableForPosted" onclick="EquipmentItems_DeleteList();"><i class="fa fa-trash-o"></i>&nbsp;Delete - حذف</button>
+                                                                    </div>
+                                                                    <div id="divEquipmentItems" class="col-sm-12 m-t-xs">
+                                                                        <section class="panel panel-default">
+                                                                            <header class="panel-heading font-bold text-ul"> Details - التفاصيل</header>
+                                                                            <!--Region: table header-->
+                                                                            <div class="table-responsive" style="width:100%; height:300px; overflow:scroll;">
+                                                                                <table id="tblEquipmentItems" class="table table-striped b-t b-light text-sm  table-hover ">
+                                                                                    <thead>
+                                                                                        <tr>
+                                                                                            <th id="HeaderDeleteEquipmentItemsID" style="width:5%;">
+                                                                                                <input id="cb-CheckAll-EquipmentItems" type="checkbox">
+                                                                                            </th>
+                                                                                            <th>Item Name - اسم الصنف</th>
+                                                                                            <th> Last Counter - رقم أخر عداد</th>
+                                                                                            <th>Date - التاريخ</th>
+                                                                                            <th>Remarks - الملاحظات</th>
+                                                                                            <th class="rounded-right hide"></th>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody></tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                            <!--Region: EOF table header-->
+                                                                            <!--Region: table footer-->
+                                                                            <footer class="panel-footer hide">
+                                                                                <div class="col-sm-12 m-t-n-sm swapChildrenClass">
+
+                                                                                </div>
+                                                                            </footer>
+                                                                            <!--Region: EOF table footer-->
+                                                                        </section>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                            <div id="Wheels" class="container tab-pane fade">
+                                                                <div class="row  col-sm-12">
+                                                                    <div class="form-group col-sm-1">
+                                                                        <label>Head</label>
+                                                                        <input type="text" id="txtHead" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" onchange="hideANDShowRows('H');" data-required="false" maxlength="50" placeholder="12." style="text-transform:uppercase" />
+                                                                    </div>
+                                                                    <div class="form-group col-sm-1">
+                                                                        <label>Tail</label>
+                                                                        <input type="text" id="txtTail" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" onchange="hideANDShowRows('T');"  data-required="false" maxlength="50" placeholder="12." style="text-transform:uppercase" />
+                                                                    </div>
+                                                                </div>
+                                                                <hr />
+                                                                <div class="row  col-sm-12">
+
+                                                                    <div class="form-group col-sm-3">
+                                                                        <label><h4>Head</h4> </label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div id="Head1">
+                                                                    <div class="row  col-sm-12">
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass">
+                                                                            <select id="slWheelOutLeft1" @*onchange="Payment_PartnerTypeChanged();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"></select>
+                                                                            <span class="input-group-btn">
+                                                                                <button id="btn-filter-PartnerType" title="Add/Delete" class="btn btn-sm btn-lightblue" type="button" onclick="ShowHideComboByUotAndIn('Left1');"><i class="fa fa-plus-square"></i></button>
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass">
+                                                                            <div id="slleft1">
+                                                                                <select id="slWheelOutLeftIN1" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control parsley-validated input-sm" data-required="false"></select>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass ">
+                                                                            <div id="slright1">
+                                                                                <select id="slWheelOutRightIN1" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control parsley-validated input-sm" data-required="false"></select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass ">
+                                                                            <span class="input-group-btn">
+                                                                                <button id="btn-filter-PartnerType" title="dd/Delet" class="btn btn-sm btn-lightblue" type="button" onclick="ShowHideComboByUotAndIn('Right1');"><i class="fa fa-plus-square"></i></button>
+                                                                            </span>
+                                                                            <select id="slWheelOutRight1" @*onchange="Payment_PartnerTypeChanged();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"></select>
+                                                                            
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div id="Head2">
+                                                                    <div class="row  col-sm-12">
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass">
+                                                                            <select id="slWheelOutLeft2" @*onchange="Payment_PartnerTypeChanged();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"></select>
+                                                                            <span class="input-group-btn">
+                                                                                <button id="btn-filter-PartnerType" title="Add/Delete" class="btn btn-sm btn-lightblue" type="button" onclick="ShowHideComboByUotAndIn('Left2');"><i class="fa fa-plus-square"></i></button>
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass">
+                                                                            <div id="slleft2">
+                                                                                <select id="slWheelOutLeftIN2" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control parsley-validated input-sm" data-required="false"></select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass ">
+                                                                            <div id="slright2">
+                                                                                <select id="slWheelOutRightIN2" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control parsley-validated input-sm" data-required="false"></select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass ">
+                                                                            <span class="input-group-btn">
+                                                                                <button id="btn-filter-PartnerType" title="dd/Delet" class="btn btn-sm btn-lightblue" type="button" onclick="ShowHideComboByUotAndIn('Right2');"><i class="fa fa-plus-square"></i></button>
+                                                                            </span>
+                                                                             <select id="slWheelOutRight2" @*onchange="Payment_PartnerTypeChanged();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"></select>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </div>
+                                                                <div id="Head3">
+                                                                    <div class="row  col-sm-12">
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass">
+                                                                            <select id="slWheelOutLeft3" @*onchange="Payment_PartnerTypeChanged();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"></select>
+                                                                            <span class="input-group-btn">
+                                                                                <button id="btn-filter-PartnerType" title="Add/Delete" class="btn btn-sm btn-lightblue" type="button" onclick="ShowHideComboByUotAndIn('Left3');"><i class="fa fa-plus-square"></i></button>
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass">
+                                                                            <div id="slleft3">
+                                                                                <select id="slWheelOutLeftIN3" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control parsley-validated input-sm" data-required="false"></select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass ">
+                                                                            <div id="slright3">
+                                                                                <select id="slWheelOutRightIN3" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control parsley-validated input-sm" data-required="false"></select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass ">
+                                                                            <span class="input-group-btn">
+                                                                                <button id="btn-filter-PartnerType" title="dd/Delet" class="btn btn-sm btn-lightblue" type="button" onclick="ShowHideComboByUotAndIn('Right3');"><i class="fa fa-plus-square"></i></button>
+                                                                            </span>
+                                                                            <select id="slWheelOutRight3" @*onchange="Payment_PartnerTypeChanged();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"></select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                               
+                                                                <hr />
+                                                                <div class="row  col-sm-12">
+
+                                                                    <div class="form-group col-sm-3">
+                                                                        <label><h4>Trail</h4> </label>
+                                                                    </div>
+                                                                </div>
+                                                                <div id="Tail1">
+                                                                    <div class="row  col-sm-12">
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass">
+                                                                            <select id="slWheelOutLeftTail1" @*onchange="Payment_PartnerTypeChanged();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"></select>
+                                                                            <span class="input-group-btn">
+                                                                                <button id="btn-filter-PartnerType" title="Add/Delete" class="btn btn-sm btn-lightblue" type="button" onclick="ShowHideComboByUotAndIn('LeftTail1');"><i class="fa fa-plus-square"></i></button>
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass">
+                                                                            <div id="slleftTail1">
+                                                                                <select id="slWheelOutLeftINTail1" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control parsley-validated input-sm" data-required="false"></select>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass ">
+                                                                            <div id="slrightTail1">
+                                                                                <select id="slWheelOutRightINTail1" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control parsley-validated input-sm" data-required="false"></select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass ">
+                                                                            <span class="input-group-btn">
+                                                                                <button id="btn-filter-PartnerType" title="dd/Delet" class="btn btn-sm btn-lightblue" type="button" onclick="ShowHideComboByUotAndIn('RightTail1');"><i class="fa fa-plus-square"></i></button>
+                                                                            </span>
+                                                                             <select id="slWheelOutRightTail1" @*onchange="Payment_PartnerTypeChanged();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"></select>
+                                                                            
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+                                                                <div id="Tail2">
+                                                                    <div class="row  col-sm-12">
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass">
+                                                                            <select id="slWheelOutLeftTail2" @*onchange="Payment_PartnerTypeChanged();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"></select>
+                                                                            <span class="input-group-btn">
+                                                                                <button id="btn-filter-PartnerType" title="Add/Delete" class="btn btn-sm btn-lightblue" type="button" onclick="ShowHideComboByUotAndIn('LeftTail2');"><i class="fa fa-plus-square"></i></button>
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass">
+                                                                            <div id="slleftTail2">
+                                                                                <select id="slWheelOutLeftINTail2" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control parsley-validated input-sm" data-required="false"></select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass ">
+                                                                            <div id="slrightTail2">
+                                                                                <select id="slWheelOutRightINTail2" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control parsley-validated input-sm" data-required="false"></select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass ">
+                                                                            <span class="input-group-btn">
+                                                                                <button id="btn-filter-PartnerType" title="dd/Delet" class="btn btn-sm btn-lightblue" type="button" onclick="ShowHideComboByUotAndIn('RightTail2');"><i class="fa fa-plus-square"></i></button>
+                                                                            </span>
+                                                                             <select id="slWheelOutRightTail2" @*onchange="Payment_PartnerTypeChanged();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"></select>
+                                                                          
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                </div>
+                                                                <div id="Tail3">
+                                                                    <div class="row  col-sm-12">
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass">
+                                                                            <select id="slWheelOutLeftTail3" @*onchange="Payment_PartnerTypeChanged();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"></select>
+                                                                            <span class="input-group-btn">
+                                                                                <button id="btn-filter-PartnerType" title="Add/Delete" class="btn btn-sm btn-lightblue" type="button" onclick="ShowHideComboByUotAndIn('LeftTail3');"><i class="fa fa-plus-square"></i></button>
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass">
+                                                                            <div id="slleftTail3">
+                                                                                <select id="slWheelOutLeftINTail3" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control parsley-validated input-sm" data-required="false"></select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass ">
+                                                                            <div id="slrightTail3">
+                                                                                <select id="slWheelOutRightINTail3" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control parsley-validated input-sm" data-required="false"></select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass ">
+                                                                            <span class="input-group-btn">
+                                                                                <button id="btn-filter-PartnerType" title="dd/Delet" class="btn btn-sm btn-lightblue" type="button" onclick="ShowHideComboByUotAndIn('RightTail3');"><i class="fa fa-plus-square"></i></button>
+                                                                            </span>
+                                                                            <select id="slWheelOutRightTail3" @*onchange="Payment_PartnerTypeChanged();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"></select>
+                                                                           
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div id="Tail4">
+                                                                    <div class="row  col-sm-12">
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass">
+                                                                            <select id="slWheelOutLeftTail4" @*onchange="Payment_PartnerTypeChanged();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"></select>
+                                                                            <span class="input-group-btn">
+                                                                                <button id="btn-filter-PartnerType" title="Add/Delete" class="btn btn-sm btn-lightblue" type="button" onclick="ShowHideComboByUotAndIn('LeftTail4');"><i class="fa fa-plus-square"></i></button>
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass">
+                                                                            <div id="slleftTail4">
+                                                                                <select id="slWheelOutLeftINTail4" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control parsley-validated input-sm" data-required="false"></select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass ">
+                                                                            <div id="slrightTail4">
+                                                                                <select id="slWheelOutRightINTail4" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control parsley-validated input-sm" data-required="false"></select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass ">
+                                                                            <span class="input-group-btn">
+                                                                                <button id="btn-filter-PartnerType" title="dd/Delet" class="btn btn-sm btn-lightblue" type="button" onclick="ShowHideComboByUotAndIn('RightTail4');"><i class="fa fa-plus-square"></i></button>
+                                                                            </span>
+                                                                            <select id="slWheelOutRightTail4" @*onchange="Payment_PartnerTypeChanged();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"></select>
+                                                                           
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div id="Tail5">
+                                                                    <div class="row  col-sm-12">
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass">
+                                                                            <select id="slWheelOutLeftTail5" @*onchange="Payment_PartnerTypeChanged();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"></select>
+                                                                            <span class="input-group-btn">
+                                                                                <button id="btn-filter-PartnerType" title="Add/Delete" class="btn btn-sm btn-lightblue" type="button" onclick="ShowHideComboByUotAndIn('LeftTail5');"><i class="fa fa-plus-square"></i></button>
+                                                                            </span>
+                                                                        </div>
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass">
+                                                                            <div id="slleftTail5">
+                                                                                <select id="slWheelOutLeftINTail5" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control parsley-validated input-sm" data-required="false"></select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass ">
+                                                                            <div id="slrightTail5">
+                                                                                <select id="slWheelOutRightINTail5" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control parsley-validated input-sm" data-required="false"></select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass ">
+                                                                            <span class="input-group-btn">
+                                                                                <button id="btn-filter-PartnerType" title="dd/Delet" class="btn btn-sm btn-lightblue" type="button" onclick="ShowHideComboByUotAndIn('RightTail5');"><i class="fa fa-plus-square"></i></button>
+                                                                            </span>
+                                                                             <select id="slWheelOutRightTail5" @*onchange="Payment_PartnerTypeChanged();"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm" data-required="false"></select>
+                                                                           
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--EOF Wizard-->
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <!-- Endregion Add / Edit Region Form -->
+                    <div class="modal-footer m-t-n-lg">
+                        <button type="button" id="btnSave" class="btn btn-primary btn-sm" onclick="TRCK_Equipments_Insert(false);">
+                            <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                        </button>
+                        <button type="button" id="btnSaveandNew" class="btn btn-primary btn-sm" onclick="TRCK_Equipments_Insert(true);">
+                            <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew
+                        </button>
+
+                        <button class="btnTRCK_EquipmentClose btn btn-link btn-sm" id="btnTRCK_EquipmentClose" @*onclick="TRCK_Equipments_UnlockRecord();"*@ data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!--EOF TRCK_Equipments Modal-->
+            
+            <!--Region: table header-->
+            <div class="table-responsive">
+                <table id="tblTRCK_Equipments" class="table table-striped b-t b-light text-sm  table-hover">
+                    <thead>
+                        <tr>
+                            <th id="ID">
+                                <input id="cb-CheckAll" type="checkbox" />
+                            </th>
+                            <th class="th-sortable" data-toggle="class">@Forwarding.MvcApp.App_Resources.App_Resources.Code
+                            </th>
+                            <th>Equip.Number/VIN
+                            </th>
+                            <th class="hide">@Forwarding.MvcApp.App_Resources.App_Resources.LocalName
+                            </th>
+                                                        
+                            <th class="rounded-right hide"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <!--Region: table header-->
+
+            <!--Region: footer-->
+            <footer class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-4 hidden-xs">
+                        <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                        <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                        </button>
+                    </div>
+                    <div id="div-Text-Total" class="col-sm-4 text-center">
+                        <small class="text-muted inline m-t-sm m-b-sm"> @Forwarding.MvcApp.App_Resources.App_Resources.Showing 
+                            <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                            <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                        </small>
+                    </div>
+                    <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+                </div>
+            </footer>
+            <!--Region: footer-->
+        </section>
+    </div>
+</div>
+<select id="slPurchaseItem" class="hide"></select>
+<!-- TRCK_EquipmentLicenses Modal -->
+<div class="modal fade" id="TRCK_EquipmentLicensesModal" tabindex="-1" style="z-index: 1050;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="TRCK_EquipmentLicensesModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modalwidth-70">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.TRCK_LicensesDetails &nbsp;<label id="lblTRCK_EquipmentLicensesShown" purpose="dynamicLabel" class="static-text-primary"></label>
+            </h3>
+        </div>
+        <div class="modal-body">
+            <!-- Region Add / Edit Country Form -->
+            <div class="span7 form vertical-mode" id="TRCK_EquipmentLicenses-form">
+                <fieldset>
+                    <div class="form-group pull-in  has-error clearfix">
+                        <input id="hTRCK_EquipmentLicensesID" type="hidden" />
+                        <!-- start alert message region -->
+                        <div class="alert alert-danger div-error">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                        </div>
+                        <!-- end alert message region -->
+
+                        <div class="form-group col-sm-6">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_LicenseNumber </label>
+                            <input type="text" id="txtLicenseNumber2" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="License Number" style="text-transform:uppercase" />
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.ExpirationDate</label>
+                            <div class="input-group">
+                                <span class="input-group-addon" style="background-color: #428bca;color:white;"><span class="fa fa-calendar"></span></span>
+                                <input type="text" id="txtLicenseNumberExpireDate2" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                            </div>
+                        </div>
+                       
+                    </div>
+                </fieldset>
+            </div>
+            <!-- Endegion Add / Edit TRCK_EquipmentLicenses Form -->
+        </div>
+        <div class="modal-footer">
+            <!--sherif-->
+            <button type="button" id="btnSaveTRCK_EquipmentLicenses" class="btn btn-primary btn-sm" onclick="">
+                <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+            </button>
+            <button type="button" id="btnSaveandNewTRCK_EquipmentLicenses" class="btn btn-primary btn-sm" onclick="TRCK_EquipmentLicenses_Insert(true);">
+                <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew
+            </button>
+            <button class="btnClose btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>
+        </div>
+    </div>
+</div>
+</div>
+<!-- TRCK_EquipmentLicenses Modal -->

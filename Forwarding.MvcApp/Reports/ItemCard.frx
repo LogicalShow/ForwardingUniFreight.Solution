@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="03/03/2020 15:06:51" ReportInfo.Modified="05/26/2024 14:17:51" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+                // ((Decimal)Report.GetColumnValue(&quot;Table.TotalQuantity&quot;))
+  }
+}  
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFSSxhiP6CTXC7kHqaWdA+92cnCOpUrEy9a4rjPETpQfsFDlo69vQpyLrltRBtE6+ZPzQDG7q+4eXGJ8RgLIvdh10DCBrQWvNBROpy5mBrs0HLOqqLqi3+c9ncV+9xmz0O">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="exec [dbo].[SC_GetTransactionsDetailsWithTransactionTypesIDs]  @ItemIDs  , @StoreIDs  , @TransactionTypesIDs , @PartnerSupAccountIDs ,  @FromDate  ,  @ToDate,@ClientID,@SupplierID">
+        <Column Name="BranchID" DataType="System.Int32"/>
+        <Column Name="BranchName" DataType="System.String"/>
+        <Column Name="TotalPrice" DataType="System.Decimal"/>
+        <Column Name="PartnerName" DataType="System.String"/>
+        <Column Name="PartnerSupAccountID" DataType="System.Int32"/>
+        <Column Name="TransactionDate" DataType="System.DateTime"/>
+        <Column Name="TransactionType" DataType="System.String"/>
+        <Column Name="InvoiceNumber" DataType="System.String"/>
+        <Column Name="CustomerName" DataType="System.String"/>
+        <Column Name="QtyImport" DataType="System.Decimal"/>
+        <Column Name="QtyExport" DataType="System.Decimal"/>
+        <Column Name="PriceImport" DataType="System.Decimal"/>
+        <Column Name="PriceExport" DataType="System.Decimal"/>
+        <Column Name="AveragePrice" DataType="System.Decimal"/>
+        <Column Name="TotalQuantity" DataType="System.Decimal"/>
+        <Column Name="ItemName" DataType="System.String"/>
+        <Column Name="StoreName" DataType="System.String"/>
+        <Column Name="ItemID" DataType="System.Int64"/>
+        <Column Name="StoreID" DataType="System.Int32"/>
+        <Column Name="TransactionCode" DataType="System.String"/>
+        <Column Name="Username" DataType="System.String"/>
+        <Column Name="ItemCode" DataType="System.String"/>
+        <Column Name="TransactionStatue" DataType="System.String"/>
+        <Column Name="InvoicePrice" DataType="System.Decimal"/>
+        <Column Name="TransactionTypeID" DataType="System.Int32"/>
+        <Column Name="UnitName" DataType="System.String"/>
+        <Column Name="TransactionFactor" DataType="System.Int32"/>
+        <Column Name="TransactionDetailsID" DataType="System.Int32"/>
+        <Column Name="QtyBalance" DataType="System.Decimal"/>
+        <Column Name="PriceBalance" DataType="System.Decimal"/>
+        <Column Name="Code" DataType="System.String"/>
+        <CommandParameter Name="@FromDate" DataType="22" Expression="[FromDate]"/>
+        <CommandParameter Name="@ToDate" DataType="22" Expression="[ToDate]"/>
+        <CommandParameter Name="@ItemIDs" DataType="22" Expression="[ItemIDs]"/>
+        <CommandParameter Name="@StoreIDs" DataType="22" Expression="[StoreIDs]"/>
+        <CommandParameter Name="@TransactionTypesIDs" DataType="22" Expression="[TransactionTypesIDs]"/>
+        <CommandParameter Name="@PartnerSupAccountIDs " DataType="22" Expression="[PartnerSupAccountIDs]"/>
+        <CommandParameter Name="@ClientID" DataType="22" Expression="[ClientID]"/>
+        <CommandParameter Name="@SupplierID" DataType="22" Expression="[SupplierID]"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="FromDate" DataType="System.String"/>
+    <Parameter Name="ToDate" DataType="System.String"/>
+    <Parameter Name="ItemIDs" DataType="System.String"/>
+    <Parameter Name="StoreIDs" DataType="System.String"/>
+    <Parameter Name="TransactionTypesIDs" DataType="System.String"/>
+    <Parameter Name="PartnerSupAccountIDs" DataType="System.String"/>
+    <Parameter Name="ClientID" DataType="System.String"/>
+    <Parameter Name="SupplierID" DataType="System.String"/>
+    <Total Name="TotalStoreItem_ImportQty" Expression="[Table.QtyImport]" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalStoreItem_ExportQty" Expression="[Table.QtyExport]" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalStoreItem_ImportPrice" Expression="[Table.PriceImport]" Evaluator="Data1" PrintOn="GroupFooter2"/>
+    <Total Name="TotalStoreItem_ExportPrice" Expression="[Table.PriceExport]" Evaluator="Data1" PrintOn="GroupFooter2"/>
+  </Dictionary>
+  <ReportPage Name="Page1" RawPaperSize="9" FirstPageSource="15" OtherPagesSource="15">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="18.9"/>
+    <PageHeaderBand Name="PageHeader1" Top="23.7" Width="718.2" Height="75.6">
+      <TextObject Name="Text34" Left="9.45" Width="708.75" Height="37.8" Border.Lines="Top, Bottom" Border.Style="Dash" Text="كارت الصنف" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial Black, 16pt, style=Bold"/>
+      <TextObject Name="Text95" Left="567" Top="47.25" Width="47.25" Height="18.9" Text="من" HorzAlign="Center" VertAlign="Center" Font="Arial, 16pt, style=Bold"/>
+      <TextObject Name="Text96" Left="378" Top="47.25" Width="189" Height="18.9" Fill.Color="LightGray" Text="[Convert.ToDateTime([FromDate])]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 16pt, style=Bold"/>
+      <TextObject Name="Text97" Left="292.95" Top="47.25" Width="56.7" Height="18.9" Text="الى" HorzAlign="Center" VertAlign="Center" Font="Arial, 16pt, style=Bold"/>
+      <TextObject Name="Text98" Left="132.3" Top="47.25" Width="160.65" Height="18.9" Fill.Color="LightGray" Text="[Convert.ToDateTime([ToDate])]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 16pt, style=Bold"/>
+    </PageHeaderBand>
+    <GroupHeaderBand Name="GroupHeader2" Top="104.1" Width="718.2" Height="37.8" StartNewPage="true" KeepWithData="true" RepeatOnEveryPage="true" Condition="[Table.StoreID]" KeepTogether="true">
+      <TextObject Name="Text2" Width="94.5" Height="18.9"/>
+      <TextObject Name="Text51" Left="132.3" Width="481.95" Height="28.35" Border.Lines="All" Text="[Table.StoreName]" HorzAlign="Right" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text1" Width="94.5"/>
+      <TextObject Name="Text48" Left="614.25" Width="103.95" Height="28.35" Border.Lines="All" Text="المخزن" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <GroupHeaderBand Name="GroupHeader1" Top="146.7" Width="718.2" Height="75.6" Condition="[Table.ItemID]" KeepTogether="true">
+        <TextObject Name="Text52" Left="491.4" Top="47.25" Width="122.85" Height="28.35" Border.Lines="All" Fill.Color="LightGray" Text="التاريخ" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+        <TextObject Name="Text5" Left="311.85" Top="47.25" Width="179.55" Height="28.35" Border.Lines="All" Fill.Color="LightGray" Text="الحركة/ نوع المستند" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+        <TextObject Name="Text49" Left="189" Top="9.45" Width="56.7" Height="28.35" Border.Lines="All" Fill.Color="DarkGray" Text="الوحدة" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+        <TextObject Name="Text50" Top="9.45" Width="189" Height="28.35" Border.Lines="All" Fill.Color="DarkGray" Text="[Table.UnitName]" HorzAlign="Right" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+        <TextObject Name="Text46" Left="614.25" Top="9.45" Width="103.95" Height="28.35" Border.Lines="All" Fill.Color="DarkGray" Text="الصنف" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+        <TextObject Name="Text47" Left="245.7" Top="9.45" Width="368.55" Height="28.35" Border.Lines="All" Fill.Color="DarkGray" Text="[Table.ItemName]" HorzAlign="Right" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+        <TextObject Name="Text99" Left="614.25" Top="47.25" Width="103.95" Height="28.35" Border.Lines="All" Fill.Color="LightGray" Text="رقم الحركة" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+        <TextObject Name="Text101" Left="160.65" Top="47.25" Width="151.2" Height="28.35" Border.Lines="All" Fill.Color="LightGray" Text="الكمية" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+        <TextObject Name="Text102" Top="47.25" Width="160.65" Height="28.35" Border.Lines="All" Fill.Color="LightGray" Text="الكمية الحالية" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+        <DataBand Name="Data1" Top="227.1" Width="718.2" Height="28.35" DataSource="Table">
+          <TextObject Name="Text78" Left="491.4" Width="122.85" Height="28.35" Border.Lines="All" Text="[Table.TransactionDate]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+          <TextObject Name="Text79" Left="311.85" Width="179.55" Height="28.35" Border.Lines="All" Text="[Table.TransactionType]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TextObject Name="Text100" Left="614.25" Width="103.95" Height="28.35" Border.Lines="All" Text="[Table.Code]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+          <TextObject Name="Text3" Left="160.65" Width="151.2" Height="28.35" Border.Lines="All" Text="[Table.TotalQuantity]" Format="Number" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 12pt, style=Bold" Trimming="EllipsisCharacter"/>
+          <TextObject Name="Text103" Width="160.65" Height="28.35" Border.Lines="All" Text="[Table.QtyBalance]" Format="Number" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 12pt, style=Bold" Trimming="EllipsisCharacter"/>
+          <Sort>
+            <Sort Expression="[Table.TransactionDate]"/>
+            <Sort Expression="[Table.TransactionDetailsID]"/>
+          </Sort>
+        </DataBand>
+        <GroupFooterBand Name="GroupFooter1" Top="260.25" Width="718.2"/>
+      </GroupHeaderBand>
+      <GroupFooterBand Name="GroupFooter2" Top="265.05" Width="718.2"/>
+    </GroupHeaderBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="269.85" Width="718.2"/>
+    <PageFooterBand Name="PageFooter1" Top="274.65" Width="718.2"/>
+  </ReportPage>
+</Report>

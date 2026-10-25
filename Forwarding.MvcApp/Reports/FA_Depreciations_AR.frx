@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="04/15/2020 16:14:35" ReportInfo.Modified="11/04/2020 11:33:02" ReportInfo.CreatorVersion="2018.3.14.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqtr1371Y2+HtWu8WFjl2KctZmh5Ny3LlNRIaznH7ZmW3dMAHgcASpqGxR9Ke+0drIwJvuBJrOWFvx0JGAwGso2VBkFR9bYuafvNpUTR7EdiClfkgopuozEm00Bw7SA54h5NC6YVhOIlxYSD8NU609vT2OL+DCF57kxop7ieofxC/Kre3wwhhLXQLLzUuoaERaH9S2Jj0x5HVoHXWE1gY911ZH9Lp89O90SCflNRSJPN4=">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="SELECT V.ID, V.TransactionTypeID, V.Amount, V.FromDate, V.ToDate, V.QtyFactor, V.Qty, V.IsApproved, V.Notes, V.Percentage, V.DepreciationTypeID, V.AssetID, V.JVID, V.BranchID, V.Code, V.AssetName, V.DepartmentID, V.DepartmentName, V.DevisonID, V.DevisonName, V.GroupID, V.GroupName, V.ExludedTypeID, V.ExludedTypeName, V.BarCode, V.BarCodeType, V.PurchasingDate, V.PurchasingAmountLocal, V.OpeningDepreciationAmount, V.ScrappingAmount, V.IsDeleted, V.DepreciationID, V.CreationDate, V.UserID, V.AmountFactor, V.BranchName, V.TransactionTypeName, V.PeriodType, V.LastQty, V.LastAmount, V.LastDepreciation , V.AssetCode&#13;&#10;FROM &quot;vwFA_Transactions&quot; V where&#13;&#10;V.DepreciationID = @DepreciationID&#13;&#10;order by V.DepartmentID , V.DevisonID&#13;&#10;                                                        ">
+        <Column Name="ID" DataType="System.Int32"/>
+        <Column Name="Code" DataType="System.String"/>
+        <Column Name="GroupID" DataType="System.Int32"/>
+        <Column Name="BarCode" DataType="System.String"/>
+        <Column Name="BranchID" DataType="System.Int32"/>
+        <Column Name="DepartmentID" DataType="System.Int32"/>
+        <Column Name="DevisonID" DataType="System.Int32"/>
+        <Column Name="BarCodeType" DataType="System.String"/>
+        <Column Name="GroupName" DataType="System.String"/>
+        <Column Name="BranchName" DataType="System.String"/>
+        <Column Name="DevisonName" DataType="System.String"/>
+        <Column Name="DepartmentName" DataType="System.String"/>
+        <Column Name="LastQty" DataType="System.Decimal"/>
+        <Column Name="Qty" DataType="System.Decimal"/>
+        <Column Name="CreationDate" DataType="System.DateTime"/>
+        <Column Name="DepreciationTypeID" DataType="System.Int32"/>
+        <Column Name="LastAmount" DataType="System.Decimal"/>
+        <Column Name="TransactionTypeID" DataType="System.Int32"/>
+        <Column Name="Amount" DataType="System.Decimal"/>
+        <Column Name="FromDate" DataType="System.DateTime"/>
+        <Column Name="ToDate" DataType="System.DateTime"/>
+        <Column Name="QtyFactor" DataType="System.Int32"/>
+        <Column Name="IsApproved" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="Notes" DataType="System.String"/>
+        <Column Name="Percentage" DataType="System.Decimal"/>
+        <Column Name="AssetID" DataType="System.Int32"/>
+        <Column Name="JVID" DataType="System.Int32"/>
+        <Column Name="AssetName" DataType="System.String"/>
+        <Column Name="ExludedTypeID" DataType="System.Int32"/>
+        <Column Name="ExludedTypeName" DataType="System.String"/>
+        <Column Name="IsDeleted" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="DepreciationID" DataType="System.Int32"/>
+        <Column Name="UserID" DataType="System.Int32"/>
+        <Column Name="AmountFactor" DataType="System.Int32"/>
+        <Column Name="TransactionTypeName" DataType="System.String"/>
+        <Column Name="PeriodType" DataType="System.Int32"/>
+        <Column Name="PurchasingDate" DataType="System.DateTime"/>
+        <Column Name="PurchasingAmountLocal" DataType="System.Decimal"/>
+        <Column Name="OpeningDepreciationAmount" DataType="System.Decimal"/>
+        <Column Name="ScrappingAmount" DataType="System.Decimal"/>
+        <Column Name="LastDepreciation" DataType="System.Decimal"/>
+        <Column Name="AssetCode" DataType="System.String"/>
+        <CommandParameter Name="@DepreciationID" DataType="22" Expression="[DepreciationID]"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="DepreciationID" DataType="System.String" Expression="&quot;1&quot;"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9" FirstPageSource="15" OtherPagesSource="15">
+    <ReportTitleBand Name="ReportTitle1" Width="1047.06"/>
+    <PageHeaderBand Name="PageHeader1" Top="4.17" Width="1047.06" Height="151.2">
+      <TextObject Name="Text16" Left="9.45" Width="1020.6" Height="47.25" Border.Lines="Top, Bottom" Border.Style="Dash" Text="إهلاك مجمع الأصول" HorzAlign="Center" VertAlign="Center" Font="Arial, 28pt, style=Bold"/>
+      <TextObject Name="Text14" Left="652.05" Top="66.15" Width="122.85" Height="28.35" Text="الفرع" HorzAlign="Center" VertAlign="Center" Font="Arial, 18pt, style=Bold"/>
+      <TextObject Name="Text13" Left="311.85" Top="66.15" Width="321.3" Height="28.35" Fill.Color="LightGray" Text="[Table.BranchName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 18pt, style=Bold"/>
+      <TextObject Name="Text4" Left="963.9" Top="132.3" Width="75.6" Height="18.9" Border.Lines="All" Fill.Color="LightGray" Text="كود الأصل" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text12" Left="434.7" Top="132.3" Width="122.85" Height="18.9" Border.Lines="All" Fill.Color="LightGray" Text="الصافي قبل الإهلاك" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text8" Left="642.6" Top="132.3" Width="94.5" Height="18.9" Border.Lines="All" Fill.Color="LightGray" Text="من" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text2" Left="869.4" Top="132.3" Width="94.5" Height="18.9" Border.Lines="All" Fill.Color="LightGray" Text="إسم الأصل" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text46" Left="311.85" Top="132.3" Width="122.85" Height="18.9" Border.Lines="All" Fill.Color="LightGray" Text="قيمة الإهلاك" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text47" Left="189" Top="132.3" Width="122.85" Height="18.9" Border.Lines="All" Fill.Color="LightGray" Text="الصافي بعد الإهلاك" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text49" Left="737.1" Top="132.3" Width="132.3" Height="18.9" Border.Lines="All" Fill.Color="LightGray" Text="اسم المجموعة" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text45" Left="94.5" Top="132.3" Width="94.5" Height="18.9" Border.Lines="All" Fill.Color="LightGray" Text="الإدارة" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text44" Top="132.3" Width="94.5" Height="18.9" Border.Lines="All" Fill.Color="LightGray" Text="القسم" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text50" Left="557.55" Top="132.3" Width="85.05" Height="18.9" Border.Lines="All" Fill.Color="LightGray" Text="الى" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="159.53" Width="1047.06" Height="37.8" DataSource="Table" Columns.Count="1">
+      <TextObject Name="Text1" Left="963.9" Width="75.6" Height="37.8" Border.Lines="All" Text="[Table.AssetCode]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text23" Left="869.4" Width="94.5" Height="37.8" Border.Lines="All" Text="[Table.AssetName]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text24" Left="311.85" Width="122.85" Height="37.8" Border.Lines="All" Text="[Table.Amount]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="3" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text25" Left="642.6" Width="94.5" Height="37.8" Border.Lines="All" Text="[Table.FromDate]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text3" Left="434.7" Width="122.85" Height="37.8" Border.Lines="All" Text="[Table.LastAmount]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="3" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text48" Left="189" Width="122.85" Height="37.8" Border.Lines="All" Text="[[Table.LastAmount] - [Table.Amount]]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="3" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text5" Left="737.1" Width="132.3" Height="37.8" Border.Lines="All" Text="[Table.GroupName]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text21" Width="94.5" Height="37.8" Border.Lines="All" Text="[Table.DepartmentName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text51" Left="557.55" Width="85.05" Height="37.8" Border.Lines="All" Text="[Table.ToDate]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text22" Left="94.5" Width="94.5" Height="37.8" Border.Lines="All" Text="[Table.DevisonName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+    </DataBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="201.5" Width="1047.06" Height="75.6">
+      <TextObject Name="Text6" Left="793.8" Top="9.45" Width="217.35" Height="28.35" Text="إعـــداد" HorzAlign="Center" VertAlign="Center" Font="Arial, 16pt, style=Bold"/>
+      <TextObject Name="Text52" Left="793.8" Top="37.8" Width="217.35" Height="28.35" Text="(                         )" HorzAlign="Center" VertAlign="Center" Font="Arial, 16pt, style=Bold"/>
+      <TextObject Name="Text53" Left="444.15" Top="9.45" Width="217.35" Height="28.35" Text="رئيس قسم الأصول" HorzAlign="Center" VertAlign="Center" Font="Arial, 16pt, style=Bold"/>
+      <TextObject Name="Text54" Left="444.15" Top="37.8" Width="217.35" Height="28.35" Text="(                         )" HorzAlign="Center" VertAlign="Center" Font="Arial, 16pt, style=Bold"/>
+      <TextObject Name="Text55" Left="94.5" Top="9.45" Width="217.35" Height="28.35" Text="يعتمد" HorzAlign="Center" VertAlign="Center" Font="Arial, 16pt, style=Bold"/>
+      <TextObject Name="Text56" Left="94.5" Top="37.8" Width="217.35" Height="28.35" Text="(                         )" HorzAlign="Center" VertAlign="Center" Font="Arial, 16pt, style=Bold"/>
+    </ReportSummaryBand>
+    <PageFooterBand Name="PageFooter1" Top="281.27" Width="1047.06" Height="18.9">
+      <TextObject Name="Text7" Left="500.85" Width="94.5" Height="18.9" Text="[Page]" HorzAlign="Center" VertAlign="Center" Font="Arial, 16pt, style=Bold"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

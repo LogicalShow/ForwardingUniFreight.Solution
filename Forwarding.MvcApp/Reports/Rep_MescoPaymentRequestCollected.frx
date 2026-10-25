@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/03/2022 13:02:22" ReportInfo.Modified="04/28/2025 20:41:00" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+using System.Globalization;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+
+   
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFHqm0rZN8U3ovGdwvYth0uiUdmsDM9GBKvMdM2icdnfm4x8AH0PGT/Cbqkr5oUoCWF6yLR9Gizqj0lLRnXzsHSWUKItqtXetElY+7yBgVtWcjxuiZ9QaAn6lfixcgOyrt">
+      <TableDataSource Name="Table" Alias="Rep_A_Payment_Request" DataType="System.Int32" Enabled="true" SelectCommand="exec Rep_MescoPaymentRequestCollected @PaymentRequestID">
+        <Column Name="ChargeTypeName" DataType="System.String"/>
+        <Column Name="OperationCode" DataType="System.String"/>
+        <Column Name="VesselName" DataType="System.String"/>
+        <Column Name="CustodyName" DataType="System.String"/>
+        <Column Name="ClientName" DataType="System.String"/>
+        <Column Name="PaymentRequestCode" DataType="System.String"/>
+        <Column Name="PaymentOrderCode" DataType="System.Int64"/>
+        <Column Name="ClientPaymentTerm" DataType="System.String"/>
+        <Column Name="OperationMasterBL" DataType="System.String"/>
+        <Column Name="HouseNumber" DataType="System.String"/>
+        <Column Name="SalesmanName" DataType="System.String"/>
+        <Column Name="OperationManName" DataType="System.String"/>
+        <Column Name="VoyageDate" DataType="System.DateTime"/>
+        <Column Name="ContainerNumber" DataType="System.String"/>
+        <Column Name="LineName" DataType="System.String"/>
+        <Column Name="PayableEstimatedCost" DataType="System.Decimal"/>
+        <Column Name="PaymentRequestDetailEstimatedCost" DataType="System.Decimal"/>
+        <Column Name="PaymentRequestDetailActualCost" DataType="System.Decimal"/>
+        <Column Name="CategoryName" DataType="System.String"/>
+        <Column Name="QuotationCode" DataType="System.String"/>
+        <Column Name="BookingStatus" DataType="System.String"/>
+        <Column Name="BookingCreationDate" DataType="System.DateTime"/>
+        <Column Name="VendorName" DataType="System.String"/>
+        <Column Name="PRAccountName" DataType="System.String"/>
+        <Column Name="DetailTaxPercentage" DataType="System.Decimal"/>
+        <Column Name="DetailDiscountPercentage" DataType="System.Decimal"/>
+        <Column Name="PaymentRequestCreatorName" DataType="System.String"/>
+        <Column Name="AccountantApprovedBy" DataType="System.String"/>
+        <Column Name="PayableSupervisorApprovedBy" DataType="System.String"/>
+        <Column Name="TreasurySupervisorApprovedBy" DataType="System.String"/>
+        <Column Name="PaymentRequestCreationDate" DataType="System.DateTime"/>
+        <Column Name="IsCash" DataType="System.String"/>
+        <Column Name="TotalEstmatedCost" DataType="System.Decimal"/>
+        <Column Name="TotalActualCost" DataType="System.Decimal"/>
+        <Column Name="CurrencyCode" DataType="System.String"/>
+        <Column Name="PRSubAccountName" DataType="System.String"/>
+        <Column Name="Activity" DataType="System.String"/>
+        <Column Name="PaymentRequestCollectedID" DataType="System.Int32"/>
+        <Column Name="DebitAmount" DataType="System.Decimal"/>
+        <CommandParameter Name="PaymentRequestID" DataType="8" Size="10" Expression="[ID]" DefaultValue="9"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="ID" DataType="System.String"/>
+    <Total Name="TotalTAXAmount" Expression="([Rep_A_Payment_Request.PaymentRequestDetailEstimatedCost]- [Rep_A_Payment_Request.DebitAmount])* ([Rep_A_Payment_Request.DetailTaxPercentage] / 100)" Evaluator="Data1"/>
+    <Total Name="TotalDiscountAmount" Expression="([Rep_A_Payment_Request.PaymentRequestDetailEstimatedCost]- [Rep_A_Payment_Request.DebitAmount]) * ([Rep_A_Payment_Request.DetailDiscountPercentage] / 100)" Evaluator="Data1"/>
+    <Total Name="TotalAmount" Expression="[TotaAmountlWithoutVAT] + [TotalTAXAmount] - [TotalDiscountAmount]" Evaluator="Data1"/>
+    <Total Name="TotaAmountlWithoutVAT" Expression="[Rep_A_Payment_Request.PaymentRequestDetailEstimatedCost] - [Rep_A_Payment_Request.DebitAmount]" Evaluator="Data1"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" LeftMargin="2.5" TopMargin="2.5" RightMargin="2.5" BottomMargin="2.5" FirstPageSource="15" OtherPagesSource="15" StartPageEvent="Page1_StartPage">
+    <ReportTitleBand Name="ReportTitle1" Width="1103.76" Height="93.49" FirstRowStartsNewPage="true">
+      <TextObject Name="Text2" Left="427.81" Top="8.04" Width="248.14" Height="18.9" Text="[IIf([Rep_A_Payment_Request.PaymentOrderCode] == 0,&quot;Payment Request&quot;,&quot;Payment Order&quot;)]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text1" Left="10.22" Top="7.22" Width="47.25" Height="18.9" Text="Date :" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text3" Left="857.45" Top="8.34" Width="47.25" Height="18.9" Text="Ref :" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text4" Left="57.47" Top="7.22" Width="252.92" Height="18.9" Text="[IIf(FormatDateTime([Rep_A_Payment_Request.PaymentRequestCreationDate],&quot;dd/MM/yyyy&quot;) == &quot;01/01/0001&quot;,&quot;&quot;,FormatDateTime([Rep_A_Payment_Request.PaymentRequestCreationDate],&quot;dd/MM/yyyy&quot;))]" Format="Custom" Format.Format="dd/MM/yyy" VertAlign="Center"/>
+      <TextObject Name="Text5" Left="904.7" Top="8.34" Width="196.32" Height="18.9" Text="[IIf([Rep_A_Payment_Request.PaymentOrderCode] == 0,[Rep_A_Payment_Request.PaymentRequestCode],[Rep_A_Payment_Request.PaymentOrderCode])]" VertAlign="Center"/>
+      <TextObject Name="Text24" Left="7.38" Top="37.69" Width="85.05" Height="18.9" Text="Custody" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text28" Left="6.36" Top="65.46" Width="75.6" Height="20.8" Text="Currency" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text30" Left="104.94" Top="65.46" Width="94.5" Height="20.8" Text="[Rep_A_Payment_Request.CurrencyCode]" VertAlign="Center"/>
+      <TextObject Name="Text38" Left="92.43" Top="37.69" Width="9.45" Height="18.9" Text=":" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text41" Left="91.34" Top="65.46" Width="9.45" Height="20.8" Text=":" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text64" Left="107.57" Top="36.94" Width="345.5" Height="18.9" Text="[Rep_A_Payment_Request.CustodyName]" VertAlign="Center"/>
+      <TextObject Name="Text79" Left="459.58" Top="37.46" Width="75.6" Height="20.8" Text="Payment" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text80" Left="554.21" Top="38.21" Width="248.37" Height="18.9" Text="[Rep_A_Payment_Request.IsCash]" VertAlign="Center"/>
+      <TextObject Name="Text81" Left="540.53" Top="37.46" Width="9.45" Height="18.9" Text=":" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text82" Left="460.81" Top="65.46" Width="75.6" Height="20.8" Text="Activity" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text83" Left="554.3" Top="65.46" Width="246.43" Height="20.8" Text="[Rep_A_Payment_Request.Activity]" VertAlign="Center"/>
+      <TextObject Name="Text84" Left="540.53" Top="65.46" Width="9.45" Height="20.8" Text=":" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <LineObject Name="Line1" Left="3.01" Top="32.19" Width="1100.64"/>
+      <LineObject Name="Line2" Left="1.16" Top="93.49" Width="1099.67"/>
+    </ReportTitleBand>
+    <GroupHeaderBand Name="GroupHeader1" Top="98.2" Width="1103.76" Height="65.38" CanGrow="true" Condition="[Rep_A_Payment_Request.PaymentRequestCollectedID]">
+      <TableObject Name="Table1" Left="1.16" Top="3.64" Width="1099.55" Height="61.74" Border.Lines="All">
+        <TableColumn Name="Column6" Width="107.81"/>
+        <TableColumn Name="Column1" Width="90.81"/>
+        <TableColumn Name="Column2" Width="405.12"/>
+        <TableColumn Name="Column3" Width="107.58"/>
+        <TableColumn Name="Column4" Width="109.88"/>
+        <TableColumn Name="Column5" Width="70.82"/>
+        <TableColumn Name="Column7" Width="70.79"/>
+        <TableColumn Name="Column8" Width="136.74"/>
+        <TableRow Name="Row5" Height="30.98">
+          <TableCell Name="Cell53" Border.Lines="All" Fill.Color="Silver" Text="Details of payment" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" ColSpan="8"/>
+          <TableCell Name="Cell48" Border.Lines="All" Fill.Color="Silver" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell49" Border.Lines="All" Fill.Color="Silver" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell50" Border.Lines="All" Fill.Color="Silver" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell51" Border.Lines="All" Fill.Color="Silver" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell52" Border.Lines="All" Fill.Color="Silver" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell54" Border.Lines="All" Fill.Color="Silver" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell55" Border.Lines="All" Fill.Color="Silver" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        </TableRow>
+        <TableRow Name="Row1" Height="30.76">
+          <TableCell Name="Cell26" Border.Lines="All" Fill.Color="Silver" Text="Category" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell1" Border.Lines="All" Fill.Color="Silver" Text="Item" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell2" Border.Lines="All" Fill.Color="Silver" Text="Operation" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell3" Border.Lines="All" Fill.Color="Silver" Text="Vessel" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell4" Border.Lines="All" Fill.Color="Silver" Text="Container" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell5" Border.Lines="All" Fill.Color="Silver" Text="Estimated" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell27" Border.Lines="All" Fill.Color="Silver" Text="Amount" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell28" Border.Lines="All" Fill.Color="Silver" Text="Vendor" HorzAlign="Center" VertAlign="Center"/>
+        </TableRow>
+      </TableObject>
+      <DataBand Name="Data1" Top="168.28" Width="1103.76" Height="47.05" CanGrow="true" DataSource="Table">
+        <TableObject Name="Table1" Left="1.14" Top="-0.75" Width="1099.46" Height="47.8" Border.Lines="All">
+          <TableColumn Name="Column15" Width="107.89"/>
+          <TableColumn Name="Column10" Width="90.91"/>
+          <TableColumn Name="Column11" Width="404.64"/>
+          <TableColumn Name="Column12" Width="108.83"/>
+          <TableColumn Name="Column13" Width="108.85"/>
+          <TableColumn Name="Column14" Width="70.83"/>
+          <TableColumn Name="Column16" Width="70.89"/>
+          <TableColumn Name="Column17" Width="136.62"/>
+          <TableRow Name="Row2" MinHeight="37.8" MaxHeight="3780" Height="47.8" AutoSize="true">
+            <TableCell Name="Cell35" Border.Lines="All" Text="[Rep_A_Payment_Request.CategoryName]" HorzAlign="Center" VertAlign="Center"/>
+            <TableCell Name="Cell30" Border.Lines="All" Text="[Rep_A_Payment_Request.ChargeTypeName]" HorzAlign="Center" VertAlign="Center"/>
+            <TableCell Name="Cell31" Border.Lines="All" HorzAlign="Center" VertAlign="Center">
+              <RichObject Name="Rich1" Left="1.88" Top="2.12" Width="401.26" Height="40.21" CanGrow="true" Text="{\rtf1\fbidis\ansi\ansicpg1256\deff0\nouicompat\deflang3073{\fonttbl{\f0\fnil\fcharset0 Arial;}}&#13;&#10;{\*\generator Riched20 10.0.19041}\viewkind4\uc1 &#13;&#10;\pard\ltrpar\b\fs20\lang1033 Client Name : \b0 [Rep_A_Payment_Request.ClientName] , \b Client Payment Term : \b0 [Rep_A_Payment_Request.ClientPaymentTerm] , \b MBL : \b0 [Rep_A_Payment_Request.OperationMasterBL] , \b HBL:\b0 [Rep_A_Payment_Request.HouseNumber] , \b Salesman : \b0 [Rep_A_Payment_Request.SalesmanName] , \b Operation man : \b0 [Rep_A_Payment_Request.OperationManName] , \b Line : \b0 [Rep_A_Payment_Request.LineName] , \b Code : \b0 [Rep_A_Payment_Request.OperationCode] , \b Booking Status : \b0 [Rep_A_Payment_Request.BookingStatus] , \b Booking creation Date : \b0 [IIf(FormatDateTime([Rep_A_Payment_Request.BookingCreationDate],&quot;dd/MM/yyyy&quot;) == &quot;01/01/0001&quot;,&quot;&quot;,FormatDateTime([Rep_A_Payment_Request.BookingCreationDate],&quot;dd/MM/yyyy&quot;))] , \b Account : \b0 [Rep_A_Payment_Request.PRAccountName] , \b SubAccount : \b0 [Rep_A_Payment_Request.PRSubAccountName]\par&#13;&#10;}&#13;&#10;"/>
+            </TableCell>
+            <TableCell Name="Cell32" Border.Lines="All" Text="[Rep_A_Payment_Request.VesselName]&#13;&#10;[IIf(FormatDateTime([Rep_A_Payment_Request.VoyageDate],&quot;dd/MM/yyyy&quot;) == &quot;01/01/0001&quot;,&quot;&quot;,FormatDateTime([Rep_A_Payment_Request.VoyageDate],&quot;dd/MM/yyyy&quot;))]" HorzAlign="Center" VertAlign="Center"/>
+            <TableCell Name="Cell33" Border.Lines="All" Text="[Rep_A_Payment_Request.ContainerNumber]" HorzAlign="Center" VertAlign="Center"/>
+            <TableCell Name="Cell34" Border.Lines="All" Text="[Rep_A_Payment_Request.PayableEstimatedCost]" Format="Number" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center"/>
+            <TableCell Name="Cell36" Border.Lines="All" Text="[[Rep_A_Payment_Request.PaymentRequestDetailEstimatedCost] - [Rep_A_Payment_Request.DebitAmount] ]" Format="Number" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center"/>
+            <TableCell Name="Cell37" Border.Lines="All" Text="[Rep_A_Payment_Request.VendorName]" HorzAlign="Center" VertAlign="Center"/>
+          </TableRow>
+        </TableObject>
+      </DataBand>
+    </GroupHeaderBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="220.04" Width="1103.76" Height="177.24">
+      <TableObject Name="Table3" Left="271.8" Top="8.15" Width="560.16" Height="75.6" Border.Lines="All">
+        <TableColumn Name="Column23" Width="280.08"/>
+        <TableColumn Name="Column24" Width="280.08"/>
+        <TableRow Name="Row6">
+          <TableCell Name="Cell56" Border.Lines="All" Fill.Color="LightGray" Text="Total amount without VAT" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell57" Border.Lines="All" Text="[TotaAmountlWithoutVAT]" Format="Number" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center"/>
+        </TableRow>
+        <TableRow Name="Row7">
+          <TableCell Name="Cell61" Border.Lines="All" Fill.Color="LightGray" Text="Total tax amount" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell62" Border.Lines="All" Text="[TotalTAXAmount]" Format="Number" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center"/>
+        </TableRow>
+        <TableRow Name="Row8">
+          <TableCell Name="Cell66" Border.Lines="All" Fill.Color="LightGray" Text="Total with holding tax amount" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell67" Border.Lines="All" Text="[TotalDiscountAmount]" Format="Number" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center"/>
+        </TableRow>
+        <TableRow Name="Row9">
+          <TableCell Name="Cell71" Border.Lines="All" Fill.Color="LightGray" Text="Total amount" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell72" Border.Lines="All" Text="[[TotaAmountlWithoutVAT] + [TotalTAXAmount] - [TotalDiscountAmount]]" Format="Number" Format.UseLocale="true" HorzAlign="Center" VertAlign="Center"/>
+        </TableRow>
+      </TableObject>
+      <TableObject Name="Table2" Left="192.16" Top="95.64" Width="719.44" Height="81.6" Border.Lines="All">
+        <TableColumn Name="Column19" Width="179.86"/>
+        <TableColumn Name="Column20" Width="179.86"/>
+        <TableColumn Name="Column21" Width="179.86"/>
+        <TableColumn Name="Column22" Width="179.86"/>
+        <TableRow Name="Row3" Height="38.7">
+          <TableCell Name="Cell39" Border.Lines="All" Fill.Color="Silver" Text="Creator" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell40" Border.Lines="All" Fill.Color="Silver" Text="Accountant Approved By" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell41" Border.Lines="All" Fill.Color="Silver" Text="Payable Supervisor Approved By" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell42" Border.Lines="All" Fill.Color="Silver" Text="Treasury Supervisor Approved By" HorzAlign="Center" VertAlign="Center"/>
+        </TableRow>
+        <TableRow Name="Row4" Height="42.9">
+          <TableCell Name="Cell44" Border.Lines="All" Text="[Rep_A_Payment_Request.PaymentRequestCreatorName]" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell45" Border.Lines="All" Text="[Rep_A_Payment_Request.AccountantApprovedBy]" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell46" Border.Lines="All" Text="[Rep_A_Payment_Request.PayableSupervisorApprovedBy]" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell47" Border.Lines="All" Text="[Rep_A_Payment_Request.TreasurySupervisorApprovedBy]" HorzAlign="Center" VertAlign="Center"/>
+        </TableRow>
+      </TableObject>
+    </ReportSummaryBand>
+  </ReportPage>
+</Report>

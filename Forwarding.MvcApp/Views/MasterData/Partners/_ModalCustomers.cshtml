@@ -1,0 +1,865 @@
+﻿<!--Customers Modal-->
+@*<div class="modal fade" id="CustomerModal" tabindex="-1" style="z-index: 2000;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="CustomerModalLabel" aria-hidden="true">*@
+    <div class="modal fade" id="CustomerModal" tabindex="-1" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="CustomerModalLabel" aria-hidden="true">
+        <div class="modal-dialog modalwidth-90 m-t-n-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="m-b-none">
+                        @Forwarding.MvcApp.App_Resources.App_Resources.Customer &nbsp;<label id="lblShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                    </h3>
+                </div>
+                <!-- Region Add / Edit Region Form -->
+                <div class="modal-body">
+                    <div class="span7 form vertical-mode" id="Customer-form">
+                        <fieldset>
+                            <div class="form-group pull-in  has-error clearfix">
+                                <input id="hID" type="hidden" />
+                                <!--Wizard-->
+                                <div class="wizard clearfix">
+                                    <ul class="steps">
+                                        <li data-target="#BasicData" id="stepsBasicData" class="active"><span class="badge badge-info">1</span>@Forwarding.MvcApp.App_Resources.App_Resources.BasicData</li>
+                                        <li data-target="#Billing" id="stepsBilling" class="complete"><span class="badge badge-info">2</span>@Forwarding.MvcApp.App_Resources.App_Resources.Billing</li>
+                                        <li data-target="#tabAddresses" id="stepsAddresses" class="complete"><span class="badge badge-info">3</span>@Forwarding.MvcApp.App_Resources.App_Resources.Addresses</li>
+                                        <li data-target="#tabContacts" id="stepsContacts" class="complete"><span class="badge badge-info">4</span>@Forwarding.MvcApp.App_Resources.App_Resources.Contacts</li>
+                                        <li data-target="#tabWebAccount" id="stepsWebAccount" class="complete"><span class="badge badge-info">5</span>@Forwarding.MvcApp.App_Resources.App_Resources.Website_Account</li>
+                                        <li data-target="#tabAgentNetwork" id="stepsWebAccount" class="complete"><span class="badge badge-info">5</span>@Forwarding.MvcApp.App_Resources.App_Resources.Network</li>
+
+                                        @*------------*@
+                                        <li data-target="#tabPartnersBanks" id="stepsPartnersBanks" class="complete hide classPartnersBanksOption"><span class="badge badge-info">5</span>@Forwarding.MvcApp.App_Resources.App_Resources.Banks</li>
+                                        @*------------*@
+                                        <li data-target="#tabAccounting" id="stepsAccounting" class="complete hide classAccountingOption"><span class="badge badge-info">$</span>@Forwarding.MvcApp.App_Resources.App_Resources.Accounting</li>
+                                        @*------------*@
+                                        <li data-target="#tabUploadFiles" id="stepsUploadFiles" class="complete hide classHideOutsidePartners"><span class="badge badge-info">↑</span>@Forwarding.MvcApp.App_Resources.App_Resources.Upload</li>
+                                        @*------------*@
+                                        <li data-target="#tabCreditLimit" id="stepsCreditLimit" class="complete hide classCreditLimitOption"><span class="badge badge-info">$</span>@Forwarding.MvcApp.App_Resources.App_Resources.CreditLimit</li>
+                                        @*------------*@
+                                        <li data-target="#tabSL_SalesMan" id="stepsSL_SalesMan" class="complete hide classSL_SalesManOption"><span class="badge badge-info">$</span>@Forwarding.MvcApp.App_Resources.App_Resources.SL_SalesMan</li>
+                                        <li data-target="#tabSL_Regions" id="stepsSL_Regions" class="complete hide classSL_RegionsOption"><span class="badge badge-info">$</span>@Forwarding.MvcApp.App_Resources.App_Resources.SL_Regions</li>
+                                    </ul>
+                                    <div class="actions" style="display:none;">
+                                        <!--Next & Previous buttons-->
+                                        <button type="button" class="btn btn-default btn-xs btn-prev" disabled="disabled">@Forwarding.MvcApp.App_Resources.App_Resources.Prev</button>
+                                        <button type="button" class="btn btn-default btn-xs btn-next" data-last="Finish">@Forwarding.MvcApp.App_Resources.App_Resources.Next</button>
+                                    </div>
+                                </div>
+                                <div class="step-content">
+                                    <!--Basic Data-->
+                                    <div class="step-pane active" id="BasicData">
+                                        <!-- start alert message region -->
+                                        <div class="alert alert-danger div-error">
+                                            @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                        </div>
+                                        <!-- end alert message region -->
+                                        <!-- Add / Edit Basic Data -->
+                                        <div class="form-group col-sm-6">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Code</label>
+                                            <input type="text" id="txtCode" onkeypress="CheckValueIsInteger(id);" onfocus="CheckValueIsInteger(id);" class="form-control parsley-validated" data-required="false" data-minlength="1" maxlength="10" placeholder="" disabled="disabled" style="text-transform:uppercase" />
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Name</label>
+                                            <input type="text" id="txtName" disabled="disabled" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated" data-required="true" maxlength="100" placeholder="" style="text-transform:uppercase" />
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.LocalName</label>
+                                            <input type="text" id="txtLocalName" disabled="disabled" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated" data-required="false" maxlength="100" placeholder="" style="text-transform:uppercase" />
+                                        </div>
+                                        <div class="form-group col-sm-6 classHideslSalesmenComb">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Salesman</label>
+                                            <select id="slSalesmen" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b" data-required="false"></select>
+                                        </div>
+
+                                        <div class="form-group col-sm-6">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.I_PriceList</label>
+                                            <select id="slPriceList" name="slPriceList" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false" class="form-control m-b"><option value=""><--Select--></option></select>
+                                        </div>
+
+                                        <div class="form-group col-sm-6 classHideslCustomerCategoriesComb">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.SL_CustomerCategories</label>
+                                            <select id="slCustomerCategories" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b" data-required="false"></select>
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label>Foreign Exporter No</label>
+                                            <input type="text" id="txtForeignExporterNo" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated" data-required="false" data-minlength="0" maxlength="150" placeholder="" style="text-transform:uppercase" />
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label>Foreign Exporter Country</label>
+                                            <select id="slForeignExporterCountry" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b" data-required="false"></select>
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label>Branch</label>
+                                            <select id="slCustomerBranchID" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b" data-required="false"><option value=""><--Select--></option></select>
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label>Debitor Group</label>
+                                            <select id="slCustomerDebitorGroupID" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b" data-required="false"><option value=""><--Select--></option></select>
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Website</label>
+                                            <input type="text" id="txtWebsite" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated" name="Website" data-required="false" data-minlength="0" maxlength="150" placeholder="" onchange="Customers_SetWebSiteHref();" style="text-transform:uppercase" />
+                                        </div>
+                                        <div class="form-group col-sm-6 ">
+                                            <label>Main Clients</label>
+                                            <select id="slMainClients" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b" data-required="false"></select>
+                                        </div>
+                                        @*<div class="form-group col-sm-6 ">
+                                            <label>Owners</label>
+                                            <select id="slOwner" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b" data-required="false"></select>
+                                        </div>*@
+                                        <div class="form-group col-sm-6">
+                                            <label>Projects</label>
+                                            <select id="slOwner" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b" data-required="false" multiple></select>
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label>Mobile</label>
+                                            <input id="slMobile" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated" data-required="false" maxlength="250" placeholder="" style="text-transform:uppercase" />
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-sm-6">
+                                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Address</label>
+                                                @*<input type="text" id="txtCustomerAddress" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated" data-required="false" maxlength="250" placeholder="ex. Address" style="text-transform:uppercase" />*@
+                                                <textarea id="txtCustomerAddress" maxlength="500" rows="3" class="form-control col-sm-12 textDivOperations" style="text-transform:uppercase;"></textarea>
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.PhonesandFaxes</label>
+                                                <input id="txtCustomerPhonesAndFaxes" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated" data-required="false" maxlength="250" placeholder="" style="text-transform:uppercase" />
+                                            </div>
+                                            <div class="form-group col-sm-6 m-t-md">
+                                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Email</label>
+                                                <input id="txtCustomerEmail" name="Email" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated" data-required="false" maxlength="250" placeholder="" style="text-transform:uppercase" />
+                                            </div>
+                                        
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-sm-6">
+                                                <label>Shipping Details</label>
+                                                <input id="txtCustomerShippingDetails" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated" data-required="false" maxlength="250" placeholder="" style="text-transform:uppercase" />
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</label>
+                                                <input type="text" id="txtNotes" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated" data-required="false" maxlength="250" placeholder="" style="text-transform:uppercase" />
+                                            </div>
+                                            <div class="form-group col-sm-6 hide">
+                                                <label>Dynamics CRM Code</label>
+                                                <input type="text" id="txtcrmCode" class="form-control parsley-validated" data-required="false" maxlength="100" style="text-transform:uppercase" disabled="disabled" />
+                                            </div>
+                                            <div class="form-group col-sm-6 hide">
+                                                <label>Finance 365 Ref</label>
+                                                <input type="text" id="txtFinance365Ref" class="form-control parsley-validated" data-required="false" maxlength="100" style="text-transform:uppercase" />
+                                            </div>
+                                            <div class="form-group col-sm-6 hide">
+                                                <label>Creation Date</label>
+                                                <input id="txtCustomerCreationDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"  type="text" style="background-color:white; cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date">
+                                            </div>
+                                            <div class="form-group col-sm-6 hide">
+                                                <label>Shipping Instructions</label>
+                                                <input type="text" id="txtShippingInstructions" class="form-control parsley-validated" data-required="false" maxlength="100" style="text-transform:uppercase" />
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group col-sm-6 m-t-25">
+                                            <a id="btnVisitWebsite" class="btn btn-info btn-sm" target="_blank">
+                                                <span class="fa fa-hand-o-right"></span>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.VisitWebsite
+                                            </a>
+                                        </div>
+
+                                        <div class="form-group col-sm-6 hide classShowForGBL">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Sites</label>
+                                            <input type="text" id="txtSites" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated" data-required="false" maxlength="50" placeholder="ex. Sites" style="text-transform:uppercase" />
+                                        </div>
+
+                                        <div class="form-group col-sm-3 m-t">
+                                            <label><input type="checkbox" id="cbIsConsignee" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Consignee</label><br />
+                                            <label><input type="checkbox" id="cbIsShipper" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><span>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Shipper</span></label><br />
+                                            <label><input type="checkbox" id="cbIsOriginalCMRbyPost" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Forwarder</label><br />
+                                        </div>
+                                        <div class="form-group col-sm-3 m-t">
+                                            <label><input type="checkbox" id="cbIsInternalCustomer" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.InternalCustomer</label><br />
+                                            <label><input type="checkbox" id="cbIsExternalCustomer" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.ExternalCustomer</label><br />
+                                            <label><input type="checkbox" id="cbIsRelatedCustomer" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.RelatedCustomer</label><br />
+                                            <label><input type="checkbox" id="cbIsInactive" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.IsInactive</label><br />
+                                            <label class="hide ShowForPYR"><input type="checkbox" id="cbIsMustPay" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;<span id="spMustPay">Must Pay</span></label>
+                                        </div>
+                                        <div class="form-group col-sm-3 m-t">
+                                            @*<label><input type="checkbox" id="cbIsOriginalCMRbyPost" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Original CMR by Post</label><br />*@
+                                        </div>
+
+                                        <div class="form-group col-sm-6"></div>
+
+                                        <!--EOF Add / Edit Basic Data -->
+                                    </div>
+                                    <!--EOF Basic Data-->
+                                    <!--Billing-->
+                                    <div class="step-pane" id="Billing">
+                                        <!-- start alert message region -->
+                                        <div class="alert alert-danger div-error">
+                                            @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                        </div>
+                                        <!-- end alert message region -->
+                                        <!-- Add / Edit Billing -->
+                                        <div class="form-group col-sm-6">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.VATNumber</label>
+                                            <input type="text" id="txtVATNumber" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated" data-required="false" data-minlength="0" maxlength="20" placeholder="Vat No." style="text-transform:uppercase" />
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            @*<label>@Forwarding.MvcApp.App_Resources.App_Resources.BankName</label>*@
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.TaxID</label>
+                                            <input type="text" id="txtBankName" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated" maxlength="100" placeholder="Tax ID" style="text-transform:uppercase" />
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.CommercialRegister</label>
+                                            <input type="text" id="txtIBANNumber" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated" maxlength="100" placeholder="ex. CommercialRegister" style="text-transform:uppercase" />
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.PaymentTerm</label>
+                                            <select id="slPaymentTerms" name="slPaymentTerms" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b" data-required="false"></select>
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label id="lblBillingDetails">Billing details</label>
+                                            <input type="text" id="txtBillingDetails" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated" maxlength="100" placeholder="Billing Details" style="text-transform:uppercase" />
+                                        </div>
+                                        <div class="form-group col-sm-6 hide">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.BankAddress</label>
+                                            <input type="text" id="txtBankAddress" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated" data-required="false" maxlength="500" placeholder="ex. Address" style="text-transform:uppercase" />
+                                        </div>
+                                        <div class="form-group col-sm-6 hide">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.InvoiceCurrency</label>
+                                            <select id="slCurrencies" name="slCurrencies" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b" data-required="false"></select>
+                                        </div>
+                                        <div class="form-group col-sm-6 hide">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Swift</label>
+                                            <input type="text" id="txtSwift" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated" data-required="false" maxlength="50" placeholder="ex. Swift Code" style="text-transform:uppercase" />
+                                        </div>
+                                        <div class="form-group col-sm-6 hide classShowForCAL">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.TaxeType</label>
+                                            <select id="slTaxeTypes" name="slTaxeTypes" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b" data-required="false"></select>
+                                        </div>
+                                        <div class="form-group col-sm-6 hide">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.BankAccountNumber</label>
+                                            <input type="text" id="txtBankAccountNumber" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated" data-required="false" maxlength="100" placeholder="ex. Account No." style="text-transform:uppercase" />
+                                        </div>
+                                        <div class="form-group col-sm-2 m-t-27">
+                                            <label><input type="checkbox" id="cbIsConsolidatedInvoice" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.TaxExempted</label>
+                                        </div>
+                                        <div class="form-group col-sm-2 m-t-27 hide">
+                                            <label><input type="checkbox" id="cbIgnoreVATNumberValidation" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Ignore VAT Number</label>
+                                        </div>
+                                        <!--EOF Add / Edit Billing -->
+                                    </div>
+                                    <!--EOF Billing-->
+                                    <!--Addresses-->
+                                    <div class="step-pane" id="tabAddresses">
+                                        <!-- start alert message region -->
+                                        <div class="alert alert-danger div-error">
+                                            @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                        </div>
+                                        <!-- end alert message region -->
+                                        @* The next line is to call the addresses modal from the new button *@
+                                        <button id="btn-NewAddAddress" class="m-l btn btn-warning btn-sm" data-toggle="modal" data-target="#AddressModal" onclick="Addresses_ClearAllControls();"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.NewAddress</button>
+                                        <br /><br />
+                                        <!--The id of the next div is used to fill the addresses in the textareas-->
+                                        <div id="bodyAddresses"></div>
+                                    </div>
+                                    <!--EOFAddresses-->
+                                    <!--Banks-->
+                                    <div class="step-pane" id="tabPartnersBanks">
+                                        <!-- start alert message region -->
+                                        <div class="alert alert-danger div-error">
+                                            @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                        </div>
+                                        <!-- end alert message region -->
+                                        @* The next line is to call the addresses modal from the new button *@
+                                        <button id="btn-NewAddBanks" class="m-l btn btn-warning btn-sm" data-toggle="modal" data-target="#PartnersBanksModal" onclick="PartnersBanks_ClearAllControls();"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.New  Banks</button>
+                                        <br /><br />
+                                        <!--The id of the next div is used to fill the addresses in the textareas-->
+                                        <div id="bodyPartnersBanks"></div>
+                                    </div>
+                                    <!--EOFBanks-->
+                                    <!--Contacts-->
+                                    <div class="step-pane" id="tabContacts">
+                                        <!-- start alert message region -->
+                                        <div class="alert alert-danger div-error">
+                                            @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                        </div>
+                                        <!-- end alert message region -->
+                                        @* The next line is to call the Contacts modal from the new button *@
+                                        <button id="btn-NewAddContact" class="m-l btn btn-warning btn-sm" data-toggle="modal" data-target="#ContactModal" onclick="Contacts_ClearAllControls();"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.NewContact</button>
+                                        <br /><br />
+                                        <!--The id of the next div is used to fill the Contacts in the textareas-->
+                                        <div id="bodyContacts"></div>
+                                    </div>
+
+                                    <div class="step-pane" id="tabWebAccount">
+                                        <!-- start alert message region -->
+                                        <div class="alert alert-danger div-error">
+                                            @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Username</label>
+                                            <input type="text" id="txtUserName" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated" data-required="false" data-minlength="1" maxlength="50" placeholder="" style="text-transform:uppercase" />
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Password</label>
+                                            <input type="password" id="txtUserPassword" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated" data-required="false" maxlength="50" placeholder="" style="text-transform:uppercase" />
+                                        </div>
+                                        <div class="form-group col-sm-2">
+                                            <br />
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Website_IsActive</label>
+                                            <input type="checkbox" id="cbIsActiveUser" />
+                                        </div>
+
+                                        <input type="hidden" id="cbOldIsActive" />
+                                        <input type="hidden" id="hCustomerUserID" />
+                                        <input type="hidden" id="hCustomerUserName" />
+                                    </div>
+
+                                    <div class="step-pane" id="tabAgentNetwork">
+                                        <!-- start alert message region -->
+                                        <div class="alert alert-danger div-error">
+                                            @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                        </div>
+                                        <!-- end alert message region -->
+                                        <!--The id of the next div is used to fill the AgentNetwork -->
+                                        <div id="bodyCustomerNetwork">
+                                            <div class="col-sm-2 m-l-n">
+                                                <button id="btn-NewAddCustomerNetwork" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#CustomerNetworkModal" onclick="CustomerNetwork_ClearAllControls();"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Add</button>
+                                            </div>
+                                            <div class="col-sm-3 m-l">
+                                                <input id="txtCustomerNetworkSearch" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase; border-color:#cccccc;" type="text" class="input-sm form-control" maxlength="8" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search Network">
+                                            </div>
+                                            <button id="btn-CustomerNetworkSearch" class="btn btn-sm btn-primary m-l-n" type="button" onclick="CustomerNetwork_LoadingWithPagingForModal();"><i class="fa fa-search"></i></button>
+                                            <button id="btn-DeleteCustomerNetwork" type="button" class="float-right btn btn-sm btn-danger" onclick="CustomerNetwork_Delete();"><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete</button>
+                                            <br /> <br />
+                                            <section class="panel panel-default" style="overflow: scroll; width: auto; height: 330px;">
+                                                <!--Region: table header-->
+                                                <div class="table-responsive">
+                                                    <table id="tblCustomerNetwork" class="table table-striped b-t b-light text-sm  table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width:5%;" id="HeaderDeletetblCustomerNetworkID">
+                                                                    <input id="cb-CheckAll-CustomerNetwork" type="checkbox" />
+                                                                </th>
+                                                                <th>
+                                                                    @Forwarding.MvcApp.App_Resources.App_Resources.Network
+                                                                </th>
+                                                                <th>
+                                                                    @Forwarding.MvcApp.App_Resources.App_Resources.From
+                                                                </th>
+                                                                <th>
+                                                                    @Forwarding.MvcApp.App_Resources.App_Resources.To
+                                                                </th>
+                                                                <th>
+                                                                    @Forwarding.MvcApp.App_Resources.App_Resources.Notes
+                                                                </th>
+                                                                <th class="rounded-right hide"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody></tbody>
+                                                    </table>
+                                                </div>
+                                                <!--Region: EOF table header-->
+                                                <!--Region: table footer-->
+                                                <footer class="panel-footer"></footer>
+                                                <!--Region: EOF table footer-->
+                                            </section>
+
+                                            <div class="row">
+                                                <div id="div-Text-Total-Modal" class="col-sm-4 text-center">
+                                                    <small class="text-muted inline">
+                                                        @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                                                        <span id="spn-first-page-row-Modal"></span>- <span id="spn-last-page-row-Modal"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                                                        <span id="spn-total-count-Modal"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                                                    </small>
+                                                </div>
+                                                <div id="div-Pager-Modal" class="col-sm-4 text-right text-center-xs"></div>
+                                            </div>
+
+                                            @*<div id="divAgentNetworkSummary" class="form-group float-right m-r-lg"> <!--i need those Divs for not to start from a new line-->
+                                        @Forwarding.MvcApp.App_Resources.App_Resources.NumberOfMAWBs &nbsp;<label id="lblTotalNumberOfMAWBs" purpose="dynamicLabel" class="static-text-blue"></label>
+                                    </div>*@
+                                        </div>
+                                    </div>
+                                    <!--EOF Contacts-->
+                                    <!--Accounting-->
+                                    <div class="step-pane" id="tabAccounting">
+                                        <!-- start alert message region -->
+                                        <div class="alert alert-danger div-error">
+                                            @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                        </div>
+                                        <!-- end alert message region -->
+                                        <div class="form-group col-sm-6">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.ClientGroup</label>
+                                            <select id="slSubAccountGroup" class="form-control m-b" onchange="FillSlAccountFromGroup('slAccount', 'slSubAccountGroup', 'slSubAccount', 0, 0);" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Account</label>
+                                            <select id="slAccount" class="form-control m-b" @*onchange="FillSlSubAccount('slSubAccount', 'slAccount', 0, 0);"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.SubAccount</label>
+                                            <select id="slSubAccount" class="form-control m-b" disabled="disabled" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                                        </div>
+                                        <div class="form-group col-sm-6">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.CostCenter</label>
+                                            <select id="slCostCenter" class="form-control m-b" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                                        </div>
+                                        <!--The id of the next div is used to fill the Accounting in the textareas-->
+                                        <div id="bodyAccounting"></div>
+                                    </div>
+                                    <!--Accounting-->
+                                    <!--UploadFiles-->
+                                    <div class="step-pane" id="tabUploadFiles">
+                                        <!--Upload Region Controls-->
+                                        <input id="inputFileUpload_Customers" type="file" multiple="multiple" class="btn-primary btn-sm " />
+                                        <div id="divUpload" class="m-t">
+                                            <input id="btnUploadFile" onclick="GeneralUpload_UploadFile();" class="btn btn-warning btn-sm" type="button" value="Upload Files" />
+                                            <progress></progress>
+                                        </div>
+                                        <button id="btn-DeleteDocsIn" type="button" class="float-right btn btn-sm btn-danger m-t-n-lg swapChildrenClass" onclick="GeneralUpload_DeleteList();"><i class="fa fa-trash-o"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete&nbsp;</b></button>
+
+                                        <!--End Upload Region Controls-->
+
+                                        <section class="panel panel-default m-t">
+                                            <!--Region: table header-->
+                                            <div class="table-responsive">
+                                                <table id="tblUploadedFiles_Customers" class="table table-striped b-t b-light text-sm  table-hover">
+                                                    <thead>
+                                                        <tr class="swapChildrenClass">
+                                                            <th id="HeaderDeleteUploadedFiles_Customers" style="width:5%;">
+                                                                <input id="cb-CheckAll-UploadedFiles_Customers" type="checkbox" />
+                                                            </th>
+                                                            <th>
+                                                                @Forwarding.MvcApp.App_Resources.App_Resources.Serial
+                                                            </th>
+                                                            <th>
+                                                                @Forwarding.MvcApp.App_Resources.App_Resources.FileName
+                                                            </th>
+                                                            <th class="rounded-right"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                            <!--Region: table footer-->
+                                            <footer class="panel-footer"></footer>
+                                            <!--Region: EOF table footer-->
+                                            <!--Region: EOF table header-->
+                                        </section>
+                                    </div>
+                                    <!--EOFUploadFiles-->
+                                    <div class="step-pane" id="tabCreditLimit">
+                                        <!-- start alert message region -->
+                                        <div class="alert alert-danger div-error">
+                                            @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                        </div>
+                                        <!-- end alert message region -->
+
+                                        <div class="form-group col-sm-3">
+                                            <label>Credit Limit</label>
+                                            <select id="slCreditLimit" class="form-control m-b" onchange="getCustomerCreditLimitBalance();" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                                        </div>
+                                        <div class="form-group col-sm-3">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Date</label>
+                                            <input id="txtDate" @*onblur="RecalculateExchangeRate();"  onchange="RecalculateExchangeRate();"*@ type="text" onfocus="DisableEnterKey(id);" data-required="false" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm Edit-input" data-date-format="dd/mm/yyyy" placeholder="@Forwarding.MvcApp.App_Resources.App_Resources.Select" />
+                                        </div>
+                                        <div class="form-group col-sm-3">
+                                            <label>Balance</label>
+                                            <input type="text" id="txtBalance" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated" data-required="false" data-minlength="1" maxlength="10" placeholder="" disabled="disabled" style="text-transform:uppercase" />
+                                        </div>
+                                        <div class="col-sm-1 m-t-27">
+                                            <button id="btnLog" type="button" onclick="LogCustomerCreditLimitModal();" data-toggle="modal" data-target="#LogCustomerCreditLimitModal" class="form-control btn btn-sm btn-lightblue m-t-n-xs swapChildrenClass"><i class="fa fa-table"></i><b>&nbsp;Log&nbsp;</b></button>
+                                        </div>
+
+
+                                        <!--The id of the next div is used to fill the Accounting in the textareas-->
+                                        <div id="bodyCreditLimit"></div>
+                                    </div>
+                                    <div class="step-pane" id="tabSL_SalesMan">
+                                        <!-- start alert message region -->
+                                        <div class="alert alert-danger div-error">
+                                            @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                        </div>
+                                        <!-- end alert message region -->
+                                        <!--The id of the next div is used to fill the AgentNetwork -->
+                                        <div id="bodyCustomerNetwork">
+                                            <div class="col-sm-2 m-l-n">
+                                                <button id="btn-NewAddCustomerSL_SalesMan" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#CustomerSL_SalesManModal" onclick="CustomerSL_SalesMan_ClearAllControls();"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Add</button>
+                                            </div>
+                                            <div class="col-sm-3 m-l">
+                                                <input id="txtCustomerSL_SalesManSearch" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase; border-color:#cccccc;" type="text" class="input-sm form-control" maxlength="8" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search SalesMan">
+                                            </div>
+                                            <button id="btn-CustomerSL_SalesManSearch" class="btn btn-sm btn-primary m-l-n" type="button" onclick="CustomerSL_SalesMan_LoadingWithPagingForModal();"><i class="fa fa-search"></i></button>
+                                            <button id="btn-DeleteCustomerSL_SalesMan" type="button" class="float-right btn btn-sm btn-danger" onclick="CustomerSL_SalesMan_Delete();"><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete</button>
+                                            <br /> <br />
+                                            <section class="panel panel-default" style="overflow: scroll; width: auto; height: 330px;">
+                                                <!--Region: table header-->
+                                                <div class="table-responsive">
+                                                    <table id="tblCustomerSL_SalesMan" class="table table-striped b-t b-light text-sm  table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width:5%;" id="HeaderDeletetblCustomerSL_SalesManID">
+                                                                    <input id="cb-CheckAll-CustomerNetwork" type="checkbox" />
+                                                                </th>
+                                                                <th>
+                                                                    @Forwarding.MvcApp.App_Resources.App_Resources.SL_SalesMan
+                                                                </th>
+                                                                <th>
+                                                                    @Forwarding.MvcApp.App_Resources.App_Resources.Percentage
+                                                                </th>
+                                                                <th>
+                                                                    @Forwarding.MvcApp.App_Resources.App_Resources.IsDefault
+                                                                </th>
+                                                                <th class="rounded-right hide"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody></tbody>
+                                                    </table>
+                                                </div>
+                                                <!--Region: EOF table header-->
+                                                <!--Region: table footer-->
+                                                <footer class="panel-footer"></footer>
+                                                <!--Region: EOF table footer-->
+                                            </section>
+
+                                            <div class="row">
+                                                <div id="div-Text-Total-Modal" class="col-sm-4 text-center">
+                                                    <small class="text-muted inline">
+                                                        @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                                                        <span id="spn-first-page-row-Modal"></span>- <span id="spn-last-page-row-Modal"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                                                        <span id="spn-total-count-Modal"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                                                    </small>
+                                                </div>
+                                                <div id="div-Pager-Modal" class="col-sm-4 text-right text-center-xs"></div>
+                                            </div>
+
+                                            @*<div id="divAgentNetworkSummary" class="form-group float-right m-r-lg"> <!--i need those Divs for not to start from a new line-->
+                                        @Forwarding.MvcApp.App_Resources.App_Resources.NumberOfMAWBs &nbsp;<label id="lblTotalNumberOfMAWBs" purpose="dynamicLabel" class="static-text-blue"></label>
+                                    </div>*@
+                                        </div>
+                                    </div>
+                                    <div class="step-pane" id="tabSL_Regions">
+                                        <!-- start alert message region -->
+                                        <div class="alert alert-danger div-error">
+                                            @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                        </div>
+                                        <!-- end alert message region -->
+                                        <!--The id of the next div is used to fill the AgentNetwork -->
+                                        <div id="bodyCustomerNetwork">
+                                            <div class="col-sm-2 m-l-n">
+                                                <button id="btn-NewAddCustomerSL_Regions" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#CustomerSL_RegionsModal" onclick="CustomerSL_Regions_ClearAllControls();"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Add</button>
+                                            </div>
+                                            <div class="col-sm-3 m-l">
+                                                <input id="txtCustomerSL_RegionsSearch" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase; border-color:#cccccc;" type="text" class="input-sm form-control" maxlength="8" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search SalesMan">
+                                            </div>
+                                            <button id="btn-CustomerSL_RegionsSearch" class="btn btn-sm btn-primary m-l-n" type="button" onclick="CustomerSL_Regions_LoadingWithPagingForModal();"><i class="fa fa-search"></i></button>
+                                            <button id="btn-DeleteCustomerSL_Regions" type="button" class="float-right btn btn-sm btn-danger" onclick="CustomerSL_Regions_Delete();"><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete</button>
+                                            <br /> <br />
+                                            <section class="panel panel-default" style="overflow: scroll; width: auto; height: 330px;">
+                                                <!--Region: table header-->
+                                                <div class="table-responsive">
+                                                    <table id="tblCustomerSL_Regions" class="table table-striped b-t b-light text-sm  table-hover">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width:5%;" id="HeaderDeletetblCustomerSL_RegionsID">
+                                                                    <input id="cb-CheckAll-CustomerNetwork" type="checkbox" />
+                                                                </th>
+                                                                <th>
+                                                                    @Forwarding.MvcApp.App_Resources.App_Resources.SL_Regions
+                                                                </th>
+                                                               
+                                                                <th>
+                                                                    @Forwarding.MvcApp.App_Resources.App_Resources.IsDefault
+                                                                </th>
+                                                                <th class="rounded-right hide"></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody></tbody>
+                                                    </table>
+                                                </div>
+                                                <!--Region: EOF table header-->
+                                                <!--Region: table footer-->
+                                                <footer class="panel-footer"></footer>
+                                                <!--Region: EOF table footer-->
+                                            </section>
+
+                                            <div class="row">
+                                                <div id="div-Text-Total-Modal" class="col-sm-4 text-center">
+                                                    <small class="text-muted inline">
+                                                        @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                                                        <span id="spn-first-page-row-Modal"></span>- <span id="spn-last-page-row-Modal"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                                                        <span id="spn-total-count-Modal"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                                                    </small>
+                                                </div>
+                                                <div id="div-Pager-Modal" class="col-sm-4 text-right text-center-xs"></div>
+                                            </div>
+
+                                            @*<div id="divAgentNetworkSummary" class="form-group float-right m-r-lg"> <!--i need those Divs for not to start from a new line-->
+                                        @Forwarding.MvcApp.App_Resources.App_Resources.NumberOfMAWBs &nbsp;<label id="lblTotalNumberOfMAWBs" purpose="dynamicLabel" class="static-text-blue"></label>
+                                    </div>*@
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!--EOF Wizard-->
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <!-- Endregion Add / Edit Region Form -->
+                <div class="modal-footer">
+                    <button id="btn-OperatorTankChargeModal" class="m-l btn btn-lightblue btn-sm hide" data-toggle="modal" data-target="#" onclick="OperatorTankCharge_FillModal();"><i class="fa fa-text-width"></i>&nbsp;Operator Tank Charge</button>
+                    <button type="button" id="btnSave" class="btn btn-primary btn-sm" @* onclick="Customers_Insert(true);"*@>
+                        <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                    </button>
+                    <button type="button" id="btnSaveandNew" class="btn btn-primary btn-sm" @* onclick="Customers_Insert(true);"*@>
+                        <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew
+                    </button>
+                    <button class="btn btn-link btn-sm" id="btnClose" @*onclick="Customers_UnlockRecord();"*@ data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+                </div>
+            </div>
+        </div>
+    </div>
+<!--EOF Customers Modal-->
+<!-- LogTaxesPercentages -->
+<div class="modal fade" id="LogCustomerCreditLimitModal" tabindex="-1" data-keyboard="false" data-backdrop="false" role="dialog" aria-labelledby="LogCustomerCreditLimitModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-50">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;</button>*@
+                <h3 class="m-b-none">
+                    Customer Limit Log
+                </h3>
+            </div>
+            <!-- Percentages Log Content -->
+            <div class="modal-body">
+                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Customer : </label> <label id="lblTaxeTypeCode" class="static-text-primary"></label>
+                <div class="span7 form vertical-mode" id="LogTaxesPercentages-form">
+                    <fieldset>
+                        <!--LogTaxesPercentagestable header-->
+                        <div class="table-responsive">
+                            <table id="tblLogTaxesPercentages" class="table table-striped b-t b-light text-sm  table-hover">
+                                <thead>
+                                    <tr>
+                                        @*<th id="ID">
+                                                <input id="cb-CheckAll" type="checkbox" />
+                                            </th>*@
+                                        @*<th class="th-sortable" data-toggle="class">@Forwarding.MvcApp.App_Resources.App_Resources.Code
+                                            </th>*@
+                                        @*<th>@Forwarding.MvcApp.App_Resources.App_Resources.Name
+                                            </th>*@
+                                        <th>
+                                            @Forwarding.MvcApp.App_Resources.App_Resources.Date
+                                        </th>
+                                        <th>
+                                            Limit
+                                        </th>
+                                        @*<th class="rounded-right"></th>*@
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <!--EOF: LogTaxesPercentagestable header-->
+                    </fieldset>
+                </div>
+            </div>
+            <!-- Percentages Log Content -->
+            <div class="modal-footer">
+
+                <div class="row">
+                    @*<div class="col-sm-4 hidden-xs">
+                            <select id="select-page-size-Modal" class="input-sm form-control input-s-sm inline">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                            </select>
+                            <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                            </button>
+                        </div>*@
+                    <div id="div-Text-Total-Modal" class="col-sm-4 text-center">
+                        <small class="text-muted inline m-t-sm m-b-sm">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                            <span id="spn-first-page-row-Modal"></span>- <span id="spn-last-page-row-Modal"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                            <span id="spn-total-count-Modal"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                        </small>
+                    </div>
+                    <div id="div-Pager-Modal" class="col-sm-4 text-right text-center-xs "></div>
+
+
+                </div>
+                <button class="btn btn-link btn-sm" onclick="LogPercentages_ResetFunctionsNames();" data-dismiss="modal" aria-hidden="true" tabindex="12">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- LogTaxesPercentages  -->
+
+<div class="modal fade" id="CustomerNetworkModal" tabindex="-1" style="z-index: 1050;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="CustomerNetworkModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modalwidth-70">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;</button>*@
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.Network &nbsp;<label id="lblCustomerNetworkShown" purpose="dynamicLabel" class="static-text-primary"></label>
+            </h3>
+        </div>
+        <div class="modal-body">
+            <!-- Region Add / Edit Country Form -->
+            <div class="span7 form vertical-mode" id="CustomerNetwork-form">
+                <fieldset>
+                    <div class="form-group pull-in  has-error clearfix">
+                        <input id="hCustomerNetworkID" type="hidden" />
+                        <!-- start alert message region -->
+                        <div class="alert alert-danger div-error">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                        </div>
+                        <!-- end alert message region -->
+
+                        <div class="form-group col-sm-6">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Network</label>
+                            <select id="slCustomerNetwork" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control " data-required="true"></select>
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.FromDate</label>
+                            <input id="txtCustomerNetworkFromDate" readonly="readonly" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control " data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.ToDate</label>
+                            <input id="txtCustomerNetworkToDate" readonly="readonly" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control " data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                        </div>
+                        <div class="form-group col-sm-9">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</label>
+                            <input type="text" id="txtCustomerNetworkNotes" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated" data-required="false" maxlength="250" placeholder="ex. Notes" style="text-transform:uppercase" />
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <!-- Endegion Add / Edit AgentNetwork Form -->
+        </div>
+        <div class="modal-footer">
+            <!--sherif-->
+            <button type="button" id="btnSaveCustomerNetwork" class="btn btn-primary btn-sm" onclick="">
+                <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+            </button>
+            <button type="button" id="btnSaveandNewCustomerNetwork" class="btn btn-primary btn-sm" onclick="CustomerNetwork_Insert(true);">
+                <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew
+            </button>
+            @*<button type="button" id="btnSaveAgentNetwork" class="btn btn-primary btn-sm" onclick="AgentNetwork_GenerateAgentNetwork();">
+                <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save</button>*@
+            <button class="btnClose btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>
+        </div>
+    </div>
+</div>
+</div>
+<div class="modal fade" id="CustomerSL_SalesManModal" tabindex="-1" style="z-index: 1050;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="CustomerSL_SalesManModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modalwidth-70">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;</button>*@
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.SL_SalesMan &nbsp;<label id="lblCustomerSL_SalesManShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region Add / Edit Country Form -->
+                <div class="span7 form vertical-mode" id="CustomerSL_SalesMan-form">
+                    <fieldset>
+                        <div class="form-group pull-in  has-error clearfix">
+                            <input id="hCustomerSL_SalesManID" type="hidden" />
+                            <!-- start alert message region -->
+                            <div class="alert alert-danger div-error">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                            </div>
+                            <!-- end alert message region -->
+
+                            <div class="form-group col-sm-6">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.SL_SalesMan</label>
+                                <select id="slCustomerSL_SalesMan" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control " data-required="true"></select>
+                            </div>
+                            
+                            <div class="form-group col-sm-6">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Percentage</label>
+                                <input type="text" id="txtCustomerPercentage" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated" data-required="false" maxlength="250" placeholder="ex.12" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-3 m-t">
+                                <label><input type="checkbox" id="cbIsDefault" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.IsDefault</label><br />
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- Endegion Add / Edit AgentNetwork Form -->
+            </div>
+            <div class="modal-footer">
+                <!--sherif-->
+                <button type="button" id="btnSaveCustomerSL_SalesMan" class="btn btn-primary btn-sm" onclick="">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                </button>
+                <button type="button" id="btnSaveandNewCustomerSL_SalesMan" class="btn btn-primary btn-sm" onclick="CustomerSL_SalesMan_Insert(true);">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew
+                </button>
+                @*<button type="button" id="btnSaveAgentNetwork" class="btn btn-primary btn-sm" onclick="AgentNetwork_GenerateAgentNetwork();">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save</button>*@
+                <button class="btnClose btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="CustomerSL_RegionsModal" tabindex="-1" style="z-index: 1050;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="CustomerSL_RegionsModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modalwidth-70">
+        <div class="modal-content">
+            <div class="modal-header">
+                @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;</button>*@
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.SL_Regions &nbsp;<label id="lblCustomerSL_RegionsShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region Add / Edit Country Form -->
+                <div class="span7 form vertical-mode" id="CustomerSL_Regions-form">
+                    <fieldset>
+                        <div class="form-group pull-in  has-error clearfix">
+                            <input id="hCustomerSL_RegionsID" type="hidden" />
+                            <!-- start alert message region -->
+                            <div class="alert alert-danger div-error">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                            </div>
+                            <!-- end alert message region -->
+
+                            <div class="form-group col-sm-6">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.SL_Regions</label>
+                                <select id="slCustomerSL_Regions" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control " data-required="true"></select>
+                            </div>
+
+                          
+                            <div class="form-group col-sm-3 m-t">
+                                <label><input type="checkbox" id="cbIsDefaultRegions" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.IsDefault</label><br />
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- Endegion Add / Edit AgentNetwork Form -->
+            </div>
+            <div class="modal-footer">
+                <!--sherif-->
+                <button type="button" id="btnSaveCustomerSL_Regions" class="btn btn-primary btn-sm" onclick="">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                </button>
+                <button type="button" id="btnSaveandNewCustomerSL_Regions" class="btn btn-primary btn-sm" onclick="CustomerSL_Regions_Insert(true);">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew
+                </button>
+                @*<button type="button" id="btnSaveAgentNetwork" class="btn btn-primary btn-sm" onclick="AgentNetwork_GenerateAgentNetwork();">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save</button>*@
+                <button class="btnClose btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>
+            </div>
+        </div>
+    </div>
+</div>

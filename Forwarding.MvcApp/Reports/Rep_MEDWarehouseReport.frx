@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/03/2022 13:02:22" ReportInfo.Modified="10/29/2023 18:29:05" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+    
+
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFdK1pGRuXb2ZqNrvvshfdvk1WTy4Q4X3n3sfovtvD12ZUZMgosSXIKCfex3Uxiv0ztNRpdBkVUVn6xObKSedOpcc6jTMR7CoRC+37+7/tXCLDT73rOQRxu2R+JRG3kt9Kevp6335ch0U+8r1uIpftYA==">
+      <TableDataSource Name="Table" Alias="WarehouseReport" DataType="System.Int32" Enabled="true" SelectCommand="exec (@query)">
+        <Column Name="Logo" DataType="System.String" PropName="Column" Calculated="true" Expression="[Logo]"/>
+        <Column Name="MainWarehouseName" DataType="System.String"/>
+        <Column Name="MainWarehouseAddress" DataType="System.String"/>
+        <Column Name="CCWarehouseETA" DataType="System.DateTime"/>
+        <Column Name="CCWarehouseATD" DataType="System.DateTime"/>
+        <Column Name="CCIsDone" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="Notes" DataType="System.String"/>
+        <Column Name="OperationID" DataType="System.Int64"/>
+        <Column Name="OperationCode" DataType="System.String"/>
+        <Column Name="Logo" DataType="System.String" PropName="Column" Calculated="true" Expression=""/>
+        <Column Name="ClientName" DataType="System.String"/>
+        <CommandParameter Name="@query" DataType="12" Expression="[query]" DefaultValue="Rep_MEDWarehouseReport ' WHERE 1=1 '"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="Title" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9" ExtraDesignWidth="true" UnlimitedWidth="true">
+    <DataBand Name="Data1" Top="155.2" Width="1047.06" Height="37.8" CanGrow="true" DataSource="Table">
+      <TextObject Name="Text2" Left="9.45" Width="132.3" Height="37.8" Border.Lines="All" Text="[WarehouseReport.OperationCode]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text4" Left="141.75" Width="226.8" Height="37.8" Border.Lines="All" Text="[WarehouseReport.ClientName]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text7" Left="368.55" Width="132.3" Height="37.8" Border.Lines="All" Text="[WarehouseReport.MainWarehouseName]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text9" Left="500.85" Width="151.2" Height="37.8" Border.Lines="All" Text="[WarehouseReport.MainWarehouseAddress]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text11" Left="652.05" Width="132.3" Height="37.8" Border.Lines="All" Text="[IIf(FormatDateTime([WarehouseReport.CCWarehouseETA],&quot;dd/MM/yyyy&quot;) == &quot;01/01/0001&quot;,&quot;&quot;,FormatDateTime([WarehouseReport.CCWarehouseETA],&quot;dd/MM/yyyy&quot;))]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text12" Left="784.35" Width="132.3" Height="37.8" Border.Lines="All" Text="[IIf(FormatDateTime([WarehouseReport.CCWarehouseATD],&quot;dd/MM/yyyy&quot;) == &quot;01/01/0001&quot;,&quot;&quot;,FormatDateTime([WarehouseReport.CCWarehouseATD],&quot;dd/MM/yyyy&quot;))]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text15" Left="916.65" Width="226.8" Height="37.8" Border.Lines="All" Text="[WarehouseReport.Notes]" HorzAlign="Center" VertAlign="Center"/>
+      <DataHeaderBand Name="DataHeader1" Width="1047.06" Height="151.2" RepeatOnEveryPage="true">
+        <PictureObject Name="Picture1" Left="6.92" Top="3.67" Width="1029.65" Height="50.42" DataColumn="WarehouseReport.Logo"/>
+        <TextObject Name="Text1" Left="403.52" Top="55.2" Width="236.45" Height="18.9" Text="Warehouse Report" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+        <TextObject Name="Text3" Left="9.45" Top="113.4" Width="132.3" Height="37.8" Border.Lines="All" Fill.Color="Gainsboro" Text="Operation Code" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text5" Left="141.75" Top="113.4" Width="226.8" Height="37.8" Border.Lines="All" Fill.Color="Gainsboro" Text="Client Name" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text6" Left="368.55" Top="113.4" Width="132.3" Height="37.8" Border.Lines="All" Fill.Color="Gainsboro" Text="Bonded Warehouse" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text8" Left="500.85" Top="113.4" Width="151.2" Height="37.8" Border.Lines="All" Fill.Color="Gainsboro" Text="Bonded Warehouse Location" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text10" Left="652.05" Top="113.4" Width="132.3" Height="37.8" Border.Lines="All" Fill.Color="Gainsboro" Text="Bonded Warehouse ETA" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text13" Left="784.35" Top="113.4" Width="132.3" Height="37.8" Border.Lines="All" Fill.Color="Gainsboro" Text="Bonded Warehouse ETD" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text14" Left="916.65" Top="113.4" Width="226.8" Height="37.8" Border.Lines="All" Fill.Color="Gainsboro" Text="Notes" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      </DataHeaderBand>
+    </DataBand>
+  </ReportPage>
+</Report>

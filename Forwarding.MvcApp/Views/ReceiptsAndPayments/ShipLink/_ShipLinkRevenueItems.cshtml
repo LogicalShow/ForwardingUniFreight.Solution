@@ -1,0 +1,126 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="ReceiptsAndPayments" href="javascript:void(0);" onclick="LoadViews('ReceiptsAndPaymentsTransactions')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.ReceiptsAndPaymentsGroup
+        </a>
+    </li>
+    <li>
+        <a id="ReceiptsAndPaymentsMasterData" href="javascript:void(0);" onclick="LoadViews('ShipLink')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.ShipLink
+        </a>
+    </li>
+    <li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.ShipLinkRevenueItems</li>
+</ul>
+<!-- end breadcrumb -->
+
+
+<div id="div-ShipLinkRevenueItems">
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.ShipLinkRevenueItems
+            </h3>
+        </header>
+        <!--Region the searh, delete, addnew-->
+        <div class="row text-sm wrapper hidden-print m-t-n-sm">
+            <div id="div-main-options" class="col-sm-3 m-b-xs">
+                <button id="btn-NewAdd" class="btn btn-warning btn-sm swapChildrenClass hide" data-toggle="modal" data-target="#ShipLinkRevenueItemsModal"><i class="fa fa-plus"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.New&nbsp;</b></button>
+                <button id="btn-Save" onclick="FadePageCover(true);ShipLinkRevenueItems_Save();" class="btn btn-primary btn-sm swapChildrenClass hide" data-toggle="modal" data-target="#ShipLinkRevenueItemsModal"><i class="fa fa-save"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Save&nbsp;</b></button>
+                <div id="div-option-buttons" class="btn-group hide">
+                    <button id="btn-Copy" type="button" class="btn btn-sm btn-default"><i class="fa fa-copy"></i>&nbsp;Copy </button>
+                    <button id="btn-Print" type="button" class="btn btn-sm btn-default"><i class="fa fa-print"></i>&nbsp;Print </button>
+                    <button id="btn-Send" type="button" class="btn btn-sm btn-default"><i class="fa fa-envelope-o"></i>&nbsp;Send </button>
+                </div>
+            </div>
+            <div id="div-search-option" class="col-sm-9">
+                @*<div id="div-search-controls" class="input-group col-sm-9">
+                        <input id="txt-Search" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase"  type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="">
+                        <span class="input-group-btn">
+                            <button id="btn-search" class="btn btn-sm btn-primary" type="button" onclick="ShipLinkRevenueItems_LoadingWithPaging();"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>*@
+
+                <select id="slLine" class="hide form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+
+
+                <select id="slImportExport" class="hide form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false">
+                    <option value="Im">@Forwarding.MvcApp.App_Resources.App_Resources.Import</option>
+                    <option value="Ex">@Forwarding.MvcApp.App_Resources.App_Resources.Export</option>
+                </select>
+
+                <select id="slCostCenter" class="hide form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                <select id="slRevenueItem" class="hide form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                <select id="slVoyageSubAccount" class="hide form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                <div class="col-sm-2  hide">
+                    <h5><b>VoyageAccount</b></h5>
+                </div>
+                <div class="col-sm-7 m-l-n-lg  hide">
+                    <select id="slVoyageAccount" class="form-control input-sm" onchange="ShipLinkRevenueItems_slVoyageAccountChanged();" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);"></select>
+                </div>
+                <div class="float-right col-sm-1">
+                    <button id="btn-Delete" type="button" class="float-right btn btn-sm btn-danger m-r-n swapChildrenClass hide"><i class="fa fa-trash-o"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete&nbsp;</b></button>
+                </div>
+            </div>
+        </div>
+        <!--Region the searh, delete, addnew-->
+        <!--Region: table header-->
+        <div class="table-responsive m-t-n">
+            <table id="tblShipLinkRevenueItems" class="table table-striped b-t b-light text-sm  table-hover">
+                <thead>
+                    <tr>
+                        <th id="ID">
+                            <input id="cb-CheckAll" type="checkbox" />
+                        </th>
+                        <th>@Forwarding.MvcApp.App_Resources.App_Resources.Item</th>
+                        <th>@Forwarding.MvcApp.App_Resources.App_Resources.Account</th>
+                        <th id="thVoyageSubAccountID" class="hide">@Forwarding.MvcApp.App_Resources.App_Resources.SubAccount</th>
+                        <th id="thRevenueSubAccountID20" class="hide">SubAccount20</th>
+                        <th id="thRevenueSubAccountID40" class="hide">SubAccount40</th>
+                        <th>@Forwarding.MvcApp.App_Resources.App_Resources.CostCenter</th>
+                        <th>@Forwarding.MvcApp.App_Resources.App_Resources.Type</th>
+                        <th id="thLine" class="hide">@Forwarding.MvcApp.App_Resources.App_Resources.Line</th>
+                        <th class="rounded-right hide"></th>
+                    </tr>
+                </thead>
+                <tbody style="font-size:100%;"></tbody>
+            </table>
+        </div>
+        <!--Region: table header-->
+        <!--Region: footer-->
+        <footer class="panel-footer">
+            <div class="row hide">
+                <div class="col-sm-4 hidden-xs">
+                    <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                    </select>
+                    <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                        @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                    </button>
+                </div>
+                <div id="div-Text-Total" class="col-sm-4 text-center">
+                    <small class="text-muted inline m-t-sm m-b-sm">
+                        @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                        <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                        <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                    </small>
+                </div>
+                <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+            </div>
+        </footer>
+        <!--Region: footer-->
+    </section>
+</div>
+</div>

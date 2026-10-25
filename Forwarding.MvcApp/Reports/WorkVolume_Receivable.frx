@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/14/2020 12:43:47" ReportInfo.Modified="01/16/2020 12:08:04" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+
+    private void Text8_BeforePrint(object sender, EventArgs e)
+    {
+       //Text8.Text = (ToDecimal(((Int32)Report.GetColumnValue(&quot;vw_WorkVolume.NumOperations_User&quot;))/  ((Int32)Report.GetColumnValue(&quot;vw_WorkVolume.TotalOperations&quot;)))*100).ToString();
+    }                                          
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFRHG1B188P1plB5d5Qz+9C0G35hA7H71tJToQWs3ACXFW2AjgbCSBUvpvT02Dn5f01ZzOMjVntp1Dk/7GqgzP3o0vZeUqJLNnjzR+7RnIkTsEQJf5zAOt+xJGdMXUFSyfgS5E8iE1tlmAujLn2+U2og==">
+      <TableDataSource Name="Table" Alias="GetListvw_WorkVolume_Receivable" DataType="System.Int32" Enabled="true" SelectCommand="exec GetListvw_WorkVolume_Receivable @WhereClause">
+        <Column Name="Username" DataType="System.String"/>
+        <Column Name="ReceivableCostAmount" DataType="System.Decimal"/>
+        <Column Name="TotalReceivableCostAmount" DataType="System.Decimal"/>
+        <Column Name="_Percent" DataType="System.Decimal"/>
+        <CommandParameter Name="@WhereClause" DataType="12" Expression="[WhereClause]"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="WhereClause" DataType="System.String" Expression="&quot;&quot;"/>
+    <Parameter Name="pPrintString" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="105.84">
+      <TextObject Name="Text9" Left="120.96" Top="15.12" Width="400.68" Height="37.8" Text="Business Volume - Receivable" HorzAlign="Center" Font="Arial, 20pt" TextFill.Color="Navy"/>
+      <TextObject Name="Text7" Left="26.46" Top="68.04" Width="653.94" Height="18.9" Text="[pPrintString]" Font="Arial, 12pt" TextFill.Color="Navy"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="109.84" Width="718.2" Height="30.24">
+      <TextObject Name="Text2" Left="211.68" Width="158.76" Height="30.24" Border.Lines="All" Border.Color="Navy" Fill.Color="LightSteelBlue" Text="Payable Cost Amount" HorzAlign="Center" VertAlign="Center" TextFill.Color="Navy"/>
+      <TextObject Name="Text1" Left="26.46" Width="185.22" Height="30.24" Border.Lines="All" Border.Color="Navy" Fill.Color="LightSteelBlue" Text="User Name" HorzAlign="Center" VertAlign="Center" TextFill.Color="Navy"/>
+      <TextObject Name="Text10" Left="370.44" Width="158.76" Height="30.24" Border.Lines="All" Border.Color="Navy" Fill.Color="LightSteelBlue" Text="Total Payable" HorzAlign="Center" VertAlign="Center" TextFill.Color="Navy"/>
+      <TextObject Name="Text11" Left="529.2" Width="158.76" Height="30.24" Border.Lines="All" Border.Color="Navy" Fill.Color="LightSteelBlue" Text="Percent" HorzAlign="Center" VertAlign="Center" TextFill.Color="Navy"/>
+    </PageHeaderBand>
+    <GroupHeaderBand Name="GroupHeader1" Top="144.08" Width="718.2" Condition="[GetListvw_WorkVolume_Receivable.Username]">
+      <DataBand Name="Data1" Top="148.08" Width="718.2" Height="26.46" DataSource="Table">
+        <TextObject Name="Text5" Left="211.68" Width="158.76" Height="26.46" Border.Lines="All" Border.Color="Navy" Text="[Round([GetListvw_WorkVolume_Receivable.ReceivableCostAmount],2)]" HorzAlign="Center" VertAlign="Center" TextFill.Color="Navy"/>
+        <TextObject Name="Text4" Left="26.46" Width="185.22" Height="26.46" Border.Lines="All" Border.Color="Navy" Text="[GetListvw_WorkVolume_Receivable.Username]" HorzAlign="Center" VertAlign="Center" TextFill.Color="Navy"/>
+        <TextObject Name="Text12" Left="370.44" Width="158.76" Height="26.46" Border.Lines="All" Border.Color="Navy" Text="[Round([GetListvw_WorkVolume_Receivable.TotalReceivableCostAmount],2)]" HorzAlign="Center" VertAlign="Center" TextFill.Color="Navy"/>
+        <TextObject Name="Text13" Left="529.2" Width="158.76" Height="26.46" Border.Lines="All" Border.Color="Navy" Text="[Round([GetListvw_WorkVolume_Receivable._Percent],2)]" HorzAlign="Center" VertAlign="Center" TextFill.Color="Navy"/>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter1" Top="178.54" Width="718.2"/>
+    </GroupHeaderBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="182.54" Width="718.2" Height="298.62">
+      <MSChartObject Name="MSChart1" Left="7.56" Top="11.34" Width="699.3" Height="287.28" DataSource="Table" AutoSeriesColumn="[GetListvw_WorkVolume_Receivable.Username]" AutoSeriesColor="[GetListvw_WorkVolume_Receivable.ReceivableCostAmount]" ChartData="PENoYXJ0IEJvcmRlcmxpbmVDb2xvcj0iRGFya0dyYXkiIEJvcmRlcmxpbmVXaWR0aD0iMiIgQm9yZGVybGluZURhc2hTdHlsZT0iU29saWQiPg0KICA8U2VyaWVzPg0KICAgIDxTZXJpZXMgTmFtZT0iU2VyaWVzMSIgTGVnZW5kPSJEZWZhdWx0IiBYVmFsdWVUeXBlPSJTdHJpbmciIFlWYWx1ZVR5cGU9IkRvdWJsZSIgQ2hhcnRBcmVhPSJEZWZhdWx0IiBDdXN0b21Qcm9wZXJ0aWVzPSJQb2ludFdpZHRoPTAuNCI+DQogICAgICA8UG9pbnRzPg0KICAgICAgICA8RGF0YVBvaW50IFlWYWx1ZXM9IjEiIEF4aXNMYWJlbD0iQSIgLz4NCiAgICAgICAgPERhdGFQb2ludCBZVmFsdWVzPSIzIiBBeGlzTGFiZWw9IkIiIC8+DQogICAgICAgIDxEYXRhUG9pbnQgWVZhbHVlcz0iMiIgQXhpc0xhYmVsPSJDIiAvPg0KICAgICAgICA8RGF0YVBvaW50IFlWYWx1ZXM9IjQiIEF4aXNMYWJlbD0iRCIgLz4NCiAgICAgIDwvUG9pbnRzPg0KICAgIDwvU2VyaWVzPg0KICA8L1Nlcmllcz4NCiAgPExlZ2VuZHM+DQogICAgPExlZ2VuZCBOYW1lPSJEZWZhdWx0Ij4NCiAgICA8L0xlZ2VuZD4NCiAgPC9MZWdlbmRzPg0KICA8VGl0bGVzPg0KICAgIDxUaXRsZSBOYW1lPSJUaXRsZTEiIFZpc2libGU9IkZhbHNlIj4NCiAgICA8L1RpdGxlPg0KICA8L1RpdGxlcz4NCiAgPENoYXJ0QXJlYXM+DQogICAgPENoYXJ0QXJlYSBOYW1lPSJEZWZhdWx0Ij4NCiAgICAgIDxBeGlzWT4NCiAgICAgICAgPE1ham9yR3JpZCBMaW5lQ29sb3I9IjY0LCA2NCwgNjQsIDY0IiAvPg0KICAgICAgPC9BeGlzWT4NCiAgICAgIDxBeGlzWCBJbnRlcnZhbD0iMSIgSXNNYXJnaW5WaXNpYmxlPSJGYWxzZSI+DQogICAgICAgIDxNYWpvckdyaWQgTGluZUNvbG9yPSI2NCwgNjQsIDY0LCA2NCIgLz4NCiAgICAgIDwvQXhpc1g+DQogICAgICA8QXhpc1gyPg0KICAgICAgICA8TWFqb3JHcmlkIExpbmVDb2xvcj0iNjQsIDY0LCA2NCwgNjQiIC8+DQogICAgICA8L0F4aXNYMj4NCiAgICAgIDxBeGlzWTI+DQogICAgICAgIDxNYWpvckdyaWQgTGluZUNvbG9yPSI2NCwgNjQsIDY0LCA2NCIgLz4NCiAgICAgIDwvQXhpc1kyPg0KICAgIDwvQ2hhcnRBcmVhPg0KICA8L0NoYXJ0QXJlYXM+DQogIDxCb3JkZXJTa2luIFNraW5TdHlsZT0iRW1ib3NzIiAvPg0KPC9DaGFydD4=">
+        <MSChartSeries Name="Series1" XValue="[GetListvw_WorkVolume_Receivable.Username]" YValue1="[GetListvw_WorkVolume_Receivable.ReceivableCostAmount]"/>
+      </MSChartObject>
+    </ReportSummaryBand>
+    <PageFooterBand Name="PageFooter1" Top="485.16" Width="718.2" Height="3.78"/>
+  </ReportPage>
+</Report>

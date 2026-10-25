@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="03/03/2020 15:06:51" ReportInfo.Modified="11/18/2021 13:48:40" ReportInfo.CreatorVersion="2018.3.14.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqH8PF3dxkYYkh6pEphET1UY9ELQ1bIn4/M9D56Jt38xADja7dz7sl3CqUQ3LeC+MSFvtEnLz5OuUhVcIqp1LckskLgWS656adSk2mDXyY3G2B+tQztNj5PQiDUq6mp/ND6XqNtwDDvHwR+5uo8uUfUPyQ5jd+cUPJwv1dp8qTth++mikrBHKbBPZFGj7tWW/UuVL7okDbotvIWcqWDUB+2WSuxwqlVPGOCLb+4DvNkXS9KpPK15rZ8+zPa94BQ5QJ">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="exec Sales_GetCustomersBalanceOnDate @ClientIDs ,'-1' , @SalesMenIDs, @ToDate">
+        <Column Name="CustomerName" DataType="System.String"/>
+        <Column Name="ClientID" DataType="System.Int32"/>
+        <Column Name="SalesManID" DataType="System.Int32"/>
+        <Column Name="SalesManName" DataType="System.String"/>
+        <Column Name="CustomerCode" DataType="System.Int32"/>
+        <Column Name="Total" DataType="System.Decimal"/>
+        <CommandParameter Name="@SalesMenIDs" DataType="12" Expression="[SalesMenIDs]"/>
+        <CommandParameter Name="@ToDate" DataType="12" Expression="[ToDate]"/>
+        <CommandParameter Name="@ClientIDs" DataType="22" Expression="[ClientIDs]"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="SalesMenIDs" DataType="System.String"/>
+    <Parameter Name="ToDate" DataType="System.String"/>
+    <Parameter Name="ClientIDs" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="18.9"/>
+    <PageHeaderBand Name="PageHeader1" Top="23.02" Width="718.2" Height="66.15">
+      <TextObject Name="Text34" Width="680.4" Height="56.7" Border.Lines="Top, Bottom" Border.Style="Dash" Text=" [Convert.ToDateTime([ToDate])]  تقرير الارصدة حتى تاريخ" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial Black, 16pt, style=Bold"/>
+    </PageHeaderBand>
+    <GroupHeaderBand Name="GroupHeader1" Top="93.3" Width="718.2" Height="66.15" StartNewPage="true" KeepWithData="true" Condition="[Table.SalesManID]">
+      <TextObject Name="Text1" Width="236.25" Height="37.8"/>
+      <TextObject Name="Text2" Left="236.25" Width="359.1" Height="37.8" Text=" [Convert.ToDateTime([ToDate])]  [Table.SalesManName] " HorzAlign="Right" VertAlign="Center" Font="Arial, 14pt, style=Bold">
+        <Formats>
+          <CustomFormat Format="dd/MM/yyyy"/>
+          <GeneralFormat/>
+        </Formats>
+      </TextObject>
+      <TextObject Name="Text35" Left="595.35" Top="47.25" Width="85.05" Height="18.9" Border.Lines="All" Fill.Color="Silver" Text="كود" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text36" Left="378" Top="47.25" Width="217.35" Height="18.9" Border.Lines="All" Fill.Color="Silver" Text="العميل" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text37" Left="236.25" Top="47.25" Width="141.75" Height="18.9" Border.Lines="All" Fill.Color="Silver" Text="الرصيد" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text38" Top="47.25" Width="236.25" Height="18.9" Border.Lines="All" Fill.Color="Silver" Text="ملاحظات" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text42" Left="680.4" Top="47.25" Width="37.8" Height="18.9" Border.Lines="All" Fill.Color="Silver" Text="م" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text44" Left="595.35" Width="85.05" Height="37.8" Text="المندوب" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <DataBand Name="Data1" Top="163.57" Width="718.2" Height="28.35" DataSource="Table">
+        <TextObject Name="Text3" Left="595.35" Width="85.05" Height="28.35" Border.Lines="All" Text="[Table.CustomerCode]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text39" Left="378" Width="217.35" Height="28.35" Border.Lines="All" Text="[Table.CustomerName]" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text40" Left="236.25" Width="141.75" Height="28.35" Border.Lines="All" Text="[Table.Total]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="5" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text41" Width="236.25" Height="28.35" Border.Lines="All" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text43" Left="680.4" Width="37.8" Height="28.35" Border.Lines="All" Text="[Row#]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter1" Top="196.04" Width="718.2"/>
+    </GroupHeaderBand>
+    <PageFooterBand Name="PageFooter1" Top="200.17" Width="718.2"/>
+  </ReportPage>
+</Report>

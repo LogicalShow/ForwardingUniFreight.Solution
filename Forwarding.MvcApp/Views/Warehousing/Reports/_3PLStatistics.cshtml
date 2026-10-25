@@ -1,0 +1,426 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="liGroupName" href="javascript:void(0);" onclick="LoadViews('WarehousingReports')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.Warehousing
+    </a>
+</li>
+<li>
+    <a id="liTabName" href="javascript:void(0);" onclick="LoadViews('WarehousingReports')">
+        @Forwarding.MvcApp.App_Resources.App_Resources.WarehousingReports
+</a>
+</li>
+<li class="active">@Forwarding.MvcApp.App_Resources.App_Resources._3PLStatistics
+    </li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-3PLSalesReport">
+    <!-- Add / Edit Region Modal --> <!--data-keyboard="false" data-backdrop="false" to prevent modal closure on pressing escape and pressing outside the modal-->
+    <!-- Region Options & Template  -->
+
+    <div id="div-Data">
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.FilterBy
+                </h3>
+            </header>
+            <div class="m-t-sm">
+                <div class="span7 form" id="Search-form">
+                    <fieldset>
+                        <div class="row" style="margin:5px;">
+
+                            <div class="form-group has-error col-sm-3">
+                                <label>Report</label>
+                                <select id="slReportName" class="input-sm form-control" onchange="ReportNameChanged();">
+                                    <option value="1">Purchase items below min limit</option>
+                                    <option value="2">Receive orders with defected items</option>
+                                    <option value="3">Products near expiry</option>
+                                    <option value="4">Expired products</option>
+                                    <option value="5">Client occupied area</option>
+                                    <option value="6">Zero locations</option>
+                                    <option value="7">Receive orders notes</option>
+                                    <option value="8">Product Reallocation Log</option>
+                                    <option value="9">Shipped Locations</option>
+                                    <option value="10">bin Locations</option>
+                                    <option value="11">Order Status</option>
+                                    <option value="12">Pickup Report</option>
+                                    <option value="13">Extra Services</option>
+                                    <option value="14">Defected inventory</option>
+                                    <option value="15">Receive&Pickup With Services</option>
+                                    <option value="16">Receive vs Pickup By Pallet</option>
+                                    <option value="17">Space Occupied For Each Cient</option>
+                                    <option value="18">Tracing For Serial Number</option>
+                                    <option value="19">Repeated Pallets</option>
+                                    <option value="20">Moves</option>
+                                    <option value="21">Tracing Material</option>
+                                </select>
+                            </div>
+
+                            <!--Print-->
+                            <div class="form-group col-sm-5">
+                                <div class="col-sm-12">
+                                    <button id="btn-search" type="button" class="btn btn-lightblue btn-sm m-t-md hide" onclick="_3PLStatistics_Print('Search');"><i class="fa fa-search"></i><b>&nbsp;Search</b></button>
+                                    <button id="btn-print" type="button" class="btn btn-lightblue btn-sm m-t-md" onclick="_3PLStatistics_Print('Print');"><i class="fa fa-print"></i><b>&nbsp;Print</b></button>
+                                    <button id="btn-print-excel" type="button" class="btn btn-success btn-sm m-t-md hide" onclick="_3PLStatistics_Print('Excel');"><i class="fa fa-file-excel-o"></i><b>&nbsp;Export</b></button>
+                                    <button id="btn-clear" type="button" class="btn btn-default btn-sm m-t-md" onclick="ClearFilters();"><i class="fa fa-remove"></i><b>&nbsp;Clear</b></button>
+                                </div>
+                            </div>
+                            <div id="UploadDefected" class="swapChildrenClass col-sm-4 hide" style="display: inline-flex;">
+                                <div id="hDefectedTemplate" class="hide"></div>
+                                <input type="file" class="input-sm form-control" title="Select File" id="fileDefected" style="width: 100%;" accept=".xls,.xlsx">
+                                <button type="button" class="btn btn-primary btn-sm" onclick="UploadExcelFile_Defected();">
+                                    <i class="fa fa-file-excel-o"></i> Upload
+                                </button>
+                                <button type="button" class="btn btn-success btn-sm sm m-r-xs" onclick="PrintHtmlReport_14('Excel',true);"><i class="fa fa-file-export"></i><b>&nbsp;Defected Template&nbsp;</b></button>
+                            </div>
+                        </div>
+                        
+                        <div class="col-sm-12 row filters">
+
+                            <div class="form-group col-sm-3 hide">
+                                <label>Status</label>
+                                <select id="slOrderStatus" class="input-sm form-control">
+                                    <option value="0">Select Status</option>
+                                    <option value="INPROGRESS">INPROGRESS</option>
+                                    <option value="PUTAWAY">PUTAWAY</option>
+                                    <option value="FINALIZED">FINALIZED</option>
+                                </select>
+                            </div>
+
+                            <div id="divDaysToBeNearExpiry" class="form-group col-sm-3 hide">
+                                <label>Days to be near expiry</label>
+                                <input type="number" id="txtDaysToBeNearExpiry" class="form-control input-sm">
+                            </div>
+
+                            <div id="divCustomer" class="form-group col-sm-3 hide">
+                                <label id="lblCustomer">Customer</label>
+                                <select id="slCustomer" class="form-control input-sm"></select>
+                            </div>
+                            <div id="divCustomers" class="form-group col-sm-3 hide">
+                                <label id="lblCustomers">Owners</label>
+                                <select id="slCustomers" class="form-control input-sm" multiple></select>
+                            </div>
+
+                            <div id="divOwner" class="form-group col-sm-3 hide">
+                                <label>Project</label>
+                                <select id="slOwner" class="form-control input-sm"></select>
+                            </div>
+                            <div id="divOwners" class="form-group col-sm-3 hide">
+                                <label>Projects</label>
+                                <select id="slOwners" class="form-control input-sm" multiple></select>
+                            </div>
+
+                            <div id="divProduct" class="form-group col-sm-3 hide">
+                                <label>Product</label>
+                                <select id="slProduct" class="form-control input-sm"></select>
+                            </div>
+                            <div id="divProducts" class="form-group col-sm-3 hide">
+                                <label>Product</label>
+                                <select id="slProducts" class="form-control input-sm" multiple></select>
+                            </div>
+
+                            <div id="divWarehouse" class="form-group col-sm-2 hide">
+                                <label>Warehouse</label>
+                                <select id="slWarehouse" class="form-control input-sm"></select>
+                            </div>
+                            <div id="divWarehouses" class="form-group col-sm-2 hide">
+                                <label>Warehouses</label>
+                                <select id="slWarehouses" class="form-control input-sm" multiple></select>
+                            </div>
+                            <div id="divWarehousesTo" class="form-group col-sm-2 hide">
+                                <label>Warehouses To</label>
+                                <select id="slWarehousesTo" class="form-control input-sm" multiple></select>
+                            </div>
+
+                            <div id="divArea" class="form-group col-sm-3 hide">
+                                <label>Area</label>
+                                <select id="slArea" class="form-control input-sm"></select>
+                            </div>
+
+                            <div id="divInvoice" class="form-group col-sm-1 hide">
+                                <label>Is Invoiced</label>
+                                <input type="checkbox" id="cbIsInvoiced" />
+                            </div>
+
+                            <div id="divService" class="form-group col-sm-2 hide">
+                                <label>Service</label>
+                                <select id="slService" class="form-control input-sm"></select>
+                            </div>
+
+                            <div id="divOrderType" class="form-group col-sm-2 hide">
+                                <label>Order Type</label>
+                                <select id="slOrderType" class="form-control input-sm">
+                                    <option value="0">All</option>
+                                    <option value="1">Inbound</option>
+                                    <option value="2">Outbound</option>
+                                </select>
+                            </div>
+                            <div id="divOrderTypes" class="form-group col-sm-2 hide">
+                                <label>Order Types</label>
+                                <select id="slOrderTypes" class="form-control input-sm" multiple>
+                                    <option value="0">All</option>
+                                    <option value="1">Inbound</option>
+                                    <option value="2">Outbound</option>
+                                    <option value="3" class="Extra">Putaway</option>
+                                    <option value="4" class="Extra">Move</option>
+                                    <option value="5" class="Extra">Adjust</option>
+                                    <option value="6" class="Extra">ItemTransfer</option>
+                                </select>
+                            </div>
+
+
+                            <div id="divOrderNo" class="form-group input-group col-sm-6 hide" style="clear:both;">
+                                <label>Order Number</label>
+                                <select id="slOrderNo" class="form-control input-sm" multiple></select>
+                                <span class="input-group-btn">
+                                    <button id="btnLoadOrders" type="button" class="btn btn-blue btn-sm m-t-md" onclick="LoadOrders();"><i class="fa fa-refresh"></i></button>
+                                </span>
+                            </div>
+                            <div id="divFromDate" class="form-group col-sm-2 hide">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.From</label>
+                                <input id="txtFromDate" readonly="readonly" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="input-sm datepicker-input form-control" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                            </div>
+                            <div id="divToDate" class="form-group col-sm-2 hide">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.To</label>
+                                <input id="txtToDate" readonly="readonly" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="input-sm datepicker-input form-control" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                            </div>
+
+                            <div id="divLocation" class="form-group col-sm-3 hide">
+                                <label>Location</label>
+                                <input type="text" id="txtLocation" autocomplete="off" class="form-control input-sm" placeholder="Location" style="text-transform:uppercase">
+                            </div>
+
+                            <div id="divPalletID" class="form-group col-sm-3 hide">
+                                <label>Pallet ID</label>
+                                <input type="text" id="txtPalletID" autocomplete="off" class="form-control input-sm" placeholder="Pallet ID" style="text-transform:uppercase">
+                            </div>
+
+                            <div id="divSerial" class="form-group col-sm-3 hide">
+                                <label>Serial</label>
+                                <input type="text" id="txtSerial" autocomplete="off" class="form-control input-sm" placeholder="Serial" style="text-transform:uppercase">
+                            </div>
+
+                            <div id="divFromCreation" class="form-group col-sm-2 hide" style="clear:both">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.CreationDate @Forwarding.MvcApp.App_Resources.App_Resources.From</label>
+                                <input id="txtFromCreation" readonly="readonly" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="input-sm datepicker-input form-control" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                            </div>
+                            <div id="divToCreation" class="form-group col-sm-2 hide">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.CreationDate @Forwarding.MvcApp.App_Resources.App_Resources.To</label>
+                                <input id="txtToCreation" readonly="readonly" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="input-sm datepicker-input form-control" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                            </div>
+
+                            <div id="divFromModification" class="form-group col-sm-2 hide">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ModificationDate @Forwarding.MvcApp.App_Resources.App_Resources.From</label>
+                                <input id="txtFromModification" readonly="readonly" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="input-sm datepicker-input form-control" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                            </div>
+                            <div id="divToModification" class="form-group col-sm-2 hide">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ModificationDate @Forwarding.MvcApp.App_Resources.App_Resources.To</label>
+                                <input id="txtToModification" readonly="readonly" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="input-sm datepicker-input form-control" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                            </div>
+
+                            <div id="divRepeatedPallet" class="form-group col-sm-3 m-t-md hide">
+                                <label><input type="checkbox" id="cbByPallet" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;By Pallet</label>
+                                <label><input type="checkbox" id="cbByLocation" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;By Location</label>
+                            </div>
+
+                        </div>
+                      
+                        <div class="form-group pull-right row">
+
+                            <div class="col-sm-12 ">
+                                <br />
+                                &nbsp;&nbsp;&nbsp;
+
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+
+            <!--Region: table header-->
+            <div class="table-responsive m-t-n ItemsLog hide">
+                <table id="tblItemsLog" class="table table-striped b-t b-light text-sm  table-hover">
+                    <thead>
+                        <tr>
+                            <th><input type="text" id="srchCreationDate" class="form-control" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" id="srchWarehouse" class="form-control" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" id="srchCustomer" class="form-control" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" id="srchOwner" class="form-control" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" id="srchOrderType" class="form-control" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" id="srchOrderNo" class="form-control" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" id="srchNotes" class="form-control" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" id="srchItemCode" class="form-control" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" id="srchItemName" class="form-control" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" id="srchUnit" class="form-control" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" id="srchFromLoc" class="form-control" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" id="srchToLoc" class="form-control" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" id="srchFromPallet" class="form-control" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" id="srchToPallet" class="form-control" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" id="srchPalletClass" class="form-control" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" id="srchQty" class="form-control" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" id="srchModificationDate" class="form-control" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" id="srchUser" class="form-control" onchange="_3PLStatistics_Print('Search');" /></th>
+                        </tr>
+                        <tr>
+                            <th>Creation</th>
+                            <th>WH</th>
+                            <th>Owner</th>
+                            <th>Project</th>
+                            <th>Order Type</th>
+                            <th>Order Number</th>
+                            <th>Notes</th>
+                            <th>Item</th>
+                            <th>Desc</th>
+                            <th>UOM</th>
+                            <th>From Location</th>
+                            <th>To Location</th>
+                            <th>From LPN</th>
+                            <th>To LPN</th>
+                            <th>LPN Class</th>
+                            <th>Quantity</th>
+                            <th>Last Update</th>
+                            <th>User Update</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <!--Region: table header-->
+            <!--Region: footer-->
+            <footer class="panel-footer">
+                <div class="row ItemsLog hide">
+                    <div class="col-sm-4 hidden-xs">
+                        <select id="select-page-size-log" class="input-sm form-control input-s-sm inline">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                        <button id="btn-applypaging-log" class="btn btn-sm btn-default" type="button" onclick="_3PLStatistics_Print('Search');">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                        </button>
+                    </div>
+                    <div id="div-Text-Total-log" class="col-sm-4 text-center">
+                        <small class="text-muted inline m-t-sm m-b-sm">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                            <span id="spn-first-page-row-log"></span>- <span id="spn-last-page-row-log"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                            <span id="spn-total-count-log"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                        </small>
+                    </div>
+                    <div id="div-Pager-log" class="col-sm-4 text-right text-center-xs float-right" onclick="_3PLStatistics_Print('Search');"></div>
+                </div>
+            </footer>
+            <!--Region: footer-->
+            <!--Region: table header-->
+            <div class="table-responsive m-t-n Inquiries hide">
+                <table id="tblInquiries" class="table table-striped b-t b-light text-sm  table-hover">
+                    <thead id="hByLocation" class="hide">
+                        <tr>
+                            <th><input type="text" class="form-control srchWarehouse" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" class="form-control srchPallet" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" class="form-control srchItemCode" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" class="form-control srchItemName" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" class="form-control srchUnit" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" class="form-control srchBatch" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" class="form-control srchProDate" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" class="form-control srchExpDate" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" class="form-control srchQty" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" class="form-control srchRecCode" onchange="_3PLStatistics_Print('Search');" /></th>
+                        </tr>
+                        <tr>
+                            <th>Warehouse</th>
+                            <th>Pallet ID</th>
+                            <th>Item</th>
+                            <th>Desc</th>
+                            <th>UOM</th>
+                            <th>Batch No</th>
+                            <th>Prod Date</th>
+                            <th>Exp Date</th>
+                            <th>Quantity</th>
+                            <th>Rec Code</th>
+                        </tr>
+                    </thead>
+                    <thead id="hByPallet" class="hide">
+                        <tr>
+                            <th><input type="text" class="form-control srchWarehouse" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" class="form-control srchLocation" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" class="form-control srchItemCode" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" class="form-control srchItemName" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" class="form-control srchUnit" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" class="form-control srchBatch" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" class="form-control srchProDate" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" class="form-control srchExpDate" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" class="form-control srchQty" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" class="form-control srchRecCode" onchange="_3PLStatistics_Print('Search');" /></th>
+                        </tr>
+                        <tr>
+                            <th>Warehouse</th>
+                            <th>Location</th>
+                            <th>Item</th>
+                            <th>Desc</th>
+                            <th>UOM</th>
+                            <th>Batch No</th>
+                            <th>Prod Date</th>
+                            <th>Exp Date</th>
+                            <th>Quantity</th>
+                            <th>Rec Code</th>
+                        </tr>
+                    </thead>
+                    <thead id="hBySerial" class="hide">
+                        <tr>
+                            <th><input type="text" class="form-control srchWarehouse" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" class="form-control srchRecDate" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" class="form-control srchOrderCreation" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" class="form-control srchPallet" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" class="form-control srchCreation" onchange="_3PLStatistics_Print('Search');" /></th>
+                            <th><input type="text" class="form-control srchCreator" onchange="_3PLStatistics_Print('Search');" /></th>
+                        </tr>
+                        <tr>
+                            <th>Warehouse</th>
+                            <th>Rec Date</th>
+                            <th>Shipped Date</th>
+                            <th>Pallet ID</th>
+                            <th>Creation</th>
+                            <th>Creator</th>
+                        </tr>
+                    </thead>
+
+                    <tbody></tbody>
+                </table>
+            </div>
+            <!--Region: table header-->
+            <!--Region: footer-->
+            <footer class="panel-footer">
+                <div class="row Inquiries hide">
+                    <div class="col-sm-4 hidden-xs">
+                        <select id="select-page-size-Inquery" class="input-sm form-control input-s-sm inline">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                        <button id="btn-applypaging-Inquery" class="btn btn-sm btn-default" type="button" onclick="_3PLStatistics_Print('Search');">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                        </button>
+                    </div>
+                    <div id="div-Text-Total-Inquery" class="col-sm-4 text-center">
+                        <small class="text-muted inline m-t-sm m-b-sm">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                            <span id="spn-first-page-row-Inquery"></span>- <span id="spn-last-page-row-Inquery"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                            <span id="spn-total-count-Inquery"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                        </small>
+                    </div>
+                    <div id="div-Pager-Inquery" class="col-sm-4 text-right text-center-xs float-right" onclick="_3PLStatistics_Print('Search');"></div>
+                </div>
+            </footer>
+            <!--Region: footer-->
+
+        </section>
+    </div>
+</div>
+<input type="hidden" id="hExportedTable" />

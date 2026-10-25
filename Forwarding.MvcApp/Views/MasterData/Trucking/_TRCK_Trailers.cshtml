@@ -1,0 +1,502 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li><a id="hl-homepage" href="javascript:void(0);"><i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+    </a></li>
+    <li><a id="MasterData" href="javascript:void(0);" onclick="LoadViews('Trucking')">@Forwarding.MvcApp.App_Resources.App_Resources.MasterData
+    </a></li>
+    <li><a id="Trucking" href="javascript:void(0);" onclick="LoadViews(id)">@Forwarding.MvcApp.App_Resources.App_Resources.Trucking
+    </a></li>
+    <li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_Trailers</li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-TRCK_Trailers">
+    <!-- Region Options & Template  -->
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 id="h3TRCK_DriverTitle" class="m-b-none Drivers_or_DriverAssistant"> Trailer </h3>
+            </header>
+            <!--Region the searh, delete, addnew-->
+            <div class="row text-sm wrapper hidden-print ">
+                <div id="div-main-options" class="col-sm-5 m-b-xs">
+                    <button id="btn-NewAdd" class="btn btn-warning btn-sm hide" data-toggle="modal" data-target="#TRCK_TrailerModal"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.New</button>
+                    <button id="btn-ExportLicenseExpiration" onclick="ExportExpiredLicense();" title="Export expiration less than 30 days" class="btn btn-lightblue btn-sm" data-toggle="modal" data-target="#"><i class="fa fa-table"></i>&nbsp;License Expiration</button>
+                    <div id="div-option-buttons" class="btn-group hide">
+                        <button id="btn-Copy" type="button" class="btn btn-sm btn-default"><i class="fa fa-copy"></i>&nbsp;Copy </button>
+                        <button id="btn-Print" type="button" class="btn btn-sm btn-default"><i class="fa fa-print"></i>&nbsp;Print </button>
+                        <button id="btn-Send" type="button" class="btn btn-sm btn-default"><i class="fa fa-envelope-o"></i>&nbsp;Send </button>
+                    </div>
+                </div>
+                <div id="div-search-option" class="col-sm-7">
+                    <div id="div-search-controls" class="input-group col-sm-9">
+                        <input id="txt-Search" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase"  type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search Code / Name / Local Name">
+                        <span class="input-group-btn">
+                            <button id="btn-search" class="btn btn-sm btn-primary" type="button" onclick="TRCK_Trailers_LoadingWithPaging();"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                    <div class="float-right col-sm-1">
+                        <button id="btn-Delete" type="button" class="float-right btn btn-sm btn-danger m-r-n hide"><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete</button>
+                    </div>
+                </div>
+            </div>
+            <!--EOF Region the searh, delete, addnew line-->
+            
+            <!--TRCK_Trailers Modal-->
+            <div class="modal fade" id="TRCK_TrailerModal" tabindex="-1" style="data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="TRCK_TrailerModalLabel" aria-hidden="true">
+                <div class="modal-dialog modalwidth-90 m-t-n-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="m-b-none">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.TRCK_Trailers &nbsp;<label id="lblShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                        </h3>
+                    </div>
+                    <!-- Region Add / Edit Region Form -->
+                    <div class="modal-body">
+                        <div class="span7 form vertical-mode" id="TRCK_Trailer-form">
+                            <fieldset>
+                                <div class="form-group pull-in  has-error clearfix">
+                                    <input id="hTRCK_TrailerID" type="hidden" />
+                                    <!--Wizard-->
+                                    <div class="wizard clearfix">
+                                        <ul class="steps">
+                                            <li data-target="#BasicData" id="stepsBasicData" class="active"><span class="badge badge-info">1</span>@Forwarding.MvcApp.App_Resources.App_Resources.BasicData</li>
+                                            <li data-target="#tabAccounting" id="stepsAccounting" class="complete classAccountingOption"><span class="badge badge-info">2</span>@Forwarding.MvcApp.App_Resources.App_Resources.Accounting</li>
+                                            <li data-target="#tabTRCK_TrailerLicenses" id="stepsTRCK_TrailerLicenses" class="complete"><span class="badge badge-info">3</span>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_LicensesDetails</li> 
+                                        </ul>
+                                        <div class="actions" style="display:none;">
+                                            <!--Next & Previous buttons-->
+                                            <button type="button" class="btn btn-default btn-xs btn-prev" disabled="disabled">@Forwarding.MvcApp.App_Resources.App_Resources.Prev</button>
+                                            <button type="button" class="btn btn-default btn-xs btn-next" data-last="Finish">@Forwarding.MvcApp.App_Resources.App_Resources.Next</button>
+                                        </div>
+                                    </div>
+                                    <div class="step-content">
+                                        <!--Basic Data-->
+                                        <div class="step-pane active" id="BasicData">
+                                            <!-- start alert message region -->
+                                            <div class="alert alert-danger div-error">
+                                                @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                            </div>
+                                            <!-- end alert message region -->
+                                            <!-- Add / Edit Basic Data -->
+                                            <div class="row  col-sm-12">
+                                                <div class="form-group col-sm-2">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Code</label>
+                                                    <input type="text" id="txtCode" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" data-minlength="1" maxlength="10" placeholder="Generated Automatically" disabled="disabled" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>Trailer Number / VIN</label>
+                                                    <input type="text" id="txtName" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="true" maxlength="50" placeholder="ex. SEA WINGS USA" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3 hide">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.LocalName</label>
+                                                    <input type="text" id="txtLocalName" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="ex. SEA WINGS USA" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_EquipmentModel</label>
+                                                    <select id="slEquipmentModel" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                                                </div>
+                                            </div>
+                                            <div class="row  col-sm-12">                                               
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_PlateNo</label>
+                                                    <input type="text" id="txtPlateNo" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Plate No." style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_ChassisNo</label>
+                                                    <input type="text" id="txtChassisNo" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Chassis No." style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_ExaminationExpireDate</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon" style="background-color: #428bca;color:white;"><span class="fa fa-calendar"></span></span>
+                                                        <input type="text" id="txtExaminationExpireDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_WorkingDate</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon" style="background-color: #428bca;color:white;"><span class="fa fa-calendar"></span></span>
+                                                        <input type="text" id="txtWorkingDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row  col-sm-12">
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_OriginCountry</label>
+                                                    <select id="slOriginCountry" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_ManufacturDate</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon" style="background-color: #428bca;color:white;"><span class="fa fa-calendar"></span></span>
+                                                        <input type="text" id="txtManufacturDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_LicenseNumber </label>
+                                                    <input type="text" id="txtLicenseNumber" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="License Number" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>Licencse Expir.Date</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon" style="background-color: #428bca;color:white;"><span class="fa fa-calendar"></span></span>
+                                                        <input type="text" id="txtLicenseNumberExpireDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row  col-sm-12">
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_Color </label>
+                                                    <input type="text" id="txtColor" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Color" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_Length </label>
+                                                    <input type="text" id="txtLength" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Length" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_Width </label>
+                                                    <input type="text" id="txtWidth" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Width" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_Height </label>
+                                                    <input type="text" id="txtHeight" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Height" style="text-transform:uppercase" />
+                                                </div>
+                                                    
+                                            </div>
+                                            <div class="row  col-sm-12">
+                                                <div class="form-group col-sm-2">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_NoOfPrimaryWheels </label>
+                                                    <input type="text" id="txtNoOfPrimaryWheels" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="No Of Primary Wheels" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-2">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_NoOfAdditionalWheels </label>
+                                                    <input type="text" id="txtNoOfAdditionalWheels" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="No Of Additional Wheels" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-2">
+                                                    <label>Wheel Size</label>
+                                                    <input type="text" id="txtWheelSize" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="" style="text-transform:uppercase" />
+                                                </div>   
+                                                <div class="form-group col-sm-2">
+                                                    <label>Model</label>
+                                                    <input type="text" id="txtModel" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-2">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_GrossWeight</label>
+                                                    <input type="text" id="txtGrossWeight" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Gross Weight" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-2">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_AllowedWeight </label>
+                                                    <input type="text" id="txtAllowedWeight" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Allowed Weight" style="text-transform:uppercase" />
+                                                </div>
+                                            </div>
+                                            <div class="row  col-sm-12">
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_AxeCount </label>
+                                                    <input type="text" id="txtAxeCount" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Axe Count" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_TaxEndDate</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon" style="background-color: #428bca;color:white;"><span class="fa fa-calendar"></span></span>
+                                                        <input type="text" id="txtTaxEndDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                                                    </div>
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_InsuranceBill</label>
+                                                    <input type="text" id="txtInsuranceBill" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Insurance Bill" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_InsuranceCompany</label>
+                                                    <select id="slInsuranceCompany" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                                                </div>
+
+                                            </div>
+                                            <div class="row  col-sm-12">
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.NumberOfChambers</label>
+                                                    <input type="number" id="txtNumberOfChambers" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Chambers No." style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.ChambersVolumeInLiters</label>
+                                                    <input type="number" id="txtChambersVolumeInLiters" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Chambers Volume in liters." style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TankerEmptyWeight</label>
+                                                    <input type="number" id="txtTankerEmptyWeight" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="Tanker Empty Weight." style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Outlet</label>
+                                                    <select id="slOutlet" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false">
+                                                        <option value="0">Select Outlet</option>
+                                                        <option value="1">single </option>
+                                                        <option value="2">separate </option>
+                                                    </select>
+                                                </div>
+                                                @*NumberOfChambers ChambersVolumeInLiters TankerEmptyWeight Heating  Heatable Epump Compressor Outlet GroundOperated	ATP*@
+                                            </div>
+                                            <div class="row  col-sm-12">
+                                                <div class="form-group col-sm-2  m-t-lg">
+                                                    <label><input type="checkbox" id="cbIsHeating" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Heating</label><br />
+                                                </div>
+                                                <div class="form-group col-sm-2  m-t-lg">
+                                                    <label><input type="checkbox" id="cbIsHeatable" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Heatable</label><br />
+                                                </div>
+                                                <div class="form-group col-sm-2  m-t-lg">
+                                                    <label><input type="checkbox" id="cbIsEpump" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Epump</label><br />
+                                                </div>
+                                                <div class="form-group col-sm-2  m-t-lg">
+                                                    <label><input type="checkbox" id="cbIsCompressor" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Compressor</label><br />
+                                                </div>
+                                                <div class="form-group col-sm-2  m-t-lg">
+                                                    <label><input type="checkbox" id="cbIsGroundOperated" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.GroundOperated</label><br />
+                                                </div>
+                                                <div class="form-group col-sm-2  m-t-lg">
+                                                    <label><input type="checkbox" id="cbIsATP" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.ATP</label><br />
+                                                </div>
+
+                                            </div>
+                                            <div class="row  col-sm-12">
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_ServiceCenter</label>
+                                                    <select id="slServiceCenter" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                                                </div>
+
+                                                <div class="form-group col-sm-2">
+                                                    <label>Insurance Value</label>
+                                                    <input type="text" id="txtInsuranceValue" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="" style="text-transform:uppercase" />
+                                                </div>
+                                                <div class="form-group col-sm-2">
+                                                    <label>Insurance Date</label>
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon" style="background-color: #428bca;color:white;"><span class="fa fa-calendar"></span></span>
+                                                        <input type="text" id="txtInsuranceDate" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group col-sm-3">
+                                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</label>
+                                                    <input type="text" id="txtNotes" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="" style="text-transform:uppercase" />
+                                                </div>
+
+                                                <div class="form-group col-sm-2  m-t-md">
+                                                    <label><input type="checkbox" id="cbIsInactive" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.IsInactive</label><br />
+                                                </div>
+                                            </div> 
+                                                <!--EOF Add / Edit Basic Data -->
+                                            </div>
+                                        <!--EOF Basic Data-->
+                                        <!--Accounting-->
+                                        <div class="step-pane" id="tabAccounting">
+                                            <!-- start alert message region -->
+                                            <div class="alert alert-danger div-error">
+                                                @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                            </div>
+                                            <!-- end alert message region -->
+                                            <div class="form-group col-sm-6">
+                                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ClientGroup</label>
+                                                <select id="slSubAccountGroup" class="form-control m-b input-sm" onchange="FillSlAccountFromGroup('slAccount', 'slSubAccountGroup', 'slSubAccount', 0, 0);" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Account</label>
+                                                <select id="slAccount" class="form-control m-b input-sm" @*onchange="FillSlSubAccount('slSubAccount', 'slAccount', 0, 0);"*@ onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.SubAccount</label>
+                                                <select id="slSubAccount" class="form-control m-b input-sm" disabled="disabled" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.CostCenter</label>
+                                                <select id="slCostCenter" class="form-control m-b input-sm" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                                            </div>
+                                            <!--The id of the next div is used to fill the Accounting in the textareas-->
+                                            <div id="bodyAccounting"></div>
+                                        </div> 
+                                        <!--Accounting-->
+
+                                        <!--Trailer Licenses-->
+                                        <div class="step-pane" id="tabTRCK_TrailerLicenses">
+                                            <!-- start alert message region -->
+                                            <div class="alert alert-danger div-error">
+                                                @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                            </div>
+                                            <!-- end alert message region -->
+                                            <!--The id of the next div is used to fill the TRCK_TrailerLicenses -->
+                                            <div id="bodyTRCK_TrailerLicenses">
+                                                <div class="col-sm-2 m-l-n">
+                                                    <button id="btn-NewAddTRCK_TrailerLicenses" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#TRCK_TrailerLicensesModal" onclick="TRCK_TrailerLicenses_ClearAllControls();"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Add</button>
+                                                </div>
+                                                <div class="col-sm-3 m-l">
+                                                    <input id="txtTRCK_TrailerLicensesSearch" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase; border-color:#cccccc;" type="text" class="input-sm form-control" maxlength="8" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search License Number">
+                                                </div>
+                                                <button id="btn-TRCK_TrailerLicensesSearch" class="btn btn-sm btn-primary m-l-n" type="button" onclick="TRCK_TrailerLicenses_LoadingWithPagingForModal();"><i class="fa fa-search"></i></button>
+                                                <button id="btn-DeleteTRCK_TrailerLicenses" type="button" class="float-right btn btn-sm btn-danger" onclick="TRCK_TrailerLicenses_Delete();"><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete</button>
+                                                <br /> <br />
+                                                <section class="panel panel-default" style="overflow: scroll; width: auto; height: 330px;">
+                                                    <!--Region: table header-->
+                                                    <div class="table-responsive">
+                                                        <table id="tblTRCK_TrailerLicenses" class="table table-striped b-t b-light text-sm  table-hover">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="width:5%;" id="HeaderDeletetblTRCK_TrailerLicensesID">
+                                                                        <input id="cb-CheckAll-TRCK_TrailerLicenses" type="checkbox" />
+                                                                    </th>
+                                                                    <th>
+                                                                        @Forwarding.MvcApp.App_Resources.App_Resources.TRCK_LicenseNumber
+                                                                    </th>
+                                                                    <th>
+                                                                        @Forwarding.MvcApp.App_Resources.App_Resources.ExpirationDate
+                                                                    </th>                                                                   
+                                                                    <th class="rounded-right hide"></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody></tbody>
+                                                        </table>
+                                                    </div>
+
+                                                <footer class="panel-footer"></footer>
+                                                <!--Region: EOF table footer-->
+                                                </section>
+
+                                                <div class="row">
+                                                    <div id="div-Text-Total-Modal" class="col-sm-4 text-center">
+                                                        <small class="text-muted inline">
+                                                            @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                                                            <span id="spn-first-page-row-Modal"></span>- <span id="spn-last-page-row-Modal"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                                                            <span id="spn-total-count-Modal"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                                                        </small>
+                                                    </div>
+                                                    <div id="div-Pager-Modal" class="col-sm-4 text-right text-center-xs"></div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                        <!--EOF Trailer Licenses-->
+                                   </div>
+                                    <!--EOF Wizard-->
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <!-- Endregion Add / Edit Region Form -->
+                    <div class="modal-footer m-t-n">
+                        <button type="button" id="btnSave" class="btn btn-primary btn-sm" onclick="TRCK_Trailers_Insert(false);">
+                            <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                        </button>
+                        <button type="button" id="btnSaveandNew" class="btn btn-primary btn-sm" onclick="TRCK_Trailers_Insert(true);">
+                            <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew
+                        </button>
+                        <button class="btnTRCK_TrailerClose btn btn-link btn-sm" id="btnTRCK_TrailerClose" @*onclick="TRCK_Trailers_UnlockRecord();"*@ data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+                    </div>
+                </div>
+            </div>
+        </div>
+            <!--EOF TRCK_Trailers Modal-->
+            
+            <!--Region: table header-->
+            <div class="table-responsive">
+                <table id="tblTRCK_Trailers" class="table table-striped b-t b-light text-sm  table-hover">
+                    <thead>
+                        <tr>
+                            <th id="ID">
+                                <input id="cb-CheckAll" type="checkbox" />
+                            </th>
+                            <th class="th-sortable" data-toggle="class">@Forwarding.MvcApp.App_Resources.App_Resources.Code
+                            </th>
+                            <th> Trailer Number / VIN
+                            </th>
+                            <th class="hide">@Forwarding.MvcApp.App_Resources.App_Resources.LocalName
+                            </th>
+                                                        
+                            <th class="rounded-right hide"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <!--Region: table header-->
+
+            <!--Region: footer-->
+            <footer class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-4 hidden-xs">
+                        <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                        <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                        </button>
+                    </div>
+                    <div id="div-Text-Total" class="col-sm-4 text-center">
+                        <small class="text-muted inline m-t-sm m-b-sm"> @Forwarding.MvcApp.App_Resources.App_Resources.Showing 
+                            <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                            <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                        </small>
+                    </div>
+                    <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+                </div>
+            </footer>
+            <!--Region: footer-->
+        </section>
+    </div>
+</div>
+
+<!-- TRCK_TrailerLicenses Modal -->
+<div class="modal fade" id="TRCK_TrailerLicensesModal" tabindex="-1" style="z-index: 1050;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="TRCK_TrailerLicensesModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modalwidth-70">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.TRCK_LicensesDetails &nbsp;<label id="lblTRCK_TrailerLicensesShown" purpose="dynamicLabel" class="static-text-primary"></label>
+            </h3>
+        </div>
+        <div class="modal-body">
+            <!-- Region Add / Edit Country Form -->
+            <div class="span7 form vertical-mode" id="TRCK_TrailerLicenses-form">
+                <fieldset>
+                    <div class="form-group pull-in  has-error clearfix">
+                        <input id="hTRCK_TrailerLicensesID" type="hidden" />
+                        <!-- start alert message region -->
+                        <div class="alert alert-danger div-error">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                        </div>
+                        <!-- end alert message region -->
+
+                        <div class="form-group col-sm-6">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.TRCK_LicenseNumber </label>
+                            <input type="text" id="txtLicenseNumber2" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="License Number" style="text-transform:uppercase" />
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.ExpirationDate</label>
+                            <div class="input-group">
+                                <span class="input-group-addon" style="background-color: #428bca;color:white;"><span class="fa fa-calendar"></span></span>
+                                <input type="text" id="txtLicenseNumberExpireDate2" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                            </div>
+                        </div>
+                       
+                    </div>
+                </fieldset>
+            </div>
+            <!-- Endegion Add / Edit TRCK_TrailerLicenses Form -->
+        </div>
+        <div class="modal-footer">
+            <!--sherif-->
+            <button type="button" id="btnSaveTRCK_TrailerLicenses" class="btn btn-primary btn-sm" onclick="">
+                <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+            </button>
+            <button type="button" id="btnSaveandNewTRCK_TrailerLicenses" class="btn btn-primary btn-sm" onclick="TRCK_TrailerLicenses_Insert(true);">
+                <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew
+            </button>
+            <button class="btnClose btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>
+        </div>
+    </div>
+</div>
+</div>
+<!-- TRCK_TrailerLicenses Modal -->

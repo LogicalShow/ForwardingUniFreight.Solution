@@ -1,0 +1,66 @@
+﻿<!--AddressModal-->
+<div class="modal fade" id="PartnersBanksModal" tabindex="-1" style="z-index: 3000;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="PartnersBanksModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-70">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.Bank &nbsp;<label id="lblAddressShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region Add / Edit Address Form -->
+                <div class="span7 form vertical-mode" id="Address-form">
+                    <fieldset>
+                        <div class="form-group pull-in  has-error clearfix">
+                            <input id="hBankID" type="hidden" />
+                            <!-- start alert message region -->
+                            <div class="alert alert-danger div-error">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                            </div>
+                          
+
+                            <div class="form-group col-sm-12">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.BankName</label>
+                                <input id="txtPartnerBankName" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated" data-required="false" maxlength="200" placeholder="" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Branch</label>
+                                <input id="txtBranch" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated" data-required="false" maxlength="200" placeholder="" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.AccountName</label>
+                                <input id="txtAccountName" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated" data-required="false" maxlength="200" placeholder="" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.AccountNumber</label>
+                                <input id="txtAccountNumber" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated" data-required="false" maxlength="200" placeholder="" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.SwiftCode</label>
+                                <input id="txtSwiftCode" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated" data-required="false" maxlength="200" placeholder="" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Currency</label>
+                                <select id="slAccountCurrency" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b" data-required="true"></select>
+                            </div>
+
+
+
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- Endegion Add / Edit Country Form -->
+            </div>
+            <div class="modal-footer"><!--sherif-->
+                <button type="button" id="btnCopyFromMainPartnerbank" class="btn btn-info btn-sm hide" onclick="PartnersBanks_CopyFromMainAddress();">
+                    <span class="glyphicon glyphicon-edit hide"></span>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.CopyFromMainAddress</button>
+
+                <button type="button" id="btnBankSave" class="btn btn-primary btn-sm" onclick="PartnersBanks_Insert(false);">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save</button>
+                <button type="button" id="btnBankSaveandNew" class="btn btn-primary btn-sm" onclick="PartnersBanks_Insert(true);">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew</button>
+                <button class=" btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF AddressModal-->

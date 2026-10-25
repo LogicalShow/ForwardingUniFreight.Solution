@@ -1,0 +1,158 @@
+﻿
+<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li><a id="hl-homepage" href="javascript:void(0);"><i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+    </a></li>
+    <li><a id="Accounting" href="javascript:void(0);" onclick="LoadViews('AccountingReports')">@Forwarding.MvcApp.App_Resources.App_Resources.Accounting
+    </a></li>
+    <li><a id="AccountingReports" href="javascript:void(0);" onclick="LoadViews('AccountingReports')">@Forwarding.MvcApp.App_Resources.App_Resources.Reports
+    </a></li>
+    <li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.AccountLedgerByCurrency</li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-AccountLedger">
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.AccountLedgerByCurrency
+            </h3>
+        </header>
+        <div class="row text-sm wrapper hidden-print m-t-n-sm">
+            <div class="swapChildrenClass">
+                <!--Region Filter-->
+                <div class="form-group col-sm-2">
+                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.From</label>
+                    <input id="txtFromDate" readonly="readonly" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="input-sm datepicker-input form-control" data-date-format="dd/mm/yyyy" placeholder="@Forwarding.MvcApp.App_Resources.App_Resources.Select" />
+                </div>
+                <div class="form-group col-sm-2">
+                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.To</label>
+                    <input id="txtToDate" readonly="readonly" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="input-sm datepicker-input form-control" data-date-format="dd/mm/yyyy" placeholder="@Forwarding.MvcApp.App_Resources.App_Resources.Select" />
+                </div>
+                <div class="col-sm-2">
+                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Currency</label>
+                    <select id="slCurrency" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                </div>
+
+                <div class="col-sm-6">
+                    <button id="btn-ExportToExcel" type="button" onclick="AccountLedgerByCurrency_Print('Excel');" class="btn btn-sm btn-lightblue m-t-md"><i class="fa fa-table"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.TraExportExcel&nbsp;</b></button>
+                    <button id="btn-Print" type="button" onclick="AccountLedgerByCurrency_Print('Print');" class="btn btn-sm btn-info m-t-md"><i class="fa fa-print"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Print&nbsp;</b></button>
+                </div>
+                @*<div class="input-group col-sm-2 hide">
+                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Status</label>
+                    <select id="slStatus" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm">
+                        <option value="0">@Forwarding.MvcApp.App_Resources.App_Resources.All</option>
+                        <option value="1">@Forwarding.MvcApp.App_Resources.App_Resources.Posted</option>
+                        <option value="2">@Forwarding.MvcApp.App_Resources.App_Resources.UnPosted</option>
+                    </select>
+                </div>*@
+                @*<div class="input-group col-sm-2 m-t-27 hide">
+                    <label class=""><input type="checkbox" id="cbShowSubAccount" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.ShowSubAccounts</label><br />
+                </div>*@
+
+            </div>
+        </div>
+            <div class="row text-sm wrapper hidden-print m-t-n-md">
+                <div class="swapChildrenClass">
+                    <div class="input-group col-sm-2">
+                        <label class=""><input type="checkbox" id="cbShowSubAccount" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.ShowSubAccounts</label><br />
+                    </div>
+                    <div class="input-group col-sm-2 ">
+                        <label class="swapChildrenClass"><input type="checkbox" id="cbByCostCenter" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.GroupByCostCenter</label><br />
+                    </div>
+                    <div class="input-group col-sm-2 ">
+                        <label class="swapChildrenClass"><input type="checkbox" id="cbByCostCenterTotals" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Totals By Cost Center</label><br />
+                    </div>
+                </div>
+            </div>
+
+                <div class="row text-sm wrapper hidden-print m-t-n-md ">
+                    <div class="col-sm-1 swapChildrenClass m-t-xs hide">
+                        <input tabindex="" type="radio" name="nameRdGroup" id="cbIsDetails" checked="checked" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Detailed&nbsp;</b>
+                    </div>
+                    <div class="col-sm-2 swapChildrenClass m-t-xs hide">
+                        <input tabindex="" type="radio" name="nameRdGroup" id="cbIsGroupByCostCenter" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.GroupByCostCenter&nbsp;</b>
+                    </div>
+
+                </div>
+                <div class="row text-sm wrapper hidden-print m-t-n-md">
+                    <div class="swapChildrenClass row">
+                        <section id="secJournalType" class="m-t-xs m-l col-sm-2 panel panel-default hide" style="clear:both;">
+                            <div class="">
+                                <label class=""><input type="checkbox" id="cbCheckAllJournalTypes" onchange="AccountLedger_cbCheckAllJournalTypesChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><u>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.SelectAllJournalTypes</u></label><br />
+                            </div>
+                            <div id="divCbJournalType" style="width:107%; height:370px; font-size:100%; overflow:scroll;">
+                            </div>
+                        </section>
+                        <section id="secAccount" class="m-t-xs m-l col-sm-4 panel panel-default">
+                            <div class="">
+                                <label class="swapChildrenClass"><input type="checkbox" id="cbCheckAllAccounts" onchange="AccountLedger_cbCheckAllAccountsChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><u>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.SelectAllAccounts</u></label><br />
+                            </div>
+                            <div id="divCbAccount" style="width:104%; height:370px; font-size:100%; overflow:scroll;">
+                            </div>
+
+                        </section>
+                        <section class="m-t-xs m-l col-sm-2 ">
+                            <div class="">
+                                <label class="swapChildrenClass"><input type="checkbox" id="cbCheckAllBranch" onchange="AccountLedger_cbCheckAllBranchChanged();" onfocus="DisableEnterKey(id);" onkeypress=" DisableEnterKey(id);"><u>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.SelectAllBranches</u></label><br />
+                            </div>
+                            <div id="divCbBranch" style="width:104%; height:370px; font-size:100%; overflow:scroll;">
+                            </div>
+                        </section>
+                        <section class="m-t-xs m-l col-sm-3">
+                            <div class="">
+                                <label class="swapChildrenClass"><input type="checkbox" id="cbCheckAllCostCenter" onchange="AccountLedger_cbCheckAllCostCenterChanged();" onfocus=" DisableEnterKey(id);" onkeypress=" DisableEnterKey(id);"><u>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.SelectAllCostCenters</u></label><br />
+                            </div>
+                            <div id="divCbCostCenter" style="width:104%; height:370px; font-size:100%; overflow:scroll;">
+                            </div>
+                        </section>
+                        <section id="secJVType" class="m-t-xs m-l col-sm-3 panel panel-default hide" style="clear:both;">
+                            <div class="">
+                                <label class=""><input type="checkbox" id="cbCheckAllJVTypes" onchange="AccountLedger_cbCheckAllJVTypesChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><u>&nbsp;Select All JV Types</u></label><br />
+                            </div>
+                            <div id="divCbJVType" style="width:107%; height:370px; font-size:100%; overflow:scroll;">
+                            </div>
+                        </section>
+                  
+                              @*<section id="secCurrency" class="m-t m-l col-sm-3 panel panel-default hide">
+                            <div class="">
+                                <label class=""><input type="checkbox" class="hide" id="cbCheckAllCurrency" onchange="SafesJournal_cbCheckAllCurrencyChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><u>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Currencies</u></label><br />
+                            </div>
+                            <div id="divCbCurrency" style="width:107%; height:370px; font-size:100%; overflow:scroll;">
+                            </div>
+                        </section>*@
+                        <!--EOF Region Filter-->
+                        <div id="hExportedTable" class="hide"></div>
+                    </div>
+                </div>
+
+                <footer class="panel-footer hide">
+                    <div class="row">
+                        <div class="col-sm-4 hidden-xs">
+                            <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                            </select>
+                            <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                            </button>
+                        </div>
+                        <div id="div-Text-Total" class="col-sm-4 text-center">
+                            <small class="text-muted inLine m-t-sm m-b-sm">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                                <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                                <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                            </small>
+                        </div>
+                        <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+                    </div>
+                </footer>
+    </section>
+    </div>
+</div>

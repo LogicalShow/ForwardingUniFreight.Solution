@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="04/15/2020 16:14:35" ReportInfo.Modified="06/10/2020 22:52:23" ReportInfo.CreatorVersion="2018.3.14.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqtr1371Y2+HtWu8WFjl2KctZmh5Ny3LlNRIaznH7ZmW3dMAHgcASpqGxR9Ke+0drIwJvuBJrOWFvx0JGAwGso2VBkFR9bYuafvNpUTR7EdiClfkgopuozEm00Bw7SA54h5NC6YVhOIlxYSD8NU609vT2OL+DCF57kxop7ieofxC/Kre3wwhhLXQLLzUuoaERaH9S2Jj0x5HVoHXWE1gY913o2KiWGp5apN998zx6T75s=">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="select BarCode , BarCodeType , ID , Name , Code ,PurchasingDate , BranchName ,  DepartmentName , DevisonName ,BranchID , DepartmentID , GroupID , GroupName , DevisonID ,LastQty,  startnum FROM FA_PrintBarcodes v &#13;&#10;  where&#13;&#10;&#13;&#10; V.ID IN(SELECT CONVERT(INT , value ) from [fn_split]( @AssetIDs, '*') ) &#13;&#10;order by V.BranchID , V.DepartmentID , V.DevisonID&#13;&#10;">
+        <Column Name="ID" DataType="System.Int32"/>
+        <Column Name="Code" DataType="System.String"/>
+        <Column Name="Name" DataType="System.String"/>
+        <Column Name="GroupID" DataType="System.Int32"/>
+        <Column Name="BarCode" DataType="System.String"/>
+        <Column Name="PurchasingDate" DataType="System.DateTime"/>
+        <Column Name="BranchID" DataType="System.Int32"/>
+        <Column Name="DepartmentID" DataType="System.Int32"/>
+        <Column Name="DevisonID" DataType="System.Int32"/>
+        <Column Name="BarCodeType" DataType="System.String"/>
+        <Column Name="GroupName" DataType="System.String"/>
+        <Column Name="BranchName" DataType="System.String"/>
+        <Column Name="DevisonName" DataType="System.String"/>
+        <Column Name="DepartmentName" DataType="System.String"/>
+        <Column Name="LastQty" DataType="System.Decimal"/>
+        <Column Name="startnum" DataType="System.Int32"/>
+        <CommandParameter Name="@AssetIDs" DataType="22" Expression="[AssetIDs]"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="AssetIDs" DataType="System.String" Expression="&quot;1*2*3*4*5*6*7*8*9*10&quot;"/>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2"/>
+    <PageHeaderBand Name="PageHeader1" Top="4.17" Width="718.2"/>
+    <GroupHeaderBand Name="GroupHeader4" Top="8.33" Width="718.2" Condition="[Table.BranchName]">
+      <GroupHeaderBand Name="GroupHeader5" Top="12.5" Width="718.2" Condition="[Table.DevisonName]">
+        <GroupHeaderBand Name="GroupHeader6" Top="16.67" Width="718.2" Height="37.8" StartNewPage="true" RepeatOnEveryPage="true" Condition="[Table.DepartmentName]">
+          <TextObject Name="Text14" Width="132.3" Height="37.8" Fill.Color="LightGray" Text="[[Table.DepartmentName]]" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold, Underline"/>
+          <TextObject Name="Text9" Left="652.05" Width="66.15" Height="37.8" Fill.Color="LightGray" Text="فرع" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+          <TextObject Name="Text11" Left="387.45" Width="94.5" Height="37.8" Fill.Color="LightGray" Text="إدارة" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+          <TextObject Name="Text10" Left="132.3" Width="94.5" Height="37.8" Fill.Color="LightGray" Text="قسم" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+          <TextObject Name="Text13" Left="226.8" Width="160.65" Height="37.8" Fill.Color="LightGray" Text="[[Table.DevisonName]]" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+          <TextObject Name="Text12" Left="481.95" Width="170.1" Height="37.8" Fill.Color="LightGray" Text="[[Table.BranchName]]" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+          <DataBand Name="Data1" Top="58.63" Width="359.1" Height="170.1" Border.Lines="All" Border.Style="Dot" DataSource="Table" Columns.Count="2">
+            <BarcodeObject Name="Barcode1" Left="85.05" Top="66.15" Width="112.5" Height="94.5" Text="[Table.BarCode]" AllowExpressions="true"/>
+            <TextObject Name="Text1" Left="236.25" Top="9.45" Width="113.4" Height="28.35" Border.Lines="All" Text="[Table.BranchName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TextObject Name="Text3" Left="9.45" Top="9.45" Width="113.4" Height="28.35" Border.Lines="All" Text="[Table.DepartmentName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TextObject Name="Text5" Left="122.85" Top="9.45" Width="113.4" Height="28.35" Border.Lines="All" Text="[Table.DevisonName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TextObject Name="Text7" Left="236.25" Top="37.8" Width="113.4" Height="18.9" Border.Lines="All" Text="[Table.Code]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TextObject Name="Text8" Left="9.45" Top="37.8" Width="226.8" Height="18.9" Border.Lines="All" Fill.Color="Silver" Text="[Table.Name]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold, Underline"/>
+          </DataBand>
+          <GroupFooterBand Name="GroupFooter6" Top="232.9" Width="718.2" Height="37.8"/>
+        </GroupHeaderBand>
+        <GroupFooterBand Name="GroupFooter5" Top="274.87" Width="718.2" Height="37.8"/>
+      </GroupHeaderBand>
+      <GroupFooterBand Name="GroupFooter4" Top="316.83" Width="718.2" Height="37.8"/>
+    </GroupHeaderBand>
+    <PageFooterBand Name="PageFooter1" Top="358.8" Width="718.2"/>
+  </ReportPage>
+</Report>

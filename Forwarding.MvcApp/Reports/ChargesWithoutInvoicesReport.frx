@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="10/26/2021 16:56:05" ReportInfo.Modified="04/13/2025 12:09:48" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+
+
+    private void Data1_AfterData(object sender, EventArgs e)
+    {
+      
+    }
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqsrEzhd9+T4CJxZj90G866GKJEou4mqTksSIVkmn8TsL/HBOW+DmcnKVgnQahp1BgtnBGouCAD4aje9FNdnJox2FUw3yDszOx4ni8xIXiYMMHC9Ro8OPL6XH/xH4NBIWsofkWCMwZeDmoPrCnBBUxfZUMvqYoij4qk6Cg+Soa7l2E1ezyKaUGk+C7ljta0ZT6u0lGIXSyZJqbdlIGXq6mOA==">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="exec (@query)">
+        <Column Name="ID" DataType="System.Int64"/>
+        <Column Name="OperationID" DataType="System.Int64"/>
+        <Column Name="OperationCode" DataType="System.String"/>
+        <Column Name="OperationCodeSerial" DataType="System.Int32"/>
+        <Column Name="PODName" DataType="System.String"/>
+        <Column Name="POLName" DataType="System.String"/>
+        <Column Name="ChargeTypeID" DataType="System.Int32"/>
+        <Column Name="ChargeTypeName" DataType="System.String"/>
+        <Column Name="IssueDate" DataType="System.DateTime"/>
+        <Column Name="CurrencyID" DataType="System.Int32"/>
+        <Column Name="CurrencyCode" DataType="System.String"/>
+        <Column Name="Amount" DataType="System.Decimal"/>
+        <Column Name="OperationClientID" DataType="System.Int32"/>
+        <Column Name="OperationClientName" DataType="System.String"/>
+        <Column Name="POL" DataType="System.Int32"/>
+        <Column Name="POD" DataType="System.Int32"/>
+        <Column Name="OperationBookingNumber" DataType="System.String"/>
+        <Column Name="OperationMasterBL" DataType="System.String"/>
+        <Column Name="OperationHouseBLs" DataType="System.String"/>
+        <Column Name="IsReceivable" DataType="System.String"/>
+        <Column Name="IsPayable" DataType="System.String"/>
+        <Column Name="IsROrP" DataType="System.Int32"/>
+        <Column Name="OperationStageName" DataType="System.String"/>
+        <Column Name="CloseDate" DataType="System.DateTime"/>
+        <CommandParameter Name="@query" DataType="12" Expression="[query]" DefaultValue="SELECT * FROM vwChargesWithoutInvoices"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="dummy" DataType="System.String"/>
+    <Total Name="sumSAR" Expression="[Table.Amount]" Evaluator="Data1" PrintOn="ReportSummary1" EvaluateCondition="[Table.CurrencyID]==83"/>
+    <Total Name="sumDollar" Expression="[Table.Amount]" Evaluator="Data1" PrintOn="ReportSummary1" EvaluateCondition="[Table.CurrencyID]==63"/>
+    <Total Name="sumEuro" Expression="[Table.Amount]" Evaluator="Data1" PrintOn="ReportSummary1" EvaluateCondition="[Table.CurrencyID]==82"/>
+    <Total Name="groupCount" TotalType="Count" Evaluator="Data1" PrintOn="GroupFooter1"/>
+    <Total Name="numberOfGroups" Expression="[groupCount]" Evaluator="Data1" PrintOn="ReportSummary1" EvaluateCondition="[groupCount]==1"/>
+  </Dictionary>
+  <ReportPage Name="Page1" PaperWidth="500">
+    <ReportTitleBand Name="ReportTitle1" Width="1814.4" Height="103.95"/>
+    <PageHeaderBand Name="PageHeader1" Top="107.95" Width="1814.4" Height="122.85">
+      <TextObject Name="Text21" Left="359.1" Top="18.9" Width="444.15" Height="28.35" Text="Charges Without Invoices" HorzAlign="Center" VertAlign="Center" Font="Arial, 16pt, style=Bold"/>
+      <TextObject Name="Text31" Left="1493.1" Top="66.15" Width="113.4" Height="56.7" Border.Lines="All" Text="Date" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text32" Left="113.4" Top="66.15" Width="245.7" Height="56.7" Border.Lines="All" Text="Client Name" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text33" Left="1266.3" Top="66.15" Width="226.8" Height="56.7" Border.Lines="All" Text="POD" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text34" Left="1030.05" Top="66.15" Width="236.25" Height="56.7" Border.Lines="All" Text="POL" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text36" Left="633.15" Top="66.15" Width="170.1" Height="56.7" Border.Lines="All" Text="Charge Type" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text37" Left="359.1" Top="66.15" Width="94.5" Height="56.7" Border.Lines="All" Text="Receivables Not Invoiced" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text38" Top="66.15" Width="113.4" Height="56.7" Border.Lines="All" Text="Operation Code" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text43" Left="916.65" Top="66.15" Width="113.4" Height="56.7" Border.Lines="All" Text="Currency" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text45" Left="803.25" Top="66.15" Width="113.4" Height="56.7" Border.Lines="All" Text="Amount" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text47" Left="453.6" Top="66.15" Width="179.55" Height="56.7" Border.Lines="All" Text="Approved Payable Not Generated to Receivables" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text49" Left="1682.1" Top="66.15" Width="113.4" Height="56.7" Border.Lines="All" Text="Close Date" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text51" Left="1606.5" Top="66.15" Width="75.6" Height="56.7" Border.Lines="All" Text="Status" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+    </PageHeaderBand>
+    <GroupHeaderBand Name="GroupHeader1" Top="234.8" Width="1814.4" Condition="[Table.OperationID]">
+      <DataBand Name="Data1" Top="238.8" Width="1814.4" Height="47.25" AfterDataEvent="Data1_AfterData" DataSource="Table">
+        <TextObject Name="Text13" Left="1493.1" Width="113.4" Height="47.25" Border.Lines="All" Text="[Table.IssueDate]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text14" Left="113.4" Width="245.7" Height="47.25" Border.Lines="All" Text="[Table.OperationClientName]" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text15" Left="1266.3" Width="226.8" Height="47.25" Border.Lines="All" Text="[Table.PODName]" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text16" Left="1030.05" Width="236.25" Height="47.25" Border.Lines="All" Text="[Table.POLName]" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text18" Left="633.15" Width="170.1" Height="47.25" Border.Lines="All" Text="[Table.ChargeTypeName]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text19" Left="359.1" Width="94.5" Height="47.25" Border.Lines="All" Text="[Table.IsReceivable]" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text20" Width="113.4" Height="47.25" Border.Lines="All" Text="[Table.OperationCode]" Format="Date" Format.Format="d" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text44" Left="916.65" Width="113.4" Height="47.25" Border.Lines="All" Text="[Table.CurrencyCode]" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text46" Left="803.25" Width="113.4" Height="47.25" Border.Lines="All" Text="[Table.Amount]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text48" Left="453.6" Width="179.55" Height="47.25" Border.Lines="All" Text="[Table.IsPayable]" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text50" Left="1682.1" Width="113.4" Height="47.25" Border.Lines="All" Text="[Table.CloseDate]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text52" Left="1606.5" Width="75.6" Height="47.25" Border.Lines="All" Text="[Table.OperationStageName]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center"/>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter1" Top="290.05" Width="1814.4"/>
+    </GroupHeaderBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="294.05" Width="1814.4" Height="151.2">
+      <TextObject Name="Text28" Left="803.25" Top="56.7" Width="226.8" Height="28.35" Border.Lines="All" Text="Total No of Operations" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text29" Left="1030.05" Top="56.7" Width="236.25" Height="28.35" Border.Lines="All" Text="[numberOfGroups]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text22" Left="113.4" Top="28.35" Width="340.2" Height="28.35" Border.Lines="All" Text="Total in EGP" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text23" Left="453.6" Top="28.35" Width="179.55" Height="28.35" Border.Lines="All" Text="[sumSAR]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text24" Left="113.4" Top="56.7" Width="340.2" Height="28.35" Border.Lines="All" Text="Total in USD" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text25" Left="453.6" Top="56.7" Width="179.55" Height="28.35" Border.Lines="All" Text="[sumDollar]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text26" Left="113.4" Top="85.05" Width="340.2" Height="28.35" Border.Lines="All" Text="Total in EUR" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text27" Left="453.6" Top="85.05" Width="179.55" Height="28.35" Border.Lines="All" Text="[sumEuro]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+    </ReportSummaryBand>
+    <PageFooterBand Name="PageFooter1" Top="449.25" Width="1814.4"/>
+  </ReportPage>
+</Report>

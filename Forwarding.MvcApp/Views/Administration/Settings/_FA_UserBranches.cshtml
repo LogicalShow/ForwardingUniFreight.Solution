@@ -1,0 +1,155 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="Administration" href="javascript:void(0);" onclick="LoadViews('Settings')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.Administration
+    </a>
+</li>
+<li>
+    <a id="Settings" href="javascript:void(0);" onclick="LoadViews(id)">
+        @Forwarding.MvcApp.App_Resources.App_Resources.Settings
+</a>
+</li>
+<li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.FA_UserBranches</li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-FA_UserBranches">
+
+
+    <!-- Add / Edit FA_UserBranches Modal -->
+    <div class="modal fade" id="FA_UserBranchesModal" tabindex="-1" data-keyboard="false" data-backdrop="false"
+          role="dialog" aria-labelledby="FA_UserBranchesModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modalwidth-50">
+            <div class="modal-content">
+                <div class="modal-header">
+                    @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;</button>*@
+                    <h3 class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.FA_UserBranches &nbsp;
+                    <label id="lblShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <!-- Region Add / Edit FA_UserBranches Form -->
+                    <div class="span7 form vertical-mode" id="FA_UserBranches-form">
+                        <fieldset>
+                            <div class="form-group pull-in  has-error clearfix">
+                                <input id="hID" type="hidden" />
+                                <input id="hLastDepreciationDate" type="hidden" />
+                                <!-- start alert message region -->
+                                <div class="alert alert-danger div-error">
+                                    @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                </div>
+                                <!-- end alert message region -->
+
+                                <div class="form-group col-sm-12">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.User </label>
+                                    <select id="slUsers" class="form-control m-b" onchange="GetUserBranches(this);" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);"></select>
+                                </div>
+
+                            </div>
+                            <div class="form-group pull-in  has-error clearfix">
+                                <div class="form-group col-sm-12">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Branch</label>
+    
+                                  <select id="slBranches" class="form-control m-b" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);"></select>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <!-- Endegion Add / Edit FA_UserBranches Form -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnSave" class="btn btn-primary btn-sm" onclick="FA_UserBranches_Insert(false);">
+                        <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save</button>
+                    <button type="button" id="btnSaveandNew" class="btn btn-primary btn-sm hide" onclick="FA_UserBranches_Insert(true);">
+                        <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew</button>
+                    <button class="btnClose btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Region Options & Template  -->
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.FA_UserBranches  @*FA_UserBranches*@
+                </h3>
+            </header>
+            <div class="row text-sm wrapper hidden-print ">
+                <div id="div-main-options" class="col-sm-5 m-b-xs">
+                    <button id="btn-NewAdd" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#FA_UserBranchesModal">
+                    <i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.New</button>
+                    
+                    <div id="div-option-buttons" class="btn-group hide">
+                        <button id="btn-Copy" type="button" class="btn btn-sm btn-default"><i class="fa fa-copy"></i>Copy </button>
+                        <button id="btn-Print" type="button" class="btn btn-sm btn-default"><i class="fa fa-print"></i>Print </button>
+                        <button id="btn-Send" type="button" class="btn btn-sm btn-default"><i class="fa fa-envelope-o"></i>Send </button>
+                    </div>
+                </div>
+                <div id="div-search-option" class="col-sm-7">
+                    <div id="div-search-controls" class="input-group col-sm-9">
+                        <input id="txt-Search" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase"  type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="@Forwarding.MvcApp.App_Resources.App_Resources.SearchBranchesUsers">
+                        <span class="input-group-btn">
+                            <button id="btn-search" class="btn btn-sm btn-primary" type="button" onclick="FA_UserBranches_LoadingWithPaging();"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                    <div class="float-right col-sm-1">
+                        <button id="btn-Delete" type="button" class="float-right btn btn-sm btn-danger m-r-n"><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete</button>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table id="tblFA_UserBranches" class="table table-striped b-t b-light text-sm  table-hover">
+                    <thead>
+                        <tr>
+                            <th id="ID">
+                                <input  id="cb-CheckAll" type="checkbox" />
+                            </th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.User
+                            </th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Branch
+                            </th>
+                            <th class="hide">UserID    </th>
+                            <th class="hide">SafeID         </th>
+                            <th class="rounded-right hide">    </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <footer class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-4 hidden-xs">
+                        <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                            <option value="25" >25</option>
+                            <option value="50" selected>50</option>
+                            <option value="100">100</option>
+                        </select>
+                        <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                        </button>
+                    </div>
+                    <div id="div-Text-Total" class="col-sm-4 text-center">
+                        <small class="text-muted inline m-t-sm m-b-sm"> @Forwarding.MvcApp.App_Resources.App_Resources.Showing 
+                            <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                            <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                        </small>
+                    </div>
+                    <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+                </div>
+            </footer>
+        </section>
+    </div>
+</div>

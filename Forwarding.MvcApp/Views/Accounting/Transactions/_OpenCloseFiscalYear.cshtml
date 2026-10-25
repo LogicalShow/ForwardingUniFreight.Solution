@@ -1,0 +1,88 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="Accounting" href="javascript:void(0);" onclick="LoadViews('AccountingTransactions')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.Accounting
+    </a>
+</li>
+<li>
+    <a id="AccountingTransactions" href="javascript:void(0);" onclick="LoadViews(id)">
+        @Forwarding.MvcApp.App_Resources.App_Resources.AccountingTransactions
+</a>
+</li>
+<li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.OpenCloseFiscalYear</li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-OpenCloseFiscalYear">
+    <div id="div-Data">
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.OpenCloseFiscalYear
+                </h3>
+            </header>
+            <div class="span7 form vertical-mode" id="OpenCloseFiscalYear-form">
+                <fieldset class="swapChildrenClass">
+                    <div style="margin-left:25%;" class="form-group  col-sm-5 ">
+                        <br>
+                        <br>
+                        <div class="form-group col-sm-12 swapChildrenClass">
+                            <div class="form-group">
+                                <div id="div_ItemsType" class="swapChildrenClass" style="border:dashed 1px black!important; overflow-y:scroll;">
+                                    <label class="col-sm-4">@Forwarding.MvcApp.App_Resources.App_Resources.ActionType</label>  
+                                    <label class="col-sm-4">&nbsp;<input Tag="Close" onchange="ClearItems();" type="radio" checked value="0" name="OpenClose" id="cbIsCustomer" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Close &nbsp;&nbsp;&nbsp;&nbsp; </label>
+                                        <label class="col-sm-4"><input Tag="Open" type="radio" onchange="ClearItems();" value="1" name="OpenClose" id="cbIsSubAccount" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">@Forwarding.MvcApp.App_Resources.App_Resources.Open</label>
+                                        @*<label class=""><input type="radio" onchange="ClearItems();" value="3" name="ItemType" id="cbIsLines" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Lines&nbsp;&nbsp;&nbsp;&nbsp; </label>
+            <label class=""><input type="radio" onchange="ClearItems();" value="4" name="ItemType" id="cbIsCompanies" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Companies&nbsp;&nbsp;&nbsp;&nbsp; </label>
+            <label class=""><input type="radio" onchange="ClearItems();" value="5" name="ItemType" id="cbIsItems" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;Items&nbsp;&nbsp;&nbsp;&nbsp; </label>*@
+</div>
+                            </div>
+                        </div>
+                        <br />
+                        <div id="div-search-controls" class="input-group col-sm-12">
+                            <input id="txt-Search" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="@Forwarding.MvcApp.App_Resources.App_Resources.Search">
+                            <span class="input-group-btn">
+                                <button id="btn-search" class="btn btn-sm btn-primary" type="button" onclick="Fill_FiscalYears();">@Forwarding.MvcApp.App_Resources.App_Resources.FiscalYears &nbsp;&nbsp;<i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                        <br>
+                        <div class="form-group form-group">
+                            <div class="col-sm-6">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.FiscalYears</label>
+                                <select id="slFiscalYears" class="input-sm form-control" onchange=""></select>
+                            </div>
+                            <div class="col-sm-6">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ProfitandLossAccount</label>
+                                <select id="slAccount" class="input-sm form-control" onchange=""></select>
+                            </div>
+
+                        </div>
+                        <br>
+                        <div class="form-group col-sm-12 ">
+                            
+                            <div class="form-group">
+                               
+                                <button type="button" id="btnSave" class="btn btn-danger btn-sm float-right" onclick="ApplyOpenClose();">
+                                    <span class="fa fa-save"></span>&nbsp;<span id="btnName">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Close&nbsp;</span>
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <footer class="panel-footer">
+                <div class="row">
+
+                </div>
+            </footer>
+            <!--Region: footer-->
+        </section>
+    </div>
+</div>

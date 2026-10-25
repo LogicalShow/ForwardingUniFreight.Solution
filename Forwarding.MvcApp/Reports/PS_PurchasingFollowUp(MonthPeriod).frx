@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="03/03/2020 15:06:51" ReportInfo.Modified="02/20/2021 18:17:34" ReportInfo.CreatorVersion="2018.3.14.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqH8PF3dxkYYkh6pEphET1UY9ELQ1bIn4/M9D56Jt38xADja7dz7sl3CqUQ3LeC+MSQ/B6GxQJNOfAtMrjca9wIe0SyrcyEuSaWE1/bokHB5pOLkFkzjXCU8fGEybvpXO/72VbX+fWOjxVySBXYizuPuJCGEeei9usvjM4AE4uBK9E4cv6YDE5EKknnuifxfON4si7zFi9x4TZhTr6/29FOAD8r5Zty7jEvjh1Y7ZEK3chntCHSVN7NmSvWBpm6Aud">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="SELECT distinct V.ID, V.InvoiceNo, V.InvoiceDate, V.QuotationID, V.SupplierID, V.SupplierName, V.TotalBeforTax, V.TotalPrice, V.Discount, V.DiscountPercentage, V.Notes, V.DepartmentID, V.SalesManID, V.CostCenter_ID, V.InvCostCenter, V.PaymentMethodID, V.TransactionID, V.PaymentMethodName, V.IsApproved, V.ISDiscountBeforeTax, V.InvoiceNoManual, V.OrderID, V.JVID, V.CurrencyID, V.IsFixedDiscount, V.EntitlementDays, V.CurrencyCode, V.ExchangeRate, V.LocalTotalBeforeTax, V.LocalTotal, V.IsDeleted, V.PaidAmount, V.RemainAmount, V.SupplierInvoiceNo, V.TaxesAmount, V.ItemsAmount, V.ServicesAmount, V.ExpensesAmount, V.IsFromTrans, V.TransactionsCount &#13;&#10; , ISNULL( ( SELECT SUM(pit.TaxAmount) FROM dbo.PS_InvoicesTaxes AS pit WHERE pit.TaxValue = 14 AND pit.InvoiceID = v.ID ) , 0.00 ) AS VAT_Taxes&#13;&#10; , ISNULL( ( SELECT SUM(pit.TaxAmount) FROM dbo.PS_InvoicesTaxes AS pit WHERE pit.TaxValue = 1 AND pit.InvoiceID =v.ID ) , 0.00 ) AS dis_Taxes&#13;&#10; , ISNULL( ( SELECT SUM(pit.TaxAmount) FROM dbo.PS_InvoicesTaxes AS pit WHERE pit.TaxValue &lt;&gt; 1 AND pit.TaxValue &lt;&gt; 14 AND pit.InvoiceID = v.ID ) , 0.00 ) AS Other_Taxes&#13;&#10;FROM &quot;vwPS_InvoicesDetails&quot; V&#13;&#10;where&#13;&#10;        (@SupplierIDs = '-1' or @SupplierIDs =N'-1'  or  V.SupplierID IN(SELECT CONVERT(INT , value ) from [fn_split]( @SupplierIDs, '*') ))&#13;&#10;AND (@ItemIDs = '-1' or @ItemIDs =N'-1'  or  V.D_ItemID  IN(SELECT CONVERT(INT , value ) from [fn_split]( @ItemIDs, '*') ))&#13;&#10; AND  isnull(IsDeleted , 0) = 0 AND isnull(V.D_ItemID , 0 ) &lt;&gt; 0 AND  ( CONVERT(date , V.InvoiceDate) between  CONVERT(date ,@FromDate) and  CONVERT(date , @ToDate) ) &#13;&#10;">
+        <Column Name="InvoiceNo" DataType="System.String"/>
+        <Column Name="Notes" DataType="System.String"/>
+        <Column Name="DiscountPercentage" DataType="System.Decimal"/>
+        <Column Name="Discount" DataType="System.Decimal"/>
+        <Column Name="InvoiceDate" DataType="System.DateTime"/>
+        <Column Name="TotalPrice" DataType="System.Decimal"/>
+        <Column Name="TotalBeforTax" DataType="System.Decimal"/>
+        <Column Name="CurrencyCode" DataType="System.String"/>
+        <Column Name="IsDeleted" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="PaidAmount" DataType="System.Decimal"/>
+        <Column Name="RemainAmount" DataType="System.Decimal"/>
+        <Column Name="TaxesAmount" DataType="System.Decimal"/>
+        <Column Name="ItemsAmount" DataType="System.Decimal"/>
+        <Column Name="ServicesAmount" DataType="System.Decimal"/>
+        <Column Name="ExpensesAmount" DataType="System.Decimal"/>
+        <Column Name="IsFixedDiscount" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="LocalTotal" DataType="System.Decimal"/>
+        <Column Name="LocalTotalBeforeTax" DataType="System.Decimal"/>
+        <Column Name="ExchangeRate" DataType="System.Decimal"/>
+        <Column Name="ID" DataType="System.Int64"/>
+        <Column Name="QuotationID" DataType="System.Int32"/>
+        <Column Name="DepartmentID" DataType="System.Int32"/>
+        <Column Name="SalesManID" DataType="System.Int32"/>
+        <Column Name="CostCenter_ID" DataType="System.Int32"/>
+        <Column Name="InvCostCenter" DataType="System.String"/>
+        <Column Name="PaymentMethodID" DataType="System.Int32"/>
+        <Column Name="PaymentMethodName" DataType="System.String"/>
+        <Column Name="IsApproved" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="ISDiscountBeforeTax" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="InvoiceNoManual" DataType="System.String"/>
+        <Column Name="OrderID" DataType="System.Int32"/>
+        <Column Name="JVID" DataType="System.Int32"/>
+        <Column Name="CurrencyID" DataType="System.Int32"/>
+        <Column Name="IsFromTrans" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="TransactionsCount" DataType="System.Int32"/>
+        <Column Name="TransactionID" DataType="System.Int32"/>
+        <Column Name="SupplierID" DataType="System.Int32"/>
+        <Column Name="SupplierName" DataType="System.String"/>
+        <Column Name="EntitlementDays" DataType="System.Int32"/>
+        <Column Name="SupplierInvoiceNo" DataType="System.String"/>
+        <Column Name="VAT_Taxes" DataType="System.Decimal"/>
+        <Column Name="dis_Taxes" DataType="System.Decimal"/>
+        <Column Name="Other_Taxes" DataType="System.Decimal"/>
+        <CommandParameter Name="@FromDate" DataType="22" Expression="[FromDate]"/>
+        <CommandParameter Name="@ToDate" DataType="22" Expression="[ToDate]"/>
+        <CommandParameter Name="@SupplierIDs" DataType="22" Expression="[SupplierIDs]"/>
+        <CommandParameter Name="@ItemIDs" DataType="22" Expression="[ItemIDs]"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="FromDate" DataType="System.String"/>
+    <Parameter Name="ToDate" DataType="System.String"/>
+    <Parameter Name="SupplierIDs" DataType="System.String"/>
+    <Parameter Name="ItemIDs" DataType="System.String"/>
+    <Total Name="services" Expression="[Table.ServicesAmount]*[Table.ExchangeRate]" Evaluator="Data1" PrintOn="GroupFooter1"/>
+    <Total Name="Expenses" Expression="[Table.ExpensesAmount]*[Table.ExchangeRate]" Evaluator="Data1" PrintOn="GroupFooter1"/>
+    <Total Name="items" Expression="[Table.ItemsAmount]*[Table.ExchangeRate]" Evaluator="Data1" PrintOn="GroupFooter1"/>
+    <Total Name="taxes" Expression="[Table.TaxesAmount]*[Table.ExchangeRate]" Evaluator="Data1" PrintOn="GroupFooter1"/>
+    <Total Name="Discount" Expression="[Table.Discount]*[Table.ExchangeRate]" Evaluator="Data1" PrintOn="GroupFooter1"/>
+    <Total Name="DiscountAll" Expression="[Table.Discount]*[Table.ExchangeRate]" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="TaxesAll" Expression="[Table.TaxesAmount]*[Table.ExchangeRate]" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="ItemsAll" Expression="[Table.ItemsAmount]*[Table.ExchangeRate]" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="serviceAll" Expression="[Table.ServicesAmount]*[Table.ExchangeRate]" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="ExpensesAll" Expression="[Table.ExpensesAmount]*[Table.ExchangeRate]" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="vat" Expression="[Table.VAT_Taxes]*[Table.ExchangeRate]" Evaluator="Data1" PrintOn="GroupFooter1"/>
+    <Total Name="wht" Expression="[Table.dis_Taxes]*[Table.ExchangeRate]" Evaluator="Data1" PrintOn="GroupFooter1"/>
+    <Total Name="Totalvat" Expression="[Table.VAT_Taxes]*[Table.ExchangeRate]" Evaluator="Data1" PrintOn="ReportSummary1"/>
+    <Total Name="Totalwht" Expression="[Table.dis_Taxes]*[Table.ExchangeRate]" Evaluator="Data1" PrintOn="ReportSummary1"/>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="9.45"/>
+    <PageHeaderBand Name="PageHeader1" Top="13.62" Width="718.2" Height="75.6">
+      <TextObject Name="Text34" Left="66.15" Width="595.35" Height="37.8" Border.Lines="Top, Bottom" Border.Style="Dash" Text="Purchasing Follow-Up (Total For Period)" HorzAlign="Center" VertAlign="Center" Font="Arial Black, 16pt, style=Bold"/>
+      <TextObject Name="Text22" Left="217.35" Top="47.25" Width="132.3" Height="18.9" Text="[Convert.ToDateTime([FromDate])]" Format="Custom" Format.Format="dd/MM/yyyy"/>
+      <TextObject Name="Text43" Left="387.45" Top="47.25" Width="170.1" Height="18.9" Text="[Convert.ToDateTime([ToDate])]" Format="Custom" Format.Format="dd/MM/yyyy"/>
+      <TextObject Name="Text23" Left="160.65" Top="47.25" Width="56.7" Height="18.9" Text="From :" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text44" Left="349.65" Top="47.25" Width="37.8" Height="18.9" Text="To :" Font="Arial, 10pt, style=Bold"/>
+    </PageHeaderBand>
+    <GroupHeaderBand Name="GroupHeader1" Top="93.38" Width="718.2" Height="56.7" KeepWithData="true" RepeatOnEveryPage="true" Condition="Month([Table.InvoiceDate])+&quot;/&quot;+Year([Table.InvoiceDate])" KeepTogether="true">
+      <TextObject Name="Text1" Top="9.45" Width="132.3" Height="18.9" Text="[Month([Table.InvoiceDate])]/[Year([Table.InvoiceDate])]" Font="Arial, 11pt, style=Bold" TextFill.Color="DimGray"/>
+      <TextObject Name="Text10" Top="37.8" Width="94.5" Height="18.9" Border.Lines="All" Fill.Color="DarkGray" Text="Supplier" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Text35" Left="94.5" Top="37.8" Width="75.6" Height="18.9" Border.Lines="All" Fill.Color="DarkGray" Text="Date" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Text36" Left="170.1" Top="37.8" Width="75.6" Height="18.9" Border.Lines="All" Fill.Color="DarkGray" Text="Invoice No" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Text37" Left="245.7" Top="37.8" Width="75.6" Height="18.9" Border.Lines="All" Fill.Color="DarkGray" Text="Discount" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Text38" Left="321.3" Top="37.8" Width="75.6" Height="18.9" Border.Lines="All" Fill.Color="DarkGray" Text="VAT" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Text39" Left="463.05" Top="37.8" Width="94.5" Height="18.9" Border.Lines="All" Fill.Color="DarkGray" Text="Items" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Text40" Left="557.55" Top="37.8" Width="94.5" Height="18.9" Border.Lines="All" Fill.Color="DarkGray" Text="Services" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Text41" Left="652.05" Top="37.8" Width="66.15" Height="18.9" Border.Lines="All" Fill.Color="DarkGray" Text="Expenses" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Text46" Left="396.9" Top="37.8" Width="66.15" Height="18.9" Border.Lines="All" Fill.Color="DarkGray" Text="WHT" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      <DataBand Name="Data1" Top="154.25" Width="718.2" Height="37.8" DataSource="Table">
+        <TextObject Name="Text2" Width="94.5" Height="37.8" Border.Lines="All" Text="[Table.SupplierName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text3" Left="170.1" Width="75.6" Height="37.8" Border.Lines="All" Text="[Table.InvoiceNo]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text4" Left="94.5" Width="75.6" Height="37.8" Border.Lines="All" Text="[Table.InvoiceDate]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        <TextObject Name="Text5" Left="245.7" Width="75.6" Height="37.8" Border.Lines="All" Text="[[Table.Discount]*[Table.ExchangeRate]]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="3" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 8pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text9" Left="321.3" Width="75.6" Height="37.8" Border.Lines="All" Text="[[Table.VAT_Taxes]*[Table.ExchangeRate]]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="3" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 8pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text6" Left="463.05" Width="94.5" Height="37.8" Border.Lines="All" Text="[[Table.ItemsAmount]*[Table.ExchangeRate]]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="3" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 8pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text7" Left="557.55" Width="94.5" Height="37.8" Border.Lines="All" Text="[[Table.ServicesAmount]*[Table.ExchangeRate]]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="3" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 8pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text8" Left="652.05" Width="66.15" Height="37.8" Border.Lines="All" Text="[[Table.ExpensesAmount]*[Table.ExchangeRate]]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="3" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 8pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text45" Left="396.9" Width="66.15" Height="37.8" Border.Lines="All" Text="[[Table.dis_Taxes]*[Table.ExchangeRate]]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="3" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 8pt" Trimming="EllipsisCharacter"/>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter1" Top="196.22" Width="718.2" Height="94.5">
+        <TextObject Name="Text13" Left="463.05" Top="9.45" Width="94.5" Height="28.35" Fill.Color="LightGray" Text="[items]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="3" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+        <TextObject Name="Text11" Left="557.55" Top="9.45" Width="94.5" Height="28.35" Fill.Color="LightGray" Text="[services]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="3" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+        <TextObject Name="Text12" Left="652.05" Top="9.45" Width="66.15" Height="28.35" Fill.Color="LightGray" Text="[Expenses]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="3" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+        <TextObject Name="Text15" Left="245.7" Top="9.45" Width="75.6" Height="28.35" Fill.Color="LightGray" Text="[Discount]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="3" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+        <TextObject Name="Text16" Left="9.45" Top="18.9" Width="226.8" Height="56.7" Text="Total For Month [Month([Table.InvoiceDate])+&quot;/&quot;+Year([Table.InvoiceDate])] :" Font="Arial, 11pt, style=Bold" TextFill.Color="DimGray"/>
+        <TextObject Name="Text47" Left="321.3" Top="9.45" Width="75.6" Height="28.35" Fill.Color="LightGray" Text="[vat]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="3" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+        <TextObject Name="Text48" Left="396.9" Top="9.45" Width="66.15" Height="28.35" Fill.Color="LightGray" Text="[wht]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="3" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      </GroupFooterBand>
+    </GroupHeaderBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="294.88" Width="718.2" Height="85.05">
+      <TextObject Name="Text17" Left="47.25" Top="37.8" Width="113.4" Height="18.9" Border.Lines="Bottom" Fill.Color="Gainsboro" Text="[DiscountAll]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Text19" Left="406.35" Top="37.8" Width="94.5" Height="18.9" Border.Lines="Bottom" Fill.Color="Gainsboro" Text="[ItemsAll]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="3" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Text20" Left="519.75" Top="37.8" Width="94.5" Height="18.9" Border.Lines="Bottom" Fill.Color="Gainsboro" Text="[serviceAll]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="3" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Text21" Left="623.7" Top="37.8" Width="94.5" Height="18.9" Border.Lines="Bottom" Fill.Color="Gainsboro" Text="[ExpensesAll]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="3" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Text49" Left="179.55" Top="37.8" Width="103.95" Height="18.9" Border.Lines="Bottom" Fill.Color="Gainsboro" Text="[Totalvat]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Text50" Left="302.4" Top="37.8" Width="94.5" Height="18.9" Border.Lines="Bottom" Fill.Color="Gainsboro" Text="[Totalwht]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Text51" Left="47.25" Width="113.4" Height="28.35" Text="Total Discount" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Text52" Left="179.55" Width="103.95" Height="28.35" Text="Total VAT" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Text53" Left="302.4" Width="94.5" Height="28.35" Text="Total WHT" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Text54" Left="396.9" Width="113.4" Height="28.35" Text="Total Items &#13;&#10;Amount" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Text55" Left="519.75" Width="94.5" Height="28.35" Text="Total Services &#13;&#10;Amount" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Text56" Left="623.7" Width="94.5" Height="28.35" Text="Total Expenses Amount" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+    </ReportSummaryBand>
+    <PageFooterBand Name="PageFooter1" Top="384.1" Width="718.2" Height="47.25"/>
+  </ReportPage>
+</Report>

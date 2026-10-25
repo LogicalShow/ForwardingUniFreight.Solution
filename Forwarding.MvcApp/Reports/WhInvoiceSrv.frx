@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="08/05/2024 00:09:51" ReportInfo.Modified="08/05/2024 01:09:46" ReportInfo.CreatorVersion="2018.3.14.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFtHJVZLL/i3PN7CkdFc/1A7YXJU6T13VfFIAjI9Ib2eHK43COXIAb1+oG8abaGcWEZGpgJFPBP3+b+JobTIAbFImpu7AL5/m4I+6ScGE9e6WjDfiveqdM4GY1NsEAX+IA1Kv91fN+ZWCpwdpXJVvVKg==">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="exec (@query)">
+        <Column Name="ID" DataType="System.Int64"/>
+        <Column Name="CodeSerial" DataType="System.Int32"/>
+        <Column Name="Code" DataType="System.String"/>
+        <Column Name="InvoiceDate" DataType="System.DateTime"/>
+        <Column Name="Amount" DataType="System.Decimal"/>
+        <Column Name="CurrencyID" DataType="System.Int32"/>
+        <Column Name="CurrencyName" DataType="System.String"/>
+        <Column Name="ExchangeRate" DataType="System.Decimal"/>
+        <Column Name="WarehouseID" DataType="System.Int32"/>
+        <Column Name="WarehouseName" DataType="System.String"/>
+        <Column Name="CustomerID" DataType="System.Int32"/>
+        <Column Name="CustomerName" DataType="System.String"/>
+        <Column Name="Notes" DataType="System.String"/>
+        <Column Name="ReceiveCode" DataType="System.String"/>
+        <Column Name="PickupCode" DataType="System.String"/>
+        <Column Name="ChargeTypeID" DataType="System.Int32"/>
+        <Column Name="ChargeTypeName" DataType="System.String"/>
+        <Column Name="SpacePerPallet" DataType="System.Decimal"/>
+        <Column Name="Days" DataType="System.Int32"/>
+        <Column Name="Qty" DataType="System.Decimal"/>
+        <Column Name="Rate" DataType="System.Decimal"/>
+        <Column Name="DetailsAmount" DataType="System.Decimal"/>
+        <Column Name="DetailsNotes" DataType="System.String"/>
+        <CommandParameter Name="query" DataType="12" Expression="[query]" DefaultValue="select * from vwWH_InvoiceDetails_rpt"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="dummy" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="47.25">
+      <TextObject Name="Text4" Left="264.6" Width="113.4" Height="37.8" Border.Shadow="true" Border.ShadowColor="WhiteSmoke" Text="Invoice" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="51.25" Width="718.2" Height="141.75">
+      <TextObject Name="Text2" Top="113.4" Width="189" Height="28.35" Border.Lines="All" Fill.Color="WhiteSmoke" Text="Charge" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text3" Left="189" Top="113.4" Width="189" Height="28.35" Border.Lines="All" Fill.Color="WhiteSmoke" Text="Amount" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text7" Left="9.45" Top="66.15" Width="94.5" Height="18.9" Text="Amount" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text10" Left="103.95" Top="66.15" Width="94.5" Height="18.9" Text="[Table.Amount]"/>
+      <TextObject Name="Text13" Left="226.8" Top="66.15" Width="94.5" Height="18.9" Text="Notes" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text16" Left="321.3" Top="66.15" Width="387.45" Height="18.9" Text="[Table.Notes]"/>
+      <TextObject Name="Text6" Left="9.45" Top="37.8" Width="94.5" Height="18.9" Text="Date" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text9" Left="103.95" Top="37.8" Width="94.5" Height="18.9" Text="[Table.InvoiceDate]"/>
+      <TextObject Name="Text12" Left="226.8" Top="37.8" Width="94.5" Height="18.9" Text="Warehouse" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text15" Left="321.3" Top="37.8" Width="387.45" Height="18.9" Text="[Table.WarehouseName]"/>
+      <TextObject Name="Text5" Left="9.45" Top="9.45" Width="94.5" Height="18.9" Text="Code" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text8" Left="103.95" Top="9.45" Width="94.5" Height="18.9" Text="[Table.Code]"/>
+      <TextObject Name="Text11" Left="226.8" Top="9.45" Width="94.5" Height="18.9" Text="Customer" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text14" Left="321.3" Top="9.45" Width="387.45" Height="18.9" Text="[Table.CustomerName]"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="197" Width="718.2" Height="75.6" DataSource="Table">
+      <TextObject Name="Text1" Width="189" Height="28.35" Border.Lines="All" Text="[Table.ChargeTypeName]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text17" Left="189" Width="189" Height="28.35" Border.Lines="All" Text="[Table.DetailsAmount]" HorzAlign="Center" VertAlign="Center"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="276.6" Width="718.2" Height="18.9"/>
+  </ReportPage>
+</Report>

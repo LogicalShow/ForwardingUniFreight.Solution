@@ -1,0 +1,131 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li><a id="hl-homepage" href="javascript:void(0);" onclick="LoadViews(id);"><i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+    </a></li>
+    <li><a id="Reports" href="javascript:void(0);" onclick="LoadViews('OperAccountingReports')">@Forwarding.MvcApp.App_Resources.App_Resources.Reports
+    </a></li>
+    <li><a id="AccountingReports" href="javascript:void(0);" onclick="LoadViews('OperAccountingReports');">@Forwarding.MvcApp.App_Resources.App_Resources.AccountingReports
+    </a></li>
+    <li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.CustodyStatement</li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-Statements">
+    <!-- Region Options & Template  -->
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <div id="hExportedTable" class="hide"></div>
+                <h3 class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.FilterBy</h3>
+                @*<h3 class="m-b-none">Best Print Using Internet Explorer</h3>*@
+            </header>
+            <!--Region the searh, delete, addnew-->
+            <div class="row text-sm wrapper hidden-print m-l">
+                <div id="div-main-options">
+                    <!--Region Filter-->
+                    <div id="divTransportFilter" class="btn-group hide" data-toggle="buttons"> 
+                        <label class="btn btn-sm btn-default active" id="lbl-filter-AllTransports" title="All Types"   > <input type="radio" name="options">   <i class="fa text-active"></i> @Forwarding.MvcApp.App_Resources.App_Resources.All</label>
+                        <label class="btn btn-sm btn-default       " id="lbl-filter-ocean"         title="Ocean" > <input type="radio" name="options"> <i class="fa text-active ">    </i> <i class="fa fa-anchor   "></i>    </label> 
+                        <label class="btn btn-sm btn-default       " id="lbl-filter-air"           title="Air"   > <input type="radio" name="options"> <i class="fa text-active ">  </i> <i class="fa fa-plane    "></i>    </label> 
+                        <label class="btn btn-sm btn-default       " id="lbl-filter-inland"        title="Inland"> <input type="radio" name="options"> <i class="fa text-active  "></i> <i class="fa fa-truck     "></i>    </label>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;
+                    <div id="divDirectionFilter" class="btn-group hide" data-toggle="buttons"> 
+                        <label class="btn btn-sm btn-default active" id="lbl-filter-AllDirections" title="All Directions"     > <input type="radio" name="options">   <i class="fa text-active"></i> @Forwarding.MvcApp.App_Resources.App_Resources.All</label>
+                        <label class="btn btn-sm btn-default       " id="lbl-filter-import"        title="Import"  > <input type="radio" name="options">   <i class="fa text-active"  >    </i> <i class="fa fa-arrow-circle-down"></i> </label> 
+                        <label class="btn btn-sm btn-default       " id="lbl-filter-export"        title="Export"  > <input type="radio" name="options">   <i class="fa text-active"  >  </i> <i class="fa fa-external-link      "></i> </label> 
+                        <label class="btn btn-sm btn-default       " id="lbl-filter-domestic"      title="Domestic"> <input type="radio" name="options">   <i class="fa text-active"></i> <i class="fa fa-home                   "></i> </label>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;
+                    <div id="divBLTypeFilter" class="btn-group hide" data-toggle="buttons"> 
+                        <label class="btn btn-sm btn-default active" id="lbl-filter-AllBLTypes" title="All B/L Types"     > <input type="radio" name="options">   <i class="fa text-active"></i> @Forwarding.MvcApp.App_Resources.App_Resources.All</label>
+                        <label class="btn btn-sm btn-default       " id="lbl-filter-direct"     title="Direct"> <input type="radio" name="options">   <i class="fa text-active"  >    </i> <i class="fa fa-indent"  ></i>    </label> 
+                        <label class="btn btn-sm btn-default       " id="lbl-filter-house"      title="House" > <input type="radio" name="options">   <i class="fa text-active"  >  </i> <i class="fa fa-link      "  ></i>  </label> 
+                        <label class="btn btn-sm btn-default       " id="lbl-filter-master"     title="Master"> <input type="radio" name="options">   <i class="fa text-active"></i> <i class="fa fa-book                   "></i> </label>
+                    </div>
+                    @*  to get the StageID selected $("#ulOperationStages li[class=active]").val() *@
+                    &nbsp;&nbsp;&nbsp;
+                    @*<div class="btn-group m-r">
+                        <button data-toggle="dropdown" class="btn btn-sm btn-default dropdown-toggle"><span class="dropdown-label">@Forwarding.MvcApp.App_Resources.App_Resources.AllStages</span> <span class="caret"></span></button>
+                        <ul id="ulOperationStages" class="dropdown-menu dropdown-select">*@
+                            @*<li class="active" value="0"><a href="#"><input type="radio" name="d-s-r">ALL STAGES</a></li>
+                            <li class="" value="1"><a href="#"><input type="radio" name="d-s-r">CREATED</a></li>
+                            <li class="" value="2"><a href="#"><input type="radio" name="d-s-r">SENT</a></li>
+                            <li class="" value="3"><a href="#"><input type="radio" name="d-s-r">DRAFT</a></li>
+                            <li class="" value="5"><a href="#"><input type="radio" name="d-s-r">DECLINED</a></li>
+                            <li class="" value="4"><a href="#"><input type="radio" name="d-s-r">ACCEPTED</a></li>*@
+                            @*<li class="disabled"><a href="#"><input type="radio" name="d-s-r" disabled="">I'm disabled</a></li>*@
+                        @*</ul>
+                    </div>*@
+                    <br /><br />
+                    <div class="form-group col-sm-3 m-l-n hide">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Branch</label>
+                        <select id="slBranch" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                    </div>
+                    
+                    <div class="input-group col-sm-2 m-l-n hide">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.PartnerType</label>
+                        <select id="slPartnerType" onchange="Statements_PartnerTypeChanged();" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                    </div>
+
+                    <div class="form-group col-sm-3 m-l-n">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Partner</label>
+                        <select id="slPartner" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                    </div>
+                    @*<div class="form-group col-sm-3 m-l-n m-t-n-sm"><br><br><br><br></div>
+                    <div class="form-group col-sm-3 m-l-n hide">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Currency</label>
+                        <select id="slCurrency" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                    </div>
+                    <div class="form-group col-sm-3 m-l-n">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.OperationStatus</label>
+                        <select id="slOperationStages" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                    </div>*@
+                    @*<br /><br /><br /><br />*@
+                    <div class="form-group col-sm-2 m-l-n">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Currency</label>
+                        <select id="slCurrency" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                    </div>
+                    <div class="form-group col-sm-2 m-l-n">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.From</label>
+                        <input id="txtFromDate" readonly="readonly" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="input-sm datepicker-input form-control" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                    </div>
+                    <div class="form-group col-sm-2 m-l-n">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.To</label>
+                        <input id="txtToDate" readonly="readonly" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="input-sm datepicker-input form-control" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                    </div>
+                    <div class="col-sm-3 m-l-n-sm m-t-sm hide">
+                        <br />
+                        <label> <input type="checkbox" id="cbIncludeAllocations" checked="checked" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"> Calculate Regarding Allocations</label>
+                    </div>
+                    @*<div class="col-sm-3 m-l-n-sm m-t-sm">
+                        <br />
+                        <label> <input type="checkbox" id="cbIncludeCurrenciesDetails" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"> Show Currencies Details</label>
+                        <br /><br />
+                    </div>*@
+                    
+                    <div>
+                        @*<div class="btn-group m-t-n-xs m-r hide">
+                            <button data-toggle="dropdown" class="btn btn-sm btn-default dropdown-toggle"><span class="dropdown-label">PDF File</span> <span class="caret"></span></button>
+                            <ul id="ulReportTypes" class="dropdown-menu dropdown-select">
+                            </ul>
+                        </div>*@
+                        <br />
+                        <div class="col-sm-3 m-l-n m-t-xs" data-toggle="buttons"> 
+                            <button id="btn-print" type="button" class="btn btn-lightblue btn-sm" onclick="Statements_Print('Print');"><i class="fa fa-print"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Print</button>
+                            <button id="btn-ExportToExcel" type="button" onclick="Statements_Print('Excel');" class="btn btn-sm btn-primary"><i class="fa fa-table"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.TraExportExcel&nbsp;</b></button>
+                        </div>
+                    </div>
+                    <!--EOF Region Filter-->
+                </div>
+            </div>
+            <!--EOF Region the searh, delete, addnew line-->
+            
+            
+        </section>
+    </div>
+</div>

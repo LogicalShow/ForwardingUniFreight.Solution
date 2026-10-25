@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="02/24/2022 13:11:41" ReportInfo.Modified="02/24/2022 13:44:30" ReportInfo.CreatorVersion="2018.3.14.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFcprtaVHUEEAazxZnD2sC23nbdShReaLEpqZVlj9ksKPPGbd/vCFGduAah4HeRGDWMivX44BE+vLGJrdxPkEHe1f4o1Lsj7sQ7Blsf6YMvkw/O3Si9+83KGs/UYn/ZsSH">
+      <TableDataSource Name="Table" Alias="Rep_DeliveryOrders" DataType="System.Int32" Enabled="true" SelectCommand="exec Rep_DocsOut @ID">
+        <Column Name="ConsigneeName" DataType="System.String"/>
+        <Column Name="ClientName" DataType="System.String"/>
+        <Column Name="LineName" DataType="System.String"/>
+        <Column Name="LineLocalName" DataType="System.String"/>
+        <Column Name="Code" DataType="System.String"/>
+        <Column Name="ACIDNumber" DataType="System.String"/>
+        <Column Name="Notify1Name" DataType="System.String"/>
+        <Column Name="POLName" DataType="System.String"/>
+        <Column Name="PODName" DataType="System.String"/>
+        <Column Name="ETAPOLDate" DataType="System.DateTime"/>
+        <Column Name="ContainerNumbers" DataType="System.String"/>
+        <Column Name="NumberOfPackages" DataType="System.Int32"/>
+        <Column Name="CityCountryName" DataType="System.String"/>
+        <Column Name="StreetLine1" DataType="System.String"/>
+        <Column Name="StreetLine2" DataType="System.String"/>
+        <Column Name="ConsigneeAddress" DataType="System.String"/>
+        <Column Name="PackageTypeID" DataType="System.Int32"/>
+        <Column Name="ClientAddress" DataType="System.String"/>
+        <Column Name="MasterBL" DataType="System.String"/>
+        <Column Name="HouseBLs" DataType="System.String"/>
+        <Column Name="PackageTypesOnContainersTotals" DataType="System.String"/>
+        <Column Name="NumberOfPackages1" DataType="System.Int32"/>
+        <Column Name="GrossWeight" DataType="System.Decimal"/>
+        <Column Name="GrossWeightSum" DataType="System.Decimal"/>
+        <Column Name="FlightNo" DataType="System.String"/>
+        <Column Name="FlightNo1" DataType="System.String"/>
+        <Column Name="FlightNo2" DataType="System.String"/>
+        <Column Name="FlightNo3" DataType="System.String"/>
+        <Column Name="ActualArrival" DataType="System.DateTime"/>
+        <Column Name="FlightDate1" DataType="System.DateTime"/>
+        <Column Name="FlightDate2" DataType="System.DateTime"/>
+        <Column Name="FlightDate3" DataType="System.DateTime"/>
+        <Column Name="CommodityName" DataType="System.String"/>
+        <Column Name="OpenDate" DataType="System.DateTime"/>
+        <Column Name="BookingNumbers" DataType="System.String"/>
+        <Column Name="ChargeableWeight" DataType="System.Decimal"/>
+        <Column Name="ShippingLineName" DataType="System.String"/>
+        <Column Name="ShipperName" DataType="System.String"/>
+        <Column Name="IncotermName" DataType="System.String"/>
+        <Column Name="CertificateNumber" DataType="System.String"/>
+        <Column Name="AirlineName" DataType="System.String"/>
+        <Column Name="ContainerNumbers1" DataType="System.String"/>
+        <Column Name="ContainerTypes" DataType="System.String"/>
+        <Column Name="ContainerTypeCode" DataType="System.String"/>
+        <Column Name="CarrierSeal" DataType="System.String"/>
+        <Column Name="ContainerTypeName" DataType="System.String"/>
+        <Column Name="ContainerNumber" DataType="System.String"/>
+        <Column Name="NumberOfPackagesOnContainer" DataType="System.Int32"/>
+        <Column Name="DescriptionOfGoods" DataType="System.String"/>
+        <Column Name="Description" DataType="System.String"/>
+        <Column Name="NumberOfContainers" DataType="System.Int32"/>
+        <Column Name="CarrierSeal2" DataType="System.String"/>
+        <Column Name="NumberOfPackagesOnContainer2" DataType="System.String"/>
+        <Column Name="ContainerNumberInLine" DataType="System.String"/>
+        <Column Name="ContainerNumberCarrierSeal" DataType="System.String"/>
+        <Column Name="ConsigneePhonesAndFaxes" DataType="System.String"/>
+        <Column Name="ShipperAddress" DataType="System.String"/>
+        <Column Name="ShipperPhonesAndFaxes" DataType="System.String"/>
+        <Column Name="Notify1Name1" DataType="System.String"/>
+        <Column Name="Notify2Name" DataType="System.String"/>
+        <Column Name="Notify1Address" DataType="System.String"/>
+        <Column Name="Notify2Address" DataType="System.String"/>
+        <Column Name="VoyageOrTruckNumber" DataType="System.String"/>
+        <Column Name="DescriptionOfGoods1" DataType="System.String"/>
+        <Column Name="VolumeSum" DataType="System.Decimal"/>
+        <Column Name="TransientTime" DataType="System.Int32"/>
+        <Column Name="POrCName" DataType="System.String"/>
+        <Column Name="VesselName" DataType="System.String"/>
+        <Column Name="PackageTypes" DataType="System.String"/>
+        <Column Name="ShipmentType" DataType="System.Int32"/>
+        <Column Name="TransportType" DataType="System.Int32"/>
+        <Column Name="ChargeableWeightSum" DataType="System.Decimal"/>
+        <Column Name="ExpectedDeparture" DataType="System.DateTime"/>
+        <Column Name="AgentName" DataType="System.String"/>
+        <Column Name="HouseNumber" DataType="System.String"/>
+        <Column Name="HouseClients" DataType="System.String"/>
+        <Column Name="ConsolContainerNumber" DataType="System.String"/>
+        <Column Name="HouseCarrierSeal" DataType="System.String"/>
+        <Column Name="HouseContainer" DataType="System.String"/>
+        <Column Name="FreightPayableAt" DataType="System.String"/>
+        <Column Name="NumberOfOriginalBills" DataType="System.Int32"/>
+        <Column Name="MarksAndNumbers" DataType="System.String"/>
+        <Column Name="ShippedOnBoardDate" DataType="System.DateTime"/>
+        <CommandParameter Name="ID" DataType="22" Expression="[ID]"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="ID" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9">
+    <ReportTitleBand Name="ReportTitle1" Width="1047.06" Height="746.55">
+      <TextObject Name="Text1" Left="9.45" Top="132.3" Width="1030.05" Height="18.9" Fill.Color="Silver" Text="Air Freight Manifest" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text2" Left="9.45" Top="160.65" Width="1030.05" Height="18.9" Fill.Color="Silver" Text="CONSOL DETAILS" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text3" Left="9.45" Top="189" Width="340.2" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="EXPORT AGENT" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text4" Left="359.1" Top="189" Width="349.65" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="IMPORT AGENT" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text5" Left="718.2" Top="189" Width="321.3" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="DEPARTURE CFS" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text6" Left="9.45" Top="207.9" Width="340.2" Height="56.7" Border.Lines="Left, Right, Bottom" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text7" Left="359.1" Top="207.9" Width="349.65" Height="56.7" Border.Lines="Left, Right, Bottom" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text8" Left="718.2" Top="207.9" Width="321.3" Height="56.7" Border.Lines="Left, Right, Bottom" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text9" Left="9.45" Top="274.05" Width="160.65" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="OTAL WEIGHT" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text10" Left="179.55" Top="274.05" Width="170.1" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="CHARGEABLE" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text11" Left="9.45" Top="292.95" Width="160.65" Height="18.9" Border.Lines="Left, Right, Bottom" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text12" Left="179.55" Top="292.95" Width="170.1" Height="18.9" Border.Lines="Left, Right, Bottom" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text13" Left="9.45" Top="321.3" Width="160.65" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="PACKAGES" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text14" Left="179.55" Top="321.3" Width="170.1" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="MASTER FREIGHT" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text15" Left="9.45" Top="340.2" Width="160.65" Height="18.9" Border.Lines="Left, Right, Bottom" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text16" Left="179.55" Top="340.2" Width="170.1" Height="18.9" Border.Lines="Left, Right, Bottom" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text17" Left="359.1" Top="274.05" Width="349.65" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="CARRIER" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text18" Left="359.1" Top="292.95" Width="349.65" Height="18.9" Border.Lines="Left, Right, Bottom" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text19" Left="359.1" Top="321.3" Width="349.65" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="ORIGIN" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text20" Left="359.1" Top="340.2" Width="349.65" Height="18.9" Border.Lines="Left, Right, Bottom" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text21" Left="718.2" Top="274.05" Width="321.3" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="CUSTOMS ENTRY NUMBER" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text22" Left="718.2" Top="292.95" Width="321.3" Height="18.9" Border.Lines="Left, Right, Bottom" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text23" Left="718.2" Top="321.3" Width="321.3" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="DESTINATION" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text24" Left="718.2" Top="340.2" Width="321.3" Height="18.9" Border.Lines="Left, Right, Bottom" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text25" Left="9.45" Top="368.55" Width="1030.05" Height="18.9" Fill.Color="Silver" Text="ROUTING INFORMATION" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text26" Left="9.45" Top="396.9" Width="94.5" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="Mode" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text27" Left="103.95" Top="396.9" Width="103.95" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="Flight / Date" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text28" Left="207.9" Top="396.9" Width="396.9" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="Carrier" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text29" Left="604.8" Top="396.9" Width="122.85" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="Load" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text30" Left="727.65" Top="396.9" Width="103.95" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="Disch" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text31" Left="831.6" Top="396.9" Width="103.95" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="ETD" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text32" Left="935.55" Top="396.9" Width="103.95" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="ETA" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text33" Left="9.45" Top="415.8" Width="1030.05" Height="18.9" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text34" Left="9.45" Top="444.15" Width="1030.05" Height="18.9" Fill.Color="Silver" Text="SHIPMENT DETAILS&#13;" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text35" Left="9.45" Top="463.05" Width="160.65" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="HOUSE" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text36" Left="170.1" Top="463.05" Width="283.5" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="SHIPPER" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text37" Left="453.6" Top="463.05" Width="226.8" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="CONSIGNEE" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text38" Left="680.4" Top="463.05" Width="160.65" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="NATURE OF GOODS" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text39" Left="841.05" Top="463.05" Width="198.45" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="HANDLING INSTRUCTIONS" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text40" Left="9.45" Top="481.95" Width="160.65" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="HAWB:" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text41" Left="9.45" Top="500.85" Width="160.65" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="Job Ref: " VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text42" Left="9.45" Top="519.75" Width="160.65" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="Wgt / Pkg:" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text43" Left="9.45" Top="538.65" Width="160.65" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="Origin:" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text44" Left="9.45" Top="557.55" Width="160.65" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="Destination:" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text45" Left="9.45" Top="576.45" Width="160.65" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="Shippers Ref:" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text46" Left="9.45" Top="595.35" Width="160.65" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="Service Level:" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text47" Left="9.45" Top="614.25" Width="160.65" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="Master: " VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text48" Left="9.45" Top="633.15" Width="160.65" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="Inspection:" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text49" Left="9.45" Top="661.5" Width="160.65" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="PACKAGES" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text50" Left="170.1" Top="661.5" Width="283.5" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="DESCRIPTION" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text51" Left="453.6" Top="661.5" Width="226.8" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="DIMENSION (H x W x L)" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text52" Left="680.4" Top="661.5" Width="160.65" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="ITEM NO" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text53" Left="841.05" Top="661.5" Width="198.45" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="Container" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text54" Left="9.45" Top="680.4" Width="1030.05" Height="18.9" Border.Lines="Left, Right, Bottom" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text55" Left="9.45" Top="708.75" Width="1030.05" Height="37.8" Border.Lines="All" Text="Unless otherwise agreed in a written contract signed by XPO Global Forwarding France or its affiliates, all services provided by XPO are subject to the limitations of liability and other provisions of XPO’s Standard Customer Terms and Conditions along with the terms of any applicable bills of lading, waybills, powers of attorney or other documents &#13;&#10;that are referenced therein, each of which are incorporated herein by reference. Copies of the XPO Standard Customer Terms and Conditions can be found at www.xpo.com/business-terms or may be obtained by emailing stc@xpo.com. Carrier should notify XPO Global Forwarding France immediately if it discovers or has reasonable grounds for &#13;&#10;suspecting that any of the information on this manifest is incorrect or inaccurate or does not otherwise match the cargo physically in the possession of carrier. By agreeing to accept these instructions, the carrier named herein agrees to the XPO Standard Supplier Terms and Conditions, which are incorporated herein by reference, unless the parties &#13;&#10;have already entered into an agreement that is currently in force, in which case the terms of that agreement will apply. Copies of the XPO Standard Supplier Terms and Conditions are available by contacting stc@xpo.com." VertAlign="Center" Font="Arial, 4pt, style=Bold"/>
+      <TextObject Name="Text56" Left="680.4" Top="481.95" Width="160.65" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="Release:" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text57" Left="680.4" Top="557.55" Width="160.65" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="Type:" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text58" Left="680.4" Top="595.35" Width="160.65" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="Goods Description:" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text59" Left="869.4" Top="595.35" Width="113.4" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="Marks &amp; Numbers" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text60" Left="756" Top="633.15" Width="151.2" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="Screening Date and Time:" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text61" Left="878.85" Width="160.65" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="OTAL WEIGHT" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text62" Left="878.85" Top="18.9" Width="160.65" Height="18.9" Border.Lines="Left, Right, Bottom" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text63" Left="878.85" Top="37.8" Width="160.65" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="PACKAGES" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text64" Left="878.85" Top="56.7" Width="160.65" Height="18.9" Border.Lines="Left, Right, Bottom" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text65" Left="878.85" Top="75.6" Width="160.65" Height="18.9" Border.Lines="All" Fill.Color="Black" Text="PACKAGES" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text66" Left="878.85" Top="94.5" Width="160.65" Height="18.9" Border.Lines="Left, Right, Bottom" VertAlign="Center" Font="Arial, 8pt, style=Bold" TextFill.Color="White"/>
+    </ReportTitleBand>
+  </ReportPage>
+</Report>

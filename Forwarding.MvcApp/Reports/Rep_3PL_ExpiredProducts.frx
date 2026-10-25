@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/03/2022 13:02:22" ReportInfo.Modified="09/30/2023 02:31:19" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+    
+
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFtHJVZLL/i3PN7CkdFc/1A7YXJU6T13VfFIAjI9Ib2eHK43COXIAb1+oG8abaGcWEZGpgJFPBP3+b+JobTIAbFImpu7AL5/m4I+6ScGE9e6WjDfiveqdM4GY1NsEAX+IADlM10AKBghyoUj8qCxgdQw==">
+      <TableDataSource Name="Table" Alias="Rep_3PL_ExpiredProducts" DataType="System.Int32" Enabled="true" SelectCommand="exec (@query)">
+        <Column Name="Logo" DataType="System.String" PropName="Column" Calculated="true" Expression="[Logo]"/>
+        <Column Name="ReceiveCode" DataType="System.String"/>
+        <Column Name="PartNumber" DataType="System.String"/>
+        <Column Name="ReceiveDate" DataType="System.DateTime"/>
+        <Column Name="ExpirationDate" DataType="System.DateTime"/>
+        <Column Name="DaysSinceExpiry" DataType="System.Int32"/>
+        <Column Name="ProductName" DataType="System.String"/>
+        <Column Name="ProductCode" DataType="System.String"/>
+        <CommandParameter Name="@query" DataType="12" Expression="[query]" DefaultValue="Rep_3PL_ExpiredProducts ' WHERE 1=1 '"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="Logo" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9">
+    <DataBand Name="Data1" Top="145.75" Width="1047.06" Height="36.14" CanGrow="true" DataSource="Table">
+      <TableObject Name="Table1" Left="12.01" Top="-0.15" Width="1026.83" Height="36.29">
+        <TableColumn Name="Column21" Width="146.69"/>
+        <TableColumn Name="Column22" Width="146.69"/>
+        <TableColumn Name="Column23" Width="146.69"/>
+        <TableColumn Name="Column24" Width="146.69"/>
+        <TableColumn Name="Column25" Width="146.69"/>
+        <TableColumn Name="Column26" Width="146.69"/>
+        <TableColumn Name="Column27" Width="146.69"/>
+        <TableRow Name="Row8" MinHeight="36.29" Height="36.29" AutoSize="true">
+          <TableCell Name="Cell66" Border.Lines="All" Text="[Rep_3PL_ExpiredProducts.ProductName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell67" Border.Lines="All" Text="[Rep_3PL_ExpiredProducts.PartNumber]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell68" Border.Lines="All" Text="[Rep_3PL_ExpiredProducts.ProductCode]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell69" Border.Lines="All" Text="[Rep_3PL_ExpiredProducts.ReceiveCode]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell70" Border.Lines="All" Text="[IIf(FormatDateTime([Rep_3PL_ExpiredProducts.ReceiveDate],&quot;dd/MM/yyyy&quot;) == &quot;01/01/0001&quot;,&quot;&quot;,FormatDateTime([Rep_3PL_ExpiredProducts.ReceiveDate],&quot;dd/MM/yyyy&quot;))]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell71" Border.Lines="All" Text="[IIf(FormatDateTime([Rep_3PL_ExpiredProducts.ExpirationDate],&quot;dd/MM/yyyy&quot;) == &quot;01/01/0001&quot;,&quot;&quot;,FormatDateTime([Rep_3PL_ExpiredProducts.ExpirationDate],&quot;dd/MM/yyyy&quot;))]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell72" Border.Lines="All" Text="[Rep_3PL_ExpiredProducts.DaysSinceExpiry]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+        </TableRow>
+      </TableObject>
+      <DataHeaderBand Name="DataHeader1" Width="1047.06" Height="141.75" RepeatOnEveryPage="true">
+        <PictureObject Name="Picture1" Left="6.92" Top="3.67" Width="1029.65" Height="50.42" DataColumn="Rep_3PL_ExpiredProducts.Logo"/>
+        <TextObject Name="Text1" Left="403.52" Top="55.2" Width="236.45" Height="18.9" Text="Expired Products" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+        <TableObject Name="Table2" Left="11.97" Top="107.9" Width="1026.97" Height="33.85">
+          <TableColumn Name="Column11" Width="146.71"/>
+          <TableColumn Name="Column12" Width="146.71"/>
+          <TableColumn Name="Column13" Width="146.71"/>
+          <TableColumn Name="Column14" Width="146.71"/>
+          <TableColumn Name="Column15" Width="146.71"/>
+          <TableColumn Name="Column16" Width="146.71"/>
+          <TableColumn Name="Column17" Width="146.71"/>
+          <TableRow Name="Row6" Height="33.85">
+            <TableCell Name="Cell26" Border.Lines="All" Fill.Color="Silver" Text="Product Name" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell27" Border.Lines="All" Fill.Color="Silver" Text="Part Number" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell28" Border.Lines="All" Fill.Color="Silver" Text="Product Code" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell29" Border.Lines="All" Fill.Color="Silver" Text="Receive Code" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell30" Border.Lines="All" Fill.Color="Silver" Text="ReceiveDate" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell51" Border.Lines="All" Fill.Color="Silver" Text="Expiration Date" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell52" Border.Lines="All" Fill.Color="Silver" Text="DaysSinceExpiry" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          </TableRow>
+        </TableObject>
+      </DataHeaderBand>
+    </DataBand>
+  </ReportPage>
+</Report>

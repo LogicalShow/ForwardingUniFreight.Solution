@@ -1,0 +1,187 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li><a id="hl-homepage" href="javascript:void(0);"><i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+    </a></li>
+    <li><a id="OperAcc" href="javascript:void(0);" onclick="LoadViews('OpenBalance')">@Forwarding.MvcApp.App_Resources.App_Resources.OperAcc
+    </a></li>
+    <li><a id="PartnerOpenBalance" href="javascript:void(0);" onclick="LoadViews('OpenBalance')">@Forwarding.MvcApp.App_Resources.App_Resources.OpenBalance
+    </a></li>
+    <li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.PartnerOpenBalance</li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-PartnerOpenBalance">
+    <!-- Region Options & Template  -->
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 id="h3OpenBalance" class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.PartnerOpenBalance</h3>
+            </header>
+            <!--Region the searh, delete, addnew-->
+            <div class="row text-sm wrapper hidden-print ">
+                <div id="div-main-options" class="col-sm-2 m-b-xs">
+                    <button id="btn-NewAdd" class="btn btn-primary btn-sm swapChildrenClass hide" data-toggle="modal" @*data-target="#PartnerOpenBalanceModal"*@><i class="fa fa-edit"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.SetOpenBalance&nbsp;</b></button>
+                    <div id="div-option-buttons" class="btn-group hide">
+                        <button id="btn-Copy" type="button" class="btn btn-sm btn-default"><i class="fa fa-copy"></i>&nbsp;Copy </button>
+                        <button id="btn-Print" type="button" class="btn btn-sm btn-default"><i class="fa fa-print"></i>&nbsp;Print </button>
+                        <button id="btn-Send" type="button" class="btn btn-sm btn-default"><i class="fa fa-envelope-o"></i>&nbsp;Send </button>
+                    </div>
+                </div>
+                <div id="div-search-option" class="col-sm-10 swapChildrenClass">
+                    
+                    <div class="form-group input-group col-sm-3 m-l-n-lg swapChildrenClass">
+                        <select id="slPartnerType" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onchange="PartnerOpenBalance_EmptyPartners();" onkeypress="DisableBackspaceKey(id);" class="form-control m-b input-sm" data-required="false"></select>
+                        <span class="input-group-btn">
+                            <button id="btn-filterPartnerType" title="Filter" class="btn btn-sm btn-lightblue" type="button" onclick="PartnerOpenBalance_PartnerTypeChanged();"><i class="fa fa-filter"></i></button>
+                        </span>
+                    </div>
+                    
+                    <div class="form-group input-group m-l-n-lg col-sm-4 swapChildrenClass">
+                        <select id="slPartner" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b input-sm" data-required="false"></select>
+                        <span class="input-group-btn">
+                            <button id="btn-filterPartner" title="Filter" class="btn btn-sm btn-lightblue" type="button" onclick="PartnerOpenBalance_LoadingWithPaging();"><i class="fa fa-filter"></i></button>
+                        </span>
+                    </div>
+                    
+                    <div class="form-group input-group m-l-n-lg col-sm-3 swapChildrenClass">
+                        <select id="slCurrency" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" @*onchange="PartnerOpenBalance_LoadingWithPaging();"*@ class="form-control m-b input-sm" data-required="false"></select>
+                        <span class="input-group-btn">
+                            <button id="btn-filterCurrency" title="Filter" class="btn btn-sm btn-lightblue" type="button" onclick="PartnerOpenBalance_LoadingWithPaging();"><i class="fa fa-filter"></i></button>
+                        </span>
+                    </div>
+
+                    <div id="div-search-controls" class="input-group m-l-n-lg col-sm-4 hide">
+                        <input id="txt-Search" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase"  type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="">
+                        <span class="input-group-btn">
+                            <button id="btn-search" title="Search" class="btn btn-sm btn-primary" type="button" onclick="PartnerOpenBalance_LoadingWithPaging();"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                    <div class="float-right col-sm-2">
+                        <button id="btn-Delete" type="button" class="float-right btn btn-sm btn-danger m-r-n swapChildrenClass hide"><i class="fa fa-trash-o"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete&nbsp;</b></button>
+                    </div>
+                </div>
+            </div>
+            <!--EOF Region the searh, delete, addnew line-->
+            <!--Region: table header-->
+            <div class="table-responsive m-t-n-sm">
+                <table id="tblPartnerOpenBalance" class="table table-striped b-t b-light text-sm  table-hover">
+                    <thead>
+                        <tr>
+                            <th id="HeaderDeletePartnerOpenBalanceID">
+                                <input id="cbPartnerOpenBalanceDeleteHeader" type="checkbox" />
+                            </th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.PartnerType
+                            </th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Name
+                            </th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.OpenBalance
+                            </th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Currency
+                            </th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Notes
+                            </th>
+                            <th class="rounded-right hide"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <!--Region: table header-->
+
+            <!--Region: footer-->
+            <footer class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-4 hidden-xs">
+                        <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                        <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                        </button>
+                    </div>
+                    <div id="div-Text-Total" class="col-sm-4 text-center">
+                        <small class="text-muted inline m-t-sm m-b-sm"> @Forwarding.MvcApp.App_Resources.App_Resources.Showing 
+                            <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                            <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                        </small>
+                    </div>
+                    <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+                </div>
+            </footer>
+            <!--Region: footer-->
+        </section>
+    </div>
+    <!-- Region Options & Template  -->
+</div>
+
+<!-- AccPartnerBalanceModal -->
+    <div class="modal fade" id="AccPartnerBalanceModal" tabindex="-1" style="z-index: 1050;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="AccPartnerBalanceModalLabel" aria-hidden="true">
+        <div class="modal-dialog modalwidth-50">
+            <div class="modal-content m-t-n-lg">
+                <div class="modal-header">
+                    @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;</button>*@
+                    <h3 class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.OpenBalance &nbsp;<label id="lblAccPartnerBalanceShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <!-- Region Add / Edit AccPartnerBalance Form -->
+                    <div class="span7 form vertical-mode" id="AccPartnerBalance-form">
+                        <fieldset>
+                            <div class="form-group pull-in  has-error clearfix">
+                                <input id="hAccPartnerBalanceID" type="hidden" />
+                                <input id="hPartnerID" type="hidden" />
+                                <input id="hPartnerTypeID" type="hidden" />
+                                <!-- start alert message region -->
+                                @*<div class="alert alert-danger div-error">
+                                    @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                </div>*@
+                                <!-- end alert message region -->
+                                <div class="form-group col-sm-4 m-t-xs">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Amount</label>
+                                    <input type="text" id="txtAccPartnerBalanceAmount" onkeypress="CheckValueIsNegativeOrPositiveDecimal(id);" onfocus="CheckValueIsNegativeOrPositiveDecimal(id);" onblur="CheckDecimalFormat(id);"  class="form-control parsley-validated input-sm" data-required="true" maxlength="10" placeholder="0.0" />
+                                </div>
+                                <div class="form-group col-sm-4 m-t-xs">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Currency</label>
+                                    <select id="slAccPartnerBalanceCurrency" disabled="disabled" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="AccPartnerBalance_CurrencyChanged();" class="form-control input-sm" data-required="true"></select>
+                                </div>
+                                <div class="form-group col-sm-4 m-t-xs">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.ExchangeRate</label>
+                                    <input type="text" id="txtAccPartnerBalanceExchangeRate" onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);"  class="form-control parsley-validated input-sm" data-required="true" maxlength="10" placeholder="0.0" />
+                                </div>
+                                <div class="form-group col-sm-8">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</label>
+                                    <input type="text" id="txtAccPartnerBalanceNotes" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" data-minlength="0" maxlength="200" style="text-transform:uppercase" />
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <!-- Endegion Add / Edit EditCharge Form -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnSaveAccPartnerBalance" class="btn btn-primary btn-sm">
+                        <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save</button>
+                    <button type="button" id="btnSaveAndNewAccPartnerBalance" class="btn btn-primary btn-sm hide">
+                        <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew</button>
+                    <button class="btnClose btn btn-link btn-sm" id="btnAccPartnerBalanceClose" data-dismiss="modal" aria-hidden="true" >@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+                </div>
+                @*<div class="m-t-n-xxl m-l-md">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.CreatedBy&nbsp;<label id="lblAccPartnerBalanceCreatedBy" purpose="dynamicLabel" class="static-text-blue"></label>
+                    / @Forwarding.MvcApp.App_Resources.App_Resources.CreationDate&nbsp;<label id="lblAccPartnerBalanceCreationDate" purpose="dynamicLabel" class="static-text-blue"></label>
+                    <br>
+                    @Forwarding.MvcApp.App_Resources.App_Resources.UpdatedBy<label id="lblAccPartnerBalanceUpdatedBy" purpose="dynamicLabel" class="static-text-blue"></label>
+                    / @Forwarding.MvcApp.App_Resources.App_Resources.ModificationDate&nbsp;<label id="lblAccPartnerBalanceModificationDate" purpose="dynamicLabel" class="static-text-blue"></label>
+                    <br />
+                </div>
+            <br />*@
+            </div>
+        </div>
+    </div>
+<!--EOF AccPartnerBalanceModal -->

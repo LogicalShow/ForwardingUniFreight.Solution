@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="10/22/2019 18:01:05" ReportInfo.Modified="07/04/2024 16:30:27" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+
+    private void CheckBox1_AfterData(object sender, EventArgs e)
+    {
+   
+ 
+    }
+  }   
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFr5TBqYyQiqsC0VY5TOW4VNstfJSSaxXsfJJXQfkty2jLCeoi40ETO4mod3hzVZIkwJeA7S8qNyk3aDSj38xSavVMtk9IJgVL0fS+BK5M55xEg9R2WJdiI5titc+ILcI7">
+      <TableDataSource Name="Table1" Alias="JVsPrinting" DataType="System.Int32" Enabled="true" SelectCommand="Exec JVsPrinting @FromDate, @ToDate">
+        <Column Name="ID" DataType="System.Int64"/>
+        <Column Name="JVNo" DataType="System.String"/>
+        <Column Name="JVDate" DataType="System.DateTime"/>
+        <Column Name="TotalDebit" DataType="System.Decimal"/>
+        <Column Name="TotalCredit" DataType="System.Decimal"/>
+        <Column Name="Journal_ID" DataType="System.Int32"/>
+        <Column Name="JVType_ID" DataType="System.Int32"/>
+        <Column Name="ReceiptNo" DataType="System.String"/>
+        <Column Name="RemarksHeader" DataType="System.String"/>
+        <Column Name="Deleted" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="Posted" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="User_ID" DataType="System.Int32"/>
+        <Column Name="IsSysJv" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="TransType_ID" DataType="System.Int32"/>
+        <Column Name="JVD" DataType="System.Int64"/>
+        <Column Name="JV_ID" DataType="System.Int64"/>
+        <Column Name="Account_ID" DataType="System.Int32"/>
+        <Column Name="SubAccount_ID" DataType="System.Int32"/>
+        <Column Name="CostCenter_ID" DataType="System.Int32"/>
+        <Column Name="Debit" DataType="System.Decimal"/>
+        <Column Name="Credit" DataType="System.Decimal"/>
+        <Column Name="Currency_ID" DataType="System.Int32"/>
+        <Column Name="ExchangeRate" DataType="System.Decimal"/>
+        <Column Name="LocalDebit" DataType="System.Decimal"/>
+        <Column Name="LocalCredit" DataType="System.Decimal"/>
+        <Column Name="Description" DataType="System.String"/>
+        <Column Name="isDocumented" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="AccountName" DataType="System.String"/>
+        <Column Name="AccountNumber" DataType="System.String"/>
+        <Column Name="subAccountName" DataType="System.String"/>
+        <Column Name="SubAccount_Number" DataType="System.String"/>
+        <Column Name="CostCenter" DataType="System.String"/>
+        <Column Name="Code" DataType="System.String"/>
+        <Column Name="JVType_Name" DataType="System.String"/>
+        <Column Name="Journal_Name" DataType="System.String"/>
+        <Column Name="ValueText" DataType="System.String"/>
+        <Column Name="UserName" DataType="System.String"/>
+        <CommandParameter Name="@FromDate" DataType="22" Expression="[FromDate]"/>
+        <CommandParameter Name="@ToDate" DataType="22" Expression="[ToDate]"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="FromDate" DataType="System.String"/>
+    <Parameter Name="ToDate" DataType="System.String"/>
+    <Total Name="Total" Expression="[JVsPrinting.LocalDebit]" Evaluator="Data1" PrintOn="GroupFooter1"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9" Guides="699.3,614.25,699.3,699.3,699.3,699.3,668.304,668.304,668.304,718.2,718.2">
+    <PageHeaderBand Name="PageHeader1" Width="1047.06"/>
+    <GroupHeaderBand Name="GroupHeader1" Top="3.33" Width="1047.06" Height="199.35" CanBreak="true" Guides="255.15" KeepWithData="true" Condition="[JVsPrinting.ID]" SortOrder="None">
+      <TextObject Name="Text22" Left="0.06" Top="37.8" Width="1044.78" Height="28.35" Text="[[JVsPrinting.JVNo]]" HorzAlign="Center" VertAlign="Center" Font="Arial, 15pt, style=Bold, Underline"/>
+      <TextObject Name="Text38" Left="262.67" Top="163.13" Width="113.79" Height="36.05" Border.Lines="Left, Top, Bottom" Text="Cost Center" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text28" Top="163.13" Width="149.52" Height="36.05" Border.Lines="Left, Top, Bottom" Text="Account" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text29" Left="150.03" Top="163.13" Width="112.8" Height="36.05" Border.Lines="Left, Top, Bottom" Text="Sub Account" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text30" Left="471.35" Top="163.13" Width="75.26" Height="36.05" Border.Lines="Left, Top, Bottom" Text="Credit" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text40" Left="376.58" Top="163.13" Width="94.09" Height="36.05" Border.Lines="Left, Top, Bottom" Text="Debit" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text49" Left="547.37" Top="163.13" Width="63.77" Height="36.05" Border.Lines="Left, Top, Bottom" Text="Cur" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text50" Left="681.82" Top="163.13" Width="74.81" Height="36.05" Border.Lines="Left, Top, Bottom" Text="Local Debit" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text51" Left="756.64" Top="163.13" Width="75.23" Height="36.05" Border.Lines="Left, Top, Bottom" Text="Local Credit" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text55" Left="832.32" Top="163.3" Width="151.23" Height="36.05" Border.Lines="Left, Top, Bottom" Text="Description" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text61" Left="9.45" Top="131.87" Width="94.5" Height="18.9" Text="Notes:" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text69" Left="531.51" Top="112.97" Width="143.8" Height="18.9" Text="Receipt No.:" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text19" Left="113.4" Top="131.87" Width="916.65" Height="18.9" Text="[JVsPrinting.RemarksHeader]" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text16" Left="679.44" Top="112.97" Width="363.19" Height="18.9" Text="[JVsPrinting.ReceiptNo]" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text59" Left="9.45" Top="95.26" Width="94.5" Height="18.9" Text="JV Date:" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text12" Left="113.4" Top="95.26" Width="381.08" Height="18.9" Text="[JVsPrinting.JVDate]" Format="Date" Format.Format="d" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text57" Left="9.45" Top="112.97" Width="94.5" Height="18.9" Text="JV Type:" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text9" Left="113.4" Top="112.97" Width="381.08" Height="18.9" Text="[JVsPrinting.Journal_Name]" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text3" Left="9.45" Top="75.6" Width="94.5" Height="18.9" Text="JV No:" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text63" Left="531.51" Top="75.6" Width="143.14" Height="18.9" Text="User Name:" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text6" Left="113.4" Top="75.6" Width="381.08" Height="18.9" Text="[JVsPrinting.JVNo]" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text1" Left="-9.45" Top="9.45" Width="1048.95" Height="28.35" Border.Lines="All" Border.Color="Transparent" Text="Journal Voucher " HorzAlign="Center" VertAlign="Center" Font="Arial, 15pt, style=Bold"/>
+      <TextObject Name="Text24" Left="982.98" Top="163.3" Width="56.7" Height="36.05" Border.Lines="All" Border.LeftLine.Color="Navy" Border.LeftLine.Width="0.5" Border.TopLine.Color="Navy" Border.RightLine.Color="Navy" Border.RightLine.Width="0.5" Border.BottomLine.Color="Navy" Text="Doc" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text27" Left="679.44" Top="95.26" Width="362.45" Height="18.9" Text="[JVsPrinting.Journal_Name]" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text11" Left="531.51" Top="95.26" Width="143.8" Height="18.9" Text="Journal Type:" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text4" Left="677.93" Top="72.2" Width="363.19" Height="25.71" Text="[JVsPrinting.UserName]" Font="Arial, 10pt, style=Bold, Underline"/>
+      <TextObject Name="Text72" Left="611.98" Top="163.11" Width="69.85" Height="36.05" Border.Lines="Left, Top, Bottom" Text="Ex.Rate" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <DataBand Name="Data1" Top="206.02" Width="1047.06" Height="47.25" DataSource="Table1">
+        <TextObject Name="Text5" Left="0.06" Width="148.19" Height="47.25" Border.Lines="Left, Top, Bottom" Border.LeftLine.Color="Navy" Border.LeftLine.Width="0.5" Border.TopLine.Color="Navy" Border.RightLine.Color="Navy" Border.RightLine.Width="0.5" Border.BottomLine.Color="Navy" Text="[JVsPrinting.AccountName]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+        <TextObject Name="Text7" Left="149.71" Width="113.4" Height="47.25" Border.Lines="Left, Top, Bottom" Border.LeftLine.Color="Navy" Border.LeftLine.Width="0.5" Border.TopLine.Color="Navy" Border.RightLine.Color="Navy" Border.RightLine.Width="0.5" Border.BottomLine.Color="Navy" Text="[JVsPrinting.subAccountName]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+        <TextObject Name="Text8" Left="263.11" Width="112.64" Height="47.25" Border.Lines="Left, Top, Bottom" Border.LeftLine.Color="Navy" Border.LeftLine.Width="0.5" Border.TopLine.Color="Navy" Border.RightLine.Color="Navy" Border.RightLine.Width="0.5" Border.BottomLine.Color="Navy" Text="[JVsPrinting.CostCenter]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+        <TextObject Name="Text17" Left="547.37" Width="64.53" Height="47.25" Border.Lines="Left, Top, Bottom" Border.LeftLine.Color="Navy" Border.LeftLine.Width="0.5" Border.TopLine.Color="Navy" Border.RightLine.Color="Navy" Border.RightLine.Width="0.5" Border.BottomLine.Color="Navy" Text="[JVsPrinting.Code]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+        <TextObject Name="Text23" Left="833.02" Width="150.77" Height="47.25" Border.Lines="Left, Top, Bottom" Border.LeftLine.Color="Navy" Border.LeftLine.Width="0.5" Border.TopLine.Color="Navy" Border.RightLine.Color="Navy" Border.RightLine.Width="0.5" Border.BottomLine.Color="Navy" Text="[JVsPrinting.Description]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+        <TextObject Name="Text13" Left="376.51" Width="94.5" Height="47.25" Border.Lines="Left, Top, Bottom" Border.LeftLine.Color="Navy" Border.LeftLine.Width="0.5" Border.TopLine.Color="Navy" Border.RightLine.Color="Navy" Border.RightLine.Width="0.5" Border.BottomLine.Color="Navy" Text="[JVsPrinting.Debit]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text15" Left="471.01" Width="75.6" Height="47.25" Border.Lines="Left, Top, Bottom" Border.LeftLine.Color="Navy" Border.LeftLine.Width="0.5" Border.TopLine.Color="Navy" Border.RightLine.Color="Navy" Border.RightLine.Width="0.5" Border.BottomLine.Color="Navy" Text="[JVsPrinting.Credit]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text18" Left="612.27" Width="69.55" Height="47.25" Border.Lines="Left, Top, Bottom" Border.LeftLine.Color="Navy" Border.LeftLine.Width="0.5" Border.TopLine.Color="Navy" Border.RightLine.Color="Navy" Border.RightLine.Width="0.5" Border.BottomLine.Color="Navy" Text="[JVsPrinting.ExchangeRate]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="1" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text20" Left="681.82" Width="74.51" Height="47.25" Border.Lines="Left, Top, Bottom" Border.LeftLine.Color="Navy" Border.LeftLine.Width="0.5" Border.TopLine.Color="Navy" Border.RightLine.Color="Navy" Border.RightLine.Width="0.5" Border.BottomLine.Color="Navy" Text="[JVsPrinting.LocalDebit]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text21" Left="756.33" Width="75.93" Height="47.25" Border.Lines="Left, Top, Bottom" Border.LeftLine.Color="Navy" Border.LeftLine.Width="0.5" Border.TopLine.Color="Navy" Border.RightLine.Color="Navy" Border.RightLine.Width="0.5" Border.BottomLine.Color="Navy" Text="[JVsPrinting.LocalCredit]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+        <CheckBoxObject Name="CheckBox1" Left="1001.7" Top="9.45" Width="18.9" Height="18.9" AfterDataEvent="CheckBox1_AfterData" DataColumn="JVsPrinting.isDocumented"/>
+        <TextObject Name="Text73" Left="982.8" Width="56.27" Height="47.25" Border.Lines="All" Border.LeftLine.Color="Navy" Border.LeftLine.Width="0.5" Border.TopLine.Color="Navy" Border.RightLine.Color="Navy" Border.RightLine.Width="0.5" Border.BottomLine.Color="Navy" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+        <Sort>
+          <Sort Expression="[JVsPrinting.JVDate]"/>
+          <Sort Expression="[JVsPrinting.ID]"/>
+        </Sort>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter1" Top="256.6" Width="1047.06" Height="71.86">
+        <TextObject Name="Text2" Left="14.38" Top="35.15" Width="298.84" Height="34.44" Border.Lines="All" Text="Approved By" Font="Arial, 9pt, style=Bold"/>
+        <TextObject Name="Text70" Left="346.35" Top="36.64" Width="322.7" Height="33.7" Border.Lines="All" Text="Reviewed By" Font="Arial, 9pt, style=Bold"/>
+        <TextObject Name="Text71" Left="699.59" Top="36.68" Width="319.66" Height="33.7" Border.Lines="All" Text="Prepared By&#13;&#10;[JVsPrinting.UserName]" Font="Arial, 9pt, style=Bold"/>
+        <TextObject Name="Text32" Left="602.23" Top="6.05" Width="427.71" Height="28.35" Text="[ToWords([Total],&quot;&quot;,&quot;&quot;)]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="0" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="3" VertAlign="Center" Font="Arial, 9pt" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text26" Left="148.11" Top="6.05" Width="427.56" Height="18.9" Text="Total: [Total] " HorzAlign="Right" VertAlign="Center" Font="Arial, 9pt"/>
+      </GroupFooterBand>
+    </GroupHeaderBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="331.79" Width="1047.06"/>
+    <PageFooterBand Name="PageFooter1" Top="335.13" Width="1047.06" Height="22.46" Visible="false">
+      <TextObject Name="Text31" Left="5.66" Top="3.56" Width="99.8" Height="18.9" Text="Printed On:" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Text10" Left="121.7" Top="3.38" Width="313.77" Height="18.9" Text="[Date]" Format="Custom" Format.Format="dd/MM/yyyy hh:mm:ss tt" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="10/26/2021 16:56:05" ReportInfo.Modified="01/24/2024 17:29:33" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+
+
+    private void Data1_AfterData(object sender, EventArgs e)
+    {
+      
+    }
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFNzyHYDuoBNaNSZlSNPhWGsQpK5Wj9ZCP6aThjKb0xSvilkz5SBdVkcPHI4B1NWErCXqPdaHPnW+bh48UiQOaWRL8hSA+yGhespriYYnqCwpOW3ZVoCe41vYkojvjRY9n">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="exec (@query)">
+        <Column Name="ID" DataType="System.Int64"/>
+        <Column Name="PODName" DataType="System.String"/>
+        <Column Name="POLName" DataType="System.String"/>
+        <Column Name="Code" DataType="System.String"/>
+        <Column Name="CustomerReference" DataType="System.String"/>
+        <Column Name="ClientName" DataType="System.String"/>
+        <Column Name="BookingNumber" DataType="System.String"/>
+        <Column Name="LineName" DataType="System.String"/>
+        <Column Name="LoadingDate" DataType="System.String"/>
+        <Column Name="LoadingTime" DataType="System.String"/>
+        <Column Name="CutOffDate" DataType="System.DateTime"/>
+        <Column Name="ActualDeparture" DataType="System.String"/>
+        <Column Name="VoyageOrTruckNumber" DataType="System.String"/>
+        <Column Name="PickupAddress" DataType="System.String"/>
+        <Column Name="TruckerName" DataType="System.String"/>
+        <Column Name="Bosla" DataType="System.String"/>
+        <Column Name="IsLoaded" DataType="System.String"/>
+        <Column Name="NumberOf20DCContainers" DataType="System.Int32"/>
+        <Column Name="NumberOf40DCContainers" DataType="System.Int32"/>
+        <Column Name="NumberOf40HCContainers" DataType="System.Int32"/>
+        <Column Name="NumberOf20RFContainers" DataType="System.Int32"/>
+        <Column Name="NumberOf40RFContainers" DataType="System.Int32"/>
+        <Column Name="NumberOf40OTContainers" DataType="System.Int32"/>
+        <Column Name="NumberOfLCL" DataType="System.String"/>
+        <Column Name="CodeSerial" DataType="System.Int32"/>
+        <Column Name="OpenDate" DataType="System.DateTime"/>
+        <Column Name="ClientID" DataType="System.Int32"/>
+        <Column Name="POL" DataType="System.Int32"/>
+        <Column Name="POD" DataType="System.Int32"/>
+        <Column Name="ExpectedDeparture" DataType="System.DateTime"/>
+        <CommandParameter Name="@query" DataType="12" Expression="[query]" DefaultValue="select * from vwTruckingReport"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="dummy" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" PaperWidth="850">
+    <ReportTitleBand Name="ReportTitle1" Width="3137.4" Height="103.95"/>
+    <PageHeaderBand Name="PageHeader1" Top="107.95" Width="3137.4" Height="122.85">
+      <TextObject Name="Text21" Left="472.5" Top="18.9" Width="396.9" Height="28.35" Text="Trucking Report" HorzAlign="Center" VertAlign="Center" Font="Arial, 16pt, style=Bold"/>
+      <TextObject Name="Text32" Left="226.8" Top="66.15" Width="245.7" Height="56.7" Border.Lines="All" Text="Shipper" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text38" Top="66.15" Width="113.4" Height="56.7" Border.Lines="All" Text="Operation Code" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text39" Left="113.4" Top="66.15" Width="113.4" Height="56.7" Border.Lines="All" Text="Customer Reference" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text41" Left="472.5" Top="66.15" Width="198.45" Height="56.7" Border.Lines="All" Text="Booking No" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text43" Left="670.95" Top="66.15" Width="198.45" Height="56.7" Border.Lines="All" Text="POL" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text45" Left="869.4" Top="66.15" Width="198.45" Height="56.7" Border.Lines="All" Text="POD" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text47" Left="1067.85" Top="66.15" Width="85.05" Height="56.7" Border.Lines="All" Text="20DC" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text49" Left="1152.9" Top="66.15" Width="85.05" Height="56.7" Border.Lines="All" Text="40DC" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text51" Left="1237.95" Top="66.15" Width="85.05" Height="56.7" Border.Lines="All" Text="40HC" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text53" Left="1323" Top="66.15" Width="85.05" Height="56.7" Border.Lines="All" Text="20RF" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text55" Left="1408.05" Top="66.15" Width="85.05" Height="56.7" Border.Lines="All" Text="40RF" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text57" Left="1493.1" Top="66.15" Width="85.05" Height="56.7" Border.Lines="All" Text="40OT" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text59" Left="1578.15" Top="66.15" Width="85.05" Height="56.7" Border.Lines="All" Text="LCL" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text61" Left="1663.2" Top="66.15" Width="189" Height="56.7" Border.Lines="All" Text="Carrier" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text63" Left="1852.2" Top="66.15" Width="141.75" Height="56.7" Border.Lines="All" Text="Loading Date" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text65" Left="1993.95" Top="66.15" Width="141.75" Height="56.7" Border.Lines="All" Text="Cut Off Date" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text67" Left="2135.7" Top="66.15" Width="141.75" Height="56.7" Border.Lines="All" Text="VSL Date" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text69" Left="2419.2" Top="66.15" Width="141.75" Height="56.7" Border.Lines="All" Text="Vessel &amp; Voyage" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text71" Left="2560.95" Top="66.15" Width="141.75" Height="56.7" Border.Lines="All" Text="Address" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text73" Left="2702.7" Top="66.15" Width="141.75" Height="56.7" Border.Lines="All" Text="Trucker" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text75" Left="2844.45" Top="66.15" Width="141.75" Height="56.7" Border.Lines="All" Text="C.C PLACE" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text77" Left="2986.2" Top="66.15" Width="141.75" Height="56.7" Border.Lines="All" Text="STATUS" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text79" Left="2277.45" Top="66.15" Width="141.75" Height="56.7" Border.Lines="All" Text="ETD POL" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="234.8" Width="3137.4" Height="47.25" AfterDataEvent="Data1_AfterData" DataSource="Table">
+      <TextObject Name="Text14" Left="226.8" Width="245.7" Height="47.25" Border.Lines="All" Text="[Table.ClientName]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text20" Width="113.4" Height="47.25" Border.Lines="All" Text="[Table.Code]" Format="Date" Format.Format="d" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text40" Left="113.4" Width="113.4" Height="47.25" Border.Lines="All" Text="[Table.CustomerReference]" Format="Date" Format.Format="d" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text42" Left="472.5" Width="198.45" Height="47.25" Border.Lines="All" Text="[Table.BookingNumber]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text44" Left="670.95" Width="198.45" Height="47.25" Border.Lines="All" Text="[Table.POLName]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text46" Left="869.4" Width="198.45" Height="47.25" Border.Lines="All" Text="[Table.PODName]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text48" Left="1067.85" Width="85.05" Height="47.25" Border.Lines="All" Text="[Table.NumberOf20DCContainers]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text50" Left="1152.9" Width="85.05" Height="47.25" Border.Lines="All" Text="[Table.NumberOf40DCContainers]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text52" Left="1237.95" Width="85.05" Height="47.25" Border.Lines="All" Text="[Table.NumberOf40HCContainers]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text54" Left="1323" Width="85.05" Height="47.25" Border.Lines="All" Text="[Table.NumberOf20RFContainers]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text56" Left="1408.05" Width="85.05" Height="47.25" Border.Lines="All" Text="[Table.NumberOf40RFContainers]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text58" Left="1493.1" Width="85.05" Height="47.25" Border.Lines="All" Text="[Table.NumberOf40OTContainers]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text60" Left="1578.15" Width="85.05" Height="47.25" Border.Lines="All" Text="[Table.NumberOfLCL]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text62" Left="1663.2" Width="189" Height="47.25" Border.Lines="All" Text="[Table.LineName]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text64" Left="1852.2" Width="141.75" Height="47.25" Border.Lines="All" Text="[Table.LoadingDate]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text66" Left="1993.95" Width="141.75" Height="47.25" Border.Lines="All" Text="[IIf(Year([Table.CutOffDate]) == 1,&quot;&quot;,[Table.CutOffDate])]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text68" Left="2135.7" Width="141.75" Height="47.25" Border.Lines="All" Text="[Table.ExpectedDeparture]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text70" Left="2419.2" Width="141.75" Height="47.25" Border.Lines="All" Text="[Table.VoyageOrTruckNumber]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text72" Left="2560.95" Width="141.75" Height="47.25" Border.Lines="All" Text="[Table.PickupAddress]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text74" Left="2702.7" Width="141.75" Height="47.25" Border.Lines="All" Text="[Table.TruckerName]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text76" Left="2844.45" Width="141.75" Height="47.25" Border.Lines="All" Text="[Table.Bosla]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text78" Left="2986.2" Width="141.75" Height="47.25" Border.Lines="All" Text="[Table.IsLoaded]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text80" Left="2277.45" Width="141.75" Height="47.25" Border.Lines="All" Text="[Table.ExpectedDeparture]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center"/>
+    </DataBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="286.05" Width="3137.4" Height="151.2"/>
+    <PageFooterBand Name="PageFooter1" Top="441.25" Width="3137.4"/>
+  </ReportPage>
+</Report>

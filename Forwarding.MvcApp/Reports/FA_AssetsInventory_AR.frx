@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="05/02/2020 13:16:25" ReportInfo.Modified="11/04/2020 11:23:28" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {           
+
+    private void Text3_AfterPrint(object sender, EventArgs e)
+    {
+
+    }
+
+    private void Text3_BeforePrint(object sender, EventArgs e)
+    {
+      if(((String)Report.GetColumnValue(&quot;Table.TypeName&quot;))  == &quot;Branch&quot;)
+        Text3.Text =  &quot;الفرع&quot; ; 
+      else if (((String)Report.GetColumnValue(&quot;Table.TypeName&quot;))  == &quot;Division&quot;)
+        Text3.Text =  &quot;الإدارة&quot; ; 
+      else if(((String)Report.GetColumnValue(&quot;Table.TypeName&quot;))  == &quot;Department&quot;)
+        Text3.Text =  &quot;القسم&quot; ; 
+    }
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqtr1371Y2+HtWu8WFjl2KctZmh5Ny3LlNRIaznH7ZmW3dMAHgcASpqGxR9Ke+0drIwJvuBJrOWFvx0JGAwGso2VBkFR9bYuafvNpUTR7EdiClfkgopuozEm00Bw7SA54h5NC6YVhOIlxYSD8NU609vT2OL+DCF57kxop7ieofxC/Kre3wwhhLXQLLzUuoaERaH9S2Jj0x5HVoHXWE1gY915LU/V7X+tIwtBkt26npYfg=">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="SELECT V.Type, V.TypeName, V.BranchID, V.DevisionID, V.DepartmentID, V.Date, V.IsApproved, V.UserID, V.InventoryNotes, V.IsDeleted, V.Code, V.BranchName, V.DevisionName, V.DepartmentName, V.ID, V.AssetID, V.OriginalBranchID, V.OriginalDevisionID, V.OriginalDepartmentID, V.Qty, V.ActualQty, V.Notes, V.FA_AssetInventoryID, V.OriginalBranchName, V.OriginalDevisionName, V.OriginalDepartmentName, V.UserName, V.AssetName, V.BarCode, V.AssetCode&#13;&#10;FROM &quot;vwFA_AssetsInventoryDetails&quot; V where  V.FA_AssetInventoryID  IN(SELECT CONVERT(INT , value ) from [fn_split]( @IDs, '*') ) and isnull( V.IsDeleted , 0 ) = 0&#13;&#10;">
+        <Column Name="Type" DataType="System.Int32"/>
+        <Column Name="TypeName" DataType="System.String"/>
+        <Column Name="BranchID" DataType="System.Int32"/>
+        <Column Name="DevisionID" DataType="System.Int32"/>
+        <Column Name="DepartmentID" DataType="System.Int32"/>
+        <Column Name="Date" DataType="System.DateTime"/>
+        <Column Name="IsApproved" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="UserID" DataType="System.Int32"/>
+        <Column Name="InventoryNotes" DataType="System.String"/>
+        <Column Name="IsDeleted" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="Code" DataType="System.Int32"/>
+        <Column Name="BranchName" DataType="System.String"/>
+        <Column Name="DevisionName" DataType="System.String"/>
+        <Column Name="DepartmentName" DataType="System.String"/>
+        <Column Name="ID" DataType="System.Int32"/>
+        <Column Name="AssetID" DataType="System.Int32"/>
+        <Column Name="OriginalBranchID" DataType="System.Int32"/>
+        <Column Name="OriginalDevisionID" DataType="System.Int32"/>
+        <Column Name="OriginalDepartmentID" DataType="System.Int32"/>
+        <Column Name="Qty" DataType="System.Decimal"/>
+        <Column Name="ActualQty" DataType="System.Decimal"/>
+        <Column Name="Notes" DataType="System.String"/>
+        <Column Name="FA_AssetInventoryID" DataType="System.Int32"/>
+        <Column Name="OriginalBranchName" DataType="System.String"/>
+        <Column Name="OriginalDevisionName" DataType="System.String"/>
+        <Column Name="OriginalDepartmentName" DataType="System.String"/>
+        <Column Name="UserName" DataType="System.String"/>
+        <Column Name="AssetName" DataType="System.String"/>
+        <Column Name="BarCode" DataType="System.String"/>
+        <Column Name="AssetCode" DataType="System.String"/>
+        <CommandParameter Name="@IDs" DataType="22" Expression="[IDs]"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="IDs" DataType="System.String" Expression="&quot;*15*&quot;"/>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2"/>
+    <PageHeaderBand Name="PageHeader1" Top="4.17" Width="718.2" Height="56.7">
+      <TextObject Name="Text30" Top="9.45" Width="708.75" Height="47.25" Border.Lines="Top, Bottom" Border.Style="Dash" Text="تقرير جرد الأصول" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 24pt, style=Bold"/>
+    </PageHeaderBand>
+    <GroupHeaderBand Name="GroupHeader1" Top="65.03" Width="718.2" Height="113.4" StartNewPage="true" Condition="[Table.FA_AssetInventoryID]" KeepTogether="true">
+      <TextObject Name="Text13" Left="-9.45" Width="103.95" Height="18.9" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text6" Left="642.6" Top="47.25" Width="66.15" Height="28.35" Text="فــرع" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text5" Left="491.4" Top="47.25" Width="151.2" Height="28.35" Fill.Color="Gainsboro" Text="[Table.BranchName]" Format="Date" Format.Format="d" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text8" Left="396.9" Top="47.25" Width="94.5" Height="28.35" Text="إدارة" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text7" Left="245.7" Top="47.25" Width="151.2" Height="28.35" Fill.Color="Gainsboro" Text="[Table.DevisionName]" Format="Date" Format.Format="d" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text10" Left="179.55" Top="47.25" Width="66.15" Height="28.35" Text="قسم" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text9" Top="47.25" Width="179.55" Height="28.35" Fill.Color="Gainsboro" Text="[Table.DepartmentName]" Format="Date" Format.Format="d" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text2" Left="642.6" Top="9.45" Width="66.15" Height="28.35" Text="كــود" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text1" Left="491.4" Top="9.45" Width="151.2" Height="28.35" Fill.Color="Gainsboro" Text="[Table.Code]" Format="Date" Format.Format="d" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text4" Left="396.9" Top="9.45" Width="94.5" Height="28.35" Text="على مستوى" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text3" Left="245.7" Top="9.45" Width="151.2" Height="28.35" Fill.Color="Gainsboro" BeforePrintEvent="Text3_BeforePrint" AfterPrintEvent="Text3_AfterPrint" Text="[Table.TypeName]" Format="Date" Format.Format="d" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text12" Left="179.55" Top="9.45" Width="66.15" Height="28.35" Text="تاريخ" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text11" Top="9.45" Width="179.55" Height="28.35" Fill.Color="Gainsboro" Text="[Table.Date]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text15" Left="529.2" Top="94.5" Width="122.85" Height="18.9" Border.Lines="All" Fill.Color="Gainsboro" Text="إسم الأصل" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text17" Left="652.05" Top="94.5" Width="66.15" Height="18.9" Border.Lines="All" Fill.Color="Gainsboro" Text="كود الأصل" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text19" Left="434.7" Top="94.5" Width="94.5" Height="18.9" Border.Lines="All" Fill.Color="Gainsboro" Text="الفرع الأساسي" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text21" Left="340.2" Top="94.5" Width="94.5" Height="18.9" Border.Lines="All" Fill.Color="Gainsboro" Text="الإدارة الأساسية" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text23" Left="245.7" Top="94.5" Width="94.5" Height="18.9" Border.Lines="All" Fill.Color="Gainsboro" Text="القسم الأساسي" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text25" Left="85.05" Top="94.5" Width="75.6" Height="18.9" Border.Lines="All" Fill.Color="Gainsboro" Text="الكمية" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text27" Left="160.65" Top="94.5" Width="85.05" Height="18.9" Border.Lines="All" Fill.Color="Gainsboro" Text="الكمية المتوقعة" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text28" Top="94.5" Width="85.05" Height="18.9" Border.Lines="All" Fill.Color="Gainsboro" Text="الرصيد" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <DataBand Name="Data1" Top="182.6" Width="718.2" Height="37.8" DataSource="Table">
+        <TextObject Name="Text14" Left="529.2" Width="122.85" Height="37.8" Border.Lines="All" Text="[Table.AssetName]" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text16" Left="652.05" Width="66.15" Height="37.8" Border.Lines="All" Text="[Table.AssetCode]" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text18" Left="434.7" Width="94.5" Height="37.8" Border.Lines="All" Text="[Table.OriginalBranchName]" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text20" Left="340.2" Width="94.5" Height="37.8" Border.Lines="All" Text="[Table.OriginalDevisionName]" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text22" Left="245.7" Width="94.5" Height="37.8" Border.Lines="All" Text="[Table.OriginalDepartmentName]" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text24" Left="85.05" Width="75.6" Height="37.8" Border.Lines="All" Text="[Table.Qty]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="0" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text26" Left="160.65" Width="85.05" Height="37.8" Border.Lines="All" Text="[Table.ActualQty]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="3" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text29" Width="85.05" Height="37.8" Border.Lines="All" Text="[[Table.Qty]-[Table.ActualQty]]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="3" Format.DecimalSeparator="." Format.GroupSeparator=" " Format.NegativePattern="2" HorzAlign="Center" VertAlign="Center" WordWrap="false" Font="Arial, 10pt, style=Bold" Trimming="EllipsisCharacter"/>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter1" Top="224.57" Width="718.2" Height="9.45"/>
+    </GroupHeaderBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="238.18" Width="718.2" Height="75.6">
+      <TextObject Name="Text31" Left="519.75" Top="9.45" Width="189" Height="28.35" Text="إعــــداد" HorzAlign="Center" Font="Arial, 16pt, style=Bold"/>
+      <TextObject Name="Text32" Left="519.75" Top="37.8" Width="189" Height="28.35" Text="(                         )" HorzAlign="Center" Font="Arial, 16pt, style=Bold"/>
+      <TextObject Name="Text33" Left="255.15" Top="9.45" Width="189" Height="28.35" Text="رئيس قسم الأصول" HorzAlign="Center" Font="Arial, 16pt, style=Bold"/>
+      <TextObject Name="Text34" Left="18.9" Top="9.45" Width="189" Height="28.35" Text="يعتمد" HorzAlign="Center" Font="Arial, 16pt, style=Bold"/>
+      <TextObject Name="Text35" Left="255.15" Top="37.8" Width="189" Height="28.35" Text="(                         )" HorzAlign="Center" Font="Arial, 16pt, style=Bold"/>
+      <TextObject Name="Text36" Left="18.9" Top="37.8" Width="189" Height="28.35" Text="(                         )" HorzAlign="Center" Font="Arial, 16pt, style=Bold"/>
+    </ReportSummaryBand>
+    <PageFooterBand Name="PageFooter1" Top="317.95" Width="718.2" Height="28.35">
+      <TextObject Name="Text37" Left="302.4" Width="94.5" Height="28.35" Text="[Page]" HorzAlign="Center" Font="Arial, 16pt, style=Bold"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

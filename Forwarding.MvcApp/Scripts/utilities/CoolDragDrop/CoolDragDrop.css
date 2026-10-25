@@ -1,0 +1,207 @@
+/*
+Darko Bunic
+http://www.redips.net/
+Mar, 2020.
+*/
+
+body {
+    /*font-family: arial;
+    margin: 0px;*/
+}
+
+/* header */
+div#header {
+    /*text-align: center;
+    margin-top: 50px;*/
+}
+
+/* add bottom margin between tables */
+#table1, #table2 {
+    /*margin-bottom: 20px;*/
+}
+
+/* drag container (contains two tables) */
+#redips-drag {
+    /*margin: auto;
+    width: 730px;*/
+}
+
+/* drag objects (DIV inside table cells) */
+.redips-drag {
+    /*position: relative;*/
+    cursor: move;
+    /*margin: 2px auto;
+    z-index: 10;
+    background-color: #f0f0f0;
+    text-align: left;
+    padding: 5px;
+    font-size: 12px;
+    width: 190px;*/
+    /* round corners for FF, Chrome, Safari (except IE) */
+    /*-moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+   border-radius: 10px;*/
+    /* shadow for FF, Chrome, Safari (except IE)*/
+    /*
+	-moz-box-shadow: 4px 4px 8px #444;
+	-webkit-box-shadow: 4px 4px 8px #444;
+	box-shadow: 4px 4px 8px #444;
+	*/
+}
+
+/* drag objects border for the first table */
+.t1 {
+    /*border: 1px solid #9B9EA2;
+    ;*/
+}
+
+/* tables */
+/*div#redips-drag table {
+    background-color: #e0e0e0;
+    border-collapse: collapse;
+}*/
+
+/* table cells */
+/*div#redips-drag td {
+    height: 50px;
+    border: 1px solid white;
+    text-align: center;
+    font-size: 12px;
+    padding: 2px;
+}*/
+
+/* message cell (marked as forbidden) */
+/*.redips-mark {
+    color: white;
+    background-color: SteelBlue;
+}*/
+
+
+.tblAreaLocationsChart thead tr {
+       /*font-size: 110%;*/
+    /*border: solid 1px black !important;*/
+}
+.tblAreaLocationsChart tbody tr {
+   /*font-size: 110%;*/
+    /*border: solid 1px black !important;*/
+}
+.tblAreaLocationsChart thead tr th {
+    vertical-align: middle;
+    text-align: center !important;
+    border: solid 1px black;
+   font-size: 110%;
+    border: solid 1px black !important;
+    padding: 0px !important;
+    width: 35px !important;
+    height: 20px !important;
+}
+
+.tblAreaLocationsChart tbody tr td {
+   font-size: 110%;
+    font-weight: bold;
+    vertical-align: middle;
+    text-align: center !important;
+    border: solid 1px black !important;
+    padding: 0px !important;
+    width: 35px !important;
+    height: 20px !important;
+}
+
+/*btn-status-10*/
+/*30**/
+.Blocked {
+    color: white;
+    background-color: red;
+    vertical-align: middle;
+    text-align: center;
+    border: solid 0px white !important;
+}
+.btn-status-30 {
+    color: white;
+    background-color: red;
+}
+/*20**/
+.Allocated {
+    background-color: #7CFC00;
+    vertical-align: middle;
+    text-align: center;
+    color:black;
+    border: solid 0px white !important;
+}
+.btn-status-20 {
+    background-color: #7CFC00;
+    color: black;
+}
+/*40**/
+.Confirmed {
+    background-color: #228B22;
+    color:white;
+    vertical-align: middle;
+    text-align: center;
+    border: solid 0px white !important;
+}
+.btn-status-40 {
+    background-color: #228B22;
+    color: white;
+}
+/*50**/
+.Reserved {
+    background-color: #8B008B;
+    color:white;
+    vertical-align: middle;
+    text-align: center;
+    border: solid 0px white !important;
+}
+.btn-status-50 {
+    background-color: #8B008B;
+    color: white;
+}
+
+.Merged {
+    background-color: #1E90FF;
+    vertical-align: middle;
+    text-align: center;
+    color: black;
+    border: solid 0px white !important;
+}
+.dragDiv {
+    width: 35px !important;
+    height: 20px !important;
+    width: 100%;
+
+}
+
+.dragSpan {
+    position: relative;
+    left: -5px;
+    font-size:110%;
+}
+
+.dragCheckbox:checked {
+    opacity: 1.0;
+    top: -4px;
+    left: -5px;
+    position: relative;
+}
+.dragCheckbox {
+    opacity: 0.2;
+    top: -4px;
+    left: -5px;
+    position: relative;
+}
+
+    /*.dragCheckbox.dragCheckboxEmpty:checked {
+        opacity: 0.9;
+        top: -4px;
+        left: -11px;
+    }
+
+    .dragCheckbox.dragCheckboxEmpty {
+        opacity: 0.5;
+        top: -4px;
+        left: -11px;
+    }*/
+
+     
+    
+    

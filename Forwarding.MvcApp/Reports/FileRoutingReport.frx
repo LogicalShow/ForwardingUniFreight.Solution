@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/29/2024 21:31:52" ReportInfo.Modified="01/29/2024 21:58:49" ReportInfo.CreatorVersion="2018.3.14.0">
+  <Dictionary>
+    <Parameter Name="WhereClause" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" RawPaperSize="9" ExtraDesignWidth="true" UnlimitedWidth="true">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="18.9"/>
+    <PageHeaderBand Name="PageHeader1" Top="22.9" Width="718.2" Height="56.7">
+      <TextObject Name="Text1" Width="75.6" Height="28.35" Border.Lines="All" Text="IST" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text2" Left="75.6" Width="151.2" Height="28.35" Border.Lines="All" Fill.Color="Gold" Text="SHIPPER" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text3" Left="226.8" Width="113.4" Height="28.35" Border.Lines="All" Text="CONTAINER" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text4" Left="340.2" Width="75.6" Height="28.35" Border.Lines="All" Fill.Color="Gold" Text="POL" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text5" Left="415.8" Width="75.6" Height="28.35" Border.Lines="All" Fill.Color="Gold" Text="POD" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text6" Left="491.4" Width="113.4" Height="28.35" Border.Lines="All" Fill.Color="Gold" Text="SHIPPING LINE" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text7" Left="604.8" Width="113.4" Height="28.35" Border.Lines="All" Text="B/L.NUMBER" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text8" Left="718.2" Width="189" Height="28.35" Border.Lines="All" Text="ROUTE&quot;QUOTATION&quot;" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text10" Left="226.8" Top="28.35" Width="56.7" Height="28.35" Border.Lines="All" Text="NO" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text11" Left="283.5" Top="28.35" Width="56.7" Height="28.35" Border.Lines="All" Text="TYPE" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text12" Left="718.2" Top="28.35" Width="94.5" Height="28.35" Border.Lines="All" Text="OPERATION" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text13" Left="812.7" Top="28.35" Width="94.5" Height="28.35" Border.Lines="All" Text="SALES" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text14" Left="907.2" Width="189" Height="28.35" Border.Lines="All" Text="ROUTE&quot;PAYMENT&quot;" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text15" Left="907.2" Top="28.35" Width="94.5" Height="28.35" Border.Lines="All" Text="OPERATION" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text16" Left="1001.7" Top="28.35" Width="94.5" Height="28.35" Border.Lines="All" Text="SALES" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text17" Left="1096.2" Width="189" Height="28.35" Border.Lines="All" Text="SALES FINAL CHECK" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text18" Left="1096.2" Top="28.35" Width="94.5" Height="28.35" Border.Lines="All" Text="OPERATION" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text19" Left="1190.7" Top="28.35" Width="94.5" Height="28.35" Border.Lines="All" Text="SALES" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text21" Left="1285.2" Top="28.35" Width="94.5" Height="28.35" Border.Lines="All" Text="OPERATION" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text20" Left="1285.2" Width="94.5" Height="28.35" Border.Lines="All" Text="FINANCE" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="83.6" Width="718.2" Height="75.6"/>
+    <PageFooterBand Name="PageFooter1" Top="163.2" Width="718.2" Height="18.9"/>
+  </ReportPage>
+</Report>

@@ -1,0 +1,228 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);" onclick="LoadViews('WebSite_3PLPortal');">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+
+    <li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.WebSite_3PLInventory</li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-Inventory">
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.Inventory
+                </h3>
+            </header>
+            <!--Region the searh, delete, addnew-->
+            <div class="row text-sm wrapper hidden-print m-t-n-sm">
+                <div id="div-main-options" class="col-sm-5 m-b-xs">
+                    <button id="btn-NewAdd-hide" class="btn btn-warning btn-sm swapChildrenClass hide" data-toggle="modal" data-target="#InventoryModal"><i class="fa fa-plus"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.New&nbsp;</b></button>
+                    <button id="btn-FilterOptions-Inventory" class="btn btn-primary btn-sm" data-toggle="modal" onclick="" data-target="#FilterOptionsModal"><i class="fa fa-filter"></i> Filter & Print Options</button>
+                    <div id="div-option-buttons" class="btn-group hide">
+                        <button id="btn-Copy" type="button" class="btn btn-sm btn-default"><i class="fa fa-copy"></i>&nbsp;Copy </button>
+                        <button id="btn-Print" type="button" class="btn btn-sm btn-default"><i class="fa fa-print"></i>&nbsp;Print </button>
+                        <button id="btn-Send" type="button" class="btn btn-sm btn-default"><i class="fa fa-envelope-o"></i>&nbsp;Send </button>
+                    </div>
+                </div>
+                <div id="div-search-option" class="col-sm-7">
+                    <div id="div-search-controls" class="input-group col-sm-9 hide">
+                        <input id="txt-Search" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="">
+                        <span class="input-group-btn">
+                            <button id="btn-search" class="btn btn-sm btn-primary" type="button" onclick="Inventory_LoadingWithPaging();"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                    <div class="float-right col-sm-1">
+                        <button id="btn-Delete-hide" type="button" class="float-right btn btn-sm btn-danger m-r-n swapChildrenClass hide"><i class="fa fa-trash-o"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete&nbsp;</b></button>
+                    </div>
+                </div>
+            </div>
+            <!--Region the searh, delete, addnew-->
+            <!--Region: table header-->
+            <div class="table-responsive m-t-n">
+                <table id="tblInventory" class="table table-striped b-t b-light text-sm  table-hover">
+                    <thead>
+                        <tr>
+                            <th id="ID" style="width:5%;">
+                                <input id="cb-CheckAll" type="checkbox" />
+                            </th>
+                            <th class="classHideForDGL">Location</th>
+                            @*<th>BarCode</th>*@
+                            <th>Prod.Code</th>
+                            <th>Prod.Desc</th>
+                            <th>Rec.Code</th>
+                            <th>Client</th>
+                            <th>Rec.Date</th>
+                            <th class="hide">PalletID</th>
+                            <th>Qty</th>
+                            <th>UQ</th>
+                            <th class="rounded-right hide"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <!--Region: table header-->
+            <!--Region: footer-->
+            <footer class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-4 hidden-xs">
+                        <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                        <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                        </button>
+                    </div>
+                    <div id="div-Text-Total" class="col-sm-4 text-center">
+                        <small class="text-muted inline m-t-sm m-b-sm">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                            <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                            <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                        </small>
+                    </div>
+                    <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+                </div>
+            </footer>
+            <!--Region: footer-->
+        </section>
+    </div>
+</div>
+
+
+
+<!--FilterOptionsModal-->
+<div class="modal fade" id="FilterOptionsModal" tabindex="-1" @*style="z-index: 3000;"*@ data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="FilterOptionsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-100">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" title="Close">
+                    &times;
+                </button>
+                <div id="hExportedTable" class="hide"></div>
+                <h3 class="m-b-none">
+                    <label id="lblShownFilterOptions" class="static-text-primary">Filter Options</label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region FilterOptions Form -->
+                <button id="btn-ClearAllFilterOptions" type="button" class="btn btn-warning btn-sm m-l m-t-n-sm hide" onclick=""><i class="fa "></i><b>&nbsp;Clear All</b></button>
+                <div class="span7 form vertical-mode m-t-sm" id="FilterOptions-form">
+                    <fieldset>
+                        <div class="row hide">
+                            <div id="div-FilterOptions-controls" class="input-group m-l col-sm-5">
+                                <input id="txtFilterOptions" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search" />
+                                <span class="input-group-btn">
+                                    <button id="btn-FilterOptions" class="btn btn-sm btn-primary" type="button"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div id="divFilterOptions" class="m-t-n classSearchOptions">
+                            <div class="form-group col-sm-2 hide">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Warehouse</label>
+                                <select id="slFilterWarehouse" class="form-control m-b input-sm" data-required="true"></select>
+                            </div>
+                            <div class="form-group col-sm-2 hide">
+                                <label>BarCode</label>
+                                <input type="text" id="txtFilterBarCode" autocomplete="off" class="form-control input-sm" maxlength="200" placeholder="BarCode" style="text-transform:uppercase">
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Location</label>
+                                <select id="slFilterLocation" class="form-control input-sm"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>Receive Code</label>
+                                <input type="text" id="txtFilterReceiveCode" autocomplete="off" class="form-control input-sm" maxlength="200" placeholder="Receive Code" style="text-transform:uppercase">
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Product</label>
+                                <select id="slFilterPurchaseItem" class="form-control input-sm"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Client</label>
+                                <select id="slFilterCustomer" class="form-control input-sm"><option value=""><--Select--></option></select>
+                            </div>
+                            <div class="form-group col-sm-2 m-t-lg hide" style="clear:both;">
+                                <label class="m-l float-right"><input type="checkbox" id="cbIsSearchExpireDate" name="cbIsSearchExpireDate">&nbsp;Expire Date</label>
+                            </div>
+                            <div class="form-group col-sm-2 hide">
+                                <label>From Date</label>
+                                <input id="txtFromDate" type="text" readonly="readonly" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" disabled="disabled" />
+                            </div>
+                            <div class="form-group col-sm-2 hide">
+                                <label>To Date</label>
+                                <input id="txtToDate" type="text" readonly="readonly" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" disabled="disabled" />
+                            </div>
+                            <div class="form-group col-sm-2" style="clear:both;">
+                                <label>Serial No</label>
+                                <input type="text" id="txtFilterSerial" autocomplete="off" class="form-control input-sm" maxlength="200" placeholder="Serial No" style="text-transform:uppercase">
+                            </div>
+                            <div class="form-group col-sm-2 hide">
+                                <label>Lot No</label>
+                                <input type="text" id="txtFilterLotNo" autocomplete="off" class="form-control input-sm" maxlength="200" placeholder="Lot No" style="text-transform:uppercase">
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>Chassis</label>
+                                <input type="text" id="txtFilterChassisNumber" autocomplete="off" class="form-control input-sm" maxlength="200" placeholder="Chassis" style="text-transform:uppercase">
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label>Engine</label>
+                                <input type="text" id="txtFilterEngineNumber" autocomplete="off" class="form-control input-sm" maxlength="200" placeholder="Engine" style="text-transform:uppercase">
+                            </div>
+                            <div class="form-group col-sm-2 hide">
+                                <label>PalletID</label>
+                                <input type="text" id="txtFilterPalletID" autocomplete="off" class="form-control input-sm" maxlength="200" placeholder="PalletID" style="text-transform:uppercase">
+                            </div>
+                            <div class="form-group col-sm-2 hide">
+                                <label>From Receive Date</label>
+                                <input id="txtFilterFromReceiveDate" autocomplete="off" type="text" style="background-color:white; cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                            </div>
+                            <div class="form-group col-sm-2 hide">
+                                <label>To Receive Date</label>
+                                <input id="txtFilterToReceiveDate" autocomplete="off" type="text" style="background-color:white; cursor:text;" class="datepicker-input form-control input-sm" data-required="false" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                            </div>
+
+                            @*<div class="col-sm-2 m-t-27">
+                                    <label> <input type="checkbox" id="cbIsWorkFlow" onchange="OptionsStatistics_cbIsWorkFlowChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp; Work Flow </label>
+                                </div>*@
+                            <div class="col-sm-10 m-t-md">
+                                <button id="btn-printPDF" type="button" class="btn btn-lightblue btn-sm" onclick="Inventory_Print('Print');"><i class="fa fa-print"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Print</b></button>
+                                <button id="btn-ExportToExcel" type="button" onclick="Inventory_Print('Excel');" class="btn btn-sm btn-info"><i class="fa fa-table"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.TraExportExcel&nbsp;</b></button>
+                                <button id="btn-ClearFilters" type="button" onclick="ClearAll('#FilterOptionsModal');" class="btn btn-sm btn-warning"><i class="fa fa-eraser"></i><b>&nbsp;Clear Filters&nbsp;</b></button>
+                                <label class="m-l hide"><input type="checkbox" id="cbIsShowExpireDate">&nbsp;Show Expire Date</label>
+                                <label class="m-l"><input type="checkbox" id="cbIsShowSerial">&nbsp;Show Serial</label>
+                                <label class="m-l hide"><input type="checkbox" id="cbIsShowLotNo">&nbsp;Show Lot No</label>
+                                <label class="m-l"><input type="checkbox" id="cbIsShowVehicle">&nbsp;Show Vehicle Data</label>
+                                <label class="m-l"><input type="checkbox" id="cbPrintReceiveOnly">&nbsp;Receive Only</label>
+                                @*<button id="btn-SelectOptions" type="button" class="btn btn-info btn-sm" onclick="OptionsStatistics_SelectOptions();"><i class="fa fa-check-square-o"></i><b>&nbsp;Select Options</b></button>
+                                    <button id="btn-SelectColumns" type="button" class="btn btn-warning btn-sm" onclick="OptionsStatistics_SelectColumns();"><i class="fa fa-print"></i><b>&nbsp;Add / Remove Columns</b></button>*@
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+                <!-- Endegion FilterOptions Form -->
+            </div>
+            <div class="modal-footer m-t-n">
+                <!--sherif-->
+                <button type="button" data-dismiss="modal" onclick="Inventory_LoadingWithPaging();" id="btnFilterOptionsApply" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-search"></span>&nbsp;Search
+                </button>
+                @*<button class=" btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF FilterOptionsModal-->

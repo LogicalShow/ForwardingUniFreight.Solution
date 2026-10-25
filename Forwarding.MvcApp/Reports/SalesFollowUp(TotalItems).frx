@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="03/03/2020 15:06:51" ReportInfo.Modified="02/04/2021 13:24:13" ReportInfo.CreatorVersion="2018.3.14.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlqH8PF3dxkYYkh6pEphET1UY9ELQ1bIn4/M9D56Jt38xADja7dz7sl3CqUQ3LeC+MSQ/B6GxQJNOfAtMrjca9wIX3mSgJAHVJ84iudCLI1HBQjaJLuhFgVzl0HKyu/NNSXbd19GbmiL8VOwsJEUy09dpHFeTrFEyWld3RSFLCv5NCxIZGr8Al9fnaWz/OWMQAZYtou861PLetn6gSGtrspMznhcdbP1QkntwrMbsM1w6c=">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="SELECT V.CustomerName, V.ClientID, V.InvoiceNo, V.Notes, V.DiscountPercentage, V.Discount, V.InvoiceDate, V.TotalPrice, V.TotalBeforTax, V.CurrencyCode, V.IsDeleted, V.PaidAmount, V.RemainAmount, V.TaxesAmount, V.ItemsAmount, V.ServicesAmount, V.ExpensesAmount, V.D_ID, V.D_ItemID, V.D_ItemName, V.D_ServiceID, V.D_ServiceName, V.D_Discount, V.D_Total, V.D_Price, V.D_StoreName, V.D_Notes, V.D_Quantity, V.D_UnitPrice, V.D_Type, V.D_RemainedQuantity, V.D_ItemQty, V.D_UnitID, V.AveragePrice, V.IsFixedDiscount, V.LocalTotal, V.LocalTotalBeforeTax, V.ExchangeRate, V.ID, V.QuotationID, V.DepartmentID, V.SalesManID, V.CostCenter_ID, V.InvCostCenter, V.PaymentMethodID, V.PaymentMethodName, V.IsApproved, V.ISDiscountBeforeTax, V.InvoiceNoManual, V.OrderID, V.JVID, V.CurrencyID, V.IsFromTrans, V.TransactionsCount, V.TransactionID, V.D_StoreID, V.D_CostCenterID, V.D_CostCenter, V.D_UnitFactor, V.D_PartnerRemainedQty , V.D_UnitName&#13;&#10;FROM &quot;vwSL_InvoicesDetails&quot; V&#13;&#10;where&#13;&#10;(@ClientIDs = '-1' or @ClientIDs =N'-1'  or  V.ClientID IN(SELECT CONVERT(INT , value ) from [fn_split]( @ClientIDs, '*') ))&#13;&#10; AND (@ItemIDs = '-1' or @ItemIDs =N'-1'  or  V.D_ItemID  IN(SELECT CONVERT(INT , value ) from [fn_split]( @ItemIDs, '*') ))&#13;&#10; AND isnull(IsDeleted , 0) = 0  AND  ( CONVERT(date , V.InvoiceDate) between  CONVERT(date ,@FromDate) and  CONVERT(date , @ToDate) ) ">
+        <Column Name="CustomerName" DataType="System.String"/>
+        <Column Name="ClientID" DataType="System.Int32"/>
+        <Column Name="InvoiceNo" DataType="System.String"/>
+        <Column Name="Notes" DataType="System.String"/>
+        <Column Name="DiscountPercentage" DataType="System.Decimal"/>
+        <Column Name="Discount" DataType="System.Decimal"/>
+        <Column Name="InvoiceDate" DataType="System.DateTime"/>
+        <Column Name="TotalPrice" DataType="System.Decimal"/>
+        <Column Name="TotalBeforTax" DataType="System.Decimal"/>
+        <Column Name="CurrencyCode" DataType="System.String"/>
+        <Column Name="IsDeleted" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="PaidAmount" DataType="System.Decimal"/>
+        <Column Name="RemainAmount" DataType="System.Decimal"/>
+        <Column Name="TaxesAmount" DataType="System.Decimal"/>
+        <Column Name="ItemsAmount" DataType="System.Decimal"/>
+        <Column Name="ServicesAmount" DataType="System.Decimal"/>
+        <Column Name="ExpensesAmount" DataType="System.Decimal"/>
+        <Column Name="D_ID" DataType="System.Int32"/>
+        <Column Name="D_ItemID" DataType="System.Int64"/>
+        <Column Name="D_ItemName" DataType="System.String"/>
+        <Column Name="D_ServiceID" DataType="System.Int64"/>
+        <Column Name="D_ServiceName" DataType="System.String"/>
+        <Column Name="D_Discount" DataType="System.Decimal"/>
+        <Column Name="D_Total" DataType="System.Decimal"/>
+        <Column Name="D_Price" DataType="System.Decimal"/>
+        <Column Name="D_StoreName" DataType="System.String"/>
+        <Column Name="D_Notes" DataType="System.String"/>
+        <Column Name="D_Quantity" DataType="System.Decimal"/>
+        <Column Name="D_UnitPrice" DataType="System.Decimal"/>
+        <Column Name="D_Type" DataType="System.String"/>
+        <Column Name="D_RemainedQuantity" DataType="System.Decimal"/>
+        <Column Name="D_ItemQty" DataType="System.Decimal"/>
+        <Column Name="D_UnitID" DataType="System.Int32"/>
+        <Column Name="AveragePrice" DataType="System.Decimal"/>
+        <Column Name="IsFixedDiscount" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="LocalTotal" DataType="System.Decimal"/>
+        <Column Name="LocalTotalBeforeTax" DataType="System.Decimal"/>
+        <Column Name="ExchangeRate" DataType="System.Decimal"/>
+        <Column Name="ID" DataType="System.Int64"/>
+        <Column Name="QuotationID" DataType="System.Int32"/>
+        <Column Name="DepartmentID" DataType="System.Int32"/>
+        <Column Name="SalesManID" DataType="System.Int32"/>
+        <Column Name="CostCenter_ID" DataType="System.Int32"/>
+        <Column Name="InvCostCenter" DataType="System.String"/>
+        <Column Name="PaymentMethodID" DataType="System.Int32"/>
+        <Column Name="PaymentMethodName" DataType="System.String"/>
+        <Column Name="IsApproved" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="ISDiscountBeforeTax" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="InvoiceNoManual" DataType="System.String"/>
+        <Column Name="OrderID" DataType="System.Int32"/>
+        <Column Name="JVID" DataType="System.Int32"/>
+        <Column Name="CurrencyID" DataType="System.Int32"/>
+        <Column Name="IsFromTrans" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="TransactionsCount" DataType="System.Int32"/>
+        <Column Name="TransactionID" DataType="System.Int32"/>
+        <Column Name="D_StoreID" DataType="System.Int32"/>
+        <Column Name="D_CostCenterID" DataType="System.Int32"/>
+        <Column Name="D_CostCenter" DataType="System.String"/>
+        <Column Name="D_UnitFactor" DataType="System.Decimal"/>
+        <Column Name="D_PartnerRemainedQty" DataType="System.Decimal"/>
+        <Column Name="D_UnitName" DataType="System.String"/>
+        <CommandParameter Name="@FromDate" DataType="22" Expression="[FromDate]" DefaultValue="01/02/2020"/>
+        <CommandParameter Name="@ToDate" DataType="22" Expression="[ToDate]" DefaultValue="03/15/2020"/>
+        <CommandParameter Name="@ClientIDs" DataType="22" Expression="[ClientIDs]" DefaultValue="1666,1667,1668,1669,1670,1671,1672,1673,1674"/>
+        <CommandParameter Name="@ItemIDs" DataType="22" Expression="[ItemIDs]" DefaultValue="1*2*3"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="FromDate" DataType="System.String" Expression="&quot;01/01/2020&quot;"/>
+    <Parameter Name="ToDate" DataType="System.String" Expression="&quot;03/15/2020&quot;"/>
+    <Parameter Name="ClientIDs" DataType="System.String" Expression="&quot;1666,1667,1668,1669,1670,1671,1672,1673,1674&quot;"/>
+    <Parameter Name="ItemID" DataType="System.String" Expression="&quot;1*2*3&quot;"/>
+    <Total Name="LocalTotal" Expression="[Table.D_Total]*[Table.ExchangeRate]" Evaluator="Data1" PrintOn="GroupFooter1"/>
+    <Total Name="ItemQty" Expression="[Table.D_ItemQty]" Evaluator="Data1" PrintOn="GroupFooter1"/>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="9.45"/>
+    <PageHeaderBand Name="PageHeader1" Top="13.62" Width="718.2" Height="103.95">
+      <TextObject Name="Text34" Left="9.45" Top="9.45" Width="680.4" Height="37.8" Border.Lines="Top, Bottom" Border.Style="Dash" Text="Sales Follow-Up (Total For Items)" HorzAlign="Center" VertAlign="Center" Font="Arial Black, 16pt, style=Bold"/>
+      <TextObject Name="Text4" Left="9.45" Top="85.05" Width="255.15" Height="18.9" Border.Lines="All" Fill.Color="Silver" Text="Item Name" HorzAlign="Center" VertAlign="Center" Font="Arial, 11pt, style=Bold"/>
+      <TextObject Name="Text37" Left="264.6" Top="85.05" Width="132.3" Height="18.9" Border.Lines="All" Fill.Color="Silver" Text="Unit" HorzAlign="Center" VertAlign="Center" Font="Arial, 11pt, style=Bold"/>
+      <TextObject Name="Text36" Left="396.9" Top="85.05" Width="151.2" Height="18.9" Border.Lines="All" Fill.Color="Silver" Text="Total Price" HorzAlign="Center" VertAlign="Center" Font="Arial, 11pt, style=Bold"/>
+      <TextObject Name="Text35" Left="548.1" Top="85.05" Width="160.65" Height="18.9" Border.Lines="All" Fill.Color="Silver" Text="Quantity" HorzAlign="Center" VertAlign="Center" Font="Arial, 11pt, style=Bold"/>
+      <TextObject Name="Text3" Left="226.8" Top="56.7" Width="94.5" Height="18.9" Text="[Convert.ToDateTime([FromDate])]" Format="Custom" Format.Format="dd/MM/yyyy"/>
+      <TextObject Name="Text8" Left="359.1" Top="56.7" Width="94.5" Height="18.9" Text="[Convert.ToDateTime([ToDate])]" Format="Custom" Format.Format="dd/MM/yyyy"/>
+      <TextObject Name="Text38" Left="132.3" Top="56.7" Width="94.5" Height="18.9" Text="From : " Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text39" Left="321.3" Top="56.7" Width="37.8" Height="18.9" Text="To : " Font="Arial, 10pt, style=Bold"/>
+    </PageHeaderBand>
+    <GroupHeaderBand Name="GroupHeader1" Top="121.73" Width="718.2" Condition="[Table.D_ItemName]">
+      <DataBand Name="Data1" Top="125.9" Width="718.2" DataSource="Table">
+        <TextObject Name="Text1" Left="9.45" Width="255.15" Border.Lines="All"/>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter1" Top="130.07" Width="718.2" Height="18.9">
+        <TextObject Name="Text2" Left="9.45" Width="255.15" Height="18.9" Border.Lines="All" Text="[Table.D_ItemName]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="3" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text6" Left="264.6" Width="132.3" Height="18.9" Border.Lines="All" Text="[Table.D_UnitName]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="3" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text5" Left="548.1" Width="160.65" Height="18.9" Border.Lines="All" Text="[ItemQty]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="3" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="3" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text7" Left="396.9" Width="151.2" Height="18.9" Border.Lines="All" Text="[LocalTotal]" Format="Number" Format.UseLocale="true" HorzAlign="Center"/>
+      </GroupFooterBand>
+    </GroupHeaderBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="153.13" Width="718.2"/>
+    <PageFooterBand Name="PageFooter1" Top="157.3" Width="718.2"/>
+  </ReportPage>
+</Report>

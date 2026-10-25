@@ -1,0 +1,74 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0); " onclick="LoadViews(id);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="ContainerFreightStation" href="javascript:void(0);" onclick="LoadViews('ContainerFreightStation')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.ContainerFreightStation
+        </a>
+    </li>
+    <li>
+        <a id="ContainerFreightStationReports" href="javascript:void(0);" onclick="LoadViews('ContainerFreightStationReports');">
+            @Forwarding.MvcApp.App_Resources.App_Resources.ContainerFreightStationReports
+        </a>
+    </li>
+    <li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.WH_ManifestReport</li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-ManifestReport">
+    <!-- Region Options & Template  -->
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <div id="hExportedTable" class="hide"></div>
+                <h3 class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.WH_ManifestReport</h3>
+                @*<h3 class="m-b-none">Best Print Using Internet Explorer</h3>*@
+            </header>
+            <!--Region the searh, delete, addnew-->
+            <div class="row text-sm wrapper hidden-print m-l">
+                <div id="div-main-options">
+                    <!--Region Filter-->
+
+                    <div class="form-group input-group col-sm-3 swapChildrenClass m-l-n">
+                        <label>ContainerNo. / Operation Code</label>
+                        <input type="text" id="txtSearchText" autocomplete="off" class="form-control input-sm" maxlength="200" placeholder="" style="text-transform:uppercase">
+                        <span class="input-group-btn">
+                            <button id="btn-filterPartnerType" title="Filter" class="btn btn-sm btn-lightblue m-t-22" type="button" onclick="GetOperations();"><i class="fa fa-filter"></i></button>
+                        </span>
+                    </div>
+
+                    <div class="form-group input-group col-sm-3 swapChildrenClass m-l-n">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Operations</label>
+                        <select id="slOperationSearch" onchange="GetOperationRoadNumber();" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b input-sm" data-required="false"></select>
+
+                    </div>
+                    <div class="form-group col-sm-2 m-l-n">
+                        <label>Road Number WH</label>
+                        <input type="text" id="txtRoutingRoadNumber" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control input-sm" data-required="false" maxlength="100" placeholder="" style="text-transform:uppercase" />
+                    </div>
+
+
+                    <div>
+                        <div class="col-sm-3 m-l-n m-t-sm" data-toggle="buttons" style="clear: both;width:30%;">
+                            <button id="btn-print" type="button" class="btn btn-lightblue btn-sm" onclick="ManifestReport_Print('Print');"><i class="fa fa-print"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Print</button>
+                            <button id="btn-printsticker" type="button" class="btn btn-lightblue btn-sm hide" onclick="Manifeststicker_Print('Print');"><i class="fa fa-print"></i>&nbsp;Print sticker</button>
+                            <button id="btn-SaveRoadNumber" type="button" onclick="SaveRoadNumber();" class="btn btn-sm btn-primary"><i class="fa fa-table"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.SaveRoadNumber</b></button>
+                        </div>
+                    </div>
+                    <!--EOF Region Filter-->
+                </div>
+            </div>
+            <!--EOF Region the searh, delete, addnew line-->
+
+
+        </section>
+    </div>
+</div>

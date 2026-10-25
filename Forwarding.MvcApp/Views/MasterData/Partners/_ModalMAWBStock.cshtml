@@ -1,0 +1,68 @@
+﻿<!--MAWBStockModal-->
+    <!-- This modal is opened from Master Air Operations and from MasterData/Partners/Airlines to Generate MAWBs -->
+    <div class="modal fade" id="MAWBStockModal" tabindex="-1" style="z-index: 4000;" data-keyboard="false" data-backdrop="false" role="dialog" aria-labelledby="MAWBStockModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modalwidth-50">
+            <div class="modal-content">
+                <div class="modal-header">
+                    @*<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;</button>*@
+                    <h3 class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.MAWBStock &nbsp;<label id="lblMAWBStockShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <!-- Region Add / Edit Country Form -->
+                    <div class="span7 form vertical-mode" id="MAWBStock-form">
+                        <fieldset>
+                            <div class="form-group pull-in  has-error clearfix">
+                                @*<input id="hMAWBStockID" type="hidden" />*@
+                                <!-- start alert message region -->
+                                <div class="alert alert-danger div-error">
+                                    @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                </div>
+                                <!-- end alert message region -->
+                                <!--Radio Buttons-->
+                                <div class="col-sm-4">
+                                    <br />
+                                    <section class="panel panel-default">
+                                        <header class="panel-heading font-bold">@Forwarding.MvcApp.App_Resources.App_Resources.AddBy</header>
+                                        <label class="m-l"><input type="radio" id="cbIsAddByAmount"    onchange="MAWBStock_AddByChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbMAWBStockAddBy" value="1">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.ByAmount</label><br />
+                                        <label class="m-l"><input type="radio" id="cbIsAddByEndNumber" onchange="MAWBStock_AddByChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" name="cbMAWBStockAddBy" value="2">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.ByEndNumber</label><br />
+                                    </section>
+                                </div>
+                                <!--EOF Radio Buttons-->
+                                
+                                <div class="form-group col-sm-4">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.StartNumber</label>
+                                    <input id="txtStartNumber" type="text" class="form-control parsley-validated" onfocus="CheckValueIsInteger(id);" onkeypress="CheckValueIsInteger(id);" onchange="MAWBStock_LimitsChanged();" data-required="true" data-minlength="7" maxlength="7" placeholder="7 digits" style="text-transform:uppercase"/>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.EndNumber</label>
+                                    <input type="text" id="txtEndNumber" class="form-control parsley-validated" onfocus="CheckValueIsInteger(id);" onkeypress="CheckValueIsInteger(id);" onchange="MAWBStock_LimitsChanged();" data-required="true" data-minlength="7" maxlength="7" placeholder="7 digits" style="text-transform:uppercase"/>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Amount</label>
+                                    <input type="text" id="txtMAWBStockAmount" class="form-control parsley-validated" onfocus="CheckValueIsInteger(id);" onkeypress="CheckValueIsInteger(id);" onchange="MAWBStock_LimitsChanged();" data-required="true" maxlength="3" placeholder="3 digits" style="text-transform:uppercase"/>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label>Stock Type</label>
+                                    <select id="slTypeOfStock" class="form-control parsley-validated" data-required="true" />
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <!-- Endegion Add / Edit MAWBStock Form -->
+                </div>
+                <div class="modal-footer"><!--sherif-->
+                    @*<button type="button" id="btnSaveMAWBStock" class="btn btn-primary btn-sm" onclick="MAWBStock_Insert(false);">
+                        <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save</button>
+                    <button type="button" id="btnSaveandNewMAWBStock" class="btn btn-primary btn-sm" onclick="MAWBStock_Insert(true);">
+                        <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew</button>*@
+                    <button type="button" id="btnGenerateMAWBStock" class="btn btn-primary btn-sm" @*onclick="MAWBStock_GenerateMAWBStock();"*@>
+                        <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Generate</button>
+                    <button class="btnClose btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<!--EOF MAWBStockModal-->

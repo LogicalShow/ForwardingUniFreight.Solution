@@ -1,0 +1,108 @@
+﻿* {
+    text-align: right;
+}
+
+.navbar-header {
+    float: right !important;
+}
+
+#ul-right-menu {
+    float: left !important;
+}
+
+    #ul-right-menu > li {
+        float: right !important;
+    }
+
+#ul-usersettinginfo {
+    left: 0px !important;
+}
+
+#sec-quicksearch {
+    left: -115px !important;
+}
+
+.nav-primary ul.nav > li > a > i.icon, .nav-primary ul.nav > li > a > i.fa-angle-right {
+    float: right !important;
+    margin-right: -16px !important;
+}
+
+.nav-primary ul.nav > li > a > i.fa-angle-right {
+    border-left: 1px solid rgba(255,255,255,0.05) !important;
+}
+
+.nav-primary ul.nav > li > a > span {
+    margin-right: 22px !important;
+    font-size: 15px;
+}
+
+.nav-primary li > a > i {
+    border-left: 1px solid rgba(255,255,255,0.05) !important;
+}
+
+    .nav-primary li > a > i > b {
+        left: 42px !important;
+    }
+
+.pull-right {
+    float: left !important;
+}
+
+.fa-angle-right:before {
+    content: "\f104" !important;
+}
+
+label {
+    min-width: 100px !important;
+}
+
+.close {
+    float: left !important;
+}
+
+.modal-footer {
+    text-align: left !important;
+}
+
+.col-sm-6 {
+    float: right;
+}
+/*Sherif: Increase text font here*/
+.table tr td {
+    /*text-align: right;
+    float: right;*/
+    text-align: center;
+    /*font-size: 16px;*/
+}
+
+th {
+    /*text-align: right !important;*/
+    /*sherif*/
+    text-align: center;
+    font-size: 16px;
+}
+
+#div-option-buttons {
+    margin-right: 5px !important;
+}
+
+.icon-home {
+    float: right;
+    margin-left: 5px;
+}
+
+#div-main-options {
+    float: right !important;
+}
+
+#div-search-optoin {
+    float: left !important;
+}
+
+#div-search-controls {
+    float: right;
+}
+
+.float-right {
+    float: left !important;
+}

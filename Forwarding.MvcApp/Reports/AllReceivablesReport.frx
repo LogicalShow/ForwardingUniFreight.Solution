@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/01/2023 11:07:34" ReportInfo.Modified="01/03/2024 10:55:51" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {                        
+    private void Text1_BeforePrint(object sender, EventArgs e)
+    {
+      if(((String)Report.GetParameterValue(&quot;CompanyName&quot;))==&quot;MED&quot;){
+        
+        Text1.Text = &quot;approximately Report&quot;;
+      }
+      else if(((String)Report.GetParameterValue(&quot;CompanyName&quot;))==&quot;TRM&quot;){
+        Text1.Text =&quot;&quot;;
+      }
+      else{
+        Text1.Text=&quot;Receviables Report&quot;;
+      }
+    }
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFdK1pGRuXb2ZqNrvvshfdvk1WTy4Q4X3n3sfovtvD12ZUZMgosSXIKCfex3Uxiv0ztNRpdBkVUVn6xObKSedOpZyYO5PIUHSRKnSA+cCNFWf1hjuF6Ns2/wRHjljt7MV5UfWRnePPPBwJuwvl+aZcZQ==">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="Exec (@query)">
+        <Column Name="Quantity" DataType="System.Decimal"/>
+        <Column Name="SalePrice" DataType="System.Decimal"/>
+        <Column Name="SaleAmount" DataType="System.Decimal"/>
+        <Column Name="ExchangeRate" DataType="System.Decimal"/>
+        <Column Name="ChargeTypeName" DataType="System.String"/>
+        <Column Name="CurrencyCode" DataType="System.String"/>
+        <Column Name="OperationCode" DataType="System.String"/>
+        <Column Name="POLName" DataType="System.String"/>
+        <Column Name="PODName" DataType="System.String"/>
+        <Column Name="ContainerTypes" DataType="System.String"/>
+        <Column Name="CommodityName" DataType="System.String"/>
+        <Column Name="ATAPOLDate" DataType="System.DateTime"/>
+        <Column Name="ActualArrival" DataType="System.DateTime"/>
+        <Column Name="ReleaseDate" DataType="System.DateTime"/>
+        <Column Name="FreeTime" DataType="System.Int32"/>
+        <Column Name="ContainerNumber" DataType="System.String"/>
+        <Column Name="TankNumbers" DataType="System.String"/>
+        <Column Name="ShipmentType" DataType="System.String"/>
+        <Column Name="PrintTitle" DataType="System.String" PropName="Column" Calculated="true" Expression="[PrintTitle]"/>
+        <Column Name="Logo" DataType="System.String" PropName="Column" Calculated="true" Expression="[Logo]"/>
+        <Column Name="Logo1" DataType="System.String" PropName="Column" Calculated="true" Expression="[Logo1]"/>
+        <CommandParameter Name="@query" DataType="12" Expression="[query]" DefaultValue="SELECT ChargeTypeName,Quantity,SalePrice,SaleAmount,ExchangeRate,CurrencyCode,OperationCode,POLName,PODName,'' ContainerTypes ,'' CommodityName,CreationDate ATAPOLDate,CreationDate ActualArrival,CreationDate ReleaseDate,ContainerNumber,''TankNumbers,ShipmentType,0 FreeTime FROM vwReceivables"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="ReceivablesWithoutVAT" DataType="System.String"/>
+    <Parameter Name="CurrenciesTotals" DataType="System.String"/>
+    <Parameter Name="ClientName" DataType="System.String"/>
+    <Parameter Name="PrintTitle" DataType="System.String" Expression="[PrintTitle]"/>
+    <Parameter Name="Logo" DataType="System.String" Expression="[Logo]"/>
+    <Parameter Name="Logo1" DataType="System.String" Expression="[Logo1]"/>
+    <Parameter Name="CompanyName" DataType="System.String" Expression="[CompanyName]"/>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="146.38">
+      <TextObject Name="Text1" Left="245.7" Top="85.05" Width="207.9" Height="28.35" BeforePrintEvent="Text1_BeforePrint" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text37" Left="246.43" Top="118.03" Width="207.9" Height="28.35" Text="[IIf([Table.PrintTitle] == &quot;0&quot;,&quot;&quot;,[Table.PrintTitle])]" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text15" Left="-9043.65" Top="-9450" Width="85.05" Height="28.35" Text="Rec w.o VAT" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text14" Left="-8958.6" Top="-9450" Width="170.1" Height="28.35" Text="[ReceivablesWithoutVAT]" VertAlign="Center"/>
+      <TextObject Name="Text17" Left="-9450" Top="-9450" Width="349.65" Height="28.35" Text="[CurrenciesTotals]" VertAlign="Center"/>
+      <PictureObject Name="Picture1" Left="9.45" Top="9.45" Width="718.2" Height="75.6" DataColumn="Table.Logo"/>
+    </ReportTitleBand>
+    <DataBand Name="Data1" Top="497.25" Width="718.2" Height="28.35" Guides="28.35" DataSource="Table">
+      <TextObject Name="Text5" Width="198.45" Height="28.35" Border.Lines="All" Text="[Table.ChargeTypeName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text6" Left="198.45" Width="56.7" Height="28.35" Border.Lines="All" Text="[Table.Quantity]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text7" Left="255.15" Width="122.85" Height="28.35" Border.Lines="All" Text="[Table.SalePrice]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text9" Left="378" Width="132.3" Height="28.35" Border.Lines="All" Text="[Table.SaleAmount]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text11" Left="510.3" Width="103.95" Height="28.35" Border.Lines="All" Text="[Table.ExchangeRate]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text13" Left="614.25" Width="103.95" Height="28.35" Border.Lines="All" Text="[Table.CurrencyCode]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <DataHeaderBand Name="DataHeader1" Top="151.71" Width="718.2" Height="340.2">
+        <TextObject Name="Text44" Left="9.45" Top="37.8" Width="113.4" Height="28.35" Text="Operation Code:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+        <TextObject Name="Text45" Left="122.85" Top="37.8" Width="548.1" Height="28.35" Text="[Table.OperationCode]" VertAlign="Center" Font="Arial, 9pt"/>
+        <TextObject Name="Text46" Left="9.45" Top="9.45" Width="113.4" Height="28.35" Text="Client Name:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+        <TextObject Name="Text47" Left="122.85" Top="9.45" Width="548.1" Height="28.35" Text="[ClientName]" VertAlign="Center" Font="Arial, 9pt"/>
+        <TextObject Name="Text48" Left="9.45" Top="66.15" Width="113.4" Height="28.35" Text="Containers:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+        <TextObject Name="Text49" Left="122.85" Top="66.15" Width="548.1" Height="28.35" Text="[Table.ContainerTypes]" VertAlign="Center" Font="Arial, 9pt"/>
+        <TextObject Name="Text50" Left="9.45" Top="113.4" Width="113.4" Height="28.35" Text="Commodity:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+        <TextObject Name="Text51" Left="132.3" Top="113.4" Width="548.1" Height="28.35" Text="[Table.CommodityName]" VertAlign="Center" Font="Arial, 9pt"/>
+        <TextObject Name="Text52" Left="9.45" Top="132.3" Width="113.4" Height="28.35" Text="POL:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+        <TextObject Name="Text53" Left="122.85" Top="132.3" Width="548.1" Height="28.35" Text="[Table.POLName]" VertAlign="Center" Font="Arial, 9pt"/>
+        <TextObject Name="Text54" Left="9.45" Top="160.65" Width="113.4" Height="28.35" Text="POD:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+        <TextObject Name="Text55" Left="122.85" Top="160.65" Width="548.1" Height="28.35" Text="[Table.PODName]" VertAlign="Center" Font="Arial, 9pt"/>
+        <TextObject Name="Text56" Left="9.45" Top="189" Width="113.4" Height="28.35" Text="ATA:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+        <TextObject Name="Text57" Left="122.85" Top="189" Width="548.1" Height="28.35" Text="[IIf(Year([Table.ATAPOLDate]) == 1,&quot;&quot;,[Table.ATAPOLDate])]" Format="Custom" Format.Format="dd/MM/yyyy" VertAlign="Center" Font="Arial, 9pt"/>
+        <TextObject Name="Text58" Left="9.45" Top="245.7" Width="113.4" Height="28.35" Text="Releasing Date:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+        <TextObject Name="Text59" Left="122.85" Top="245.7" Width="548.1" Height="28.35" Text="[IIf(Year([Table.ReleaseDate]) == 1,&quot;&quot;,[Table.ReleaseDate])]" Format="Custom" Format.Format="dd/MM/yyyy" VertAlign="Center" Font="Arial, 9pt"/>
+        <TextObject Name="Text60" Left="9.45" Top="274.05" Width="113.4" Height="28.35" Text="Free Days:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+        <TextObject Name="Text61" Left="122.85" Top="274.05" Width="548.1" Height="28.35" Text="[Table.FreeTime]" VertAlign="Center" Font="Arial, 9pt"/>
+        <TextObject Name="Text62" Left="9.45" Top="94.5" Width="151.2" Height="18.9" Text="Containers No/Tank No:" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text63" Left="170.1" Top="94.5" Width="500.85" Height="18.9" Text="[Table.ContainerNumber]"/>
+        <TextObject Name="Text38" Top="311.85" Width="198.45" Height="28.35" Border.Lines="All" Text="Charge Types" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+        <TextObject Name="Text39" Left="198.45" Top="311.85" Width="56.7" Height="28.35" Border.Lines="All" Text="Qty" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+        <TextObject Name="Text40" Left="255.15" Top="311.85" Width="122.85" Height="28.35" Border.Lines="All" Text="Unit Price" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+        <TextObject Name="Text41" Left="378" Top="311.85" Width="132.3" Height="28.35" Border.Lines="All" Text="Sale Amount" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+        <TextObject Name="Text42" Left="510.3" Top="311.85" Width="103.95" Height="28.35" Border.Lines="All" Text="Ex.Rate" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+        <TextObject Name="Text43" Left="614.25" Top="311.85" Width="103.95" Height="28.35" Border.Lines="All" Text="Currency" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+        <TextObject Name="Text2" Left="9.45" Top="226.8" Width="94.5" Height="18.9" Text="ATA POD :" Font="Arial, 9pt, style=Bold"/>
+        <TextObject Name="Text3" Left="122.85" Top="226.8" Width="557.55" Height="18.9" Text="[IIf(Year([Table.ActualArrival]) == 1,&quot;&quot;,[Table.ActualArrival])]&#13;&#10;&#13;&#10;&#13;&#10;" Font="Arial, 9pt"/>
+      </DataHeaderBand>
+      <DataFooterBand Name="DataFooter1" Top="530.93" Width="718.2" Height="151.2">
+        <TextObject Name="Text64" Left="434.7" Top="37.8" Width="85.05" Height="28.35" Text="Rec w.o VAT" VertAlign="Center" Font="Arial, 9pt"/>
+        <TextObject Name="Text65" Left="519.75" Top="37.8" Width="170.1" Height="28.35" Text="[ReceivablesWithoutVAT]" VertAlign="Center"/>
+        <TextObject Name="Text66" Left="28.35" Top="37.8" Width="349.65" Height="28.35" Text="[CurrenciesTotals]" VertAlign="Center"/>
+        <PictureObject Name="Picture2" Top="75.6" Width="708.75" Height="75.6" CanGrow="true" DataColumn="Table.Logo1"/>
+      </DataFooterBand>
+    </DataBand>
+  </ReportPage>
+</Report>

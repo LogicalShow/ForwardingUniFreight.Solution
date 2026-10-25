@@ -1,0 +1,298 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="liGroupName" href="javascript:void(0);">
+            @Forwarding.MvcApp.App_Resources.App_Resources.Administration
+        </a>
+    </li>
+    <li>
+        <a id="liTabName" href="javascript:void(0);">
+            @Forwarding.MvcApp.App_Resources.App_Resources.Settings
+        </a>
+    </li>
+    <li id="liFormName" class="active">@Forwarding.MvcApp.App_Resources.App_Resources.NoAccessDepartments</li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-NoAccessDepartments">
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 id="h3Label" class="m-b-none">
+
+                </h3>
+            </header>
+            <!--Region the searh, delete, addnew-->
+            <div class="row text-sm wrapper hidden-print ">
+                <div id="div-main-options" class="col-sm-5 m-b-xs">
+                    <button id="btn-NewAdd" class="btn btn-warning btn-sm hide" data-toggle="modal" data-target="#NoAccessDepartmentsModal"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.New</button>
+                    <div id="div-option-buttons" class="btn-group hide">
+                        <button id="btn-Copy" type="button" class="btn btn-sm btn-default"><i class="fa fa-copy"></i>&nbsp;Copy </button>
+                        <button id="btn-Print" type="button" class="btn btn-sm btn-default"><i class="fa fa-print"></i>&nbsp;Print </button>
+                        <button id="btn-Send" type="button" class="btn btn-sm btn-default"><i class="fa fa-envelope-o"></i>&nbsp;Send </button>
+                    </div>
+                </div>
+                <div id="div-search-option" class="col-sm-7">
+                    <div id="div-search-controls" class="input-group col-sm-9">
+                        <input id="txt-Search" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search">
+                        <span class="input-group-btn">
+                            <button id="btn-search" class="btn btn-sm btn-primary" type="button" onclick="NoAccessDepartments_LoadingWithPaging();"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                    <div class="float-right col-sm-1">
+                        <input id="txt-DummyToCatchTheUsernameCozOfPassword" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase;width:0px;" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search">
+                        <button id="btn-Delete" type="button" class="float-right btn btn-sm btn-danger m-r-n m-t-n-lg hide"><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete</button>
+                    </div>
+                </div>
+            </div>
+            <!--Region the searh, delete, addnew-->
+            <!--Region: table header-->
+            <div class="table-responsive">
+                <table id="tblNoAccessDepartments" class="table table-striped b-t b-light text-sm  table-hover">
+                    <thead>
+                        <tr>
+                            <th id="ID">
+                                <input id="cb-CheckAll" type="checkbox" />
+                            </th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Code</th>
+                            <th>@Forwarding.MvcApp.App_Resources.App_Resources.Name</th>
+                            <th class="hide">@Forwarding.MvcApp.App_Resources.App_Resources.LocalName</th>
+                            <th class="">@Forwarding.MvcApp.App_Resources.App_Resources.Notes</th>
+                            @*<th>@Forwarding.MvcApp.App_Resources.App_Resources.Ocean</th>*@
+                            <th class="rounded-right hide"></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <!--Region: table header-->
+            <!--Region: footer-->
+            <footer class="panel-footer">
+                <div class="row">
+                    <div class="col-sm-4 hidden-xs">
+                        <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                        </select>
+                        <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                        </button>
+                    </div>
+                    <div id="div-Text-Total" class="col-sm-4 text-center">
+                        <small class="text-muted inline m-t-sm m-b-sm">
+                            @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                            <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                            <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                        </small>
+                    </div>
+                    <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+                </div>
+            </footer>
+            <!--Region: footer-->
+        </section>
+    </div>
+</div>
+
+<!-- Add / Edit Region Modal -->
+<div class="modal fade" id="NoAccessDepartmentsModal" tabindex="-1" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="NoAccessDepartmentsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-80">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.Department &nbsp;<label id="lblShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <!-- Region Add / Edit Region Form -->
+            <div class="modal-body">
+                <div class="span7 form vertical-mode" id="NoAccessDepartments-form">
+                    <fieldset>
+                        <div class="form-group pull-in  has-error clearfix">
+                            <input id="hID" type="hidden" />
+                            <!-- start alert message region -->
+                            <div class="alert alert-danger div-error">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                            </div>
+                            <!-- end alert message region -->
+                            <!-- Region Add / Edit Region Form -->
+                            <div class="row text-sm wrapper hidden-print">
+                                <div class="col-sm-12 swapChildrenClass">
+
+
+                                    <div class="form-group col-sm-4">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Code</label>
+                                        <input id="txtCode" autocomplete="off" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="true" maxlength="100" placeholder="" style="text-transform:uppercase" />
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Name</label>
+                                        <input id="txtName" autocomplete="off" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="true" maxlength="100" placeholder="" style="text-transform:uppercase" />
+                                    </div>
+                                    <div class="form-group col-sm-6 hide">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.LocalName</label>
+                                        <input id="txtLocalName" autocomplete="off" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="100" placeholder="" style="text-transform:uppercase" />
+                                    </div>
+                                    
+                                    @*<div class="form-group col-sm-2 m-t-md">
+                        <label><input type="checkbox" id="cbIsOcean" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" />&nbsp;<i class= 'fa fa-anchor ocean-icon-style'/>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.IsOcean</label><br />
+                        <label><input type="checkbox" id="cbIsAir" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" />&nbsp;<i class= 'fa fa-plane air-icon-style'/>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.IsAir</label><br />
+                        <label><input type="checkbox" id="cbIsInland" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" />&nbsp;<i class= 'fa fa-truck inland-icon-style'/>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.IsInland</label>
+                    </div>
+                    <div class="form-group col-sm-2 m-t-md">
+                        <label><input type="checkbox" id="cbIsImport" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" />&nbsp;<i class= 'fa fa-arrow-circle-down import-icon-style'/>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Import</label><br />
+                        <label><input type="checkbox" id="cbIsExport" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" />&nbsp;<i class= 'fa fa-external-link export-icon-style'/>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Export</label><br />
+                        <label><input type="checkbox" id="cbIsDomestic" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" />&nbsp;<i class= 'fa fa-home domestic-icon-style'/>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Domestic</label><br />
+                    </div>
+                    <div class="col-sm-6 m-t">
+                        <label><input type="checkbox" id="cbIsInactive" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.IsInactive</label><br />
+                    </div>*@
+                                    <div class="form-group col-sm-4">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Email</label>
+                                        <input id="txtEmail" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated input-sm" data-required="false" maxlength="100" placeholder="Email" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row text-sm wrapper hidden-print">
+                                <div class="col-sm-12 swapChildrenClass">
+                                    <div class="form-group col-sm-6">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</label>
+                                        <input id="txtNotes" autocomplete="off" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" class="form-control parsley-validated input-sm" data-required="false" maxlength="100" placeholder="" style="text-transform:uppercase" />
+                                    </div>
+                                    <div class="col-sm-5"></div>
+                                    <div class="col-sm-1"></div>
+
+                                </div>
+                            </div>
+                            <div id="divHideNotToHaveHeadache" class="hide">
+                                @*<div class="row text-sm wrapper hidden-print m-t-n-sm">*@
+                                <div class="wrapper hidden-print" style="clear:both;">
+                                    <h4>Email Settings</h4>
+                                </div>
+                                @*<div class="form-group col-sm-4 m-t-n">
+                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Email</label>
+                    <input id="txtEmail" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated input-sm" data-required="false" maxlength="100" placeholder="Email" />
+                </div>*@
+                                <div class="form-group col-sm-4 m-t-n">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Email_Password</label>
+                                    <input id="txtEmail_Password" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="password" class="form-control parsley-validated input-sm" data-required="false" maxlength="100" placeholder="Email Password" />
+                                </div>
+                                <div class="form-group col-sm-4 m-t-n">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Email_DisplayName</label>
+                                    <input id="txtEmail_DisplayName" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated input-sm" data-required="false" maxlength="100" placeholder="Display Name" />
+                                </div>
+                                @*</div>*@
+                                @*<div class="row text-sm wrapper hidden-print m-t-n-sm">*@
+
+                                <div class="form-group col-sm-4">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Email_Host</label>
+                                    <input id="txtEmail_Host" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated input-sm" data-required="false" maxlength="100" placeholder="Email Host" />
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Email_Port</label>
+                                    <input id="txtEmail_Port" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="number" class="form-control parsley-validated input-sm" data-required="false" maxlength="100" placeholder="Email_Port" />
+                                </div>
+                                <div class="form-group col-sm-4 m-t-27">
+                                    <label><input type="checkbox" id="cbEmail_IsSSL" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Email_IsSSL</label><br />
+                                </div>
+                                @*</div>*@
+                                @*send test email*@
+                                <div class="wrapper hidden-print" style="clear:both;">
+                                    <h4>@Forwarding.MvcApp.App_Resources.App_Resources.SendTestEmail</h4>
+                                </div>
+                                @*<div class="row text-sm wrapper hidden-print m-t-n-sm">*@
+                                <div class="form-group col-sm-2 m-t-n">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.To</label>
+                                    <input id="txtEmail_To" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated input-sm" data-required="false" maxlength="100" placeholder="To" />
+                                </div>
+                                <div class="form-group col-sm-2 m-t-n">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Subject</label>
+                                    <input id="txtEmail_Subject" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated input-sm" data-required="false" maxlength="100" placeholder="Subject" />
+                                </div>
+                                <div class="form-group col-sm-6 m-t-n">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Body</label>
+                                    <input id="txtEmail_Body" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated input-sm" data-required="false" maxlength="100" placeholder="Body" />
+                                </div>
+                                <div class="form-group col-sm-2 m-t-n">
+                                    <button type="button" id="btnSendTestEmail" class="btn btn-warning btn-sm" onclick="SendTestEmail();" style="margin-top: 25px;">
+                                        <span class="fa fa-envelope-o"></span> @Forwarding.MvcApp.App_Resources.App_Resources.SendTestEmail
+                                    </button>
+                                </div>
+                            </div>
+                            @*</div>*@
+                            <!-- Region Add / Edit Region Form -->
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <!-- Endregion Add / Edit Region Form -->
+            <div class="modal-footer m-t-n">
+                <button id="btn-DepartmentChargeBinding" class="btn btn-lightblue btn-sm m-t-xxs hide classHideForDepartments" data-toggle="modal" data-target="" onclick="DepartmentCharge_BindCharges();"><i class="fa fa-link"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.BindDepartmentCharges</button>
+                <button type="button" id="btnSave" class="btn btn-primary btn-sm" onclick="NoAccessDepartments_Save(false);">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                </button>
+                <button type="button" id="btnSaveandNew" class="btn btn-primary btn-sm" onclick="NoAccessDepartments_Save(true);">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew
+                </button>
+                <button class="btnClose btn btn-link btn-sm" id="btnClose" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Region Options & Template  -->
+
+<!--CheckboxesListModal-->
+<div class="modal fade" id="CheckboxesListModal" tabindex="-1" @*style="z-index: 3000;"*@ data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="CheckboxesListModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-90">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" title="Close">
+                    &times;
+                </button>
+                <h3 class="m-b-none">
+                    Select Charges For <label id="lblShownDeparmentCharge" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region CheckboxesList Form -->
+                <button id="btn-CheckAllDepartmentCharge" type="button" class="btn btn-lightblue btn-sm m-l m-t-xs" onclick="DepartmentCharge_SetAllCharges(true);"><i class="fa "></i><b>&nbsp;Check All</b></button>
+                <button id="btn-ClearAllDepartmentCharge" type="button" class="btn btn-warning btn-sm m-l m-t-xs" onclick="DepartmentCharge_SetAllCharges(false);"><i class="fa "></i><b>&nbsp;Clear All</b></button>
+                <div class="col-sm-3 float-right hide">
+                    <div id="div-search-controls" class="input-group m-t-xs">
+                        <input id="txtSearchItems" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search" />
+                        <span class="input-group-btn">
+                            <button id="btn-SearchItems" class="btn btn-sm btn-primary" type="button" onclick="DepartmentCharge_FilterDepartmentChargeModal();"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </div>
+
+
+                <div style="clear:both;" class="span7 form vertical-mode m-t-sm" id="CheckboxesList-form">
+                    <fieldset>
+
+                        <div id="divCheckboxesList">
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- Endegion CheckboxesList Form -->
+            </div>
+            <div class="modal-footer m-t-n">
+                <!--sherif-->
+                <button id="btn-print-FromSelectOperations" type="button" class="btn btn-lightblue btn-sm hide" onclick="DepartmentCharge_Print('Print');"><i class="fa fa-print"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Print</b></button>
+                <button id="btn-ExportToExcel-FromSelectOperations" type="button" onclick="DepartmentCharge_Print('Excel');" class="btn btn-sm btn-primary hide"><i class="fa fa-table"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.TraExportExcel&nbsp;</b></button>
+                <button type="button" id="btnCheckboxesListApply" class="btn btn-primary btn-sm">
+                    <span class="glyphicon glyphicon-save"></span>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                </button>
+                <button class="btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF CheckboxesListModal-->

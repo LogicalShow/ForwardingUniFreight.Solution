@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/01/2023 11:07:34" ReportInfo.Modified="02/25/2024 11:12:27" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {    
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFdK1pGRuXb2ZqNrvvshfdvk1WTy4Q4X3n3sfovtvD12ZUZMgosSXIKCfex3Uxiv0ztNRpdBkVUVn6xObKSedOpZyYO5PIUHSRKnSA+cCNFWf1hjuF6Ns2/wRHjljt7MV5I8ek4Jk5KwGlL94LqLR7Og==">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="Exec (@query)">
+        <Column Name="OperationCode" DataType="System.String"/>
+        <Column Name="Code" DataType="System.String"/>
+        <Column Name="ReceivedDate" DataType="System.DateTime"/>
+        <Column Name="ExpirationDate" DataType="System.DateTime"/>
+        <Column Name="Notes" DataType="System.String"/>
+        <Column Name="Recipient" DataType="System.String"/>
+        <Column Name="Name" DataType="System.String"/>
+        <Column Name="OperationCreatorName" DataType="System.String"/>
+        <Column Name="OperationSalesman" DataType="System.String"/>
+        <Column Name="OpenDate" DataType="System.DateTime"/>
+        <Column Name="RepBLTypeShown" DataType="System.String"/>
+        <Column Name="CommodityCode" DataType="System.String"/>
+        <Column Name="CommodityCode2" DataType="System.String"/>
+        <Column Name="CommodityCode3" DataType="System.String"/>
+        <Column Name="ClientName" DataType="System.String"/>
+        <Column Name="InvoiceNumbers" DataType="System.String"/>
+        <Column Name="ContainerTypes" DataType="System.String"/>
+        <Column Name="CommodityName" DataType="System.String"/>
+        <Column Name="POLName" DataType="System.String"/>
+        <Column Name="POLCountryName" DataType="System.String"/>
+        <Column Name="PODName" DataType="System.String"/>
+        <Column Name="PODCountryName" DataType="System.String"/>
+        <Column Name="LineName" DataType="System.String"/>
+        <Column Name="VesselName" DataType="System.String"/>
+        <Column Name="MasterBL" DataType="System.String"/>
+        <Column Name="HouseBLs" DataType="System.String"/>
+        <Column Name="HouseNumber" DataType="System.String"/>
+        <Column Name="TruckerName" DataType="System.String"/>
+        <Column Name="AgentName" DataType="System.String"/>
+        <Column Name="ExpectedDeparture" DataType="System.DateTime"/>
+        <Column Name="CutOffDate" DataType="System.DateTime"/>
+        <Column Name="ActualDeparture" DataType="System.DateTime"/>
+        <Column Name="ActualArrival" DataType="System.DateTime"/>
+        <Column Name="CertificateNumber" DataType="System.String"/>
+        <Column Name="NumberOfPackages" DataType="System.Int32"/>
+        <Column Name="GrossWeightSum" DataType="System.Decimal"/>
+        <Column Name="Volume" DataType="System.Decimal"/>
+        <Column Name="PONumber" DataType="System.String"/>
+        <Column Name="ACIDNumber" DataType="System.String"/>
+        <Column Name="SupplierReference" DataType="System.String"/>
+        <Column Name="WareHouseLocation" DataType="System.String"/>
+        <Column Name="OperationNotes" DataType="System.String"/>
+        <Column Name="HBL" DataType="System.String"/>
+        <Column Name="PackageTypeName" DataType="System.String"/>
+        <Column Name="CommodityName2" DataType="System.String"/>
+        <Column Name="CommodityName3" DataType="System.String"/>
+        <Column Name="Logo" DataType="System.String" PropName="Column" Calculated="true" Expression="[Logo]"/>
+        <Column Name="FreeTime" DataType="System.Int32"/>
+        <Column Name="ShipperName" DataType="System.String"/>
+        <Column Name="ConsigneeName" DataType="System.String"/>
+        <Column Name="Notes1" DataType="System.String"/>
+        <Column Name="OperationManName" DataType="System.String"/>
+        <Column Name="BookingNumber" DataType="System.String"/>
+        <CommandParameter Name="@query" DataType="12" Expression="[query]" DefaultValue="SELECT od.OperationCode,od.Name,od.Code,od.ExpirationDate,od.ReceivedDate,od.Recipient,od.Notes,vo.CreatorName OperationCreatorName,vo.Salesman OperationSalesman,vo.OpenDate,vo.RepBLTypeShown,vo.CommodityCode,vo.CommodityCode2,vo.CommodityCode3,vo.ClientName,vo.InvoiceNumbers,vo.ContainerTypes,vo.CommodityName,vo.CommodityName2,vo.CommodityName3,vo.POLName,vo.POLCountryName,vo.PODName,vo.PODCountryName,vo.LineName,vo.VesselName,vo.MasterBL,vo.HouseBLs,vo.HouseNumber,vo.TruckerName,vo.AgentName,CASE WHEN vo.ExpectedDeparture IS NULL THEN '' ELSE REPLACE(CONCAT(STR(DAY(vo.ExpectedDeparture)),'/',STR(MONTH(vo.ExpectedDeparture)),'/',STR(YEAR(vo.ExpectedDeparture))),' ','') END AS ExpectedDeparture,CASE WHEN vo.CutOffDate IS NULL THEN '' ELSE REPLACE(CONCAT(STR(DAY(vo.CutOffDate)),'/',STR(MONTH(vo.CutOffDate)),'/',STR(YEAR(vo.CutOffDate))),' ','') END AS CutOffDate,CASE WHEN vo.ActualDeparture IS NULL THEN '' ELSE REPLACE(CONCAT(STR(DAY(vo.ActualDeparture)),'/',STR(MONTH(vo.ActualDeparture)),'/',STR(YEAR(vo.ActualDeparture))),' ','') END AS ActualDeparture,CASE WHEN vo.ActualArrival IS NULL THEN '' ELSE REPLACE(CONCAT(STR(DAY(vo.ActualArrival)),'/',STR(MONTH(vo.ActualArrival)),'/',STR(YEAR(vo.ActualArrival))),' ','') END AS ActualArrival,vo.CertificateNumber,vo.NumberOfPackages,ISNULL(vo.PackageTypeName,0)PackageTypeName,vo.GrossWeightSum,vo.Volume,vo.PONumber,vo.ACIDNumber,vo.SupplierReference,vo.WareHouseLocation,vo.Notes OperationNotes,CASE WHEN vo.RepBLTypeShown='MASTER' THEN vo.HouseBLs ELSE vo.HouseNumber END AS HBL ,vo.FreeTime , vo.ShipperName , vo.ConsigneeName , vo.Notes , vo.OperationManName , vo.BookingNumber FROM vwOperationsDocuments od LEFT JOIN vwOperations AS vo ON vo.ID=od.OperationID"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="ClientName" DataType="System.String"/>
+    <Parameter Name="Logo" DataType="System.String" Expression="[Logo]"/>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="151.2">
+      <TextObject Name="Text1" Left="198.45" Top="113.4" Width="283.5" Height="28.35" Text="Operation Documents Report" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <PictureObject Name="Picture1" Top="9.45" Width="708.75" Height="75.6" CanGrow="true" DataColumn="Table.Logo"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="156.53" Width="718.2" Height="614.25">
+      <TextObject Name="Text2" Left="-9.45" Top="595.35" Width="160.65" Height="18.9" Border.Lines="All" Text="Document" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text3" Left="151.2" Top="595.35" Width="94.5" Height="18.9" Border.Lines="All" Text="Document No" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text4" Left="245.7" Top="595.35" Width="122.85" Height="18.9" Border.Lines="All" Text="Document Date" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text8" Left="368.55" Top="595.35" Width="132.3" Height="18.9" Border.Lines="All" Text="Delivery Date" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text10" Left="500.85" Top="595.35" Width="103.95" Height="18.9" Border.Lines="All" Text="Recipient" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text12" Left="604.8" Top="595.35" Width="103.95" Height="18.9" Border.Lines="All" Text="Notes" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text18" Left="9.45" Top="18.9" Width="103.95" Height="28.35" Text="Created By:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text19" Left="113.4" Top="18.9" Width="217.35" Height="28.35" Text="[Table.OperationCreatorName]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text20" Left="349.65" Top="18.9" Width="94.5" Height="28.35" Text="Salesman:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text21" Left="444.15" Top="18.9" Width="255.15" Height="28.35" Text="[Table.OperationSalesman]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text22" Left="9.45" Top="47.25" Width="47.25" Height="28.35" Text="Oper.:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text23" Left="56.7" Top="47.25" Width="113.4" Height="28.35" Text="[Table.OperationCode]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text25" Left="444.15" Top="47.25" Width="160.65" Height="28.35" Text="[Table.RepBLTypeShown]" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text26" Left="170.1" Top="47.25" Width="85.05" Height="28.35" Text="/ Open Date:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text27" Left="255.15" Top="47.25" Width="113.4" Height="28.35" Text="[Table.OpenDate]" Format="Custom" Format.Format="dd/MM/yyyy" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text28" Left="9.45" Top="75.6" Width="75.6" Height="28.35" Text="HS Code:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text29" Left="85.05" Top="75.6" Width="463.05" Height="28.35" Text="[Table.CommodityCode] - [Table.CommodityCode2] - [Table.CommodityCode3]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text30" Left="9.45" Top="103.95" Width="56.7" Height="28.35" Text="Client:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text31" Left="66.15" Top="103.95" Width="264.6" Height="28.35" Text="[Table.ClientName]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text32" Left="349.65" Top="103.95" Width="66.15" Height="28.35" Text="Invoices:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text33" Left="415.8" Top="103.95" Width="283.5" Height="28.35" Text="[Table.InvoiceNumbers]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text34" Left="9.45" Top="160.65" Width="85.05" Height="28.35" Text="Cargo/Pkgs:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text35" Left="94.5" Top="160.65" Width="236.25" Height="28.35" Text="[Table.ContainerTypes]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text36" Left="349.65" Top="160.65" Width="85.05" Height="28.35" Text="Commodity:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text37" Left="434.7" Top="160.65" Width="264.6" Height="28.35" Text="[Table.CommodityName] - [Table.CommodityName2] - [Table.CommodityName3]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text38" Left="9.45" Top="189" Width="94.5" Height="28.35" Text="Port Of Load:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text39" Left="103.95" Top="189" Width="226.8" Height="28.35" Text="[Table.POLName]/[Table.POLCountryName]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text40" Left="349.65" Top="189" Width="122.85" Height="28.35" Text="Port Of Discharge:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text41" Left="472.5" Top="189" Width="226.8" Height="28.35" Text="[Table.PODName]/[Table.PODCountryName]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text42" Left="9.45" Top="217.35" Width="47.25" Height="28.35" Text="Line:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text43" Left="56.7" Top="217.35" Width="274.05" Height="28.35" Text="[Table.LineName]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text44" Left="349.65" Top="217.35" Width="56.7" Height="28.35" Text="Vessel:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text45" Left="406.35" Top="217.35" Width="292.95" Height="28.35" Text="[Table.VesselName]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text46" Left="9.45" Top="245.7" Width="56.7" Height="28.35" Text="BL No.:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text47" Left="66.15" Top="245.7" Width="264.6" Height="28.35" Text="[Table.MasterBL]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text48" Left="349.65" Top="245.7" Width="56.7" Height="28.35" Text="HBL:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text49" Left="406.35" Top="245.7" Width="292.95" Height="28.35" Text="[Table.HBL]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text50" Left="9.45" Top="274.05" Width="66.15" Height="28.35" Text="Trucker:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text51" Left="75.6" Top="274.05" Width="255.15" Height="28.35" Text="[Table.TruckerName]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text52" Left="349.65" Top="274.05" Width="56.7" Height="28.35" Text="Agent:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text53" Left="406.35" Top="274.05" Width="292.95" Height="28.35" Text="[Table.AgentName]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text54" Left="9.45" Top="302.4" Width="66.15" Height="28.35" Text="ETD POL:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text55" Left="75.6" Top="302.4" Width="255.15" Height="28.35" Text="[Table.ExpectedDeparture]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text56" Left="349.65" Top="302.4" Width="85.05" Height="28.35" Text="Cutoff Date:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text57" Left="434.7" Top="302.4" Width="264.6" Height="28.35" Text="[Table.CutOffDate]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text58" Left="9.45" Top="330.75" Width="103.95" Height="28.35" Text="Departure Date:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text59" Left="113.4" Top="330.75" Width="217.35" Height="28.35" Text="[Table.ActualDeparture]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text60" Left="349.65" Top="330.75" Width="85.05" Height="28.35" Text="Arrival Date:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text61" Left="434.7" Top="330.75" Width="264.6" Height="28.35" Text="[Table.ActualArrival]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text62" Left="9.45" Top="359.1" Width="94.5" Height="28.35" Text="Certificate No:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text63" Left="103.95" Top="359.1" Width="94.5" Height="28.35" Text="[Table.CertificateNumber]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text64" Left="198.45" Top="359.1" Width="75.6" Height="28.35" Text="Packages:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text65" Left="274.05" Top="359.1" Width="94.5" Height="28.35" Text="[Table.NumberOfPackages]*[Table.PackageTypeName]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text66" Left="368.55" Top="359.1" Width="37.8" Height="28.35" Text="GW:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text67" Left="406.35" Top="359.1" Width="113.4" Height="28.35" Text="[Table.GrossWeightSum] KG" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text68" Left="519.75" Top="359.1" Width="47.25" Height="28.35" Text="CBM:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text69" Left="567" Top="359.1" Width="66.15" Height="28.35" Text="[Table.Volume] CBM" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text70" Left="9.45" Top="387.45" Width="94.5" Height="28.35" Text="PO Number:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text71" Left="103.95" Top="387.45" Width="226.8" Height="28.35" Text="[Table.PONumber]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text72" Left="349.65" Top="387.45" Width="94.5" Height="28.35" Text="ACID Number:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text73" Left="444.15" Top="387.45" Width="255.15" Height="28.35" Text="[Table.ACIDNumber]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text74" Left="9.45" Top="415.8" Width="94.5" Height="28.35" Text="C/D No:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text75" Left="103.95" Top="415.8" Width="226.8" Height="28.35" Text="[Table.SupplierReference]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text76" Left="349.65" Top="415.8" Width="141.75" Height="28.35" Text="WareHouse Location:" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text77" Left="491.4" Top="415.8" Width="207.9" Height="28.35" Text="[Table.WareHouseLocation]" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text14" Left="9.45" Top="444.15" Width="94.5" Height="18.9" Text="Free Days : " Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text15" Left="103.95" Top="444.15" Width="226.8" Height="18.9" Text="[Table.FreeTime]"/>
+      <TextObject Name="Text16" Left="9.45" Top="141.75" Width="94.5" Height="18.9" Text="Consignee :" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text17" Left="94.5" Top="141.75" Width="236.25" Height="18.9" Text="[Table.ConsigneeName]" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text24" Left="349.65" Top="141.75" Width="75.6" Height="18.9" Text="Shipper : " Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text78" Left="425.25" Top="141.75" Width="274.05" Height="18.9" Text="[Table.ShipperName]" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text79" Left="9.45" Top="472.5" Width="94.5" Height="18.9" Text="Notes : " Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text80" Left="56.7" Top="472.5" Width="595.35" Height="18.9" Text="[Table.Notes1]" Font="Arial, 9pt"/>
+      <TextObject Name="Text81" Left="9.45" Top="500.85" Width="113.4" Height="18.9" Text="Operation Man :" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text82" Left="113.4" Top="500.85" Width="207.9" Height="18.9" Text="[Table.OperationManName]" Font="Arial, 9pt"/>
+      <TextObject Name="Text83" Left="349.65" Top="500.85" Width="132.3" Height="18.9" Text="Booking Number : " Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text84" Left="463.05" Top="500.85" Width="170.1" Height="18.9" Text="[Table.BookingNumber]" Font="Arial, 9pt"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="776.12" Width="718.2" Height="28.35" DataSource="Table">
+      <TextObject Name="Text5" Width="160.65" Height="28.35" Border.Lines="All" Text="[Table.Name]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text6" Left="160.65" Width="94.5" Height="28.35" Border.Lines="All" Text="[Table.Code]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text7" Left="255.15" Width="122.85" Height="28.35" Border.Lines="All" Text="[FormatDateTime([Table.ExpirationDate],&quot;dd/MM/yy&quot;)]&#13;&#10;" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text9" Left="378" Width="132.3" Height="28.35" Border.Lines="All" Text="[Table.ReceivedDate]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text11" Left="510.3" Width="103.95" Height="28.35" Border.Lines="All" Text="[Table.Recipient]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text13" Left="614.25" Width="103.95" Height="28.35" Border.Lines="All" Text="[Table.Notes]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="809.8" Width="718.2" Height="103.95">
+      <TableObject Name="Table1" Left="9.45" Top="18.9" Width="708.75" Height="56.7">
+        <TableColumn Name="Column1" Width="236.25"/>
+        <TableColumn Name="Column2" Width="236.25"/>
+        <TableColumn Name="Column3" Width="236.25"/>
+        <TableRow Name="Row1" Height="56.7">
+          <TableCell Name="Cell1" Text="EXP/IMP Executive" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell2" Text="EXP/IMP Supervisor" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell3" Text="EXP/IMP Manager" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        </TableRow>
+      </TableObject>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

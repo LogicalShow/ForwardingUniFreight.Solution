@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/03/2022 13:02:22" ReportInfo.Modified="09/30/2023 20:06:59" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+    
+
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFtHJVZLL/i3PN7CkdFc/1A7YXJU6T13VfFIAjI9Ib2eHK43COXIAb1+oG8abaGcWEZGpgJFPBP3+b+JobTIAbFImpu7AL5/m4I+6ScGE9e6WjDfiveqdM4GY1NsEAX+IA1+1MHRXd+NPrNY+fdXmYVA==">
+      <TableDataSource Name="PurchaseItem" Alias="PurchaseItems" DataType="System.Int32" Enabled="true" TableName="PurchaseItem" SelectCommand="SELECT P.Code,P.Name,P.MinQty,SUM(I.AvailableQuantity) AS AvailableQuantity&#13;&#10;FROM PurchaseItem P&#13;&#10;INNER JOIN vwWH_Inventory I ON I.PurchaseItemID = P.ID&#13;&#10;WHERE P.MinQty IS NOT NULL AND P.MinQty &gt; 0&#13;&#10;GROUP BY P.ID,P.MinQty,P.Code,P.Name&#13;&#10;HAVING P.MinQty &gt; SUM(I.AvailableQuantity)">
+        <Column Name="Code" DataType="System.String"/>
+        <Column Name="Name" DataType="System.String"/>
+        <Column Name="MinQty" DataType="System.Decimal"/>
+        <Column Name="AvailableQuantity" DataType="System.Decimal"/>
+        <Column Name="Logo" DataType="System.String" PropName="Column" Calculated="true" Expression="[Logo]"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="Logo" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9">
+    <DataBand Name="Data1" Top="122.22" Width="1047.06" Height="21.78" CanGrow="true" DataSource="PurchaseItem">
+      <TableObject Name="Table3" Left="6.8" Top="-1.31" Width="1034.96" Height="23.09">
+        <TableColumn Name="Column16" Width="208.9"/>
+        <TableColumn Name="Column17" Width="324.76"/>
+        <TableColumn Name="Column18" Width="172.01"/>
+        <TableColumn Name="Column19" Width="169.61"/>
+        <TableColumn Name="Column20" Width="159.68"/>
+        <TableRow Name="Row7" MinHeight="23.06" Height="23.09" AutoSize="true">
+          <TableCell Name="Cell31" Border.Lines="All" Text="[PurchaseItems.Code]" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell32" Border.Lines="All" Text="[PurchaseItems.Name]" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell33" Border.Lines="All" Text="[PurchaseItems.MinQty]" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell34" Border.Lines="All" Text="[PurchaseItems.AvailableQuantity]" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell35" Border.Lines="All" Text="[[PurchaseItems.MinQty] - [PurchaseItems.AvailableQuantity]]" HorzAlign="Center" VertAlign="Center"/>
+        </TableRow>
+      </TableObject>
+      <DataHeaderBand Name="DataHeader1" Width="1047.06" Height="118.22">
+        <TableObject Name="Table2" Left="6.83" Top="85.33" Width="1034.54" Height="32.89">
+          <TableColumn Name="Column11" Width="208.9"/>
+          <TableColumn Name="Column12" Width="324.84"/>
+          <TableColumn Name="Column13" Width="172.07"/>
+          <TableColumn Name="Column14" Width="168.85"/>
+          <TableColumn Name="Column15" Width="159.88"/>
+          <TableRow Name="Row6" Height="32.89">
+            <TableCell Name="Cell26" Border.Lines="All" Fill.Color="Silver" Text="Product Code" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell27" Border.Lines="All" Fill.Color="Silver" Text="Product Name" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell28" Border.Lines="All" Fill.Color="Silver" Text="Minimum Quantity" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell29" Border.Lines="All" Fill.Color="Silver" Text="Avaialble Quantity" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell30" Border.Lines="All" Fill.Color="Silver" Text="Required Quantity" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          </TableRow>
+        </TableObject>
+        <PictureObject Name="Picture1" Left="8.89" Top="4.17" Width="1033.41" Height="50.67" DataColumn="PurchaseItems.Logo"/>
+        <TextObject Name="Text1" Left="238.29" Top="57.03" Width="570.48" Height="18.9" Text="Products below minimum quantity" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      </DataHeaderBand>
+    </DataBand>
+  </ReportPage>
+</Report>

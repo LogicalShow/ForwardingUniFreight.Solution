@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/03/2022 13:02:22" ReportInfo.Modified="10/02/2023 15:38:58" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+    
+
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFtHJVZLL/i3PN7CkdFc/1A7YXJU6T13VfFIAjI9Ib2eHK43COXIAb1+oG8abaGcWEZGpgJFPBP3+b+JobTIAbFImpu7AL5/m4I+6ScGE9e6WjDfiveqdM4GY1NsEAX+IA5z5NJFY0AJoCaIc4RojoxQ==">
+      <TableDataSource Name="Table" Alias="Rep_3PL_ProductReallocationLog" DataType="System.Int32" Enabled="true" SelectCommand="exec (@query)">
+        <Column Name="Logo" DataType="System.String" PropName="Column" Calculated="true" Expression="[Logo]"/>
+        <Column Name="ReceiveCode" DataType="System.String"/>
+        <Column Name="PartNumber" DataType="System.String"/>
+        <Column Name="ID" DataType="System.Int32"/>
+        <Column Name="ReceiveDetailID" DataType="System.Int64"/>
+        <Column Name="PurchaseItemID" DataType="System.Int64"/>
+        <Column Name="FromLocationID" DataType="System.Int32"/>
+        <Column Name="FromLocationCode" DataType="System.String"/>
+        <Column Name="ToLocationID" DataType="System.Int32"/>
+        <Column Name="ToLocationCode" DataType="System.String"/>
+        <Column Name="ModificatorUserID" DataType="System.Int32"/>
+        <Column Name="ModificatorUserName" DataType="System.String"/>
+        <Column Name="MovedQuantity" DataType="System.Decimal"/>
+        <Column Name="ModificationDate" DataType="System.DateTime"/>
+        <Column Name="PurchaseItemName" DataType="System.String"/>
+        <Column Name="FromAreaName" DataType="System.String"/>
+        <Column Name="FromWarehouseName" DataType="System.String"/>
+        <Column Name="ToAreaName" DataType="System.String"/>
+        <Column Name="ToWarehouseName" DataType="System.String"/>
+        <CommandParameter Name="@query" DataType="12" Expression="[query]" DefaultValue="Rep_3PL_ProductReallocationLog ' WHERE 1=1 '"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="Logo" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9">
+    <DataBand Name="Data1" Top="174.61" Width="1047.06" Height="31.71" CanGrow="true" DataSource="Table">
+      <TableObject Name="Table1" Left="14.93" Top="0.94" Width="1025.26" Height="30.77">
+        <TableColumn Name="Column39" Width="79.03"/>
+        <TableColumn Name="Column40" Width="83.24"/>
+        <TableColumn Name="Column41" Width="129.09"/>
+        <TableColumn Name="Column42" Width="72.08"/>
+        <TableColumn Name="Column43" Width="77.15"/>
+        <TableColumn Name="Column44" Width="66.19"/>
+        <TableColumn Name="Column45" Width="75.06"/>
+        <TableColumn Name="Column46" Width="68.1"/>
+        <TableColumn Name="Column47" Width="73.07"/>
+        <TableColumn Name="Column48" Width="82.06"/>
+        <TableColumn Name="Column49" Width="86.14"/>
+        <TableColumn Name="Column50" Width="134.05"/>
+        <TableRow Name="Row11" Height="30.77">
+          <TableCell Name="Cell108" Border.Lines="All" Text="[Rep_3PL_ProductReallocationLog.ReceiveCode]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TableCell Name="Cell109" Border.Lines="All" Text="[Rep_3PL_ProductReallocationLog.PurchaseItemName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TableCell Name="Cell110" Border.Lines="All" Text="[Rep_3PL_ProductReallocationLog.PartNumber]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TableCell Name="Cell111" Border.Lines="All" Text="[Rep_3PL_ProductReallocationLog.FromWarehouseName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TableCell Name="Cell112" Border.Lines="All" Text="[Rep_3PL_ProductReallocationLog.FromAreaName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TableCell Name="Cell113" Border.Lines="All" Text="[Rep_3PL_ProductReallocationLog.FromLocationCode]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TableCell Name="Cell114" Border.Lines="All" Text="[Rep_3PL_ProductReallocationLog.ToWarehouseName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TableCell Name="Cell115" Border.Lines="All" Text="[Rep_3PL_ProductReallocationLog.ToAreaName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TableCell Name="Cell116" Border.Lines="All" Text="[Rep_3PL_ProductReallocationLog.ToLocationCode]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TableCell Name="Cell117" Border.Lines="All" Text="[Rep_3PL_ProductReallocationLog.MovedQuantity]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TableCell Name="Cell118" Border.Lines="All" Text="[Rep_3PL_ProductReallocationLog.ModificatorUserName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+          <TableCell Name="Cell119" Border.Lines="All" Text="[IIf(FormatDateTime([Rep_3PL_ProductReallocationLog.ModificationDate],&quot;dd/MM/yyyy&quot;) == &quot;01/01/0001&quot;,&quot;&quot;,FormatDateTime([Rep_3PL_ProductReallocationLog.ModificationDate],&quot;dd/MM/yyyy hh:mm:ss tt&quot;))]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt"/>
+        </TableRow>
+      </TableObject>
+      <DataHeaderBand Name="DataHeader1" Width="1047.06" Height="170.61" RepeatOnEveryPage="true">
+        <PictureObject Name="Picture1" Left="6.92" Top="3.67" Width="1029.65" Height="50.42" DataColumn="Rep_3PL_ProductReallocationLog.Logo"/>
+        <TextObject Name="Text1" Left="296.36" Top="55.2" Width="454.34" Height="18.9" Text="Product Reallocation Log" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+        <TableObject Name="Table2" Left="14.55" Top="107.91" Width="1025.26" Height="62.7">
+          <TableColumn Name="Column11" Width="79.03"/>
+          <TableColumn Name="Column29" Width="83.24"/>
+          <TableColumn Name="Column12" Width="129.09"/>
+          <TableColumn Name="Column14" Width="72.08"/>
+          <TableColumn Name="Column31" Width="77.15"/>
+          <TableColumn Name="Column32" Width="66.19"/>
+          <TableColumn Name="Column15" Width="75.06"/>
+          <TableColumn Name="Column34" Width="68.1"/>
+          <TableColumn Name="Column33" Width="73.07"/>
+          <TableColumn Name="Column16" Width="82.06"/>
+          <TableColumn Name="Column17" Width="86.14"/>
+          <TableColumn Name="Column18" Width="134.05"/>
+          <TableRow Name="Row6" Height="31.93">
+            <TableCell Name="Cell26" Border.Lines="All" Fill.Color="Silver" Text="Receive Code" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold" RowSpan="2"/>
+            <TableCell Name="Cell74" Border.Lines="All" Fill.Color="Silver" Text="Product" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold" RowSpan="2"/>
+            <TableCell Name="Cell27" Border.Lines="All" Fill.Color="Silver" Text="Part Number" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold" RowSpan="2"/>
+            <TableCell Name="Cell29" Border.Lines="All" Fill.Color="Silver" Text="From" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold" ColSpan="3"/>
+            <TableCell Name="Cell84" Font="Arial, 8pt"/>
+            <TableCell Name="Cell86" Font="Arial, 8pt"/>
+            <TableCell Name="Cell30" Border.Lines="All" Fill.Color="Silver" Text="To" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold" ColSpan="3"/>
+            <TableCell Name="Cell90" Font="Arial, 8pt"/>
+            <TableCell Name="Cell88" Font="Arial, 8pt"/>
+            <TableCell Name="Cell51" Border.Lines="All" Fill.Color="Silver" Text="Moved Quantity" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold" RowSpan="2"/>
+            <TableCell Name="Cell52" Border.Lines="All" Fill.Color="Silver" Text="Modificator User" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold" RowSpan="2"/>
+            <TableCell Name="Cell53" Border.Lines="All" Fill.Color="Silver" Text="Modification Date" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" RowSpan="2"/>
+          </TableRow>
+          <TableRow Name="Row9" Height="30.77">
+            <TableCell Name="Cell76" Font="Arial, 8pt"/>
+            <TableCell Name="Cell77" Font="Arial, 8pt"/>
+            <TableCell Name="Cell78" Font="Arial, 8pt"/>
+            <TableCell Name="Cell79" Border.Lines="All" Fill.Color="Silver" Text="Warehouse" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell85" Border.Lines="All" Fill.Color="Silver" Text="Area" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell87" Border.Lines="All" Fill.Color="Silver" Text="Location" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell80" Border.Lines="All" Fill.Color="Silver" Text="Warehouse" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell91" Border.Lines="All" Fill.Color="Silver" Text="Area" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell89" Border.Lines="All" Fill.Color="Silver" Text="Location" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell81" Border.Lines="All" Fill.Color="Silver" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell82" Border.Lines="All" Fill.Color="Silver" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell83" Border.Lines="All" Fill.Color="Silver" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          </TableRow>
+        </TableObject>
+      </DataHeaderBand>
+    </DataBand>
+  </ReportPage>
+</Report>

@@ -1,0 +1,310 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" DoublePass="true" ReportInfo.Created="01/03/2022 13:02:22" ReportInfo.Modified="03/11/2024 10:39:43" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+//    private void Cell10_BeforePrint(object sender, EventArgs e)
+//    {
+//      if (((int)Report.GetVariableValue(&quot;Row#&quot;) != 1))
+//        Cell10.Text = &quot;&quot;;
+//    }
+
+//    private void Cell10_BeforePrint(object sender, EventArgs e)
+//    {
+//      if (((int)Report.GetVariableValue(&quot;Row#&quot;) != 1))
+//                Cell10.Text = &quot;&quot;;
+//    }
+
+    private void Text7_BeforePrint(object sender, EventArgs e)
+    {
+      if (((int)Report.GetVariableValue(&quot;Row#&quot;) != 1))
+        Text7.Text = &quot;&quot;;
+    }
+
+    private void Text79_BeforePrint(object sender, EventArgs e)
+    {
+      if (((int)Report.GetVariableValue(&quot;Row#&quot;) != 1))
+        Text79.Text = &quot;&quot;;
+    }
+      
+//    private void PageFooter1_BeforePrint(object sender, EventArgs e)
+//    {
+//      if((int)Report.GetVariableValue(&quot;TotalPages#&quot;)== (int)Report.GetVariableValue(&quot;Page#&quot;))
+//        SignatureTable.Visible = true; 
+//      
+//    }
+  
+
+//    private void PageFooter1_BeforePrint(object sender, EventArgs e)
+//    {
+//      if(Convert.ToInt32(Report.GetVariableValue(&quot;Page&quot;)) == Convert.ToInt32(Report.GetVariableValue(&quot;TotalPages&quot;)))
+//        SignatureTable.Visible = true;
+//      else
+//        SignatureTable.Visible = false;
+//    }
+
+    private void SignatureTable_BeforePrint(object sender, EventArgs e)
+    {  
+//      Text9.Text= Report.GetVariableValue(&quot;TotalPages#&quot;).ToString();
+      if(Convert.ToInt32(Report.GetVariableValue(&quot;Page&quot;)) == Convert.ToInt32(Report.GetVariableValue(&quot;TotalPages&quot;)))
+        SignatureTable.Visible = true;
+      else
+        SignatureTable.Visible = false;
+    }
+
+    private void Text83_BeforePrint(object sender, EventArgs e)
+    {
+      if (   ((String)Report.GetColumnValue(&quot;Rep_A_PaymentRequest.CurrencyCode&quot;)) == &quot;EGP&quot; )
+      {
+           Text83.Text=&quot;&quot;;
+           Text83.Visible=false;
+      }
+                
+    }
+
+    private void Text82_BeforePrint(object sender, EventArgs e)
+    {
+      if (   ((String)Report.GetColumnValue(&quot;Rep_A_PaymentRequest.CurrencyCode&quot;)) != &quot;EGP&quot; )
+        Text82.Visible=false;
+      
+    }
+    
+
+    private void Text82_AfterPrint(object sender, EventArgs e)
+    {
+              
+    }
+
+    private void Text82_AfterData(object sender, EventArgs e)
+    {
+             Text82.Text =    Text82.Text.Replace(&quot;and 00 pence&quot;,&quot;&quot;);
+    }
+
+    private void Text83_AfterData(object sender, EventArgs e)
+    {
+          Text83.Text =    Text83.Text.Replace(&quot;and 00 cents&quot;,&quot;&quot;);
+    }
+    }
+
+   
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFxRuX0SEZR+Qy5O9rl1EtG+KmpLe+QEb/nNLMsHoRO5wWScxbuUFa01UiPZqQG9jSPsmxyDkczLwALQJBNI11bZM3zI+oNRkHM6d+dVC6HPJhtqiOV5mh5+/4ChQKYTRsF5C2tbhSd3A+ArAMmbDDzA==">
+      <TableDataSource Name="Table" Alias="Rep_A_PaymentRequest" DataType="System.Int32" Enabled="true" SelectCommand="exec Rep_A_PaymentRequest @ID,@BankID">
+        <Column Name="PaymentRequestID" DataType="System.Int64"/>
+        <Column Name="ChargeTypeID" DataType="System.Int32"/>
+        <Column Name="ChargeTypeName" DataType="System.String"/>
+        <Column Name="OperationID" DataType="System.Int64"/>
+        <Column Name="OperationCode" DataType="System.String"/>
+        <Column Name="EstmatedCost" DataType="System.Decimal"/>
+        <Column Name="ActualCost" DataType="System.Decimal"/>
+        <Column Name="Description" DataType="System.String"/>
+        <Column Name="IsDocumented" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="HouseName" DataType="System.String"/>
+        <Column Name="IsSettlementOnly" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="PayableID" DataType="System.Int64"/>
+        <Column Name="SupplierID" DataType="System.Int32"/>
+        <Column Name="SupplierName" DataType="System.String"/>
+        <Column Name="Coupon" DataType="System.String"/>
+        <Column Name="VesselName" DataType="System.String"/>
+        <Column Name="ActualArrivalString" DataType="System.String"/>
+        <Column Name="ID" DataType="System.Int64"/>
+        <Column Name="Code" DataType="System.String"/>
+        <Column Name="CustodyID" DataType="System.Int32"/>
+        <Column Name="CustodyName" DataType="System.String"/>
+        <Column Name="Operations" DataType="System.String"/>
+        <Column Name="RequestDate" DataType="System.DateTime"/>
+        <Column Name="SettlementDate" DataType="System.DateTime"/>
+        <Column Name="CurrencyID" DataType="System.Int32"/>
+        <Column Name="CurrencyCode" DataType="System.String"/>
+        <Column Name="IsCheck" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="TotalEstmatedCost" DataType="System.Decimal"/>
+        <Column Name="TotalActualCost" DataType="System.Decimal"/>
+        <Column Name="TotalDiff" DataType="System.Decimal"/>
+        <Column Name="Notes" DataType="System.String"/>
+        <Column Name="IsApprovedRequest" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="IsApprovedSettlement" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="IsSettled" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="JVID" DataType="System.Int64"/>
+        <Column Name="JVID2" DataType="System.Int64"/>
+        <Column Name="CreatorUserID_Request" DataType="System.Int32"/>
+        <Column Name="CreatorUserID_Settlement" DataType="System.Int32"/>
+        <Column Name="ModificatorUserID_Request" DataType="System.Int32"/>
+        <Column Name="ModificatorUserID_Settlement" DataType="System.Int32"/>
+        <Column Name="CreationDate_Request" DataType="System.DateTime"/>
+        <Column Name="CreationDate_Settlement" DataType="System.DateTime"/>
+        <Column Name="ModificationDate_Request" DataType="System.DateTime"/>
+        <Column Name="ModificationDate_Settlement" DataType="System.DateTime"/>
+        <Column Name="VoucherID" DataType="System.Int64"/>
+        <Column Name="IsAccept" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="PartnerName" DataType="System.String"/>
+        <Column Name="TotalBeforeTax" DataType="System.Decimal"/>
+        <Column Name="WHT" DataType="System.Decimal"/>
+        <Column Name="TotalAfterTax" DataType="System.Decimal"/>
+        <Column Name="Name" DataType="System.String"/>
+        <Column Name="Attache" DataType="System.String"/>
+        <Column Name="Payment" DataType="System.String"/>
+        <Column Name="TotalVat" DataType="System.Decimal"/>
+        <Column Name="IssuedTo" DataType="System.String"/>
+        <Column Name="SupplierInvoiceNo" DataType="System.String"/>
+        <Column Name="TotalVat10" DataType="System.Decimal"/>
+        <Column Name="TotalVat14" DataType="System.Decimal"/>
+        <Column Name="BankName" DataType="System.String"/>
+        <Column Name="AccountName" DataType="System.String"/>
+        <Column Name="AccountNumber" DataType="System.String"/>
+        <CommandParameter Name="ID" DataType="22" Expression="[ID]"/>
+        <CommandParameter Name="BankID" DataType="22" Expression="[BankID]"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="ID" DataType="System.String"/>
+    <Parameter Name="BankID" DataType="System.String"/>
+    <Total Name="Total" Expression="[Rep_A_PaymentRequest.EstmatedCost]" Evaluator="Data1" PrintOn="ReportSummary1"/>
+  </Dictionary>
+  <ReportPage Name="Page1">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="349.65">
+      <TextObject Name="Text2" Left="302.4" Top="28.35" Width="151.2" Height="18.9" Text="Payment Request" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold, Underline"/>
+      <TextObject Name="Text1" Left="9.45" Top="56.7" Width="47.25" Height="18.9" Text="Date :" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text3" Left="472.5" Top="56.7" Width="47.25" Height="18.9" Text="Ref :" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text4" Left="56.7" Top="56.7" Width="85.05" Height="18.9" Fill.Color="Gainsboro" Text="[Rep_A_PaymentRequest.RequestDate]" Format="Custom" Format.Format="dd/MM/yyy" VertAlign="Center"/>
+      <TextObject Name="Text5" Left="519.75" Top="56.7" Width="103.95" Height="18.9" Fill.Color="Gainsboro" Text="[Rep_A_PaymentRequest.Code]" VertAlign="Center"/>
+      <LineObject Name="Line1" Left="9.45" Top="103.95" Width="699.3" Diagonal="true"/>
+      <TextObject Name="Text24" Left="9.45" Top="113.4" Width="85.05" Height="18.9" Text="Department" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text25" Left="9.45" Top="151.2" Width="85.05" Height="18.9" Text="Amount" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text26" Left="283.5" Top="113.4" Width="75.6" Height="18.9" Text="Activity" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text27" Left="472.5" Top="113.4" Width="75.6" Height="18.9" Text="Attaches" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text28" Left="283.5" Top="151.2" Width="75.6" Height="18.9" Text="Currency" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text29" Left="472.5" Top="151.2" Width="75.6" Height="18.9" Text="Payment" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text30" Left="368.55" Top="151.2" Width="94.5" Height="18.9" Text="[Rep_A_PaymentRequest.CurrencyCode]" VertAlign="Center"/>
+      <LineObject Name="Line2" Left="9.45" Top="204.96" Width="699.3" Diagonal="true"/>
+      <TextObject Name="Text31" Left="9.45" Top="214.41" Width="94.5" Height="18.9" Text="Beneficiary" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text33" Left="9.45" Top="252.21" Width="94.5" Height="18.9" Text="Account No" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text38" Left="94.5" Top="113.4" Width="9.45" Height="18.9" Text=":" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text39" Left="94.5" Top="151.2" Width="9.45" Height="18.9" Text=":" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text40" Left="359.1" Top="113.4" Width="9.45" Height="18.9" Text=":" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text41" Left="359.1" Top="151.2" Width="9.45" Height="18.9" Text=":" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text42" Left="548.1" Top="113.4" Width="9.45" Height="18.9" Text=":" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text43" Left="548.1" Top="151.2" Width="9.45" Height="18.9" Text=":" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text44" Left="103.95" Top="214.41" Width="9.45" Height="18.9" Text=":" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text46" Left="103.95" Top="252.21" Width="9.45" Height="18.9" Text=":" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text62" Left="113.4" Top="214.41" Width="557.55" Height="18.9" Border.Lines="Bottom" Border.BottomLine.Style="Dot" Text="[Rep_A_PaymentRequest.AccountName]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text63" Left="103.95" Top="151.2" Width="160.65" Height="18.9" BeforePrintEvent="Text63_BeforePrint" AfterPrintEvent="Text63_AfterPrint" AfterDataEvent="Text63_AfterData" Text="[Rep_A_PaymentRequest.TotalAfterTax]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" VertAlign="Center"/>
+      <TextObject Name="Text64" Left="113.4" Top="113.4" Width="160.65" Height="18.9" BeforePrintEvent="Text63_BeforePrint" AfterPrintEvent="Text63_AfterPrint" AfterDataEvent="Text63_AfterData" Text="Logistic" VertAlign="Center"/>
+      <TextObject Name="Text65" Left="368.55" Top="113.4" Width="94.5" Height="18.9" BeforePrintEvent="Text63_BeforePrint" AfterPrintEvent="Text63_AfterPrint" AfterDataEvent="Text63_AfterData" Text="[Rep_A_PaymentRequest.Name]" VertAlign="Center"/>
+      <TextObject Name="Text66" Left="557.55" Top="113.4" Width="141.75" Height="18.9" BeforePrintEvent="Text63_BeforePrint" AfterPrintEvent="Text63_AfterPrint" AfterDataEvent="Text63_AfterData" Text="[Rep_A_PaymentRequest.Attache]" VertAlign="Center"/>
+      <TextObject Name="Text67" Left="557.55" Top="151.2" Width="141.75" Height="18.9" BeforePrintEvent="Text63_BeforePrint" AfterPrintEvent="Text63_AfterPrint" AfterDataEvent="Text63_AfterData" Text="[Rep_A_PaymentRequest.Payment]" VertAlign="Center"/>
+      <TextObject Name="Text68" Left="113.4" Top="252.21" Width="557.55" Height="18.9" Border.Lines="Bottom" Border.BottomLine.Style="Dot" Text="[Rep_A_PaymentRequest.AccountNumber]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text36" Left="614.25" Top="18.9" Width="94.5" Height="18.9" Text="OperationCode"/>
+      <TextObject Name="Text35" Left="9.45" Top="280.56" Width="94.5" Height="18.9" Text="Bank" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text48" Left="103.95" Top="280.56" Width="9.45" Height="18.9" Text=":" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text69" Left="113.4" Top="280.56" Width="557.55" Height="18.9" Border.Lines="Bottom" Border.BottomLine.Style="Dot" Text="[Rep_A_PaymentRequest.BankName]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text70" Left="9.45" Top="318.36" Width="94.5" Height="18.9" Text="Issued To" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text71" Left="103.95" Top="318.36" Width="9.45" Height="18.9" Text=":" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text72" Left="113.4" Top="318.36" Width="557.55" Height="18.9" Border.Lines="Bottom" Border.BottomLine.Style="Dot" Text="[Rep_A_PaymentRequest.IssuedTo]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text82" Left="11.74" Top="178.85" Width="687.65" Height="20.42" BeforePrintEvent="Text82_BeforePrint" AfterPrintEvent="Text82_AfterPrint" AfterDataEvent="Text82_AfterData" Text="[ToWordsEnGb([Rep_A_PaymentRequest.TotalAfterTax])]" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text83" Left="11.69" Top="178.87" Width="664.21" Height="22.32" BeforePrintEvent="Text83_BeforePrint" AfterDataEvent="Text83_AfterData" Text="[ToWords( [Rep_A_PaymentRequest.TotalAfterTax]  ,[Rep_A_PaymentRequest.CurrencyCode] )]" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="353.65" Width="718.2" Height="56.54">
+      <TextObject Name="Text6" Left="9.45" Width="699.3" Height="28.35" Border.Lines="All" Fill.Color="Silver" Text="Details Of Payment" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TableObject Name="Table1" Left="9.28" Top="28.57" Width="700.09" Height="27.97">
+        <TableColumn Name="Column11" Width="159.48"/>
+        <TableColumn Name="Column12" Width="204.54"/>
+        <TableColumn Name="Column13" Width="76.56"/>
+        <TableColumn Name="Column14" Width="84.82"/>
+        <TableColumn Name="Column15" Width="174.69"/>
+        <TableRow Name="Row3" Height="27.97">
+          <TableCell Name="Cell11" Border.Lines="All" Fill.Color="Silver" Text="Item" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell12" Border.Lines="All" Fill.Color="Silver" Text="Description" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell13" Border.Lines="All" Fill.Color="Silver" Text="Supplier Invoice No." HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          <TableCell Name="Cell14" Border.Lines="All" Fill.Color="Silver" Text="Amount" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell15" Border.Lines="All" Fill.Color="Silver" Text="Remark" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        </TableRow>
+      </TableObject>
+    </PageHeaderBand>
+    <GroupHeaderBand Name="GroupHeader1" Top="414.19" Width="718.2" Condition="[Rep_A_PaymentRequest.OperationID]">
+      <DataBand Name="Data1" Top="418.19" Width="718.2" Height="30.06" DataSource="Table">
+        <TableObject Name="Table1" Left="9.28" Top="-0.89" Width="700.06" Height="30.95">
+          <TableColumn Name="Column6" Width="159.6"/>
+          <TableColumn Name="Column7" Width="203.78"/>
+          <TableColumn Name="Column8" Width="77.69"/>
+          <TableColumn Name="Column9" Width="85.99"/>
+          <TableColumn Name="Column10" Width="173"/>
+          <TableRow Name="Row2" Height="30.95">
+            <TableCell Name="Cell6" Border.Lines="All" Text="[Rep_A_PaymentRequest.ChargeTypeName]" HorzAlign="Center" VertAlign="Center"/>
+            <TableCell Name="Cell7" Border.Lines="Left, Right" HorzAlign="Center" VertAlign="Center">
+              <TextObject Name="Text79" Left="2.11" Top="0.76" Width="201.14" Height="42.83" BeforePrintEvent="Text79_BeforePrint" CanBreak="false" Text="[Rep_A_PaymentRequest.Description]" HorzAlign="Center" Font="Arial, 8pt"/>
+            </TableCell>
+            <TableCell Name="Cell8" Border.Lines="All" Text="[Rep_A_PaymentRequest.SupplierInvoiceNo]" HorzAlign="Center" VertAlign="Center"/>
+            <TableCell Name="Cell9" Border.Lines="All" Text="[Rep_A_PaymentRequest.EstmatedCost]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center"/>
+            <TableCell Name="Cell10" Border.Lines="Left, Right" HorzAlign="Center" VertAlign="Center">
+              <TextObject Name="Text7" Left="1.6" Top="2.07" Width="170.25" Height="43.24" CanGrow="true" GrowToBottom="true" BeforePrintEvent="Text7_BeforePrint" CanBreak="false" Text="[Rep_A_PaymentRequest.OperationCode]" HorzAlign="Center" Font="Arial, 8pt"/>
+            </TableCell>
+          </TableRow>
+        </TableObject>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter1" Top="452.25" Width="718.2">
+        <LineObject Name="Line3" Left="9.28" Top="-0.38" Width="699.23"/>
+      </GroupFooterBand>
+    </GroupHeaderBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="456.25" Width="718.2" Height="245.7">
+      <TextObject Name="Text34" Left="9.45" Top="170.1" Width="699.3" Height="75.6" Border.Lines="All" Text="Remarks :&#13;&#10;[Rep_A_PaymentRequest.Notes]"/>
+      <TextObject Name="Text20" Left="9.45" Top="141.75" Width="378" Height="18.9" Border.Lines="Left, Right, Bottom" Text="Ending Balance" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text78" Left="387.45" Top="141.75" Width="189" Height="18.9" Border.Lines="Left, Bottom" Text="0" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text19" Left="9.45" Top="122.85" Width="378" Height="18.9" Border.Lines="Left, Right, Bottom" Text="Payment Requst Amount" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text77" Left="387.45" Top="122.85" Width="189" Height="18.9" Border.Lines="Left, Bottom" Text="0" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text18" Left="9.45" Top="103.95" Width="378" Height="18.9" Border.Lines="All" Text="Opening Balance" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text45" Left="387.45" Top="103.95" Width="189" Height="18.9" Border.Lines="Left, Top, Bottom" Text="0" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text17" Left="9.45" Top="85.05" Width="378" Height="18.9" Border.Lines="Left, Right, Bottom" Text="Net Payment" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text23" Left="387.45" Top="85.05" Width="189" Height="18.9" Border.Lines="Bottom" AfterDataEvent="Text23_AfterData" Text="[Rep_A_PaymentRequest.TotalAfterTax]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text16" Left="9.45" Top="66.15" Width="378" Height="18.9" Border.Lines="Left, Right, Bottom" Text="( - ) WHT" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text22" Left="387.45" Top="66.15" Width="189" Height="18.9" Border.Lines="Bottom" AfterDataEvent="Text22_AfterData" Text="[Rep_A_PaymentRequest.WHT]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text15" Left="9.45" Top="28.35" Width="378" Height="18.9" Border.Lines="Left, Right, Bottom" Text="( +10 ) VAT" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text21" Left="387.07" Top="27.97" Width="189" Height="18.9" Border.Lines="Bottom" AfterDataEvent="Text21_AfterData" Text="[Rep_A_PaymentRequest.TotalVat10]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text14" Left="9.45" Top="9.45" Width="378" Height="18.9" Border.Lines="All" Text="Total Expenditures" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text10" Left="387.45" Top="9.45" Width="189" Height="18.9" Border.Lines="Top, Bottom" Text="[Total]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text37" Left="576.45" Top="9.45" Width="132.3" Height="151.2" Border.Lines="All" HorzAlign="Center"/>
+      <TextObject Name="Text80" Left="9.45" Top="47.25" Width="378" Height="18.9" Border.Lines="Left, Right, Bottom" Text="( +14 ) VAT" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text81" Left="387.45" Top="47.25" Width="189" Height="18.9" Border.Lines="Bottom" AfterDataEvent="Text21_AfterData" Text="[Rep_A_PaymentRequest.TotalVat14]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center"/>
+    </ReportSummaryBand>
+    <PageFooterBand Name="PageFooter1" Top="705.95" Width="718.2" Height="138.17" CanGrow="true" CanShrink="true" CanBreak="true">
+      <TextObject Name="Text8" Left="517.36" Top="119.14" Width="191.47" Height="18.9" Text="Page [Page#] of [TotalPages#]" HorzAlign="Right"/>
+      <TableObject Name="SignatureTable" Left="8.54" Top="5.67" Width="700" Height="106.48" Visible="false" BeforePrintEvent="SignatureTable_BeforePrint">
+        <TableColumn Name="Column16" Width="140"/>
+        <TableColumn Name="Column17" Width="140"/>
+        <TableColumn Name="Column18" Width="140"/>
+        <TableColumn Name="Column19" Width="140"/>
+        <TableColumn Name="Column20" Width="140"/>
+        <TableRow Name="Row4">
+          <TableCell Name="Cell16" Border.Lines="All" Text="Requested By" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell17" Border.Lines="All" Text="Dept./ Branch Head" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell18" Border.Lines="All" Text="Accounting Section" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell19" Border.Lines="All" Text="Financial Managers" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell20" Border.Lines="All" Text="Top Management" HorzAlign="Center" VertAlign="Center"/>
+        </TableRow>
+        <TableRow Name="Row5" Height="87.58">
+          <TableCell Name="Cell21" Border.Lines="All" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell22" Border.Lines="All" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell23" Border.Lines="All" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell24" Border.Lines="All" HorzAlign="Center" VertAlign="Center"/>
+          <TableCell Name="Cell25" Border.Lines="All" HorzAlign="Center" VertAlign="Center"/>
+        </TableRow>
+      </TableObject>
+      <TextObject Name="Text9" Left="11.01" Top="116.81" Width="464.38" Height="18.9" Text="[Date]" VertAlign="Center"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

@@ -1,0 +1,351 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="SC" href="javascript:void(0);" onclick="LoadViews('SC')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.SC
+        </a>
+    </li>
+    <li>
+        <a id="SC_TransactionsGroup" href="javascript:void(0);" onclick="LoadViews(id)">
+            @Forwarding.MvcApp.App_Resources.App_Resources.SC_TransactionsGroup
+        </a>
+    </li>
+    <li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.SC_ClientReturnsVoucher</li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-SC_Transactions">
+    <!-- Add / Edit Region Modal --> <!--data-keyboard="false" data-backdrop="false" to prevent modal closure on pressing escape and pressing outside the modal-->
+    <div class="modal fade" id="SC_TransactionsModal" tabindex="-1" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="SC_TransactionsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modalwidth-100">
+            @*<div class="modal-content modalwidth-100">*@
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="m-b-none">
+                        @Forwarding.MvcApp.App_Resources.App_Resources.SC_ClientReturnsVoucher&nbsp;<label id="lblShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                    </h3>
+                </div>
+                <!-- Region Add / Edit Region Form -->
+                <div class="modal-body">
+                    <div class="span7 form vertical-mode" id="SC_Transactions-form">
+                        <fieldset>
+                            <div class="form-group pull-in  clearfix">
+                                <input id="hID" type="hidden" />
+                                <!-- start alert message region -->
+                                <div class="alert alert-danger div-error">
+                                    @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                </div>
+                                <!-- end alert message region -->
+                                <!-- Region Add / Edit Region Form -->
+                                <div class="row text-sm wrapper hidden-print m-t-n-sm">
+                                    <div class="swapChildrenClass">
+                                        <div class="form-group  col-sm-4 has-error">
+                                            <div class="col-sm-12 has-error">
+                                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Code</label>
+                                                <input id="txtCode" disabled="disabled" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated  input-sm" data-required="true" data-minlength="1" maxlength="10" placeholder="@Forwarding.MvcApp.App_Resources.App_Resources.ex25" style="text-transform:uppercase" />
+                                            </div>
+                                        </div>
+
+                                        <div style="" class="form-group   col-sm-4 has-error">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Customers</label>
+                                            <div class="input-group has-error swapChildrenClass">
+                                                <select id="slCustomers" class="input-sm form-control" data-required="true" onchange=""></select>
+                                                <span id="btnGetInvoices" title="Get Invoices" class="input-group-addon Edit-btn" onclick="SC_SLInvoices_LoadAll();" style="background-color:green;padding:5px!important;color:white;cursor:pointer;">@Forwarding.MvcApp.App_Resources.App_Resources.GetInvoices&nbsp;<span class="fa fa-search"></span></span>
+                                            </div>
+                                        </div>
+
+
+                                        <div style="" class="form-group   col-sm-4 has-error">
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.SL_Invoices</label>
+                                            <div class="input-group has-error swapChildrenClass">
+
+                                                <select id="slSLInvoices" class="input-sm form-control" data-required="true" onchange=""></select>
+                                                <span id="btnGetItems" title="Get Items" class="input-group-addon Edit-btn" onclick="SC_PurchaseItems_LoadAll();" style="background-color:green;padding:5px!important;color:white;cursor:pointer;">@Forwarding.MvcApp.App_Resources.App_Resources.GetItems&nbsp;<span class="fa fa-search"></span></span>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row text-sm wrapper hidden-print m-t-n-sm">
+                                    <div class="swapChildrenClass">
+                                        <div class="form-group  col-sm-4 has-error">
+                                            <div class="input-group col-sm-12 has-error">
+                                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Date</label>
+                                                <input id="txtDate" onchange="" type="text" onfocus="DisableEnterKey(id);" data-required="true" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm Edit-input" data-date-format="dd/mm/yyyy" placeholder="@Forwarding.MvcApp.App_Resources.App_Resources.Select" />
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group Edit-btn col-sm-4" style="">
+
+
+
+
+                                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Store </label>
+                                            @* <input type="checkbox" id="cbIsSameStore" class="" data-required="" onchange="">*@
+
+                                            <div class="input-group swapChildrenClass">
+
+                                                <select id="slStores" class="input-sm form-control" data-required="false" onchange=""></select>
+                                                <span id="btnCopyStores" title="Copy" class="input-group-addon" onclick="CopyStores();" style="background-color:green;padding:5px!important;color:white;cursor:pointer;">@Forwarding.MvcApp.App_Resources.App_Resources.Copy&nbsp;<span class="fa fa-copy"></span></span>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="col-sm-4"></div>
+                                    </div>
+                                </div>
+                                <div class="row text-sm wrapper hidden-print m-t-n-sm">
+                                    <div class="swapChildrenClass">
+                                        <div class="form-group col-sm-4 hide">
+                                            <div class="col-sm-12">
+                                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Invoice</label>
+                                                <select id="slInvoices" class="input-sm form-control Edit-input" data-required="false" onchange=""></select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group  col-sm-8">
+                                            <div class="col-sm-12">
+
+                                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</label>
+                                                <textarea id="txtNotes" class="input-sm col-sm-12" style="resize:none;text-transform:uppercase;" rows="4"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4"></div>
+
+                                        <div class="form-group  col-sm-1 hide" style="margin-top:5px;">
+                                            <div class="input-group col-sm-12">
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <br />
+                                                <div class="">
+
+
+                                                </div>
+
+                                                <div class="hide">
+                                                    <button id="btn-Items" onclick="LoadTransactionsDetails();" class="btn btn-warning btn-sm Edit-btn hide" data-toggle="modal" data-target="#SC_TransactionsModal"><i class="fa fa-plus"></i>&nbsp; @Forwarding.MvcApp.App_Resources.App_Resources.GetItems</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+</fieldset>
+                    </div>
+
+                    <div class="table-responsive" style="overflow-x:scroll;overflow-y:scroll;">
+                        <hr />
+                        <h4 class="text-center">@Forwarding.MvcApp.App_Resources.App_Resources.Items</h4>
+                        <table id="tblItems" class="table  b-t b-light text-sm  table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="" data-toggle="class">
+
+                                    </th>
+
+                                    <th class="" data-toggle="class">
+                                        @Forwarding.MvcApp.App_Resources.App_Resources.Item
+                                    </th>
+                                    <th class="" data-toggle="class">
+                                        @Forwarding.MvcApp.App_Resources.App_Resources.Unit
+                                    </th>
+                                    <th>
+                                        @Forwarding.MvcApp.App_Resources.App_Resources.Quantity
+                                        <button id="btn-ClearQuantities" onclick="ClearQuantities();" class="btn btn-lightblue btn-sm Edit-btn hide" data-toggle="modal" data-target="#"><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Clear</button>
+                                    </th>
+                                    <th>
+                                        @Forwarding.MvcApp.App_Resources.App_Resources.Store
+                                    </th>
+                                    <th>
+                                        @Forwarding.MvcApp.App_Resources.App_Resources.Price
+                                    </th>
+                                    <th>
+                                        @Forwarding.MvcApp.App_Resources.App_Resources.Total
+                                    </th>
+                                    <th>
+                                        @Forwarding.MvcApp.App_Resources.App_Resources.Notes
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+
+
+
+
+
+                </div>
+                <!-- Endregion Add / Edit Region Form -->
+                <div class="modal-footer">
+                    <button type="button" id="btnSave" class="btn btn-primary btn-sm Edit-btn" onclick="SC_Transactions_Insert(false);">
+                        <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save
+                    </button>
+                    <button type="button" id="btnSaveandNew" class="btn btn-primary btn-sm Edit-btn" onclick="SC_Transactions_Insert(true);">
+                        <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew
+                    </button>
+                    <button type="button" id="btnPrint2" class="btn btn-lightblue btn-sm PrintTtansaction hide" onclick="PrintTransaction();">
+                        <span class="fa fa-print"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Print
+                    </button>
+                    <button id="btn-Delete2" onclick="SC_Transactions_Delete();" type="button" class=" btn btn-sm btn-danger Edit-btn"><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete</button>
+
+                    <button class="btnClose btn btn-link btn-sm" id="btnClose" onclick="" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Region Options & Template  -->
+
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.SC_ClientReturnsVoucher
+                </h3>
+            </header>
+            <!--Region the searh, delete, addnew-->
+            <div id="FilterSec" class="row text-sm wrapper hidden-print m-t-n-sm">
+                <div class="swapChildrenClass">
+
+
+                    <div class="form-group  col-sm-3">
+                        <div class="col-sm-12">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Code</label>
+                            <input id="txtCode_Filter" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated  input-sm" data-required="true" data-minlength="1" maxlength="10" placeholder="@Forwarding.MvcApp.App_Resources.App_Resources.ex25" style="text-transform:uppercase" />
+                        </div>
+                    </div>
+
+                    <div class="form-group  col-sm-2 hide">
+                        <div class="col-sm-12">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.PSInvoices</label>
+                            <select id="slPSInvoices_Filter" class="input-sm form-control" data-required="" onchange=""></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group  col-sm-3">
+
+                        <div class="input-group col-sm-12">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.FromDate</label>
+                            <input id="txtFromDate_Filter" onchange="" type="text" onfocus="DisableEnterKey(id);" data-required="true" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm" data-date-format="dd/mm/yyyy" placeholder="@Forwarding.MvcApp.App_Resources.App_Resources.Select" />
+
+                        </div>
+                    </div>
+
+                    <div class="form-group  col-sm-3">
+
+                        <div class="input-group col-sm-12">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.ToDate</label>
+                            <input id="txtToDate_Filter" type="text" onchange="" onfocus="DisableEnterKey(id);" data-required="true" onkeypress="DisableEnterKey(id);" style="cursor:text;" class="datepicker-input form-control input-sm" data-date-format="dd/mm/yyyy" placeholder="@Forwarding.MvcApp.App_Resources.App_Resources.Select" />
+                        </div>
+                    </div>
+
+                    <div class="form-group  col-sm-3" style="margin-top:5px;">
+                        <div class="input-group col-sm-12">
+                            <br />
+                            <button id="btn-search1" class="btn btn-sm btn-lightblue" type="button" onclick="SC_Transactions_LoadingWithPaging();"><i class="fa fa-search">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Search</i></button>
+                            &nbsp;&nbsp;
+                            <button id="btn-NewAdd" onclick="SC_Transactions_ClearAllControls(); SC_HideShowEditBtns(false);" class="btn btn-warning btn-sm " data-toggle="modal" data-target="#SC_TransactionsModal"><i class="fa fa-plus"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Add</button>
+                            &nbsp;&nbsp;
+                            <div class="hide">
+                                <button id="btn-Delete" type="button" class=" hide btn btn-sm btn-danger m-r-n "><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+                <div class="row text-sm wrapper hidden-print ">
+                    <div id="div-main-options" class="col-sm-5 m-b-xs">
+                        <div id="div-option-buttons" class="btn-group hide">
+                            <button id="btn-Copy" type="button" class="btn btn-sm btn-default"><i class="fa fa-copy"></i>Copy </button>
+                            <button id="btn-Print" type="button" class="btn btn-sm btn-default"><i class="fa fa-print"></i>Print </button>
+                            <button id="btn-Send" type="button" class="btn btn-sm btn-default"><i class="fa fa-envelope-o"></i>Send </button>
+                        </div>
+                    </div>
+                    <div id="div-search-option" class="col-sm-12">
+
+
+
+
+
+
+                        <div id="div-search-controls " class="input-group col-sm-9 hide">
+                            <input id="txt-Search" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="@Forwarding.MvcApp.App_Resources.App_Resources.SearchStoreNameAccountName">
+                            <span class="input-group-btn">
+                                <button id="btn-search" class="btn btn-sm btn-primary" type="button" onclick="SC_Transactions_LoadingWithPaging();"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                        <div class="float-right col-sm-1">
+                        </div>
+                    </div>
+                </div>
+                <!--Region the searh, delete, addnew-->
+                <!--Region: table header-->
+                <div class="table-responsive">
+                    <table id="tblSC_Transactions" class="table table-striped b-t b-light text-sm  table-hover">
+                        <thead>
+                            <tr>
+                                <th id="ID">
+                                    <input id="cb-CheckAll" type="checkbox" />
+                                </th>
+                                <th class="th-sortable" data-toggle="class">
+                                    @Forwarding.MvcApp.App_Resources.App_Resources.Code
+                                </th>
+                                <th>
+                                    @Forwarding.MvcApp.App_Resources.App_Resources.DateAndTime
+                                </th>
+
+                                <th>
+                                    @Forwarding.MvcApp.App_Resources.App_Resources.Notes
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <!--Region: table header-->
+                <!--Region: footer-->
+                <footer class="panel-footer">
+                    <div class="row">
+                        <div class="col-sm-4 hidden-xs">
+                            <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                            </select>
+                            <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                            </button>
+                        </div>
+                        <div id="div-Text-Total" class="col-sm-4 text-center">
+                            <small class="text-muted inline m-t-sm m-b-sm">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                                <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                                <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                            </small>
+                        </div>
+                        <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+
+
+                        <select id="hidden_slItems" style="visibility:hidden" class="input-sm form-control" data-required="false" onchange=""></select>
+                        <select id="hidden_slUnits" style="visibility:hidden" class="input-sm form-control" data-required="false" onchange=""></select>
+                    </div>
+                </footer>
+                <!--Region: footer-->
+        </section>
+    </div>
+</div>

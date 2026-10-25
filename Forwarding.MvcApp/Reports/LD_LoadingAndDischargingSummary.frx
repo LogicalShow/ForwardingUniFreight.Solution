@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="05/08/2022 22:05:10" ReportInfo.Modified="12/24/2022 12:57:41" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+
+    private void ReportTitle1_AfterData(object sender, EventArgs e)
+    {
+       Text55.Visible = !String.IsNullOrEmpty(Text56.Text);
+      
+       Text47.Visible=Text48.Visible = Convert.ToDecimal(Text47.Text) &gt; 0;
+       Text52.Visible=Text50.Visible = Convert.ToDecimal(Text52.Text) &gt; 0;
+       Text63.Visible=Text2.Visible = Convert.ToDecimal(Text2.Text) &gt; 0;
+       Text64.Visible=Text65.Visible = Convert.ToDecimal(Text64.Text) &gt; 0;
+    }
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFVYy/EZ0sl3z47HINeaw0Tz/UD0JYS4cfjJeM79NkKJ2tvn3ntUAXUq4nYR04cYIOD6crvvAGdFzt09rzr5zSaltkvXMieyKhzvLFEAyzQq2VHGZqIumprEXnfyFpMWZvONS9OP8r5IxZI29Me790uw==">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand=" exec [dbo].[GetLoadingAndDischargingSummaryByHeaderID] @HeaderID">
+        <Column Name="Serial" DataType="System.Int64"/>
+        <Column Name="CustomerName" DataType="System.String"/>
+        <Column Name="BerthNo" DataType="System.String"/>
+        <Column Name="CloseDate" DataType="System.DateTime"/>
+        <Column Name="CommodityName" DataType="System.String"/>
+        <Column Name="VesselName" DataType="System.String"/>
+        <Column Name="FromDate" DataType="System.DateTime"/>
+        <Column Name="ExpectedTotalQty" DataType="System.Decimal"/>
+        <Column Name="TotalLoadedQty_UnPackaged" DataType="System.Decimal"/>
+        <Column Name="TotalLoadedQty_Packaged" DataType="System.Decimal"/>
+        <Column Name="CranesNames" DataType="System.String"/>
+        <Column Name="OpenDate" DataType="System.DateTime"/>
+        <Column Name="TotalLoadedQty" DataType="System.Decimal"/>
+        <Column Name="LoadedQtyStatue" DataType="System.String"/>
+        <Column Name="DifferenceLoadedQty" DataType="System.Decimal"/>
+        <Column Name="StartDate" DataType="System.DateTime"/>
+        <Column Name="ServiceTypeName" DataType="System.String"/>
+        <Column Name="StoresIDs" DataType="System.String"/>
+        <Column Name="StoreOutQty_UnPackaged" DataType="System.Decimal"/>
+        <Column Name="StoreOutQty_Packaged" DataType="System.Decimal"/>
+        <Column Name="StoreInQty_UnPackaged" DataType="System.Decimal"/>
+        <Column Name="StoreInQty_Packaged" DataType="System.Decimal"/>
+        <Column Name="DirectionTypeName" DataType="System.String"/>
+        <CommandParameter Name="@HeaderID" DataType="22" Expression="[HeaderID]"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="HeaderID" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" RawPaperSize="9" FirstPageSource="15" OtherPagesSource="15" UnlimitedHeight="true">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="614.25" AfterDataEvent="ReportTitle1_AfterData">
+      <TextObject Name="Text30" Left="453.6" Top="56.7" Width="113.4" Height="28.35" Text="الباخرة" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text31" Left="245.7" Top="56.7" Width="207.9" Height="28.35" Text="[Table.VesselName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text33" Left="132.3" Top="292.95" Width="444.15" Height="28.35" Text="[Table.CustomerName]" HorzAlign="Right" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text34" Left="453.6" Top="94.5" Width="113.4" Height="28.35" Text="رحلة" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text35" Left="245.7" Top="94.5" Width="207.9" Height="28.35" Text="[Table.FromDate]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text36" Left="585.9" Top="9.45" Width="113.4" Height="28.35" Border.Lines="All" Text="[Table.DirectionTypeName]/[Table.Serial]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text38" Left="453.6" Top="132.3" Width="113.4" Height="28.35" Text="من" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text39" Left="245.7" Top="132.3" Width="207.9" Height="28.35" Text="[Table.StartDate]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text40" Left="453.6" Top="170.1" Width="113.4" Height="28.35" Text="الى" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text41" Left="245.7" Top="170.1" Width="207.9" Height="28.35" Text="[Table.CloseDate]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text42" Left="585.9" Top="255.15" Width="113.4" Height="28.35" Text="اصل الرسالة" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text43" Left="132.3" Top="255.15" Width="444.15" Height="28.35" Text="[Table.ExpectedTotalQty]" HorzAlign="Right" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text44" Left="585.9" Top="292.95" Width="113.4" Height="28.35" Text="اسم العميل" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text45" Left="132.3" Top="94.5" Width="85.05" Height="28.35" Text="رصيف رقم" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text1" Top="94.5" Width="132.3" Height="28.35" Text="[Table.BerthNo]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text46" Left="585.9" Top="340.2" Width="113.4" Height="28.35" Text="المنصرف" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text47" Left="406.35" Top="340.2" Width="160.65" Height="28.35" Text="[Table.TotalLoadedQty_UnPackaged]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text48" Left="132.3" Top="340.2" Width="274.05" Height="28.35" Text="طن صرف مباشر صب" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text50" Left="132.3" Top="396.9" Width="274.05" Height="28.35" Text="طن صرف مباشر معبأ" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text52" Left="406.35" Top="396.9" Width="160.65" Height="28.35" Text="[Table.TotalLoadedQty_Packaged]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text53" Left="585.9" Top="491.4" Width="113.4" Height="28.35" Text="[Table.LoadedQtyStatue]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text54" Left="406.35" Top="491.4" Width="160.65" Height="28.35" Text="[Table.DifferenceLoadedQty]" HorzAlign="Right" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text55" Left="585.9" Top="529.2" Width="113.4" Height="28.35" Text="أوناش" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text56" Left="75.6" Top="529.2" Width="491.4" Height="28.35" Text="[Table.CranesNames]" HorzAlign="Right" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text57" Left="396.9" Top="585.9" Width="151.2" Height="28.35" Border.Lines="All" Text="[Table.StartDate]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Right" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text58" Left="548.1" Top="585.9" Width="151.2" Height="28.35" Border.Lines="All" Text="بداية التخزين من يوم " HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text60" Left="75.6" Top="217.35" Width="567" Height="28.35" Text="[Table.CommodityName] [Table.ServiceTypeName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text61" Left="132.3" Top="132.3" Width="85.05" Height="28.35" Text="مخزن رقم" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text62" Top="132.3" Width="132.3" Height="28.35" Text="[Table.StoresIDs]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text64" Left="406.35" Top="434.7" Width="160.65" Height="18.9" Text="[Table.StoreOutQty_Packaged]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 12pt, style=Bold" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text65" Left="132.3" Top="425.25" Width="274.05" Height="28.35" Text="طن تخزين وصرف من مخزن رقم ([Table.StoresIDs]) معبأ" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text66" Left="585.9" Top="463.05" Width="113.4" Height="28.35" Text="إجمالي المنصرف" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text3" Left="406.35" Top="463.05" Width="160.65" Height="18.9" Text="[Table.TotalLoadedQty]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 12pt, style=Bold" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text67" Left="255.15" Top="463.05" Width="141.75" Height="18.9" Text="طن حتى يوم" HorzAlign="Right" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text68" Left="132.3" Top="491.4" Width="264.6" Height="18.9" Text="طن في المخزن" HorzAlign="Right" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text2" Left="406.35" Top="378" Width="160.65" Height="18.9" Text="[Table.StoreOutQty_UnPackaged]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Arial, 12pt, style=Bold" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text63" Left="132.3" Top="368.55" Width="274.05" Height="28.35" Text="طن تخزين وصرف من مخزن رقم ([Table.StoresIDs]) صب" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text4" Left="132.3" Top="463.05" Width="122.85" Height="18.9" Text="[Table.CloseDate]" Format="Date" Format.Format="d" HorzAlign="Right" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="618.25" Width="718.2"/>
+    <DataBand Name="Data1" Top="622.25" Width="718.2" DataSource="Table"/>
+    <ReportSummaryBand Name="ReportSummary1" Top="626.25" Width="718.2"/>
+    <PageFooterBand Name="PageFooter1" Top="630.25" Width="718.2"/>
+  </ReportPage>
+</Report>

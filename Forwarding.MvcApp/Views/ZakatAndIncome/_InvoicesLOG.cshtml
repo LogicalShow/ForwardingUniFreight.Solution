@@ -1,0 +1,576 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="BillingAndInvoicing" href="javascript:void(0);" onclick="LoadViews('tabInvoice')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.ZakatAndIncome
+        </a>
+    </li>
+    @*<li>
+            <a id="InvoiceOrderTab" href="javascript:void(0);" onclick="LoadViews('tabInvoice')">
+                @Forwarding.MvcApp.App_Resources.App_Resources.BLInvoices - <label class="lbl-InvoiceType"></label>
+            </a>
+        </li>*@
+    <li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.InvoicesLOG</li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-Currencies">
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.InvoicesLOG
+                </h3>
+            </header>
+
+            <div class="modal-body">
+                <div class="span7 form vertical-mode" id="Customer-form">
+                    <div>
+                        <div class="form-group pull-in  has-error clearfix">
+                            <div id="hExportedTable" class="hide"></div>
+                            <input id="hID" type="hidden" value="352">
+                            <!--Wizard-->
+                            <!--Region the searh, delete, addnew-->
+                            <div class="row text-sm wrapper hidden-print ">
+                                <div class="row col-sm-12 swapChildrenClass" id="FilterForwardingData">
+                                    <div class="input-group col-sm-10 col-lg-2 has-error m-t-md" style="margin:auto">
+                                        <div id="div-search-controls" class="input-group col-sm-12">
+                                            <input id="txt-SearchForwarding" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="">
+                                            <span class="input-group-btn">
+                                                <button id="btn-search" class="btn btn-sm btn-primary" type="button" onclick="SubmitInvoice_LoadingWithPaging_Forwarding();"><i class="fa fa-search"></i></button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-lg-3">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Branch </label>
+                                        <select id="slBranch_Forwarding" class="input-sm form-control" data-required="false" onchange="">
+                                            <option value="0">&lt;-- select Branch --&gt;</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12 col-lg-3">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.InvoiceType </label>
+                                        <select id="slInvoiceType_Forwarding" class="input-sm form-control" data-required="false" onchange="">
+                                            <option value="0">&lt;-- select Invoice Type --&gt;</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-group col-sm-12 col-lg-2 has-error" style="display : block">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.ToDate</label>
+                                        <input id="txtToDate_Forwarding" onchange="" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" autocomplete="off" style="cursor:text;" class="datepicker-input form-control input-sm Edit-input" data-date-format="dd/mm/yyyy" placeholder="Select Date">
+                                    </div>
+                                    <div class="input-group col-sm-12 col-lg-2  has-error" style="display : block">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.FromDate</label>
+                                        <input id="txtFromDate_Forwarding" onchange="" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" autocomplete="off" style="cursor:text;" class="datepicker-input form-control input-sm Edit-input" data-date-format="dd/mm/yyyy" placeholder="Select Date">
+                                    </div>
+                                </div>
+                                <div class="row col-sm-12 m-t-md">
+                                    <div class="col-sm-12 col-lg-3"><label></label></div>
+                                    <div class="col-sm-12 col-lg-1 m-t-md">
+                                        <button id="btn-ExportToExcel-FromSelect" type="button" onclick="InvoiceSales_DrawReport('Excel');" class="btn btn-sm btn-primary"><i class="fa fa-table"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.TraExportExcel&nbsp;</b></button>
+                                    </div>
+                                    <div class="col-sm-12 col-lg-3">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.User</label>
+                                        <select id="slUsers_Filter" class="input-sm form-control" data-required="false" onchange="">
+                                            <option value="0">&lt;-- select Customer --&gt;</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12 col-lg-3">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Customer </label>
+                                        <select id="slClients_Filter" class="input-sm form-control" data-required="false" onchange="">
+                                            <option value="0">&lt;-- select Customer --&gt;</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-12 col-lg-2">
+                                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Currency </label>
+                                        <select id="slCurrency_Filter" class="input-sm form-control" data-required="false" onchange="">
+                                            <option value="0">&lt;-- select Currency --&gt;</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!--Region the searh, delete, addnew-->
+                            <!--Region: table header-->
+                            <div class="table-responsive">
+                                <table id="tblSL_Invoices" class="table table-striped b-t b-light text-sm  table-hover">
+                                    <thead>
+                                        <tr>
+                                            @*<th id="ID">
+                                                    <input id="cb-CheckAll" type="checkbox" />
+                                                </th>*@
+                                            <th>
+                                                @Forwarding.MvcApp.App_Resources.App_Resources.OperationCode
+                                            </th>
+                                            <th>
+                                                @Forwarding.MvcApp.App_Resources.App_Resources.Client
+                                            </th>
+                                            <th>
+                                                @Forwarding.MvcApp.App_Resources.App_Resources.InvoiceNumber
+                                            </th>
+                                            <th>
+                                                @Forwarding.MvcApp.App_Resources.App_Resources.Amount
+                                            </th>
+                                            <th>
+                                                @Forwarding.MvcApp.App_Resources.App_Resources.InvoiceStatus
+                                            </th>
+                                            <th>
+                                                @Forwarding.MvcApp.App_Resources.App_Resources.FailedReason
+                                            </th>
+                                            <th>
+                                                @Forwarding.MvcApp.App_Resources.App_Resources.Currency
+                                            </th>
+                                            <th>
+                                                @Forwarding.MvcApp.App_Resources.App_Resources.InvoiceType
+                                            </th>
+                                            <th>
+                                                @Forwarding.MvcApp.App_Resources.App_Resources.InvoiceDate
+                                            </th>
+                                            <th>
+                                                @Forwarding.MvcApp.App_Resources.App_Resources.InvoiceSentDate
+                                            </th>
+                                            <th>
+                                                @Forwarding.MvcApp.App_Resources.App_Resources.Username
+                                            </th>
+                                            <th>
+                                                @Forwarding.MvcApp.App_Resources.App_Resources.Branch
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <!--Region: table header-->
+                            <!--Region: footer-->
+                            <footer class="panel-footer">
+                                <div class="row">
+                                    <div class="col-sm-4 hidden-xs">
+                                        <select id="select-page-size_Forwarding" class="input-sm form-control input-s-sm inline">
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                            <option value="200">200</option>
+                                            <option value="200">300</option>
+                                            <option value="200">500</option>
+                                        </select>
+                                        <button id="btn-applypaging_Forwarding" class="btn btn-sm btn-default" type="button" onclick="LoadDataWithPaging('div-Pager_Forwarding', 'select-page-size_Forwarding', 'spn-first-page-row_Forwarding', 'spn-last-page-row_Forwarding', 'spn-total-count_Forwarding', 'div-Text-Total_Forwarding', 1);">
+                                            @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                                        </button>
+                                    </div>
+                                    <div id="div-Text-Total_Forwarding" class="col-sm-4 text-center">
+                                        <small class="text-muted inline m-t-sm m-b-sm">
+                                            @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                                            <span id="spn-first-page-row_Forwarding"></span>- <span id="spn-last-page-row_Forwarding"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                                            <span id="spn-total-count_Forwarding"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                                        </small>
+                                    </div>
+                                    <div id="div-Pager_Forwarding" class="col-sm-4 text-right text-center-xs float-right"></div>
+                                </div>
+                            </footer>
+                            <!--Region: footer-->
+                            <!--EOF Wizard-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+        </section>
+    </div>
+</div>
+
+
+
+
+<!-- CurrencyModal  -->
+<div class="modal fade" id="CurrencyModal" tabindex="-1" data-keyboard="false" data-backdrop="false" role="dialog" aria-labelledby="CurrencyModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-80">
+        <div class="modal-content m-t-n-lg">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="m-b-none swapChildrenClass">
+                    <span>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Currency&nbsp;</span><label id="lblShown" purpose="dynamicLabel" @*to be cleared*@ class="static-text-primary"></label>
+                </h3>
+            </div>
+            <!-- Region Add / Edit Region Form -->
+            <div class="modal-body">
+                <div class="span7 form vertical-mode" id="Currency-form">
+                    <fieldset>
+                        <div class="form-group pull-in  has-error clearfix">
+                            <input id="hID" type="hidden" />
+                            <!-- start alert message region -->
+                            @*<div class="alert alert-danger div-error">
+                                    @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                </div>*@
+                            <!-- end alert message region -->
+                            <!-- Region Add / Edit Region Form -->
+                            <div class="swapChildrenClass m-t-n">
+                                <div class="form-group col-sm-2">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Code</label>
+                                    <input id="txtCode" tabindex="10" type="text" class="form-control parsley-validated input-sm" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" data-required="true" data-minlength="3" maxlength="3" placeholder="" style="text-transform:uppercase" />
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Name</label>
+                                    <input type="text" id="txtName" tabindex="20" class="form-control parsley-validated input-sm" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" data-required="true" maxlength="20" placeholder="" style="text-transform:uppercase" />
+                                </div>
+                                <div class="form-group col-sm-7">
+                                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Notes</label>
+                                    <input type="text" id="txtNotes" tabindex="30" class="form-control parsley-validated input-sm" data-required="false" maxlength="50" placeholder="" style="text-transform:uppercase" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                @*This div is to make the buttons clickable*@
+                                <div id="divDetailsBtns" class="col-sm-12 swapChildrenClass" style="">
+                                    <div class="col-sm-2 m-t-sm">
+                                        <button id="btn-AddDetails" class="form-control btn btn-lightblue btn-sm m-t-n-xs swapChildrenClass" data-toggle="modal" @*data-target="#DetailsModal"*@ onclick="Details_ClearAllControls();"><i class="fa fa-plus"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.AddDetails&nbsp;</b></button>
+                                    </div>
+                                    <div class="col-sm-2 m-t-sm">
+                                        <button id="btn-DeleteDetails" type="button" class="form-control btn btn-sm btn-danger m-t-n-xs swapChildrenClass" onclick="Details_DeleteList();"><i class="fa fa-trash-o"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.DeleteDetails&nbsp;</b></button>
+                                    </div>
+                                    <div class="col-sm-2 m-t-sm"></div>
+                                    <div class="col-sm-2 m-t-sm"></div>
+                                    <div class="col-sm-2 m-t-sm"></div>
+                                    <div class="col-sm-2 m-t-sm"></div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12 m-t-sm">
+                                <section id="secDetails" class="panel panel-default" style="clear:both;">
+                                    <div class="table-responsive" style="width:99%; height:400px; overflow:scroll;">
+                                        <table id="tblDetails" class="table table-striped b-t b-light text-sm table-hover">
+                                            <thead>
+                                                <tr class="">
+                                                    <th id="HeaderDeleteDetailsID">
+                                                        <input id="cbDetailsDeleteHeader" type="checkbox" />
+                                                    </th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.FromDate</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.FromDate</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.To</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.ExchangeRate</th>
+                                                    <th>@Forwarding.MvcApp.App_Resources.App_Resources.ExchangeRate</th>
+
+                                                    <th class="rounded-right hide"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </section>
+                            </div>
+                            <!-- Region Add / Edit Region Form -->
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <!-- Endregion Add / Edit Region Form -->
+            <div class="modal-footer m-t-n-lg">
+                <button type="button" id="btnSave" class="btn btn-primary btn-sm swapChildrenClass" onclick="Currencies_Save();">
+                    <span class="glyphicon glyphicon-save"></span><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Save&nbsp;</b>
+                </button>
+                <button type="button" id="btnSaveandNew" class="btn btn-primary btn-sm swapChildrenClass hide" onclick="Currencies_Insert(true);">
+                    <span class="glyphicon glyphicon-save"></span><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew&nbsp;</b>
+                </button>
+                <button class="btnClose btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true"><b>@Forwarding.MvcApp.App_Resources.App_Resources.Close</b></button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- EOF CurrencyModal  -->
+<!-- DetailsModal-->
+<div class="modal fade" id="DetailsModal" tabindex="-1" data-keyboard="false" data-backdrop="false" role="dialog" aria-labelledby="DetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-50">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;
+                </button>
+                <h3 class="m-b-none swapChildrenClass">
+                    <span>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Currency&nbsp;</span><label id="lblDetails" purpose="dynamicLabel" @*to be cleared*@ class="static-text-primary"></label>
+                </h3>
+            </div>
+            <!-- Region Add / Edit Region Form -->
+            <div class="modal-body">
+                <div class="span7 form vertical-mode" id="Details-form">
+                    <fieldset>
+                        <div class="form-group pull-in  has-error clearfix">
+                            <input id="hDetailsID" type="hidden" />
+                            <!-- start alert message region -->
+                            @*<div class="alert alert-danger div-error">
+                                    @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                                </div>*@
+                            <!-- end alert message region -->
+                            <div class="form-group col-sm-6">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.FromDate</label>
+                                <input id="txtFromDate" tabindex="100" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" readonly="readonly" style="background-color:white; cursor:text;" class="form-control datepicker-input input-sm" data-required="true" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ExchangeRate</label>
+                                <input id="txtToDate" tabindex="110" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" readonly="readonly" style="background-color:white; cursor:text;" class="form-control datepicker-input input-sm" data-required="true" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ExchangeRate</label>
+                                <input type="text" id="txtExchangeRate" tabindex="120" @*name="ExchangeRate*@ onkeypress=" CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" class="form-control parsley-validated input-sm" data-required="true" maxlength="11" @*placeholder="value from 0.00001 to 99999.99999"*@ />
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.ExchangeRate</label>
+                                <input type="text" id="txtSellingRate" tabindex="130" @*name="ExchangeRate"*@ onkeypress="CheckValueIsDecimal(id);" onfocus="CheckValueIsDecimal(id);" onblur="CheckDecimalFormat(id);" class="form-control parsley-validated input-sm" data-required="true" maxlength="11" @*placeholder="value from 0.00001 to 99999.99999"*@ />
+                            </div>
+                            @*<div class="form-group col-sm-6 hide">
+                                    <label class="m-t-25"><input type="checkbox" id="cbIsInactive" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.IsInactive</label>
+                                </div>*@
+                            <!-- Region Add / Edit Region Form -->
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <!-- Endregion Add / Edit Region Form -->
+            <div class="modal-footer m-t-n">
+                <button type="button" id="btnSaveDetails" tabindex="140" class="btn btn-primary btn-sm swapChildrenClass" onclick="Details_Save(false);">
+                    <span class="glyphicon glyphicon-save"></span><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Save&nbsp;</b>
+                </button>
+                <button type="button" id="btnSaveandNewDetails" tabindex="150" class="btn btn-primary btn-sm swapChildrenClass" onclick="Details_Save(true);">
+                    <span class="glyphicon glyphicon-save"></span><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew&nbsp;</b>
+                </button>
+                <button class="btnClose btn btn-link btn-sm" tabindex="160" data-dismiss="modal" aria-hidden="true"><b>@Forwarding.MvcApp.App_Resources.App_Resources.Close</b></button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- EOF DetailsModal  -->
+
+<div class="modal fade" id="InvoiceDetailsModal" tabindex="-1" data-keyboard="false" data-backdrop="false" role="dialog" aria-labelledby="DetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-70">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h3 class="m-b-none">
+                    Invoice Details &nbsp;<label id="lblShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region Add / Edit Region Form -->
+                <div class="span7 form vertical-mode" id="Region-form">
+                    <fieldset>
+                        <div class="form-group pull-in  has-error clearfix">
+                            <input id="hID" type="hidden" value="">
+                            <!-- start alert message region -->
+                            <div class="alert alert-danger div-error" style="">
+                                Please, revise the entries...
+                            </div>
+                            <!-- end alert message region -->
+                            <div class="row col-sm-12">
+
+                                <table id="tblSubmitInvoice_Edit_Excel" class="table table-striped b-t b-light text-sm  table-hover">
+                                    <thead>
+                                        <tr>
+                                            @*<th id="ID">
+                                                    <input class="CheckAllonChange" id="cb-CheckAll1" onchange="ChangeCheckBox();" type="checkbox" />
+                                                </th>*@
+
+                                            <th>description</th>
+                                            <th>item Code</th>
+                                            <th>quantity </th>
+                                            <th>amount Sold</th>
+                                            <th>currency Sold</th>
+                                            <th> Exchange Rate</th>
+                                            <th>amount EGP</th>
+                                            <th>Tax Rate </th>
+
+                                            <th class="rounded-right hide"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+                <!-- Endegion Add / Edit Region Form -->
+            </div>
+            <div class="modal-footer">
+                @*<button type="button" id="btnSave" class="btn btn-primary btn-sm" onclick="Regions_Insert(false);">
+                        <span class="glyphicon glyphicon-save"></span>Save
+                    </button>
+                    <button type="button" id="btnSaveandNew" class="btn btn-primary btn-sm" onclick="Regions_Insert(true);">
+                        <span class="glyphicon glyphicon-save"></span>Save &amp; New
+                    </button>*@
+                <button class="btnClose btn btn-link btn-sm" id="btnClose" onclick="Regions_UnlockRecord();" data-dismiss="modal" aria-hidden="true">Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="InvoiceDetailsEditModal" tabindex="-1" data-keyboard="false" data-backdrop="false" role="dialog" aria-labelledby="DetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-70">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h3 class="m-b-none">
+                    Invoice Details &nbsp;<label id="lblShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region Add / Edit Region Form -->
+                <div class="span7 form vertical-mode" id="Region-form">
+                    <fieldset>
+                        <div class="form-group pull-in  has-error clearfix">
+                            <input id="hID" type="hidden" value="">
+                            <!-- start alert message region -->
+                            <div class="alert alert-danger div-error" style="">
+                                Please, revise the entries...
+                            </div>
+                            <!-- end alert message region -->
+                            <div class="row col-sm-12">
+
+
+
+
+
+
+
+
+
+
+                                <div class="form-group col-sm-3">
+                                    <label>description</label>
+                                    <input id="txtDescription" type="text" class="form-control parsley-validated" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" />
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label>Item Code</label>
+                                    <input id="txtitemCode" type="text" class="form-control parsley-validated" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" />
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label>quantity</label>
+                                    <input id="txtquantity" type="text" class="form-control parsley-validated" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" />
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label>Amount Sold</label>
+                                    <input id="txtAmountSold" type="text" class="form-control parsley-validated" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" />
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label>Currency Sold</label>
+                                    <input id="txtCurrencySold" type="text" class="form-control parsley-validated" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" />
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label>Exchange Rate</label>
+                                    <input id="txtExchangeRate" type="text" class="form-control parsley-validated" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" />
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label>Amount EGP</label>
+                                    <input id="txtAmountEGP" type="text" class="form-control parsley-validated" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" />
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label>Tax Rate</label>
+                                    <input id="txtTaxRate" type="text" class="form-control parsley-validated" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" />
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </fieldset>
+                </div>
+                <!-- Endegion Add / Edit Region Form -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSave" class="btn btn-primary btn-sm" onclick="InvoiceDetailsEdit(false);">
+                    <span class="glyphicon glyphicon-save"></span>Save
+                </button>
+                @*
+                    <button type="button" id="btnSaveandNew" class="btn btn-primary btn-sm" onclick="Regions_Insert(true);">
+                        <span class="glyphicon glyphicon-save"></span>Save &amp; New
+                    </button>*@
+                <button class="btnClose btn btn-link btn-sm" id="btnClose" onclick="Regions_UnlockRecord();" data-dismiss="modal" aria-hidden="true">Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@*Invoice Details SHIPPING*@
+
+<div class="modal fade" id="InvoiceDetailsModal_Shipping" tabindex="-1" data-keyboard="false" data-backdrop="false" role="dialog" aria-labelledby="DetailsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-70">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h3 class="m-b-none">
+                    Invoice Details &nbsp;<label id="lblShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region Add / Edit Region Form -->
+                <div class="span7 form vertical-mode" id="Region-form">
+                    <fieldset>
+                        <div class="form-group pull-in  has-error clearfix">
+                            <input id="hID" type="hidden" value="">
+                            <!-- start alert message region -->
+                            <div class="alert alert-danger div-error" style="">
+                                Please, revise the entries...
+                            </div>
+                            <!-- end alert message region -->
+                            <div class="row col-sm-12">
+
+                                <table id="tblSubmitInvoice_Edit_Shipping" class="table table-striped b-t b-light text-sm  table-hover">
+                                    <thead>
+                                        <tr>
+                                            @*<th id="ID">
+                                                    <input class="CheckAllonChange" id="cb-CheckAll1" onchange="ChangeCheckBox();" type="checkbox" />
+                                                </th>*@
+
+                                            <th>description</th>
+                                            <th>item Code</th>
+                                            <th>quantity </th>
+                                            <th>amount Sold</th>
+                                            <th>currency Sold</th>
+                                            <th> Exchange Rate</th>
+                                            <th>amount EGP</th>
+                                            <th class="InvoiceDetailsSalesTotal hide">Sales Total </th>
+                                            <th>Tax Rate </th>
+                                            <th class="InvoiceDetailsTotalAmount hide">Total Amount </th>
+
+                                            <th class="rounded-right hide"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </div>
+                <!-- Endegion Add / Edit Region Form -->
+            </div>
+            <div class="modal-footer">
+                @*<button type="button" id="btnSave" class="btn btn-primary btn-sm" onclick="Regions_Insert(false);">
+                        <span class="glyphicon glyphicon-save"></span>Save
+                    </button>
+                    <button type="button" id="btnSaveandNew" class="btn btn-primary btn-sm" onclick="Regions_Insert(true);">
+                        <span class="glyphicon glyphicon-save"></span>Save &amp; New
+                    </button>*@
+                <button class="btnClose btn btn-link btn-sm" id="btnClose" onclick="Regions_UnlockRecord();" data-dismiss="modal" aria-hidden="true">Close</button><!--sherif: i added an id and the onclick fn go set the timelocked in the DB to null-->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

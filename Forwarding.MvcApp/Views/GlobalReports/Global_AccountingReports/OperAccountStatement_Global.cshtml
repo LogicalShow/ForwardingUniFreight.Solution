@@ -1,0 +1,95 @@
+﻿@{
+
+    Layout = "~/Views/GlobalReports/_GlobalReportsLayout.cshtml";
+
+}
+
+<script src="~/Scripts/Accounting/Reports/SubAccountLedger.js"></script>
+
+
+<input type="hidden" id="txtFromDate" value="@ViewBag.txtFromDate" />
+<input type="hidden" id="txtToDate" value="@ViewBag.txtToDate" />
+<input type="hidden" id="hDefaultUnEditableCompanyName" value="@ViewBag.hDefaultUnEditableCompanyName" />
+<select id="slCurrency" class="hide"><option value="@ViewBag.slCurrency" selected>@ViewBag.slCurrency_text</option></select>
+<select id="slSubAccountGroup" class="hide"><option value="@ViewBag.slSubAccountGroup" selected>@ViewBag.slSubAccountGroup_text</option></select>
+<select id="slSubAccount" class="hide"><option value="@ViewBag.slSubAccount" selected>@ViewBag.slSubAccount_text</option></select>
+<input type="hidden" id="cbIsClientStatmentEn" checked=@ViewBag.cbIsClientStatmentEn />
+<input type="hidden" id="cbIsAgentStatmentEn" checked=@ViewBag.cbIsAgentStatmentEn />
+<input type="hidden" id="cbIsDetails" checked=@ViewBag.cbIsDetails />
+<input type="hidden" id="cbHeaderLogo" checked=@ViewBag.cbHeaderLogo />
+<input type="hidden" id="cbSuppressForZeroes" checked=@ViewBag.cbSuppressForZeroes />
+
+
+
+
+
+
+
+
+<div class="row text-sm wrapper hidden-print m-t-n-md">
+
+    <div class="col-sm-2 swapChildrenClass m-t-xs hide">
+        <input tabindex="" type="radio" name="nameRdGroup" id="cbIsGroupByCostCenter" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"> <b> Cost Center By Sub Account</b> @*<b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.GroupByCostCenter&nbsp;</b>*@
+    </div>
+    <div class="col-sm-2 swapChildrenClass m-t-xs hide">
+        <input tabindex="" type="radio" name="nameRdGroup" id="cbIsByCostCenter" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><b> Cost Center By Account</b>
+    </div>
+    <div class="col-sm-1 swapChildrenClass m-t-xs hide">
+        <input tabindex="" type="radio" name="nameRdGroup" id="cbIsByCurrency" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><b>By Currency</b>
+    </div>
+
+    <div class="col-sm-1 swapChildrenClass m-t-xs hide">
+        <input tabindex="" type="radio" name="nameRdGroup" id="cbIsClientStatmentAr" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><b>Client Statment Ar</b>
+    </div>
+
+    <div class="col-sm-1 swapChildrenClass m-t-xs hide">
+        <input tabindex="" type="radio" name="nameRdGroup" id="cbIsAgentStatmentAr" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><b>Agent Statment Ar</b>
+    </div>
+    <div class="col-sm-1 swapChildrenClass m-t-xs hide">
+        <input tabindex="" type="radio" name="nameRdGroup" id="cbIsCostCenterSummary" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><b>Cost Center Summary</b>
+    </div>
+    <div class="col-sm-1 swapChildrenClass m-t-xs hide">
+        <input tabindex="" type="radio" name="nameRdGroup" id="cbIsCostCenterProfit" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><b>Cost Center Profit</b>
+    </div>
+    <div class="col-sm-2 swapChildrenClass hide m-t-xs">
+        <input tabindex="" type="radio" name="nameRdGroup" id="cbIsSupplierStatementEn" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.SupplierStatementEn&nbsp;</b>
+    </div>
+    <div class="input-group col-sm-2 hide m-t-xs">
+        <label class=""><input type="checkbox" id="cbShowSubAccount" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.ShowSubAccounts</label><br />
+    </div>
+
+</div>
+<div class="row text-sm wrapper hidden-print m-t-n-md hide">
+    <section id="secSubAccount" class="m-l col-sm-5 panel panel-default" style="clear:both;">
+        <div class="">
+            <label class=""><input type="checkbox" id="cbCheckAllSubAccounts" onchange="SubAccountLedger_cbCheckAllSubAccountsChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><u>&nbsp;Select All SubAccounts</u></label><br />
+        </div>
+        <div id="divCbSubAccount" style="width:104%; height:370px; font-size:100%; overflow:scroll;">
+        </div>
+    </section>
+    <section id="secAccount" class="m-l col-sm-3 panel panel-default">
+        <div class="">
+            <label class=""><input type="checkbox" id="cbCheckAllAccounts" onchange="SubAccountLedger_cbCheckAllAccountsChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><u>&nbsp;Select All Accounts</u></label><br />
+        </div>
+        <div id="divCbAccount" style="width:107%; height:370px; font-size:100%; overflow:scroll;">
+        </div>
+    </section>
+    <section id="secCostCenter" class="m-l col-sm-3 panel panel-default">
+        <div class="">
+            <label class=""><input type="checkbox" id="cbCheckAllCostCenters" onchange="SubAccountLedger_cbCheckAllCostCentersChanged();" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"><u>&nbsp;Select All Cost Centers</u></label><br />
+        </div>
+        <div id="divCbCostCenter" style="width:107%; height:370px; font-size:100%; overflow:scroll;">
+        </div>
+    </section>
+
+    <!--EOF Region Filter-->
+    <div id="hExportedTable" class="hide"></div>
+    <div id="hExportdiv" class="hide"></div>
+</div>
+
+<div id="ReportBody" style="background-color: white!important;">
+
+</div>
+
+
+

@@ -1,0 +1,173 @@
+﻿
+
+<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li><a id="hl-homepage" href="javascript:void(0);"><i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+    </a></li>
+    <li><a id="Accounting" href="javascript:void(0);" onclick="LoadViews('AccountingReports')">@Forwarding.MvcApp.App_Resources.App_Resources.Accounting
+    </a></li>
+    <li><a id="AccountingReports" href="javascript:void(0);" onclick="LoadViews('AccountingReports')">@Forwarding.MvcApp.App_Resources.App_Resources.Reports
+    </a></li>
+    <li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.Dynamicpost</li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-BalanceSheet">
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.Dynamicpost 
+                </h3>
+            </header>
+            <div class="row text-sm wrapper hidden-print m-t-n-sm swapChildrenClass">
+                <!--Region Filter-->
+                @*<div class="form-group col-sm-2">
+            <label>@Forwarding.MvcApp.App_Resources.App_Resources.From</label>
+            <input id="txtFromDate" readonly="readonly" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="input-sm datepicker-input form-control" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+        </div>*@
+                <div class="row">
+                    <div class="form-group col-sm-2 ">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.FromDate</label>
+                        <input id="txtFromDate" readonly="readonly" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="input-sm datepicker-input form-control" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                    </div>
+                    <div class="form-group col-sm-2 ">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.ToDate</label>
+                        <input id="txtToDate" readonly="readonly" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="input-sm datepicker-input form-control" data-date-format="dd/mm/yyyy" placeholder="Select Date" />
+                    </div>
+                    <div class="col-sm-2 hide">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Safe</label>
+                        <select id="slSafe" tabindex="400" class="form-control parsley-validated input-sm" onchange="" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false"></select>
+                    </div>
+                    <div class="col-sm-2">
+                        <label>Safe Transaction</label>
+                        <select id="slSafeTransaction" tabindex="400" class="form-control parsley-validated input-sm" onchange="" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false">
+                            <option value="0">All</option>
+                            <option value="10">In</option>
+                            <option value="20">Out</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <label>Safe Type</label>
+                        <select id="slSafeType" tabindex="400" class="form-control parsley-validated input-sm" onchange="" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false">
+                            <option value="0">All</option>
+                            <option value="10">Custody Issue</option>
+                            <option value="70">Custody Settlement</option>
+                            <option value="20">Vendor Payment</option>
+                            <option value="30">Customer Collection</option>
+                            <option value="40">CN</option>
+                            <option value="50">DownPayment</option>
+                            <option value="60">Direct</option>
+                            <option value="200">Other</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                        <label>Voucher Type</label>
+                        <select id="slVoucherType" tabindex="400" class="form-control parsley-validated input-sm" onchange="" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" data-required="false">
+                            <option value="0">All</option>
+                            <option value="10">POS</option>
+                            <option value="20">Visa</option>
+                            <option value="30">Transfer</option>
+                            <option value="40">Cheque</option>
+                            <option value="60">deposit</option>
+                            <option value="50">Cash</option>
+
+                        </select>
+                    </div>
+
+
+
+
+                    <div class="form-group col-sm-2 hide ">
+                        <label>Batch Number</label>
+                        <input id="txtBatchNumber" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="input-sm -input form-control" placeholder="" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-sm-2  ">
+                        <label>Accrual</label>
+                        <select id="slAccrual" onchange="ChangeAccrual();" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm">
+                            <option value="0">All</option>
+                            <option value="1">Vendor Accrual</option>
+                            <option value="2">Customer Accrual</option>
+                            <option value="3">Close Operation JV</option>
+                            <option value="4">LCL Freight Diff JV</option>
+                            <option value="5">Custody Settlement</option>
+                            <option value="6">Customer CreditNote</option>
+                            <option value="7">Agent CreditNote</option>
+                            <option value="8">Payable Adjustmente</option>
+                        </select>
+
+                    </div>
+                    <div class="form-group col-sm-2  ">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.InvoiceType</label>
+                        <select disabled id="slInvoiceType" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Direction</label>
+                        <select id="slDirections" style="width:100%;" class="form-control input-sm" data-required="true"></select>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label>@Forwarding.MvcApp.App_Resources.App_Resources.Service</label>
+                        <select id="slServices" style="width:100%;" onchange="ShowHideSalesman();" class="form-control input-sm" data-required="true"></select>
+                    </div>
+                </div>
+                <div class="form-group col-sm-2  m-t-27 hide">
+                    <label> Last Btach Number :</label>
+                    <label id="lblLastBatchNumber"> </label>
+                </div>
+                <div class="hide input-group col-sm-2 hidden">
+                    <label>@Forwarding.MvcApp.App_Resources.App_Resources.Status</label>
+                    <select id="slAccountLevel" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                </div>
+                <div class="hide input-group col-sm-2 m-t-25">
+                    <label class=""><input type="checkbox" id="cbSuppressForZeroes" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);">&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.SuppressForZeroes</label><br />
+                </div>
+                <div class="input-group col-sm-8 m-t-md">
+                    <button id="btn-ExportToExcel" type="button" onclick="BalanceSheet_Print('Excel');" class="btn btn-sm btn-lightblue "><i class="fa fa-table"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.TraExportExcel&nbsp;</b></button>
+                    <button id="btn-Print" type="button" onclick="BalanceSheet_Print('Print');" class="btn btn-sm btn-info hidden"><i class="fa fa-print"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Print&nbsp;</b></button>
+                </div>
+                <div class="form-group col-sm-2  ">
+                    <label>JV NO</label>
+                    <input id="txtJVNo" type="text" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="background-color:white; cursor:text;" class="input-sm -input form-control" placeholder="" />
+                </div>
+                <div class="input-group col-sm-2 m-t-md">
+                    <button id="btn-RegenerateJVs" type="button" onclick="Dynamicpost_RegenerateJVs();" class="btn btn-sm btn-danger "><i class="fa fa-table"></i><b>&nbsp;Regenerate JVs&nbsp;</b></button>
+                </div>
+                @*<div class="col-sm-4">
+        </div>*@
+            </div>
+
+                <div class="row text-sm wrapper hidden-print m-t-n-md">
+                    <div id="hExportedTable" class="hide"></div>
+                </div>
+
+
+                <footer class="panel-footer hide">
+                    <div class="row">
+                        <div class="col-sm-4 hidden-xs">
+                            <select id="select-page-size" class="input-sm form-control input-s-sm inline">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                            </select>
+                            <button id="btn-applypaging" class="btn btn-sm btn-default" type="button">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Apply
+                            </button>
+                        </div>
+                        <div id="div-Text-Total" class="col-sm-4 text-center">
+                            <small class="text-muted inLine m-t-sm m-b-sm">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.Showing
+                                <span id="spn-first-page-row"></span>- <span id="spn-last-page-row"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Of
+                                <span id="spn-total-count"></span> @Forwarding.MvcApp.App_Resources.App_Resources.Items
+                            </small>
+                        </div>
+                        <div id="div-Pager" class="col-sm-4 text-right text-center-xs float-right"></div>
+                    </div>
+                </footer>
+</section>
+    </div>
+</div>

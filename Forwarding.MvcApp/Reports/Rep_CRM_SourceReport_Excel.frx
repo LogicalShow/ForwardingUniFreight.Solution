@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/03/2022 13:02:22" ReportInfo.Modified="08/07/2023 16:04:00" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+    
+
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFtHJVZLL/i3PN7CkdFc/1A7YXJU6T13VfFIAjI9Ib2eHK43COXIAb1+oG8abaGcWEZGpgJFPBP3+b+JobTIAbFImpu7AL5/m4I+6ScGE9e6WjDfiveqdM4GY1NsEAX+IAaI8eeaRBI+XaHNtGAkm7jw==">
+      <TableDataSource Name="Table" Alias="SourceReport" DataType="System.Int32" Enabled="true" SelectCommand="exec (@query)">
+        <Column Name="Logo" DataType="System.String" PropName="Column" Calculated="true" Expression="[Logo]"/>
+        <Column Name="CreationDate" DataType="System.DateTime"/>
+        <Column Name="CompanyName" DataType="System.String"/>
+        <Column Name="ContactPersons" DataType="System.String"/>
+        <Column Name="IndustryTypeName" DataType="System.String"/>
+        <Column Name="ServiceNeeded" DataType="System.String"/>
+        <Column Name="Value" DataType="System.String"/>
+        <Column Name="SalesPerson" DataType="System.String"/>
+        <Column Name="SourceName" DataType="System.String"/>
+        <Column Name="Stage" DataType="System.String"/>
+        <CommandParameter Name="@query" DataType="12" Expression="[query]" DefaultValue="Rep_CRM_SourceReport ' WHERE 1=1 '"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9">
+    <DataBand Name="Data1" Top="145.75" Width="1047.06" Height="36.14" CanGrow="true" DataSource="Table">
+      <TableObject Name="Table1" Left="5.68" Top="-0.15" Width="1032.24" Height="36.29">
+        <TableColumn Name="Column21" Width="129.03"/>
+        <TableColumn Name="Column22" Width="129.03"/>
+        <TableColumn Name="Column23" Width="129.03"/>
+        <TableColumn Name="Column24" Width="129.03"/>
+        <TableColumn Name="Column25" Width="129.03"/>
+        <TableColumn Name="Column26" Width="129.03"/>
+        <TableColumn Name="Column27" Width="129.03"/>
+        <TableColumn Name="Column29" Width="129.03"/>
+        <TableRow Name="Row8" MinHeight="36.29" Height="36.29" AutoSize="true">
+          <TableCell Name="Cell66" Border.Lines="All" Text="[SourceReport.CompanyName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell67" Border.Lines="All" Text="[FormatDateTime([SourceReport.CreationDate],&quot;dd/MM/yyyy&quot;)]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell68" Border.Lines="All" Text="[SourceReport.SalesPerson]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell69" Border.Lines="All" Text="[SourceReport.SourceName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell70" Border.Lines="All" Text="[SourceReport.IndustryTypeName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell71" Border.Lines="All" Text="[SourceReport.ServiceNeeded]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell72" Border.Lines="All" Text="[SourceReport.Value]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+          <TableCell Name="Cell74" Border.Lines="All" Text="[SourceReport.Stage]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+        </TableRow>
+      </TableObject>
+      <DataHeaderBand Name="DataHeader1" Width="1047.06" Height="141.75">
+        <PictureObject Name="Picture1" Left="6.92" Top="3.67" Width="1029.65" Height="50.42" DataColumn="SourceReport.Logo"/>
+        <TextObject Name="Text1" Left="403.52" Top="55.2" Width="236.45" Height="18.9" Text="CRM Statistics Report" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+        <TextObject Name="Text2" Left="403.52" Top="83.12" Width="236.45" Height="18.9" Text="Source Report" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+        <TableObject Name="Table2" Left="5.68" Top="107.9" Width="1032.48" Height="33.85">
+          <TableColumn Name="Column11" Width="129.06"/>
+          <TableColumn Name="Column12" Width="129.06"/>
+          <TableColumn Name="Column13" Width="129.06"/>
+          <TableColumn Name="Column14" Width="129.06"/>
+          <TableColumn Name="Column15" Width="129.06"/>
+          <TableColumn Name="Column16" Width="129.06"/>
+          <TableColumn Name="Column17" Width="129.06"/>
+          <TableColumn Name="Column19" Width="129.06"/>
+          <TableRow Name="Row6" Height="33.85">
+            <TableCell Name="Cell26" Border.Lines="All" Fill.Color="Silver" Text="Company Name" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell27" Border.Lines="All" Fill.Color="Silver" Text="Creation Date" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell28" Border.Lines="All" Fill.Color="Silver" Text="Sales Person" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell29" Border.Lines="All" Fill.Color="Silver" Text="Source" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell30" Border.Lines="All" Fill.Color="Silver" Text="Industry" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell51" Border.Lines="All" Fill.Color="Silver" Text="Service Needed" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell52" Border.Lines="All" Fill.Color="Silver" Text="Value" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell54" Border.Lines="All" Fill.Color="Silver" Text="Current Stage" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          </TableRow>
+        </TableObject>
+      </DataHeaderBand>
+    </DataBand>
+  </ReportPage>
+</Report>

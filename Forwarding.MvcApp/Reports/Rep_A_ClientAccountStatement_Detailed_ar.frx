@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="12/26/2019 10:03:36" ReportInfo.Modified="12/27/2020 19:43:37" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+
+    private void Text12_AfterData(object sender, EventArgs e)
+    {
+      if (((String)Report.GetColumnValue(&quot;Rep_A_ClientAccountStatement.Type&quot;))==&quot;قيد استحقاق عميل&quot;)
+      {
+		     Text12.Text=&quot;فاتورة مبيعات&quot;;
+      }
+      else
+      {
+	         Text12.Text= ((String)Report.GetColumnValue(&quot;Rep_A_ClientAccountStatement.Type&quot;));
+      }
+    }
+
+    private void Text19_AfterData(object sender, EventArgs e)
+    {
+      Text19.Text=    (((Decimal)Report.GetColumnValue(&quot;Rep_A_ClientAccountStatement.LocalDebit&quot;))- ((Decimal)Report.GetColumnValue(&quot;Rep_A_ClientAccountStatement.LocalCredit&quot;))).ToString();
+    }
+
+    private void Text25_AfterData(object sender, EventArgs e)
+    {
+      Text25.Text=(Report.GetTotalValue(&quot;TotalLocalDepit&quot;)- Report.GetTotalValue(&quot;TotalLocalCredit&quot;)).ToString();
+    }
+
+    private void Text29_AfterData(object sender, EventArgs e)
+    {
+       Text29.Text=(Report.GetTotalValue(&quot;TotalBepit&quot;)-Report.GetTotalValue(&quot;TotalCredit&quot;)).ToString();
+    }
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFRHG1B188P1plB5d5Qz+9C0G35hA7H71tJToQWs3ACXFW2AjgbCSBUvpvT02Dn5f01ZzOMjVntp1Dk/7GqgzP3o0vZeUqJLNnjzR+7RnIkTsEQJf5zAOt+xJGdMXUFSyfqBzuVPCzvT6pbuUR13EYQQ==">
+      <TableDataSource Name="Table" Alias="Rep_A_ClientAccountStatement" DataType="System.Int32" Enabled="true" SelectCommand="exec Rep_A_ClientAccountStatement @SubAccount_IDs,@AccountIDs,@From_Date,@To_Date">
+        <Column Name="SubAccount_Name" DataType="System.String"/>
+        <Column Name="LocalDebit" DataType="System.Decimal"/>
+        <Column Name="LocalCredit" DataType="System.Decimal"/>
+        <Column Name="Type" DataType="System.String"/>
+        <Column Name="JVNo" DataType="System.String"/>
+        <Column Name="DocumentNo" DataType="System.String"/>
+        <Column Name="JVDate" DataType="System.DateTime"/>
+        <Column Name="Debit" DataType="System.Decimal"/>
+        <Column Name="Credit" DataType="System.Decimal"/>
+        <Column Name="Notes" DataType="System.String"/>
+        <Column Name="Currency_Code" DataType="System.String"/>
+        <CommandParameter Name="@SubAccount_IDs" DataType="22" Expression="[SubAccount_IDs]"/>
+        <CommandParameter Name="@AccountIDs" DataType="22" Expression="[AccountIDs]"/>
+        <CommandParameter Name="@From_Date" DataType="22" Expression="[From_Date]"/>
+        <CommandParameter Name="@To_Date" DataType="22" Expression="[To_Date]"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="SubAccount_IDs" DataType="System.String"/>
+    <Parameter Name="AccountIDs" DataType="System.String"/>
+    <Parameter Name="From_Date" DataType="System.String"/>
+    <Parameter Name="To_Date" DataType="System.String"/>
+    <Total Name="TotalLocalDepit" Expression="[Rep_A_ClientAccountStatement.LocalDebit]" Evaluator="Data1" PrintOn="GroupFooter1"/>
+    <Total Name="TotalLocalCredit" Expression="[Rep_A_ClientAccountStatement.LocalCredit]" Evaluator="Data1" PrintOn="GroupFooter1"/>
+    <Total Name="TotalBepit" Expression="[Rep_A_ClientAccountStatement.LocalDebit]" Evaluator="Data1"/>
+    <Total Name="TotalCredit" Expression="[Rep_A_ClientAccountStatement.LocalCredit]" Evaluator="Data1"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9" FirstPageSource="15" OtherPagesSource="15">
+    <ReportTitleBand Name="ReportTitle1" Width="1047.06" Height="113.4"/>
+    <PageHeaderBand Name="PageHeader1" Top="118.11" Width="1047.06" Height="18.9"/>
+    <GroupHeaderBand Name="GroupHeader1" Top="141.71" Width="1047.06" Height="126.04" KeepWithData="true" Condition="[Rep_A_ClientAccountStatement.SubAccount_Name]" SortOrder="None">
+      <TextObject Name="Text1" Left="114.53" Top="8.7" Width="481.95" Height="28.35" Text="[[Rep_A_ClientAccountStatement.SubAccount_Name]]" HorzAlign="Right" VertAlign="Center" Font="Arial, 14pt"/>
+      <TextObject Name="Text2" Left="596.11" Top="8.72" Width="321.3" Height="28.35" Text="كشف حساب عميل" VertAlign="Center" Font="Arial, 18pt, style=Bold" TextFill.Color="Maroon"/>
+      <TextObject Name="Text10" Left="595.72" Top="47.24" Width="103.95" Height="18.9" Text="الفترة من" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="MediumBlue"/>
+      <TextObject Name="Text38" Left="432.06" Top="47.24" Width="37.8" Height="18.9" Text="إلي" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="MediumBlue"/>
+      <TextObject Name="Text3" Left="501.61" Top="47.27" Width="94.5" Height="18.9" Text="[From_Date]" HorzAlign="Right" VertAlign="Center"/>
+      <TextObject Name="Text4" Left="337.56" Top="47.28" Width="94.5" Height="18.9" Text="[To_Date]" HorzAlign="Right" VertAlign="Center"/>
+      <TextObject Name="Text6" Left="924.21" Top="107.14" Width="113.4" Height="18.9" Border.Lines="All" Fill.Color="RoyalBlue" Text="رقم القيد" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text11" Left="726.5" Top="107.09" Width="93.75" Height="18.9" Border.Lines="All" Fill.Color="RoyalBlue" Text="تاريخ الإيصال" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text14" Left="574.57" Top="107.08" Width="151.2" Height="18.9" Border.Lines="All" Fill.Color="RoyalBlue" Text="النوع" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text16" Left="470.99" Top="107.07" Width="103.95" Height="18.9" Border.Lines="All" Fill.Color="RoyalBlue" Text="مبلغ مدين" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text18" Left="367.04" Top="107.12" Width="103.95" Height="18.9" Border.Lines="All" Fill.Color="RoyalBlue" Text="مبلغ دائن" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text39" Left="8.3" Top="107.13" Width="132.3" Height="18.9" Border.Lines="All" Fill.Color="RoyalBlue" Text="الرصيد" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <TextObject Name="Text40" Left="141.35" Top="107.11" Width="225.28" Height="18.9" Border.Lines="All" Fill.Color="RoyalBlue" Text="الملاحظات" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <LineObject Name="Line1" Left="103.95" Top="85.05" Width="803.25" Border.Color="Red" Border.Width="2" Diagonal="true"/>
+      <TextObject Name="Text8" Left="819.87" Top="107.08" Width="103.95" Height="18.9" Border.Lines="All" Fill.Color="RoyalBlue" Text="رقم الإيصال" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="White"/>
+      <DataBand Name="Data1" Top="272.46" Width="1047.06" Height="27.78" DataSource="Table">
+        <TextObject Name="Text5" Left="924.16" Top="0.17" Width="113.4" Height="27.59" Border.Lines="All" Text="[Rep_A_ClientAccountStatement.JVNo]" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text7" Left="819.88" Top="0.9" Width="103.95" Height="26.83" Border.Lines="All" Text="[Rep_A_ClientAccountStatement.DocumentNo]" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text9" Left="727.25" Top="0.89" Width="92.98" Height="26.83" Border.Lines="All" Text="[Rep_A_ClientAccountStatement.JVDate]" Format="Date" Format.Format="d" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text12" Left="576.06" Top="0.9" Width="151.2" Height="26.83" Border.Lines="All" AfterDataEvent="Text12_AfterData" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text13" Left="472.49" Top="0.18" Width="103.19" Height="27.59" Border.Lines="All" Text="[Rep_A_ClientAccountStatement.LocalDebit]" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <TextObject Name="Text19" Left="8.31" Top="0.18" Width="130.78" Height="27.59" Border.Lines="All" AfterDataEvent="Text19_AfterData" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text17" Left="139.07" Top="0.95" Width="228.32" Height="26.83" Border.Lines="All" Text="[Rep_A_ClientAccountStatement.Notes]" HorzAlign="Center" VertAlign="Center"/>
+        <TextObject Name="Text15" Left="367.78" Top="0.95" Width="103.95" Height="26.83" Border.Lines="All" Text="[Rep_A_ClientAccountStatement.LocalCredit]" HorzAlign="Center" VertAlign="Center" WordWrap="false" Trimming="EllipsisCharacter"/>
+        <Sort>
+          <Sort Expression="[Rep_A_ClientAccountStatement.JVDate]"/>
+        </Sort>
+      </DataBand>
+      <GroupFooterBand Name="GroupFooter1" Top="304.94" Width="1047.06" Height="33.65">
+        <TextObject Name="Text22" Left="473.25" Top="5.29" Width="103.95" Height="28.35" Text="[TotalLocalDepit]" HorzAlign="Center" VertAlign="Center" TextFill.Color="Navy"/>
+        <TextObject Name="Text23" Left="367.79" Top="5.29" Width="103.95" Height="28.35" Text="[TotalLocalCredit]" HorzAlign="Center" VertAlign="Center" TextFill.Color="Navy"/>
+        <TextObject Name="Text24" Left="577.22" Top="5.3" Width="274.05" Height="28.35" Text="إجمالي المدين والدائن بالعملة المحلية" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="Navy"/>
+        <TextObject Name="Text42" Left="210.54" Top="5.29" Width="85.05" Height="28.35" Text="الرصيد" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="Navy"/>
+        <TextObject Name="Text25" Left="77.86" Top="5.3" Width="132.3" Height="28.35" AfterDataEvent="Text25_AfterData" Text="sdfsdfg" HorzAlign="Center" VertAlign="Center"/>
+      </GroupFooterBand>
+    </GroupHeaderBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="343.3" Width="1047.06" Height="28.58">
+      <TextObject Name="Text41" Left="576.45" Top="0.2" Width="463.05" Height="28.35" Border.Lines="All" Border.LeftLine.Color="Navy" Border.TopLine.Color="Navy" Border.TopLine.Style="Dash" Border.RightLine.Color="Navy" Border.RightLine.Width="1.5" Border.BottomLine.Color="Navy" Border.BottomLine.Width="1.5" Fill.Color="CornflowerBlue" Text="إجمالي المدين والدائن بالعملة المحلية" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="Navy"/>
+      <TextObject Name="Text27" Left="471.77" Top="0.2" Width="103.95" Height="28.35" Border.Lines="All" Border.LeftLine.Color="Navy" Border.TopLine.Color="Navy" Border.TopLine.Style="Dash" Border.RightLine.Color="Navy" Border.RightLine.Width="1.5" Border.BottomLine.Color="Navy" Border.BottomLine.Width="1.5" Fill.Color="CornflowerBlue" Text="[TotalBepit]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="Navy"/>
+      <TextObject Name="Text28" Left="367.06" Top="0.23" Width="103.95" Height="28.35" Border.Lines="All" Border.LeftLine.Color="Navy" Border.TopLine.Color="Navy" Border.TopLine.Style="Dash" Border.RightLine.Color="Navy" Border.RightLine.Width="1.5" Border.BottomLine.Color="Navy" Border.BottomLine.Width="1.5" Fill.Color="CornflowerBlue" Text="[TotalCredit]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="Navy"/>
+      <TextObject Name="Text43" Left="139.84" Top="0.19" Width="226.8" Height="28.35" Border.Lines="All" Border.LeftLine.Color="Navy" Border.TopLine.Color="Navy" Border.TopLine.Style="Dash" Border.RightLine.Color="Navy" Border.RightLine.Width="1.5" Border.BottomLine.Color="Navy" Border.BottomLine.Width="1.5" Fill.Color="CornflowerBlue" Text="إجمالي الرصيد" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="Navy"/>
+      <TextObject Name="Text29" Left="7.53" Top="0.19" Width="132.3" Height="28.35" Border.Lines="All" Border.LeftLine.Color="Navy" Border.TopLine.Color="Navy" Border.TopLine.Style="Dash" Border.RightLine.Color="Navy" Border.RightLine.Width="1.5" Border.BottomLine.Color="Navy" Border.BottomLine.Width="1.5" Fill.Color="CornflowerBlue" AfterDataEvent="Text29_AfterData" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="Navy"/>
+    </ReportSummaryBand>
+    <PageFooterBand Name="PageFooter1" Top="376.59" Width="1047.06" Height="28.35">
+      <TextObject Name="Text20" Left="9.45" Top="9.45" Width="160.65" Height="18.9" Text="[Date]" VertAlign="Center"/>
+      <TextObject Name="Text21" Left="945" Top="9.45" Width="94.5" Height="18.9" Text="[PageN]" VertAlign="Center"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

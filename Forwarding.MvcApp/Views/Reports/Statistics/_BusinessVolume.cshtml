@@ -1,0 +1,148 @@
+﻿<!-- start breadcrumb  -->
+<ul id="ul-breadcrumb" class="breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);" onclick="LoadViews(id);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="Reports" href="javascript:void(0);" onclick="LoadViews('Statistics')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.Reports
+    </a>
+</li>
+<li>
+    <a id="Statistics" href="javascript:void(0);" onclick="LoadViews('Statistics');">
+        @Forwarding.MvcApp.App_Resources.App_Resources.Statistics
+</a>
+</li>
+<li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.BusinessVolume</li>
+</ul>
+<!-- end breadcrumb  -->
+
+<div id="div-CommissionTarget">
+    <div id="div-Data">
+        <div id="div-Options">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <h3 class="m-b-none">
+                    @Forwarding.MvcApp.App_Resources.App_Resources.BusinessVolume
+            </h3>
+        </header>
+        <!--Region the searh, delete, addnew-->
+        <div class="row text-sm wrapper hidden-print ">
+            <div id="div-main-options" class="col-sm-12 m-b-xs">
+                <button id="btn-FilterOptions-CommissionTarget" class="btn btn-primary hide btn-sm" data-toggle="modal" onclick="" data-target="#FilterOptionsModal"><i class="fa fa-filter"></i> Filter & Print Options</button>
+                <div class="row col-sm-12" id="FilterOptions-form">
+                   
+                        <div class="row hide">
+                            <div id="div-FilterOptions-controls" class="input-group m-l col-sm-5">
+                                <input id="txtFilterOptions" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase" type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="Search">
+                                <span class="input-group-btn">
+                                    <button id="btn-FilterOptions" class="btn btn-sm btn-primary" type="button"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div id="divFilterOptions" class="m-t-n classSearchOptions">
+                            <div class="row col-sm-12">
+                                <div class="form-group col-sm-3">
+                                    <label>User</label>
+                                    <select id="slFilterSalesman" class="form-control m-b input-sm" data-required="true"><option value="">&lt;--Select--&gt;</option><option value="4">ADMIN</option><option value="31">AHMED MOSTAFA</option><option value="34">MA</option><option value="32">MOHAMED KINO</option><option value="27">SHERIF ANWAR</option><option value="42">TEST</option></select>
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label>Branches</label>
+                                    <select id="slFilterTargetType" class="form-control m-b input-sm" data-required="false" onchange="CommissionTarget_TargetTypeChanged();"><option value="">&lt;--Select--&gt;</option><option value="6">CAIRO</option><option value="7">ALEXANDRIA</option></select>
+                                </div>
+                                <div class="form-group col-sm-6 m-t-md">
+                                    <label class="m-t-sm"> <input type="radio" name="NameBusinessVolume" checked="checked" id="cbOperations" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"> Operations</label>
+                                    <label class="m-l m-t-sm"> <input type="radio" name="NameBusinessVolume" id="cbPayables" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"> Payables</label>
+                                    <label class="m-l m-t-sm"> <input type="radio" name="NameBusinessVolume" id="cbProfit" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"> Profit</label>
+                                    <label class="m-l m-t-sm"> <input type="radio" name="NameBusinessVolume" id="cbReceivable" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"> Receivable</label>
+                                </div>
+                            </div>
+                            <div class="row col-sm-12">
+                                <div class="form-group  col-sm-3 has-error">
+                                    <label>From Date</label>
+                                    <input id="txtFromDate" type="text" onfocus="DisableEnterKey(id);" data-required="true" onkeypress="DisableEnterKey(id);" class="datepicker-input form-control input-sm Edit-input" data-date-format="dd/mm/yyyy" placeholder="Select From Date" />
+                                </div>
+                                <div class="form-group  col-sm-3 has-error">
+                                    <label>To Date</label>
+                                    <input id="txtToDate" type="text" onfocus="DisableEnterKey(id);" data-required="true" onkeypress="DisableEnterKey(id);" class="datepicker-input form-control input-sm Edit-input" data-date-format="dd/mm/yyyy" placeholder="Select To Date" />
+                                </div>
+                                <div class="form-group col-sm-3 hide">
+                                    <label>Year</label>
+                                    <select id="slFilterTargetYear" class="form-control m-b input-sm" data-required="true"><option value="">&lt;--Select--&gt;</option><option value="2021">2021</option><option value="2020" selected="">2020</option><option value="2019">2019</option><option value="2018">2018</option><option value="2017">2017</option><option value="2016">2016</option><option value="2015">2015</option><option value="2014">2014</option><option value="2013">2013</option><option value="2012">2012</option><option value="2011">2011</option><option value="2010">2010</option><option value="2009">2009</option><option value="2008">2008</option><option value="2007">2007</option><option value="2006">2006</option><option value="2005">2005</option><option value="2004">2004</option><option value="2003">2003</option><option value="2002">2002</option><option value="2001">2001</option><option value="2000">2000</option><option value="1999">1999</option><option value="1998">1998</option><option value="1997">1997</option><option value="1996">1996</option><option value="1995">1995</option><option value="1994">1994</option><option value="1993">1993</option><option value="1992">1992</option><option value="1991">1991</option><option value="1990">1990</option><option value="1989">1989</option><option value="1988">1988</option><option value="1987">1987</option><option value="1986">1986</option><option value="1985">1985</option><option value="1984">1984</option><option value="1983">1983</option><option value="1982">1982</option><option value="1981">1981</option><option value="1980">1980</option><option value="1979">1979</option><option value="1978">1978</option><option value="1977">1977</option><option value="1976">1976</option><option value="1975">1975</option><option value="1974">1974</option><option value="1973">1973</option><option value="1972">1972</option></select>
+                                </div>
+                                <div class="form-group col-sm-3 hide">
+                                    <label>From Month</label>
+                                    <select id="slFilterFromTargetMonth" class="form-control m-b input-sm" data-required="true"><option value="">&lt;--Select--&gt;</option> <option value="1">January</option> <option value="2">February</option> <option value="3">March</option> <option value="4">April</option> <option value="5">Mai</option> <option value="6">June</option> <option value="7">July</option> <option value="8">August</option> <option value="9">September</option> <option value="10">October</option> <option value="11">November</option> <option value="12">December</option></select>
+                                </div>
+                                <div class="form-group col-sm-3 hide">
+                                    <label>To Month</label>
+                                    <select id="slFilterToTargetMonth" class="form-control m-b input-sm" data-required="true"><option value="">&lt;--Select--&gt;</option> <option value="1">January</option> <option value="2">February</option> <option value="3">March</option> <option value="4">April</option> <option value="5">Mai</option> <option value="6">June</option> <option value="7">July</option> <option value="8">August</option> <option value="9">September</option> <option value="10">October</option> <option value="11">November</option> <option value="12">December</option></select>
+                                </div>
+                                <div class="form-group col-sm-3 m-t-md">
+                                    <button id="btn-ClearFilters" type="button" onclick="ClearAll('#FilterOptionsModal');" class="btn btn-sm btn-warning hide"><i class="fa fa-eraser"></i><b>&nbsp;Clear Filters&nbsp;</b></button>
+                                    <button id="btn-print" type="button" class="btn btn-lightblue btn-sm" onclick="BusinessVolume_Print('Print');"><i class="fa fa-print"></i><b>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Print</b></button>
+
+                                 </div>
+                            </div>
+                           
+                            
+
+                                <div class="col-sm-12 hide" style="clear:both;">
+                                    <label class="m-t-sm"> <input type="radio" name="nameReportOption" checked="checked" id="cbFixedAmountTarget" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"> Fixed Amount</label>
+                                    <label class="m-l m-t-sm"> <input type="radio" name="nameReportOption" id="cbPercentageTarget" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);"> Percentage</label>
+                                </div>
+                             
+                            </div>
+                  
+                </div>
+                <div id="div-option-buttons" class="btn-group hide">
+                    <button id="btn-Copy" type="button" class="btn btn-sm btn-default"><i class="fa fa-copy"></i>&nbsp;Copy </button>
+                    <button id="btn-Print" type="button" class="btn btn-sm btn-default"><i class="fa fa-print"></i>&nbsp;Print </button>
+                    <button id="btn-Send" type="button" class="btn btn-sm btn-default"><i class="fa fa-envelope-o"></i>&nbsp;Send </button>
+                </div>
+            </div>
+            <div id="div-search-option" class="col-sm-7">
+                <div id="div-search-controls" class="input-group col-sm-9">
+                    @*<input id="txt-Search" autocomplete="off" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" style="text-transform:uppercase"  type="text" class="input-sm form-control" binding-name="SearchPlaceHolder" binding-prop="placeholder" placeholder="">
+                        <span class="input-group-btn">
+                            <button id="btn-search" class="btn btn-sm btn-primary" type="button" onclick="CommissionTarget_LoadingWithPaging();"><i class="fa fa-search"></i></button>
+                        </span>*@
+                </div>
+            </div>
+        </div>
+        <!--Region the searh, delete, addnew-->
+        <!--Region: table header-->
+        <div class="table-responsive hide">
+            <table id="tblCommissionTarget" class="table table-striped b-t b-light text-sm  table-hover">
+                <thead>
+                    <tr>
+                        <th id="ID" style="width:5%;">
+                            <input id="cb-CheckAll" type="checkbox" />
+                        </th>
+                        <th>@Forwarding.MvcApp.App_Resources.App_Resources.Salesman</th>
+                        <th>Year</th>
+                        <th class="hide">Month</th>
+                        <th>Target Type</th>
+                        <th class="hide">Fixed Amount</th>
+                        <th class="hide">@Forwarding.MvcApp.App_Resources.App_Resources.Percentage</th>
+                        <th class="rounded-right hide"></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <!--Region: table header-->
+        <!--Region: footer-->
+    
+        <!--Region: footer-->
+    </section>
+</div>
+</div>
+
+<!--EOF FilterOptionsModal-->

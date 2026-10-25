@@ -1,0 +1,73 @@
+﻿<!--AddressModal-->
+<div class="modal fade" id="AddressModal" tabindex="-1" style="z-index: 3000;" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="AddressModalLabel" aria-hidden="true">
+    <div class="modal-dialog modalwidth-70">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="m-b-none">@Forwarding.MvcApp.App_Resources.App_Resources.Address &nbsp;<label id="lblAddressShown" purpose="dynamicLabel" class="static-text-primary"></label>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <!-- Region Add / Edit Address Form -->
+                <div class="span7 form vertical-mode" id="Address-form">
+                    <fieldset>
+                        <div class="form-group pull-in  has-error clearfix">
+                            <input id="hAddressID" type="hidden" />
+                            <!-- start alert message region -->
+                            <div class="alert alert-danger div-error">
+                                @Forwarding.MvcApp.App_Resources.App_Resources.ErrorMessage
+                            </div>
+                            <!-- end alert message region -->
+                            <div class="form-group col-sm-12">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.AddressType</label>
+                                <select id="slAddressTypes" name="slAddressTypes" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control m-b" >
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.Country</label>
+                                <select id="slCountries" name="slCountries" class="form-control m-b" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" onchange="Cities_GetList();">
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.City</label>
+                                <select id="slCities" name="slCities" class="form-control m-b" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" >
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.StreetLine1</label>
+                                <input id="txtStreetLine1" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated"  data-required="false" maxlength="200" placeholder="Address Line 1" style="text-transform:uppercase"/>
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.StreetLine2</label>
+                                <input id="txtStreetLine2" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated"  data-required="false" maxlength="200" placeholder="Address Line 2" style="text-transform:uppercase"/>
+                            </div>
+                            <div class="form-group col-sm-12" style="">
+                                <label>Post Code</label>
+                                <input id="txtZipCode" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated"  data-required="false" maxlength="20" placeholder="Postal Code" style="text-transform:uppercase"/>
+                            </div>
+                            <div class="form-group col-sm-12" style="display:none">
+                                <label>@Forwarding.MvcApp.App_Resources.App_Resources.PrintAs</label>
+                                <input id="txtPrintedAs" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated" data-required="false" maxlength="250" placeholder="" style="text-transform:uppercase" />
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label>Additional Address</label>
+                                <input id="txtAdditionalAddress" onfocus="DisableEnterKey(id);" onkeypress="DisableEnterKey(id);" type="text" class="form-control parsley-validated" data-required="false" maxlength="250" placeholder="Additional Address" style="text-transform:uppercase" />
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <!-- Endegion Add / Edit Country Form -->
+            </div>
+            <div class="modal-footer"><!--sherif-->
+                <button type="button" id="btnCopyFromMainAddress" class="btn btn-info btn-sm" onclick="Addresses_CopyFromMainAddress();">
+                    <span class="glyphicon glyphicon-edit"></span>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.CopyFromMainAddress</button>
+
+                <button type="button" id="btnAddressSave" class="btn btn-primary btn-sm" onclick="Addresses_Insert(false);">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.Save</button>
+                <button type="button" id="btnAddressSaveandNew" class="btn btn-primary btn-sm" onclick="Addresses_Insert(true);">
+                    <span class="glyphicon glyphicon-save"></span>@Forwarding.MvcApp.App_Resources.App_Resources.SaveAndNew</button>
+                <button class=" btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--EOF AddressModal-->

@@ -1,0 +1,528 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" DoublePass="true" ReportInfo.Created="08/08/2024 00:49:02" ReportInfo.Modified="03/09/2025 14:27:32" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+
+  
+
+
+    
+    
+      
+  
+
+    
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFbC7kYc19fUbK/+gNUi2Y3iChDUjt0LnYlJyguLoUWjWwrAH+fut1cWWyb/Px6STGi6wj1k5/qQPRQI9uhT7qjPDm9brby5oEFrBRTqDAK7uUmXcHARPrwge/A3ZFazRS">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="execute(@query)">
+        <Column Name="ID" DataType="System.Int64"/>
+        <Column Name="QuotationRouteID" DataType="System.Int64"/>
+        <Column Name="Code" DataType="System.String"/>
+        <Column Name="CodeWithoutDashes" DataType="System.String"/>
+        <Column Name="CodeSerial" DataType="System.Int32"/>
+        <Column Name="BranchID" DataType="System.Int32"/>
+        <Column Name="SalesmanID" DataType="System.Int32"/>
+        <Column Name="BLType" DataType="System.Int32"/>
+        <Column Name="DirectionType" DataType="System.Int32"/>
+        <Column Name="TransportType" DataType="System.Int32"/>
+        <Column Name="TransportIconName" DataType="System.String"/>
+        <Column Name="TransportIconStyle" DataType="System.String"/>
+        <Column Name="ShipmentType" DataType="System.Int32"/>
+        <Column Name="MasterBL" DataType="System.String"/>
+        <Column Name="BLDate" DataType="System.DateTime"/>
+        <Column Name="HouseNumber" DataType="System.String"/>
+        <Column Name="HouseParentID" DataType="System.Int64"/>
+        <Column Name="HBLDate" DataType="System.String"/>
+        <Column Name="AgentID" DataType="System.Int32"/>
+        <Column Name="AgentAddressID" DataType="System.Int32"/>
+        <Column Name="AgentContactID" DataType="System.Int32"/>
+        <Column Name="ShipperID" DataType="System.Int32"/>
+        <Column Name="ConsigneeAddress" DataType="System.String"/>
+        <Column Name="AgentName" DataType="System.String"/>
+        <Column Name="AgentLocalName" DataType="System.String"/>
+        <Column Name="ShipperName" DataType="System.String"/>
+        <Column Name="ShipperLocalName" DataType="System.String"/>
+        <Column Name="ConsigneeName" DataType="System.String"/>
+        <Column Name="ConsigneeLocalName" DataType="System.String"/>
+        <Column Name="POrC" DataType="System.Int32"/>
+        <Column Name="CurrencyCode" DataType="System.String"/>
+        <Column Name="OpenDate" DataType="System.DateTime"/>
+        <Column Name="CloseDate" DataType="System.DateTime"/>
+        <Column Name="CutOffDate" DataType="System.DateTime"/>
+        <Column Name="POLCountryID" DataType="System.Int32"/>
+        <Column Name="POL" DataType="System.Int32"/>
+        <Column Name="PODCountryID" DataType="System.Int32"/>
+        <Column Name="POD" DataType="System.Int32"/>
+        <Column Name="ShippingLineID" DataType="System.Int32"/>
+        <Column Name="AirlineID" DataType="System.Int32"/>
+        <Column Name="TruckerID" DataType="System.Int32"/>
+        <Column Name="LineID" DataType="System.Int32"/>
+        <Column Name="LineName" DataType="System.String"/>
+        <Column Name="LineLocalName" DataType="System.String"/>
+        <Column Name="LineBankName" DataType="System.String"/>
+        <Column Name="NumberOfPackages" DataType="System.Int32"/>
+        <Column Name="PackageTypeID" DataType="System.Int32"/>
+        <Column Name="PackageTypeName" DataType="System.String"/>
+        <Column Name="PONumber" DataType="System.String"/>
+        <Column Name="POValue" DataType="System.String"/>
+        <Column Name="PODate" DataType="System.DateTime"/>
+        <Column Name="MasterOperationID" DataType="System.Int64"/>
+        <Column Name="NumberOfHousesConnected" DataType="System.Int32"/>
+        <Column Name="CreationDate" DataType="System.DateTime"/>
+        <Column Name="PlacedOnOperationContainersAndPackagesID" DataType="System.Int64"/>
+        <Column Name="IsPackagesPlacedOnMaster" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="ContainerTypeCode" DataType="System.String"/>
+        <Column Name="ContainerNumber" DataType="System.String"/>
+        <Column Name="CarrierSeal" DataType="System.String"/>
+        <Column Name="BranchName" DataType="System.String"/>
+        <Column Name="BranchLocalName" DataType="System.String"/>
+        <Column Name="OpenedBy" DataType="System.String"/>
+        <Column Name="POrCCode" DataType="System.String"/>
+        <Column Name="POrCName" DataType="System.String"/>
+        <Column Name="ShipmentTypeCode" DataType="System.String"/>
+        <Column Name="POLCountryCode" DataType="System.String"/>
+        <Column Name="POLCountryName" DataType="System.String"/>
+        <Column Name="POLCode" DataType="System.String"/>
+        <Column Name="POLName" DataType="System.String"/>
+        <Column Name="PODCountryCode" DataType="System.String"/>
+        <Column Name="PODCountryName" DataType="System.String"/>
+        <Column Name="PickupAddress" DataType="System.String"/>
+        <Column Name="DeliveryAddress" DataType="System.String"/>
+        <Column Name="PODCode" DataType="System.String"/>
+        <Column Name="PODName" DataType="System.String"/>
+        <Column Name="MasterShippingLineID" DataType="System.Int32"/>
+        <Column Name="MasterAirlineID" DataType="System.Int32"/>
+        <Column Name="MasterTruckerID" DataType="System.Int32"/>
+        <Column Name="ShippingLineCode" DataType="System.String"/>
+        <Column Name="ShippingLineName" DataType="System.String"/>
+        <Column Name="AirlineCode" DataType="System.String"/>
+        <Column Name="AirlineName" DataType="System.String"/>
+        <Column Name="TruckerCode" DataType="System.Int32"/>
+        <Column Name="TruckerName" DataType="System.String"/>
+        <Column Name="AirlineCode1" DataType="System.String"/>
+        <Column Name="AirlineCode2" DataType="System.String"/>
+        <Column Name="AirlineCode3" DataType="System.String"/>
+        <Column Name="PickupCityCode" DataType="System.String"/>
+        <Column Name="PickupCityName" DataType="System.String"/>
+        <Column Name="DeliveryCityCode" DataType="System.String"/>
+        <Column Name="DeliveryCityName" DataType="System.String"/>
+        <Column Name="CountryCode" DataType="System.String"/>
+        <Column Name="DeliveryCountryName" DataType="System.String"/>
+        <Column Name="MasterOperationCode" DataType="System.String"/>
+        <Column Name="MasterOperationCodeSerial" DataType="System.Int32"/>
+        <Column Name="IsAWB" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="IsTrucking" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="ETAPOLDate" DataType="System.DateTime"/>
+        <Column Name="ATAPOLDate" DataType="System.DateTime"/>
+        <Column Name="ExpectedDeparture" DataType="System.DateTime"/>
+        <Column Name="ActualDeparture" DataType="System.DateTime"/>
+        <Column Name="ExpectedArrival" DataType="System.DateTime"/>
+        <Column Name="ActualArrival" DataType="System.DateTime"/>
+        <Column Name="WareHouseLocation" DataType="System.String"/>
+        <Column Name="ETAPOLAlarmStatus" DataType="System.Int32"/>
+        <Column Name="ATAPOLAlarmStatus" DataType="System.Int32"/>
+        <Column Name="ETDPOLAlarmStatus" DataType="System.Int32"/>
+        <Column Name="ATDPOLAlarmStatus" DataType="System.Int32"/>
+        <Column Name="ETAPODAlarmStatus" DataType="System.Int32"/>
+        <Column Name="ATAPODAlarmStatus" DataType="System.Int32"/>
+        <Column Name="RepBLTypeShown" DataType="System.String"/>
+        <Column Name="RepDirectionTypeShown" DataType="System.String"/>
+        <Column Name="RepTransportTypeShown" DataType="System.String"/>
+        <Column Name="ClientID" DataType="System.Int32"/>
+        <Column Name="ClientEmail" DataType="System.String"/>
+        <Column Name="ClientName" DataType="System.String"/>
+        <Column Name="ClientLocalName" DataType="System.String"/>
+        <Column Name="ContainerNumbers" DataType="System.String"/>
+        <Column Name="VGM" DataType="System.Decimal"/>
+        <Column Name="VGMSum" DataType="System.Decimal"/>
+        <Column Name="HouseBLs" DataType="System.String"/>
+        <Column Name="HouseClients" DataType="System.String"/>
+        <Column Name="VesselID" DataType="System.Int32"/>
+        <Column Name="VesselName" DataType="System.String"/>
+        <Column Name="ContainerTypes" DataType="System.String"/>
+        <Column Name="ContainerTypes20" DataType="System.String"/>
+        <Column Name="ContainerTypes40" DataType="System.String"/>
+        <Column Name="ContainerTypes45" DataType="System.String"/>
+        <Column Name="ContainerTypesReefer20" DataType="System.String"/>
+        <Column Name="ContainerTypesReefer40" DataType="System.String"/>
+        <Column Name="PackageTypesOnContainersTotals" DataType="System.String"/>
+        <Column Name="PackageTypes" DataType="System.String"/>
+        <Column Name="MonthYear" DataType="System.String"/>
+        <Column Name="ConsigneeID2" DataType="System.Int32"/>
+        <Column Name="Consignee2Name" DataType="System.String"/>
+        <Column Name="Consignee2LocalName" DataType="System.String"/>
+        <Column Name="ReleaseDate" DataType="System.DateTime"/>
+        <Column Name="ReleaseNumber" DataType="System.String"/>
+        <Column Name="ReleaseValue" DataType="System.Decimal"/>
+        <Column Name="AirLineID1" DataType="System.Int32"/>
+        <Column Name="AirLineID2" DataType="System.Int32"/>
+        <Column Name="AirLineID3" DataType="System.Int32"/>
+        <Column Name="StoreLocationID" DataType="System.Int32"/>
+        <Column Name="StoreLocation" DataType="System.String"/>
+        <Column Name="POTNAME" DataType="System.String"/>
+        <Column Name="HouseContainerNumber" DataType="System.String"/>
+        <Column Name="ServiceID" DataType="System.Int32"/>
+        <Column Name="TEU" DataType="System.Int32"/>
+        <Column Name="NoOfShipment" DataType="System.Int32"/>
+        <Column Name="PPNumber" DataType="System.Int32"/>
+        <Column Name="CCNumber" DataType="System.Int32"/>
+        <Column Name="CCVol" DataType="System.Decimal"/>
+        <Column Name="PPVol" DataType="System.Decimal"/>
+        <Column Name="TotalCBM" DataType="System.Decimal"/>
+        <Column Name="TotalPPVol" DataType="System.Decimal"/>
+        <Column Name="TotalCCVol" DataType="System.Decimal"/>
+        <Column Name="wareHouseLocalName" DataType="System.String"/>
+        <Column Name="WareHouseEntryDate" DataType="System.DateTime"/>
+        <Column Name="HousesTEU" DataType="System.Int32"/>
+        <Column Name="OperationManID" DataType="System.Int32"/>
+        <Column Name="BLTypeIconName" DataType="System.String"/>
+        <Column Name="BLTypeIconStyle" DataType="System.String"/>
+        <Column Name="DirectionIconName" DataType="System.String"/>
+        <Column Name="DirectionIconStyle" DataType="System.String"/>
+        <Column Name="UNNumber" DataType="System.Int32"/>
+        <Column Name="IMOClass" DataType="System.Decimal"/>
+        <Column Name="StuffingDate" DataType="System.DateTime"/>
+        <Column Name="FirstInvoiceDate" DataType="System.DateTime"/>
+        <Column Name="NetworkID" DataType="System.Int32"/>
+        <Column Name="NetworkName" DataType="System.String"/>
+        <Column Name="MAWBStockID" DataType="System.Int64"/>
+        <Column Name="MAWBSuffix" DataType="System.String"/>
+        <Column Name="Via1" DataType="System.Int32"/>
+        <Column Name="Via2" DataType="System.Int32"/>
+        <Column Name="Via3" DataType="System.Int32"/>
+        <Column Name="ShipperAddress" DataType="System.String"/>
+        <Column Name="ShipperPhonesAndFaxes" DataType="System.String"/>
+        <Column Name="ShipperAddressID" DataType="System.Int32"/>
+        <Column Name="ShipperContactID" DataType="System.Int32"/>
+        <Column Name="ConsigneeID" DataType="System.Int32"/>
+        <Column Name="ConsigneePhonesAndFaxes" DataType="System.String"/>
+        <Column Name="ConsigneeAddressID" DataType="System.Int32"/>
+        <Column Name="ConsigneeContactID" DataType="System.Int32"/>
+        <Column Name="NotifyID" DataType="System.Int32"/>
+        <Column Name="NotifyAddress" DataType="System.String"/>
+        <Column Name="NotifyPhonesAndFaxes" DataType="System.String"/>
+        <Column Name="NotifyAddressID" DataType="System.Int32"/>
+        <Column Name="NotifyContactID" DataType="System.Int32"/>
+        <Column Name="Notify1Name" DataType="System.String"/>
+        <Column Name="Notify1Address" DataType="System.String"/>
+        <Column Name="Notify2Name" DataType="System.String"/>
+        <Column Name="Notify2Address" DataType="System.String"/>
+        <Column Name="IncotermID" DataType="System.Int32"/>
+        <Column Name="MoveTypeID" DataType="System.Int32"/>
+        <Column Name="CommodityID" DataType="System.Int32"/>
+        <Column Name="CommodityID2" DataType="System.Int32"/>
+        <Column Name="CommodityID3" DataType="System.Int32"/>
+        <Column Name="TransientTime" DataType="System.Int32"/>
+        <Column Name="IncludePickup" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="PickupCityID" DataType="System.Int32"/>
+        <Column Name="PickupAddressID" DataType="System.Int32"/>
+        <Column Name="LineBankAccountNumber" DataType="System.String"/>
+        <Column Name="IncludeDelivery" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="DeliveryZipCode" DataType="System.String"/>
+        <Column Name="DeliveryCityID" DataType="System.Int32"/>
+        <Column Name="DeliveryCountryID" DataType="System.Int32"/>
+        <Column Name="PickupCountryID" DataType="System.Int32"/>
+        <Column Name="GrossWeight" DataType="System.Decimal"/>
+        <Column Name="GrossWeightTON" DataType="System.Decimal"/>
+        <Column Name="Volume" DataType="System.Decimal"/>
+        <Column Name="ChargeableWeight" DataType="System.Decimal"/>
+        <Column Name="TareWeight" DataType="System.Decimal"/>
+        <Column Name="NetWeight" DataType="System.Decimal"/>
+        <Column Name="NetWeightTON" DataType="System.Decimal"/>
+        <Column Name="GrossWeightSum" DataType="System.Decimal"/>
+        <Column Name="GrossWeightTONSum" DataType="System.Decimal"/>
+        <Column Name="VolumeSum" DataType="System.Decimal"/>
+        <Column Name="VolumetricWeight" DataType="System.Decimal"/>
+        <Column Name="ChargeableWeightSum" DataType="System.Decimal"/>
+        <Column Name="TareWeightSum" DataType="System.Decimal"/>
+        <Column Name="NetWeightSum" DataType="System.Decimal"/>
+        <Column Name="NetWeightTONSum" DataType="System.Decimal"/>
+        <Column Name="IsDangerousGoods" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="Notes" DataType="System.String"/>
+        <Column Name="Notes2" DataType="System.String"/>
+        <Column Name="CustomerReference" DataType="System.String"/>
+        <Column Name="SupplierReference" DataType="System.String"/>
+        <Column Name="AgreedRate" DataType="System.String"/>
+        <Column Name="OperationStageID" DataType="System.Int32"/>
+        <Column Name="CreatorUserID" DataType="System.Int32"/>
+        <Column Name="ModificatorUserID" DataType="System.Int32"/>
+        <Column Name="ModificationDate" DataType="System.DateTime"/>
+        <Column Name="QuotationID" DataType="System.Int64"/>
+        <Column Name="QuotationCode" DataType="System.String"/>
+        <Column Name="QRNotes" DataType="System.String"/>
+        <Column Name="QuotationExpirationDate" DataType="System.DateTime"/>
+        <Column Name="Salesman" DataType="System.String"/>
+        <Column Name="OperationManName" DataType="System.String"/>
+        <Column Name="CreatorRoleID" DataType="System.Int32"/>
+        <Column Name="SalesmanRoleID" DataType="System.Int32"/>
+        <Column Name="OperationManRoleID" DataType="System.Int32"/>
+        <Column Name="MoveTypeCode" DataType="System.String"/>
+        <Column Name="MoveTypeName" DataType="System.String"/>
+        <Column Name="IsCustomsClearance" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="IncotermCode" DataType="System.String"/>
+        <Column Name="IncotermName" DataType="System.String"/>
+        <Column Name="CommodityCode" DataType="System.String"/>
+        <Column Name="CommodityName" DataType="System.String"/>
+        <Column Name="CommodityCode2" DataType="System.String"/>
+        <Column Name="CommodityName2" DataType="System.String"/>
+        <Column Name="CommodityCode3" DataType="System.String"/>
+        <Column Name="CommodityName3" DataType="System.String"/>
+        <Column Name="AirlinePrefix" DataType="System.String"/>
+        <Column Name="Via1Code" DataType="System.String"/>
+        <Column Name="Via1Name" DataType="System.String"/>
+        <Column Name="Via1LocalName" DataType="System.String"/>
+        <Column Name="Via2Code" DataType="System.String"/>
+        <Column Name="Via2Name" DataType="System.String"/>
+        <Column Name="Via2LocalName" DataType="System.String"/>
+        <Column Name="Via3Code" DataType="System.String"/>
+        <Column Name="Via3Name" DataType="System.String"/>
+        <Column Name="Via3LocalName" DataType="System.String"/>
+        <Column Name="OperationStageCode" DataType="System.String"/>
+        <Column Name="OperationStageName" DataType="System.String"/>
+        <Column Name="IsDelivered" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="IsReceivedFromShipper" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="IsInsurance" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="IsClearance" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="IsBosla" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="IsCertificate" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="IsGenset" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="IsCourrier" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="MarksAndNumbers" DataType="System.String"/>
+        <Column Name="IsTelexRelease" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="CreatorName" DataType="System.String"/>
+        <Column Name="CreatorLocalName" DataType="System.String"/>
+        <Column Name="ModificatorName" DataType="System.String"/>
+        <Column Name="ModificatorLocalName" DataType="System.String"/>
+        <Column Name="TankNumbers" DataType="System.String"/>
+        <Column Name="TEUs" DataType="System.Int32"/>
+        <Column Name="DescriptionOfGoods" DataType="System.String"/>
+        <Column Name="InvoiceNumbers" DataType="System.String"/>
+        <Column Name="AllTrackingStages" DataType="System.String"/>
+        <Column Name="VesselNotes" DataType="System.String"/>
+        <Column Name="ExtraPackages" DataType="System.String"/>
+        <Column Name="EffectiveOperationCode" DataType="System.String"/>
+        <Column Name="EffectiveOperationID" DataType="System.Int64"/>
+        <Column Name="Reference" DataType="System.String"/>
+        <Column Name="TypeOfStockID" DataType="System.Int32"/>
+        <Column Name="FlightNo1" DataType="System.String"/>
+        <Column Name="FlightNo2" DataType="System.String"/>
+        <Column Name="FlightNo3" DataType="System.String"/>
+        <Column Name="FlightDate1" DataType="System.DateTime"/>
+        <Column Name="FlightDate2" DataType="System.DateTime"/>
+        <Column Name="FlightDate3" DataType="System.DateTime"/>
+        <Column Name="HandlingInformation" DataType="System.String"/>
+        <Column Name="Description" DataType="System.String"/>
+        <Column Name="AmountOfInsurance" DataType="System.String"/>
+        <Column Name="DeclaredValueForCarriage" DataType="System.String"/>
+        <Column Name="WeightCharge" DataType="System.Decimal"/>
+        <Column Name="ValuationCharge" DataType="System.Decimal"/>
+        <Column Name="Tax" DataType="System.Decimal"/>
+        <Column Name="OtherChargesDueAgent" DataType="System.Decimal"/>
+        <Column Name="OtherChargesDueCarrier" DataType="System.Decimal"/>
+        <Column Name="OtherCharges" DataType="System.String"/>
+        <Column Name="CurrencyID" DataType="System.Int32"/>
+        <Column Name="AccountingInformation" DataType="System.String"/>
+        <Column Name="ReferenceNumber" DataType="System.String"/>
+        <Column Name="OptionalShippingInformation" DataType="System.String"/>
+        <Column Name="CHGSCode" DataType="System.String"/>
+        <Column Name="WT_VALL" DataType="System.String"/>
+        <Column Name="WT_VALL_Other" DataType="System.String"/>
+        <Column Name="DeclaredValueForCustoms" DataType="System.String"/>
+        <Column Name="FlightNo" DataType="System.String"/>
+        <Column Name="OpenYear" DataType="System.Int32"/>
+        <Column Name="UNOrID" DataType="System.String"/>
+        <Column Name="ProperShippingName" DataType="System.String"/>
+        <Column Name="ClassOrDivision" DataType="System.String"/>
+        <Column Name="PackingGroup" DataType="System.String"/>
+        <Column Name="QuantityAndTypeOfPacking" DataType="System.String"/>
+        <Column Name="PackingInstruction" DataType="System.String"/>
+        <Column Name="ShippingDeclarationAuthorization" DataType="System.String"/>
+        <Column Name="Barcode" DataType="System.String"/>
+        <Column Name="GuaranteeLetterNumber" DataType="System.String"/>
+        <Column Name="GuaranteeLetterDate" DataType="System.DateTime"/>
+        <Column Name="GuaranteeLetterAmount" DataType="System.String"/>
+        <Column Name="GuaranteeLetterSupplierInvoiceNumber" DataType="System.String"/>
+        <Column Name="BankAccountID" DataType="System.Int32"/>
+        <Column Name="BankAccountName" DataType="System.String"/>
+        <Column Name="GuaranteeLetterNotes" DataType="System.String"/>
+        <Column Name="DismissalPermissionSerial" DataType="System.String"/>
+        <Column Name="DeliveryOrderSerial" DataType="System.String"/>
+        <Column Name="DispatchNumber" DataType="System.String"/>
+        <Column Name="BusinessUnit" DataType="System.String"/>
+        <Column Name="ShippedOnBoardDate" DataType="System.DateTime"/>
+        <Column Name="FreightPayableAt" DataType="System.String"/>
+        <Column Name="NumberOfOriginalBills" DataType="System.Int32"/>
+        <Column Name="IsClearanceApproved" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="ClearanceApprovalDate" DataType="System.DateTime"/>
+        <Column Name="IsTruckingApproved" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="TruckingApprovalDate" DataType="System.DateTime"/>
+        <Column Name="IsFreightApproved" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="FreightApprovalDate" DataType="System.DateTime"/>
+        <Column Name="IsFleet" DataType="System.Boolean" BindableControl="CheckBox"/>
+        <Column Name="NumberOfVehicles" DataType="System.Int32"/>
+        <Column Name="NumberOfReceivedVehicles" DataType="System.Int32"/>
+        <Column Name="NumberOfPickedVehicles" DataType="System.Int32"/>
+        <Column Name="CountryOfOrigin" DataType="System.String"/>
+        <Column Name="InvoiceValue" DataType="System.String"/>
+        <Column Name="OperationWithInvoiceSerial" DataType="System.Int32"/>
+        <Column Name="Form13Number" DataType="System.String"/>
+        <Column Name="Form13Date" DataType="System.DateTime"/>
+        <Column Name="ACIDNumber" DataType="System.String"/>
+        <Column Name="ACIDDetails" DataType="System.String"/>
+        <Column Name="BookingNumber" DataType="System.String"/>
+        <Column Name="eFBLID" DataType="System.String"/>
+        <Column Name="eFBLStatus" DataType="System.Int32"/>
+        <Column Name="RoadNumber" DataType="System.String"/>
+        <Column Name="ImoClasscount" DataType="System.Int32"/>
+        <CommandParameter Name="query" DataType="10" Expression="[query]" DefaultValue="select * from vwOperationsUNFReports  where id =11965"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="Type" DataType="System.String"/>
+    <Parameter Name="WhereClause" DataType="System.String"/>
+    <Parameter Name="query" DataType="System.String"/>
+    <Parameter Name="ToDate" DataType="System.String"/>
+    <Parameter Name="FromDate" DataType="System.String"/>
+    <Total Name="Total" TotalType="Count" Evaluator="Data1" PrintOn="GroupFooter2" ResetOnReprint="true"/>
+    <Total Name="TEU Total" Expression="[Table.TEU]" Evaluator="Data1" PrintOn="GroupFooter2" ResetOnReprint="true"/>
+    <Total Name="no shipment total" Expression="[Table.NoOfShipment]" Evaluator="Data1" PrintOn="GroupFooter1" ResetOnReprint="true"/>
+    <Total Name="Total CBM" Expression="[Table.TotalCBM]" Evaluator="Data1" PrintOn="GroupFooter1" ResetOnReprint="true"/>
+    <Total Name="TotalPP" Expression="[Table.PPNumber]" Evaluator="Data1" PrintOn="GroupFooter1" ResetOnReprint="true"/>
+    <Total Name="TotalPPCBM" Expression="[Table.PPVol]" Evaluator="Data1" PrintOn="GroupFooter1" ResetAfterPrint="false" ResetOnReprint="true"/>
+    <Total Name="TotalPPPercent" Expression="[Table.TotalPPVol]" Evaluator="Data1" PrintOn="GroupFooter1" ResetOnReprint="true"/>
+    <Total Name="TotalCC" Expression="[Table.CCNumber]" Evaluator="Data1" PrintOn="GroupFooter1" ResetOnReprint="true"/>
+    <Total Name="TotalCCVOL" Expression="[Table.CCVol]" Evaluator="Data1" PrintOn="GroupFooter1" ResetOnReprint="true"/>
+    <Total Name="TotalCCPER" Expression="[Table.TotalCCVol]" Evaluator="Data1" PrintOn="GroupFooter1" ResetOnReprint="true"/>
+    <Total Name="Totalhouse" Expression="[Table.HousesTEU]" Evaluator="Data1" PrintOn="GroupFooter1" ResetOnReprint="true"/>
+    <Total Name="TotalM" TotalType="Count" Evaluator="Data1" PrintOn="GroupFooter1" ResetOnReprint="true"/>
+    <Total Name="TotalTEUM" Expression="[Table.TEU]" Evaluator="Data1" PrintOn="GroupFooter1" ResetOnReprint="true"/>
+    <Total Name="TotalALL" TotalType="Count" Evaluator="Data1" PrintOn="ReportSummary1" ResetOnReprint="true"/>
+    <Total Name="TotalALL TEU" Expression="[Table.TEU]" Evaluator="Data1" ResetOnReprint="true"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="450" PaperHeight="210">
+    <PageHeaderBand Name="PageHeader1" Width="1625.4" Height="122.85">
+      <TextObject Name="Text1" Left="519.75" Top="28.35" Width="340.2" Height="18.9" Text="Handling Daily Report" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold, Underline" TextFill.Color="0, 64, 128"/>
+      <TextObject Name="Text61" Left="567" Top="66.15" Width="151.2" Height="56.7" Text="[IIf([FromDate]==&quot;&quot;,&quot;&quot; ,&quot;From &quot;+[FromDate])]" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text62" Left="708.75" Top="66.15" Width="160.65" Height="56.7" Text="[IIf([ToDate]==&quot;&quot;,&quot;&quot; ,&quot;To &quot;+[ToDate])]" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+    </PageHeaderBand>
+    <GroupHeaderBand Name="GroupHeader1" Top="126.85" Width="1625.4" Height="66.15" CanGrow="true" RepeatOnEveryPage="true" Condition="[Table.BranchName]">
+      <TextObject Name="Text2" Width="699.3" Height="56.7" Text="Branch : [Table.BranchName]" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <GroupHeaderBand Name="GroupHeader2" Top="197" Width="1625.4" Height="47.25" CanGrow="true" RepeatOnEveryPage="true" Condition="Month([Table.OpenDate])">
+        <ShapeObject Name="Shape1" Width="1625.4" Height="47.25" Fill.Color="218, 218, 218"/>
+        <LineObject Name="Line1" Width="1474.2"/>
+        <LineObject Name="Line2" Height="47.25"/>
+        <LineObject Name="Line5" Left="66.15" Height="47.25"/>
+        <TextObject Name="Text5" Width="66.15" Height="47.25" Text="Op.No." HorzAlign="Center" VertAlign="Center" Font="Arial, 11pt, style=Bold" TextFill.Color="0, 64, 128"/>
+        <TextObject Name="Text7" Left="66.15" Width="103.95" Height="47.25" Text=" Op Date" HorzAlign="Center" VertAlign="Center" Font="Arial, 11pt, style=Bold" TextFill.Color="0, 64, 128"/>
+        <LineObject Name="Line6" Left="170.1" Height="47.25"/>
+        <LineObject Name="Line7" Left="340.2" Height="47.25"/>
+        <TextObject Name="Text8" Left="170.1" Width="170.1" Height="47.25" Text="Agent" HorzAlign="Center" VertAlign="Center" Font="Arial, 11pt, style=Bold" TextFill.Color="0, 64, 128"/>
+        <LineObject Name="Line8" Left="491.4" Height="47.25"/>
+        <TextObject Name="Text9" Left="340.2" Width="151.2" Height="47.25" Text="Vessel" HorzAlign="Center" VertAlign="Center" Font="Arial, 11pt, style=Bold" TextFill.Color="0, 64, 128"/>
+        <LineObject Name="Line9" Left="604.8" Height="47.25"/>
+        <LineObject Name="Line10" Left="727.65" Height="47.25"/>
+        <TextObject Name="Text10" Left="491.4" Width="113.4" Height="47.25" Text="POL" HorzAlign="Center" VertAlign="Center" Font="Arial, 11pt, style=Bold" TextFill.Color="0, 64, 128"/>
+        <LineObject Name="Line11" Left="822.15" Height="47.25"/>
+        <TextObject Name="Text12" Left="604.8" Width="122.85" Height="47.25" Text="ETD" HorzAlign="Center" VertAlign="Center" Font="Arial, 11pt, style=Bold" TextFill.Color="0, 64, 128"/>
+        <LineObject Name="Line12" Left="1048.95" Height="47.25"/>
+        <TextObject Name="Text13" Left="727.65" Width="94.5" Height="47.25" Text="ETA" HorzAlign="Center" VertAlign="Center" Font="Arial, 11pt, style=Bold" TextFill.Color="0, 64, 128"/>
+        <TextObject Name="Text20" Left="822.15" Width="141.75" Height="47.25" Text="Containers" HorzAlign="Center" VertAlign="Center" Font="Arial, 11pt, style=Bold" TextFill.Color="0, 64, 128"/>
+        <LineObject Name="Line24" Left="963.9" Height="47.25"/>
+        <LineObject Name="Line28" Left="1266.3" Height="47.25"/>
+        <TextObject Name="Text26" Left="1190.7" Width="75.6" Height="47.25" Text="TEU" HorzAlign="Center" VertAlign="Center" Font="Arial, 11pt, style=Bold" TextFill.Color="0, 64, 128"/>
+        <LineObject Name="Line30" Left="1190.7" Height="47.25"/>
+        <LineObject Name="Line44" Left="1474.2" Height="47.25"/>
+        <TextObject Name="Text22" Left="963.9" Width="85.05" Height="47.25" Text="Type" HorzAlign="Center" VertAlign="Center" Font="Arial, 11pt, style=Bold" TextFill.Color="0, 64, 128"/>
+        <TextObject Name="Text24" Left="1048.95" Width="141.75" Height="47.25" Text="Size" HorzAlign="Center" VertAlign="Center" Font="Arial, 11pt, style=Bold" TextFill.Color="0, 64, 128"/>
+        <LineObject Name="Line59" Left="1625.4" Height="47.25"/>
+        <TextObject Name="Text37" Left="1266.3" Width="207.9" Height="47.25" Text="Shipping line" HorzAlign="Center" VertAlign="Center" Font="Arial, 11pt, style=Bold" TextFill.Color="0, 64, 128"/>
+        <TextObject Name="Text64" Left="1474.2" Width="151.2" Height="47.25" Text="IMO" HorzAlign="Center" VertAlign="Center" Font="Arial, 11pt, style=Bold" TextFill.Color="0, 64, 128"/>
+        <DataBand Name="Data1" Top="248.25" Width="1625.4" Height="47.25" CanGrow="true" DataSource="Table">
+          <LineObject Name="Line13" Width="1625.4" CanGrow="true"/>
+          <LineObject Name="Line15" Height="47.25" CanGrow="true"/>
+          <LineObject Name="Line16" Left="66.15" Height="47.25" CanGrow="true"/>
+          <LineObject Name="Line17" Left="170.1" Height="47.25" CanGrow="true"/>
+          <LineObject Name="Line18" Left="340.2" Height="47.25" CanGrow="true"/>
+          <LineObject Name="Line19" Left="491.4" Height="47.25" CanGrow="true"/>
+          <LineObject Name="Line20" Left="604.8" Height="47.25" CanGrow="true"/>
+          <LineObject Name="Line21" Left="727.65" Height="47.25" CanGrow="true"/>
+          <LineObject Name="Line22" Left="822.15" Height="47.25" CanGrow="true"/>
+          <LineObject Name="Line23" Left="1048.95" Height="47.25" CanGrow="true"/>
+          <TextObject Name="Text4" Width="66.15" Height="47.25" CanGrow="true" Text="[IIf([Table.BLType]==2,[Table.MasterOperationCodeSerial],[Table.CodeSerial])]" HorzAlign="Center" VertAlign="Center"/>
+          <TextObject Name="Text16" Left="491.4" Width="113.4" Height="47.25" CanGrow="true" Text="[Table.POLName]" HorzAlign="Center" VertAlign="Center"/>
+          <TextObject Name="Text19" Left="727.65" Width="94.5" Height="47.25" CanGrow="true" Text="[IIf(ToString([Table.ETAPOLDate])==&quot;1/1/0001 12:00:00 AM&quot; || [Table.DirectionType]==1,&quot;&quot;,Format(&quot;{0:dd/MM/yyyy}&quot;, [Table.ETAPOLDate]))]" HorzAlign="Center" VertAlign="Center"/>
+          <LineObject Name="Line25" Left="963.9" Height="47.25" CanGrow="true"/>
+          <TextObject Name="Text25" Left="1048.95" Width="141.75" Height="47.25" CanGrow="true" Text="[Table.ContainerTypes]" HorzAlign="Center" VertAlign="Center"/>
+          <LineObject Name="Line29" Left="1266.3" Height="47.25" CanGrow="true"/>
+          <LineObject Name="Line31" Left="1190.7" Height="47.25" CanGrow="true"/>
+          <TextObject Name="Text27" Left="1190.7" Width="75.6" Height="47.25" CanGrow="true" Text="[IIf([Table.BLType]==2,[Table.HousesTEU],[Table.TEU])]" HorzAlign="Center" VertAlign="Center"/>
+          <LineObject Name="Line47" Left="1474.2" Height="47.25" CanGrow="true"/>
+          <LineObject Name="Line14" Top="47.25" Width="1625.4" CanGrow="true"/>
+          <LineObject Name="Line4" Width="1445.85" CanGrow="true"/>
+          <TextObject Name="Text15" Left="340.2" Width="151.2" Height="47.25" CanGrow="true" Text="[Table.VesselName]" HorzAlign="Center" VertAlign="Center"/>
+          <TextObject Name="Text6" Left="66.15" Width="103.95" Height="47.25" CanGrow="true" Text="[IIf(ToString([Table.OpenDate])!=&quot;1/1/0001 12:00:00 AM&quot;,Format(&quot;{0:dd/MM/yyyy}&quot;, [Table.OpenDate]),&quot;&quot;)]" HorzAlign="Center" VertAlign="Center"/>
+          <TextObject Name="Text14" Left="170.1" Width="170.1" Height="47.25" CanGrow="true" Text="[Table.AgentName]" HorzAlign="Center" VertAlign="Center"/>
+          <TextObject Name="Text18" Left="604.8" Width="122.85" Height="47.25" CanGrow="true" Text="[IIf(ToString([Table.ExpectedDeparture])!=&quot;1/1/0001 12:00:00 AM&quot;,Format(&quot;{0:dd/MM/yyyy}&quot;, [Table.ExpectedDeparture]),&quot;&quot;)]" HorzAlign="Center" VertAlign="Center"/>
+          <TextObject Name="Text21" Left="822.15" Width="141.75" Height="47.25" CanGrow="true" Text="[Table.ContainerNumbers]" HorzAlign="Center" VertAlign="Center"/>
+          <TextObject Name="Text23" Left="963.9" Width="85.05" Height="47.25" CanGrow="true" Text="[Table.ShipmentTypeCode]" HorzAlign="Center" VertAlign="Center"/>
+          <TextObject Name="Text47" Left="1266.3" Width="207.9" Height="47.25" CanGrow="true" Text="[Table.ShippingLineName]" HorzAlign="Center" VertAlign="Center"/>
+          <TextObject Name="Text63" Left="727.65" Width="94.5" Height="47.25" CanGrow="true" Text="[IIf(ToString([Table.ExpectedArrival])==&quot;1/1/0001 12:00:00 AM&quot; || [Table.DirectionType]==2,&quot;&quot;,Format(&quot;{0:dd/MM/yyyy}&quot;, [Table.ExpectedArrival]))]" HorzAlign="Center" VertAlign="Center"/>
+          <LineObject Name="Line60" Left="1625.4" Height="47.25" CanGrow="true"/>
+          <TextObject Name="Text65" Left="1474.2" Width="151.2" Height="47.25" CanGrow="true" Text="[IIf([Table.ImoClasscount]==0,&quot;NOT IMO&quot;,&quot;IMO&quot;)]" HorzAlign="Center" VertAlign="Center"/>
+          <Sort>
+            <Sort Expression="[Table.ID]"/>
+          </Sort>
+        </DataBand>
+        <GroupFooterBand Name="GroupFooter2" Top="299.5" Width="1625.4" Height="47.25">
+          <ShapeObject Name="Shape2" Width="1625.4" Height="47.25" Fill.Color="Silver"/>
+          <TextObject Name="Text50" Width="66.15" Height="47.25" Text="[Total]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="Maroon"/>
+          <TextObject Name="Text3" Left="170.1" Width="349.65" Height="47.25" Text="[MonthName(Month([Table.OpenDate]))]" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="Maroon"/>
+          <TextObject Name="Text52" Left="1190.7" Width="75.6" Height="47.25" Text="[TEU Total]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="Maroon"/>
+          <LineObject Name="Line57" Left="1190.7" Height="47.25"/>
+          <LineObject Name="Line58" Left="1266.3" Height="47.25"/>
+          <TextObject Name="Text51" Left="878.85" Width="311.85" Height="47.25" Text="[MonthName(Month([Table.OpenDate]))] Totals" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="Maroon"/>
+          <LineObject Name="Line61" Left="1474.2" Height="47.25"/>
+        </GroupFooterBand>
+      </GroupHeaderBand>
+      <GroupFooterBand Name="GroupFooter1" Top="350.75" Width="1625.4" Height="47.25">
+        <ShapeObject Name="Shape3" Width="1625.4" Height="47.25" Fill.Color="Silver"/>
+        <TextObject Name="Text66" Width="66.15" Height="47.25" Text="[TotalM]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="Maroon"/>
+        <TextObject Name="Text67" Left="170.1" Width="349.65" Height="47.25" Text="[Table.BranchName]" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="Maroon"/>
+        <TextObject Name="Text68" Left="1190.7" Width="75.6" Height="47.25" Text="[TotalTEUM]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="Maroon"/>
+        <LineObject Name="Line62" Left="1190.7" Height="47.25"/>
+        <LineObject Name="Line63" Left="1266.3" Height="47.25"/>
+        <TextObject Name="Text69" Left="878.85" Width="311.85" Height="47.25" Text="[Table.BranchName] Totals" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="Maroon"/>
+        <LineObject Name="Line64" Left="1474.2" Height="47.25"/>
+      </GroupFooterBand>
+    </GroupHeaderBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="402" Width="1625.4" Height="113.4">
+      <ShapeObject Name="Shape4" Top="56.7" Width="1625.4" Height="47.25" Fill.Color="Silver"/>
+      <TextObject Name="Text70" Top="56.7" Width="66.15" Height="47.25" Text="[TotalALL]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="Maroon"/>
+      <TextObject Name="Text72" Left="1190.7" Top="56.7" Width="75.6" Height="47.25" Text="[TotalALL TEU]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="Maroon"/>
+      <LineObject Name="Line65" Left="1190.7" Top="56.7" Height="47.25"/>
+      <LineObject Name="Line66" Left="1266.3" Top="56.7" Height="47.25"/>
+      <TextObject Name="Text73" Left="878.85" Top="56.7" Width="311.85" Height="47.25" Text="All Branches Totals" VertAlign="Center" Font="Arial, 10pt, style=Bold" TextFill.Color="Maroon"/>
+      <LineObject Name="Line67" Left="1474.2" Top="56.7" Height="47.25"/>
+      <TextObject Name="Text74" Width="699.3" Height="56.7" Text="Totals : " VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+    </ReportSummaryBand>
+  </ReportPage>
+</Report>

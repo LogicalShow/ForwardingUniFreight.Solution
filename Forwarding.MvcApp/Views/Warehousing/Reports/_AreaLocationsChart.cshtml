@@ -1,0 +1,96 @@
+﻿<ul id="ul-breadcrumb" class=" hidden-print breadcrumb no-border no-radius b-b b-light pull-in">
+    <li>
+        <a id="hl-homepage" href="javascript:void(0);">
+            <i class="fa fa-home icon-home"></i><span>@Forwarding.MvcApp.App_Resources.App_Resources.HomePage</span>
+        </a>
+    </li>
+    <li>
+        <a id="liGroupName" href="javascript:void(0);" onclick="LoadViews('VehicleReportTab')">
+            @Forwarding.MvcApp.App_Resources.App_Resources.VehicleModule
+    </a>
+</li>
+@*<li>
+    <a id="liTabName" href="javascript:void(0);" onclick="LoadViews('WarehousingReports')">
+        @Forwarding.MvcApp.App_Resources.App_Resources.WarehousingReports
+</a>
+</li>*@
+<li class="active">@Forwarding.MvcApp.App_Resources.App_Resources.AreaLocationsChart</li>
+</ul>
+
+
+<style>
+
+
+
+</style>
+
+<!-- end breadcrumb  --
+<div id="div-AreaLocationsChart">
+
+    
+
+    <!-- Region Options & Template  -->
+    <div id="div-Data">
+        <div id="div-Options" class="hidden-print ">
+            <div id="div-Action" class="radius-top-left-right">
+            </div>
+        </div>
+        <section class="panel panel-default">
+            <header class="panel-heading">
+                <div id="hExportedTable" class="hide"></div>
+               
+                <div class="row">
+                    <div class="col-sm-4">
+                        <h3 class="m-b-none">Vichels Yard Plan</h3><br />
+                        <div class="col-sm-8 " style="margin-left: 0px; padding-left: 0px; margin-top: 10px;">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Warehouse</label>
+                            <select id="slWarehouses" onchange="GetAreaFromWarehouse();" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                        </div>
+
+                        <div class="col-sm-4 m-t-xs" data-toggle="buttons">
+                            <br />
+                            <button id="btn-print" style="margin-top: 10px;"  type="button" class="btn btn-lightblue btn-sm" onclick="WarehouseLocationsChart_Print('Print');"><i class="fa fa-table"></i>&nbsp;Generate Plan</button>
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <table class="tblAreaLocationsChart">
+                            <tbody>
+                                <tr><td>Avaliable</td> <td class="Normal"></td></tr>
+                                <tr><td>Blocked</td> <td class="Blocked"><span class="fa fa-times"></span></td></tr>
+                                <tr><td>Allocated</td> <td class="Allocated"><span class="fa fa-car"></span></td></tr>
+                                <tr><td>Confirmed</td> <td class="Confirmed"><span class="fa fa-car"></span></td></tr>
+                                <tr><td>Reserved</td> <td class="Reserved"><span class="dragSpan">&nbsp;&nbsp;R</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+               
+          
+                <div class="row row m-t-lg  hidden-print hidden-print ">
+                    <div id="div-main-options">
+
+
+                        <div class="form-group col-sm-3">
+
+                        </div>
+
+
+                        <div class="form-group col-sm-3 hide">
+                            <label>@Forwarding.MvcApp.App_Resources.App_Resources.Area</label>
+                            <select id="slArea" onfocus="DisableBackspaceKey(id);" onkeydown="DisableBackspaceKey(id);" onkeypress="DisableBackspaceKey(id);" class="form-control input-sm"></select>
+                        </div>
+                        <!--EOF Region Filter-->
+                    </div>
+                </div>
+                @*<h3 class="m-b-none">Best Print Using Internet Explorer</h3>*@
+            </header>
+            <!--Region the searh, delete, addnew-->
+
+            <div id="redips-drag" style="padding:10px;" class=""></div>
+            <div id="ReportSectionHeader" style="padding:10px;" class=""></div>
+            <!--EOF Region the searh, delete, addnew line-->
+            
+
+        </section>
+    </div>
+</div>

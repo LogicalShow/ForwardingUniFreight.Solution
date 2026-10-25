@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/03/2022 13:02:22" ReportInfo.Modified="11/20/2023 13:02:21" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+    
+
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFtHJVZLL/i3PN7CkdFc/1A7YXJU6T13VfFIAjI9Ib2eHK43COXIAb1+oG8abaGcWEZGpgJFPBP3+b+JobTIAbFImpu7AL5/m4I+6ScGE9e6WjDfiveqdM4GY1NsEAX+IASjOs5e7As29YdE8k4cS8oQ==">
+      <TableDataSource Name="Table" Alias="Rep_3PL_ShippedLocations" DataType="System.Int32" Enabled="true" SelectCommand="exec (@query)">
+        <Column Name="Logo" DataType="System.String" PropName="Column" Calculated="true" Expression="[Logo]"/>
+        <Column Name="LocationCode" DataType="System.String"/>
+        <Column Name="Period" DataType="System.String" PropName="Column" Calculated="true" Expression="[Period]"/>
+        <Column Name="PurchaseItemCode" DataType="System.String"/>
+        <Column Name="AvailableQty" DataType="System.Decimal"/>
+        <Column Name="CustomerName" DataType="System.String"/>
+        <Column Name="LocationID" DataType="System.Int32"/>
+        <Column Name="OrderCode" DataType="System.String"/>
+        <CommandParameter Name="@query" DataType="12" Expression="[query]" DefaultValue="Rep_3PL_ShippedLocations ' ''2023-10-19 00:00:00.000'' AND ''2023-10-19 23:59:59.000''  '"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="Logo" DataType="System.String"/>
+    <Parameter Name="Period" DataType="System.String" Expression="[Period]"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9">
+    <PageHeaderBand Name="PageHeader1" Width="1047.06" Height="162.85">
+      <PictureObject Name="Picture1" Left="8.71" Top="4.46" Width="1029.65" Height="50.42" DataColumn="Rep_3PL_ShippedLocations.Logo"/>
+      <TextObject Name="Text1" Left="334.34" Top="60.94" Width="328.33" Height="18.9" Text="Shipped Locations Report" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt, style=Bold"/>
+      <TextObject Name="Text2" Left="147.93" Top="88.47" Width="705.51" Height="18.9" Text="[Rep_3PL_ShippedLocations.Period]" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+      <TableObject Name="Table2" Left="4.86" Top="128.97" Width="1021.05" Height="33.88">
+        <TableColumn Name="Column12" Width="215.64"/>
+        <TableColumn Name="Column28" Width="229.12"/>
+        <TableColumn Name="Column29" Width="231.01"/>
+        <TableColumn Name="Column16" Width="240.63"/>
+        <TableColumn Name="Column17" Width="104.65"/>
+        <TableRow Name="Row6" Height="33.88">
+          <TableCell Name="Cell27" Border.Lines="All" Fill.Color="Silver" Text="Location Code" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell73" Border.Lines="All" Fill.Color="Silver" Text="Order Code" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell74" Border.Lines="All" Fill.Color="Silver" Text="Customer" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell51" Border.Lines="All" Fill.Color="Silver" Text="Product" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell52" Border.Lines="All" Fill.Color="Silver" Text="Available Quantity" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        </TableRow>
+      </TableObject>
+    </PageHeaderBand>
+    <DataBand Name="Data2" Top="166.85" Width="1047.06" Height="32.71" DataSource="Table">
+      <TableObject Name="Table1" Left="4.86" Top="0.02" Width="1021.05" Height="34.02">
+        <TableColumn Name="Column30" Width="215.64"/>
+        <TableColumn Name="Column31" Width="229.12"/>
+        <TableColumn Name="Column32" Width="231.01"/>
+        <TableColumn Name="Column33" Width="240.63"/>
+        <TableColumn Name="Column34" Width="104.65"/>
+        <TableRow Name="Row7" MinHeight="34.02" Height="34.02">
+          <TableCell Name="Cell75" Border.Lines="All" Text="[Rep_3PL_ShippedLocations.LocationCode]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell76" Border.Lines="All" Text="[Rep_3PL_ShippedLocations.OrderCode]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell77" Border.Lines="All" Text="[Rep_3PL_ShippedLocations.CustomerName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell78" Border.Lines="All" Text="[Rep_3PL_ShippedLocations.PurchaseItemCode]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell79" Border.Lines="All" Text="[Rep_3PL_ShippedLocations.AvailableQty]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        </TableRow>
+      </TableObject>
+    </DataBand>
+  </ReportPage>
+</Report>

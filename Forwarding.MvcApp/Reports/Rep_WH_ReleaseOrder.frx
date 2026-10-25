@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="12/04/2019 19:31:18" ReportInfo.Modified="06/07/2023 14:03:19" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFsmCvg6flJRSC1lr+e+4Skr1CmxZGuisGne3sji3kuY1l2/Z8C8GRepVlmwcfF0xINw8FHEwqkHqAsOI36gczQ4JSNPIobLB3MN4isfFeP/HSxeYKWoMDTc6loFR0JF5FrGRzcEIUQn4ITaAp16wylTdZKeen/S/6k+8am5iMAQw=">
+      <TableDataSource Name="Table1" Alias="Rep_WH_ReleaseOrder" DataType="System.Int32" Enabled="true" SelectCommand="exec Rep_WH_ReleaseOrder @ReleaseOrderID,@HeaderLogo">
+        <Column Name="OperationNumber" DataType="System.String"/>
+        <Column Name="MasterBL" DataType="System.String"/>
+        <Column Name="ContainerNumber" DataType="System.String"/>
+        <Column Name="HouseNumber" DataType="System.String"/>
+        <Column Name="Consignee" DataType="System.String"/>
+        <Column Name="BookingParty" DataType="System.String"/>
+        <Column Name="StorageLocation" DataType="System.String"/>
+        <Column Name="EntryDate" DataType="System.DateTime"/>
+        <Column Name="ContainerType" DataType="System.String"/>
+        <Column Name="GrossWeight" DataType="System.Decimal"/>
+        <Column Name="NetWeight" DataType="System.Decimal"/>
+        <Column Name="Packages" DataType="System.String"/>
+        <Column Name="DescriptionOfGoods" DataType="System.String"/>
+        <Column Name="StorageEndDate" DataType="System.DateTime"/>
+        <Column Name="ReleaseNumber" DataType="System.String"/>
+        <Column Name="CouponNumber" DataType="System.String"/>
+        <Column Name="CertificationNumber" DataType="System.String"/>
+        <Column Name="Remarks" DataType="System.String"/>
+        <Column Name="ReleasedBy" DataType="System.String"/>
+        <Column Name="ReleasingDate" DataType="System.DateTime"/>
+        <Column Name="ReleaseNoteName" DataType="System.String"/>
+        <Column Name="ReleaseNoteDetails" DataType="System.String"/>
+        <Column Name="OperationID" DataType="System.Int64"/>
+        <Column Name="ContainerID" DataType="System.Int64"/>
+        <Column Name="HouseBillID" DataType="System.Int64"/>
+        <Column Name="ConsigneeID" DataType="System.Int32"/>
+        <Column Name="BookingPartyID" DataType="System.Int32"/>
+        <Column Name="InventoryID" DataType="System.Int64"/>
+        <Column Name="ReleaseOrderID" DataType="System.Int64"/>
+        <Column Name="Volume" DataType="System.Decimal"/>
+        <Column Name="LogoPath" DataType="System.String"/>
+        <CommandParameter Name="@ReleaseOrderID" DataType="12" Expression="[ReleaseOrderID]"/>
+        <CommandParameter Name="@HeaderLogo" DataType="12" Expression="[HeaderLogo]"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="ReleaseOrderID" DataType="System.String"/>
+    <Parameter Name="HeaderLogo" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" RawPaperSize="9" FirstPageSource="15" OtherPagesSource="15">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="85.05">
+      <PictureObject Name="Picture1" Left="9.45" Top="9.45" Width="283.5" Height="75.6" DataColumn="Rep_WH_ReleaseOrder.LogoPath"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="87.72" Width="718.2" Height="415.95">
+      <TextObject Name="Text2" Left="23.88" Top="387.6" Width="217.83" Height="28.35" Border.Lines="All" Fill.Color="LightGray" Text="Release Note" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text4" Left="239.99" Top="387.6" Width="456.44" Height="28.35" Border.Lines="All" Fill.Color="LightGray" Text="Note Details" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt, style=Bold"/>
+      <TextObject Name="Text20" Left="354.74" Top="10.61" Width="119.25" Height="26.47" Text="إذن صرف رقم" HorzAlign="Right" Font="Arial, 16pt, style=Bold"/>
+      <TextObject Name="Text5" Left="229.66" Top="10.61" Width="119.25" Height="26.47" Text="[Rep_WH_ReleaseOrder.ReleaseNumber]" HorzAlign="Right" Font="Arial, 16pt, style=Bold"/>
+      <TextObject Name="Text21" Left="606.43" Top="54.58" Width="87.8" Height="26.47" Text="رقم العملية" HorzAlign="Right" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text22" Left="602.64" Top="133.61" Width="91.59" Height="26.47" Text="رقـم البـوليصـة" HorzAlign="Right" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text23" Left="606.43" Top="204.02" Width="87.8" Height="26.47" Text="عــدد الطـــرود" HorzAlign="Right" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text24" Left="233" Top="204.02" Width="88.11" Height="26.47" Text="الــــــــــــــوزن" HorzAlign="Right" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text25" Left="606.43" Top="270.5" Width="87.8" Height="26.47" Text="مكان التخزين" HorzAlign="Right" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text26" Left="606.43" Top="168.35" Width="87.8" Height="26.47" Text="إسـم العـميــــل" HorzAlign="Right" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text27" Left="606.12" Top="92.38" Width="88.11" Height="26.47" Text="رقـم الحـــاوية" HorzAlign="Right" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text28" Left="606.43" Top="236.78" Width="87.8" Height="26.47" Text="الــحــجــــــــــم" HorzAlign="Right" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text29" Left="606.43" Top="308.22" Width="87.8" Height="26.47" Text="رقم الشهادة" HorzAlign="Right" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text30" Left="606.43" Top="346.02" Width="87.8" Height="26.47" Text="رقم القسيمة" HorzAlign="Right" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text8" Left="346.96" Top="54.58" Width="253.83" Height="26.47" Text="[Rep_WH_ReleaseOrder.OperationNumber]" HorzAlign="Right" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text9" Left="19.26" Top="82.93" Width="581.53" Height="45.37" Text="[Rep_WH_ReleaseOrder.ContainerNumber]" HorzAlign="Right" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+      <TextObject Name="Text10" Left="266.12" Top="133.61" Width="334.67" Height="26.47" Text="[Rep_WH_ReleaseOrder.HouseNumber]" HorzAlign="Right" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text11" Left="41.51" Top="167.59" Width="558.52" Height="26.47" Text="[Rep_WH_ReleaseOrder.Consignee]" HorzAlign="Right" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text12" Left="376.45" Top="204.02" Width="224.34" Height="26.47" Text="[Rep_WH_ReleaseOrder.Packages]" HorzAlign="Right" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text13" Left="149.27" Top="204.02" Width="80.68" Height="26.47" Text="[Rep_WH_ReleaseOrder.GrossWeight]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="1" HorzAlign="Right" WordWrap="false" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text14" Left="6.9" Top="270.5" Width="593.89" Height="35.92" Text="[Rep_WH_ReleaseOrder.StorageLocation]" HorzAlign="Right" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text15" Left="316.01" Top="308.22" Width="284.78" Height="26.47" Text="[Rep_WH_ReleaseOrder.CertificationNumber]" HorzAlign="Right" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text16" Left="23.06" Top="346.02" Width="577.73" Height="35.92" Text="[Rep_WH_ReleaseOrder.CouponNumber]" HorzAlign="Right" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text17" Left="537.1" Top="236.78" Width="63.69" Height="26.47" Text="[Rep_WH_ReleaseOrder.Volume]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="" Format.NegativePattern="1" HorzAlign="Right" WordWrap="false" Font="Arial, 12pt, style=Bold" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text31" Left="94.5" Top="204.02" Width="52.33" Height="26.47" Text="KGS" HorzAlign="Right" WordWrap="false" Font="Arial, 12pt, style=Bold" Trimming="EllipsisCharacter"/>
+      <TextObject Name="Text32" Left="481.95" Top="236.25" Width="52.33" Height="26.47" Text="CBM" HorzAlign="Right" WordWrap="false" Font="Arial, 12pt, style=Bold" Trimming="EllipsisCharacter"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="506.33" Width="718.2" Height="18.9" DataSource="Table1">
+      <TextObject Name="Text1" Left="23.88" Width="215.55" Height="18.9" Border.Lines="All" Text="[Rep_WH_ReleaseOrder.ReleaseNoteName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+      <TextObject Name="Text3" Left="239.99" Width="456.44" Height="18.9" Border.Lines="Right, Top, Bottom" Text="[Rep_WH_ReleaseOrder.ReleaseNoteDetails]" HorzAlign="Center" VertAlign="Center" Font="Arial, 9pt"/>
+    </DataBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="527.9" Width="718.2" Height="218.5">
+      <TextObject Name="Text6" Left="80.14" Top="16.61" Width="617" Height="40.11" Text="برجـــاء التكـــرم بصـــرف مـشــمـــول البــوليـصــــة المـوضـحـــة عــاليـــــــه حيث أن العميل قام بسداد مصاريف الأرضيات حتى تاريخ&#13;&#10;" HorzAlign="Right" Font="Arial, 12pt, style=Bold"/>
+      <TextObject Name="Text7" Left="338.57" Top="35.47" Width="230.61" Height="20.42" Text="[Rep_WH_ReleaseOrder.ReleasingDate]" Format="Custom" Format.Format="yyyy/MM/dd" HorzAlign="Right" Font="Arial, 12pt, style=Bold"/>
+    </ReportSummaryBand>
+    <PageFooterBand Name="PageFooter1" Top="749.07" Width="718.2" Height="18.9">
+      <TextObject Name="Text19" Left="9.45" Width="510.3" Height="18.9" Text="[Date]" Format="Date" Format.Format="d" VertAlign="Center"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>

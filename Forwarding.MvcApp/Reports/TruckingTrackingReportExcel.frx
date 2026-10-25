@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="10/26/2021 16:56:05" ReportInfo.Modified="07/30/2023 18:06:20" ReportInfo.CreatorVersion="2018.3.14.0">
+  <ScriptText>using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows.Forms;
+using System.Drawing;
+using System.Data;
+using FastReport;
+using FastReport.Data;
+using FastReport.Dialog;
+using FastReport.Barcode;
+using FastReport.Table;
+using FastReport.Utils;
+
+namespace FastReport
+{
+  public class ReportScript
+  {
+
+
+    private void Data1_AfterData(object sender, EventArgs e)
+    {
+      
+    }
+  }
+}
+</ScriptText>
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFdK1pGRuXb2ZqNrvvshfdvk1WTy4Q4X3n3sfovtvD12ZUZMgosSXIKCfex3Uxiv0ztNRpdBkVUVn6xObKSedOpcc6jTMR7CoRC+37+7/tXCLDT73rOQRxu2R+JRG3kt9K7ktECnOYnW3ok2nm2tEsMg==">
+      <TableDataSource Name="Table" DataType="System.Int32" Enabled="true" SelectCommand="exec (@query)">
+        <Column Name="ID" DataType="System.Int64"/>
+        <Column Name="Code" DataType="System.String"/>
+        <Column Name="ClientName" DataType="System.String"/>
+        <Column Name="TruckerName" DataType="System.String"/>
+        <Column Name="TruckingApprovalDate" DataType="System.DateTime"/>
+        <Column Name="LoadingDate" DataType="System.DateTime"/>
+        <CommandParameter Name="@query" DataType="12" Expression="[query]" DefaultValue="SELECT O.ID,O.Code,O.TruckerName,O.ClientName,(SELECT r.LoadingDate FROM Routings AS r WHERE r.OperationID=O.ID AND r.RoutingTypeID=30) LoadingDate,O.TruckingApprovalDate FROM vwOperations O"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+    <Parameter Name="dummy" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" PaperWidth="350">
+    <ReportTitleBand Name="ReportTitle1" Width="1247.4" Height="103.95"/>
+    <PageHeaderBand Name="PageHeader1" Top="107.95" Width="1247.4" Height="122.85" PrintOn="FirstPage">
+      <TextObject Name="Text21" Left="113.4" Top="18.9" Width="708.75" Height="28.35" Text="Trucking Tracking Report" HorzAlign="Center" VertAlign="Center" Font="Arial, 16pt, style=Bold"/>
+      <TextObject Name="Text32" Left="538.65" Top="66.15" Width="283.5" Height="56.7" Border.Lines="All" Text="Trucker" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text38" Top="66.15" Width="113.4" Height="56.7" Border.Lines="All" Text="Operation Code" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text39" Left="113.4" Top="66.15" Width="425.25" Height="56.7" Border.Lines="All" Text="Client Name" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text65" Left="822.15" Top="66.15" Width="141.75" Height="56.7" Border.Lines="All" Text="Loading Date" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text67" Left="963.9" Top="66.15" Width="141.75" Height="56.7" Border.Lines="All" Text="Trucking Done Date" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="234.8" Width="1247.4" Height="75.6" AfterDataEvent="Data1_AfterData" DataSource="Table">
+      <TextObject Name="Text14" Left="538.65" Width="283.5" Height="75.6" Border.Lines="All" Text="[Table.TruckerName]" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text20" Width="113.4" Height="75.6" Border.Lines="All" Text="[Table.Code]" Format="Date" Format.Format="d" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text40" Left="113.4" Width="425.25" Height="75.6" Border.Lines="All" Text="[Table.ClientName]" Format="Date" Format.Format="d" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text66" Left="822.15" Width="141.75" Height="75.6" Border.Lines="All" Text="[IIf(Year([Table.LoadingDate]) == 1,&quot;&quot;,[Table.LoadingDate])]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center"/>
+      <TextObject Name="Text68" Left="963.9" Width="141.75" Height="75.6" Border.Lines="All" Text="[IIf(Year([Table.TruckingApprovalDate]) == 1,&quot;&quot;,[Table.TruckingApprovalDate])]" Format="Custom" Format.Format="dd/MM/yyyy" HorzAlign="Center" VertAlign="Center"/>
+    </DataBand>
+    <ReportSummaryBand Name="ReportSummary1" Top="314.4" Width="1247.4" Height="37.8"/>
+    <PageFooterBand Name="PageFooter1" Top="356.2" Width="1247.4"/>
+  </ReportPage>
+</Report>

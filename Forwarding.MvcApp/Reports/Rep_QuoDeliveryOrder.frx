@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="01/03/2022 13:02:22" ReportInfo.Modified="02/14/2024 14:24:37" ReportInfo.CreatorVersion="2018.3.14.0">
+  <Dictionary>
+    <MsSqlDataConnection Name="Connection" ConnectionString="rijcmlq+rW0RkboK+/8CKGGYUID3ctBV8q9SvKYxl3iiE7vBnh7Tgou0+4WFf3NfmPSvHVFb0LxznfRL4txSUg98sIh/mzyNjk8UiA0TLX7foEnxEGk/pl+LM0shziYkBqrUL6hYA/sWMyHXSeJ9Q/O3daI/j0few5jt/L5KKH8Gz/PG0TvZxhFb4lwhXdQ903on0GC">
+      <TableDataSource Name="Table" Alias="Rep_QuoDeliveryOrder" DataType="System.Int32" Enabled="true" SelectCommand="exec(@query)">
+        <Column Name="todaysDay" DataType="System.DateTime"/>
+        <Column Name="ClientName" DataType="System.String"/>
+        <Column Name="ACIDNumber" DataType="System.String"/>
+        <Column Name="MasterBL" DataType="System.String"/>
+        <Column Name="VesselName" DataType="System.String"/>
+        <Column Name="WareHouseLocation" DataType="System.String"/>
+        <Column Name="POLName" DataType="System.String"/>
+        <Column Name="POLCountryName" DataType="System.String"/>
+        <Column Name="ExpectedDeparture" DataType="System.DateTime"/>
+        <Column Name="VoyageOrTruckNumber" DataType="System.String"/>
+        <Column Name="RoadNumber" DataType="System.String"/>
+        <Column Name="BranchName" DataType="System.String"/>
+        <Column Name="BranchLocalName" DataType="System.String"/>
+        <Column Name="HouseNumber" DataType="System.String"/>
+        <Column Name="DescriptionOfGoods" DataType="System.String"/>
+        <Column Name="Quantity" DataType="System.Int32"/>
+        <Column Name="PackageTypeName" DataType="System.String"/>
+        <Column Name="GrossWeight" DataType="System.Decimal"/>
+        <CommandParameter Name="query" DataType="12" Expression="[query]" DefaultValue="Rep_QuoDeliveryOrder 'WHERE 1=1'"/>
+      </TableDataSource>
+    </MsSqlDataConnection>
+  </Dictionary>
+  <ReportPage Name="Page2">
+    <PageHeaderBand Name="PageHeader2" Width="718.2"/>
+    <DataBand Name="Data1" Top="388.67" Width="718.2" Height="37.8" DataSource="Table">
+      <TableObject Name="Table1" Left="9.45" Width="689.48" Height="37.8" Border.Lines="All">
+        <TableColumn Name="Column8" Width="172.37"/>
+        <TableColumn Name="Column9" Width="172.37"/>
+        <TableColumn Name="Column10" Width="172.37"/>
+        <TableColumn Name="Column11" Width="172.37"/>
+        <TableRow Name="Row12" Height="37.8">
+          <TableCell Name="Cell43" Text="[Rep_QuoDeliveryOrder.PackageTypeName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell44" Border.Lines="Left, Right" Text="[Rep_QuoDeliveryOrder.Quantity]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell45" Border.Lines="Right" Text="[Rep_QuoDeliveryOrder.DescriptionOfGoods]" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          <TableCell Name="Cell46" Text="[Rep_QuoDeliveryOrder.GrossWeight]" Format="Number" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="." Format.GroupSeparator="," Format.NegativePattern="1" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        </TableRow>
+      </TableObject>
+      <DataHeaderBand Name="DataHeader1" Top="5.33" Width="718.2" Height="378">
+        <TextObject Name="Text1" Left="349.65" Width="94.5" Height="18.9" Text=" : اذن تسليم" HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+        <TextObject Name="Text2" Left="236.25" Width="132.3" Height="18.9" Text="Delivery Order " HorzAlign="Center" VertAlign="Center" Font="Arial, 12pt, style=Bold"/>
+        <TableObject Name="Table1" Left="9.45" Top="94.5" Width="689.85" Height="245.6">
+          <TableColumn Name="Column1" Width="119.7"/>
+          <TableColumn Name="Column2" Width="459.9"/>
+          <TableColumn Name="Column3" Width="110.25"/>
+          <TableRow Name="Row1" Height="27.7">
+            <TableCell Name="Cell1" Text="Please Deliver to messers:" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell2" Text="[Rep_QuoDeliveryOrder.ClientName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell3" Text="برجاء تسليم السادة" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          </TableRow>
+          <TableRow Name="Row2" Height="18.25">
+            <TableCell Name="Cell6" Text="ACID Number" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell7" Text="[Rep_QuoDeliveryOrder.ACIDNumber]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell8" Text="ACID رقم   " HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          </TableRow>
+          <TableRow Name="Row3" Height="27.7">
+            <TableCell Name="Cell11" Text="Master BL" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell12" Text="[Rep_QuoDeliveryOrder.MasterBL]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell13" Text="رقم البوليصة الكلية" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          </TableRow>
+          <TableRow Name="Row4" Height="27.7">
+            <TableCell Name="Cell16" Text="The Following Goods Arrived per m/v" HorzAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell17" Text="[Rep_QuoDeliveryOrder.VesselName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell18" Text="البضاعة المذكورة أدناه على باخرة" HorzAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          </TableRow>
+          <TableRow Name="Row5" Height="18.25">
+            <TableCell Name="Cell21" Text="House BL" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell22" Text="[Rep_QuoDeliveryOrder.HouseNumber]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell23" Text="بموجب بوليصة فرعية رقم" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          </TableRow>
+          <TableRow Name="Row6" Height="27.7">
+            <TableCell Name="Cell24" Text="Voy/Truck No" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell25" Text="[Rep_QuoDeliveryOrder.VoyageOrTruckNumber]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell26" Text="رقم الرحلة" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          </TableRow>
+          <TableRow Name="Row7" Height="19.85">
+            <TableCell Name="Cell27" Text="WareHouse Location" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell28" Text="[Rep_QuoDeliveryOrder.WareHouseLocation]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell29" Text="مكان التخزين" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          </TableRow>
+          <TableRow Name="Row8" Height="29.3">
+            <TableCell Name="Cell30" Text="From" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell31" Text="[Rep_QuoDeliveryOrder.POLCountryName],[Rep_QuoDeliveryOrder.POLName]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell32" Text="الوارد من ميناء" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          </TableRow>
+          <TableRow Name="Row9" Height="19.85">
+            <TableCell Name="Cell33" Text="Arrival Date" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell34" Text="[Rep_QuoDeliveryOrder.ExpectedDeparture]" HorzAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell35" Text="تاريخ الوصول" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          </TableRow>
+          <TableRow Name="Row10" Height="29.3">
+            <TableCell Name="Cell36" Text="Road Number" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell37" Text="[Rep_QuoDeliveryOrder.RoadNumber]" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+            <TableCell Name="Cell38" Text="رقم الطريق" HorzAlign="Center" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+          </TableRow>
+        </TableObject>
+        <TextObject Name="Text3" Left="264.6" Top="37.8" Width="434.7" Height="28.35" Text="[Rep_QuoDeliveryOrder.todaysDay] : [Rep_QuoDeliveryOrder.BranchLocalName] " HorzAlign="Right" VertAlign="Center" Font="Arial, 8pt, style=Bold"/>
+        <TextObject Name="Text4" Left="519.75" Top="66.15" Width="179.55" Height="18.9" Text="الى السيد مخزنجي مصلحة الجمارك" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt, style=Bold, Underline"/>
+        <TextObject Name="Text5" Top="66.15" Width="283.5" Height="18.9" Text="To Customs House StoreKeeper" VertAlign="Center" Font="Arial, 10pt, style=Bold, Underline"/>
+        <TableObject Name="Table2" Left="9.45" Top="340.2" Width="689.48" Height="37.8" Border.Lines="All">
+          <TableColumn Name="Column4" Width="172.37"/>
+          <TableColumn Name="Column5" Width="172.37"/>
+          <TableColumn Name="Column6" Width="172.37"/>
+          <TableColumn Name="Column7" Width="172.37"/>
+          <TableRow Name="Row11" Height="37.8">
+            <TableCell Name="Cell39" Border.Lines="Right" Text="نوع الطرد&#13;&#10;Marks &amp; No" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell40" Border.Lines="Right" Text="عدد الطرود&#13;&#10;Quantity&amp;Packing" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell41" Border.Lines="Right" Text="محتويات البضاعة&#13;&#10;Description" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+            <TableCell Name="Cell42" Text="الوزن&#13;&#10;Weight" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+          </TableRow>
+        </TableObject>
+      </DataHeaderBand>
+      <DataFooterBand Name="DataFooter1" Top="431.8" Width="718.2" Height="132.3">
+        <TextObject Name="Text6" Left="604.8" Top="9.45" Width="94.5" Height="18.9" Text="التوكيل" HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt, style=Bold, Underline"/>
+        <TextObject Name="Text7" Left="160.65" Top="9.45" Width="510.3" Height="18.9" Text="غير مسئول عن الوزن و المقاس المبين بعالية و البضاعة تم تفريغها تحت مسؤلية و لحساب الشاحن و المستلم " HorzAlign="Right" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+        <TextObject Name="Text8" Left="9.45" Top="28.35" Width="66.15" Height="18.9" Text="Agency" VertAlign="Center" Font="Arial, 10pt, style=Bold, Underline"/>
+        <TextObject Name="Text9" Left="66.15" Top="28.35" Width="567" Height="37.8" Text="is not responsible for weight and / or measurments stated above and the unloaded at the shipper / receivers risk an account ." VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      </DataFooterBand>
+    </DataBand>
+  </ReportPage>
+</Report>

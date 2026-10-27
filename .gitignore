@@ -361,3 +361,22 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# ForwardingUniFreight: files the template hides but the project needs
+!Forwarding.MvcApp/Entities/Logs/
+!Forwarding.MvcApp/Models/Logs/
+!Forwarding.MvcApp/Scripts/Administration/Logs/
+!Forwarding.MvcApp/Views/Administration/Logs/
+!Forwarding.MvcApp/Properties/PublishProfiles/*.pubxml
+!Forwarding.MvcApp/Forwarding.MvcApp.csproj.user
+!Forwarding.MvcApp/Forwarding.MvcApp.csproj.vspscc
+!ForwardingUniFreight.Solution.vssscc
+!Forwarding.MvcApp/bin/
+Forwarding.MvcApp/bin/*
+!Forwarding.MvcApp/bin/CrystalDecisions.CrystalReports.Engine.dll
+!Forwarding.MvcApp/bin/CrystalDecisions.ReportAppServer.DataSetConversion.dll
+!Forwarding.MvcApp/bin/CrystalDecisions.ReportSource.dll
+!Forwarding.MvcApp/bin/CrystalDecisions.Shared.dll
+!Forwarding.MvcApp/bin/ICSharpCode.SharpZipLib.dll
+!Forwarding.MvcApp/bin/RestSharp.dll
+!Forwarding.MvcApp/bin/Forwarding.MvcApp.dll.config

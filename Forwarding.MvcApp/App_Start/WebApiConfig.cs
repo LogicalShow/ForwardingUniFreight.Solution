@@ -6,6 +6,8 @@ namespace Forwarding.MvcApp
 	{
 		public static void Register(HttpConfiguration config)
 		{
+            Forwarding.MvcApp.Models.Operations.Operations.BillWorkflow.BillWorkflowRegistration.RegisterRoutes(config);
+
             //var cors = new EnableCorsAttribute("*", "*", "*");
             //config.EnableCors(cors);
 

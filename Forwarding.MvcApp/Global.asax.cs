@@ -19,6 +19,8 @@ namespace Forwarding.MvcApp
 
         protected void Application_Start()
         {
+            if (!DocAi.DocAiSettings.RemotePolling)
+                System.Diagnostics.Trace.TraceWarning("DocAi: remote polling is OFF; results arrive only via webhook (test mode).");
             // Code that runs on application startup 
             AreaRegistration.RegisterAllAreas();
             WebApiConfig.Register(GlobalConfiguration.Configuration);

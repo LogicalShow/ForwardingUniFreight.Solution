@@ -352,6 +352,30 @@ namespace Forwarding.MvcApp
             routeTemplate: "api/DocsIn/UploadFile_Payables",
             defaults: new { controller = "DocsIn", action = "UploadFile_Payables" }
             );
+            #region DocAi (AI document extraction, phase 1)
+            config.Routes.MapHttpRoute(
+            name: "DocAiWebhook",
+            routeTemplate: "api/DocAi/Webhook",
+            defaults: new { controller = "DocAiWebhook", action = "Receive" }
+            );
+            config.Routes.MapHttpRoute(
+            name: "DocAiLatest",
+            routeTemplate: "api/DocAi/Latest",
+            defaults: new { controller = "DocAi", action = "Latest" }
+            );
+            config.Routes.MapHttpRoute(
+            name: "DocAiRead",
+            routeTemplate: "api/DocAi/Read",
+            defaults: new { controller = "DocAi", action = "Read" }
+            );
+            config.Routes.MapHttpRoute(
+            name: "DocAiStatus",
+            routeTemplate: "api/DocAi/Status",
+            defaults: new { controller = "DocAi", action = "Status" }
+            );
+            config.Routes.MapHttpRoute("DocAiUsage", "api/DocAi/Usage", new { controller = "DocAi", action = "Usage" });
+            config.Routes.MapHttpRoute("DocAiUsageState", "api/DocAi/UsageState", new { controller = "DocAi", action = "UsageState" });
+            #endregion DocAi
             config.Routes.MapHttpRoute(
 				name: "UploadFile",
 				routeTemplate: "api/PurchaseItem/UploadFile",

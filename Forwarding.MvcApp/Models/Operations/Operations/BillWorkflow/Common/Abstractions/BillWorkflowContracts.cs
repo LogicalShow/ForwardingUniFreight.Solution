@@ -4,10 +4,9 @@ using BillWorkflow.Common.Contracts;
 
 namespace BillWorkflow.Common.Abstractions
 {
-    public interface IBillExtractionAdapter<TPayload>
+    public interface IBillExtractionAdapter
     {
-        string ProfileCode { get; }
-        TPayload Read(string extractionJson);
+        StoredBillReadResult ReadStoredBill(string billJson, string billWithConfidenceJson);
     }
 
     public interface IBillContextProvider
@@ -22,10 +21,11 @@ namespace BillWorkflow.Common.Abstractions
 
     public interface IBillWorkflowStore
     {
-        void Save(DocumentReview documentReview, int ownerUserId);
-        BillReviewDetails GetBillReview(Guid billReviewId, int ownerUserId);
-        BillReviewPage GetBillReviews(Guid documentReviewId, int page, int pageSize, int ownerUserId);
-        BillReviewDetails ConfirmReferences(BillReviewDetails review, int expectedVersion, int ownerUserId);
+        StoredExtraction GetExtraction(Guid extractionId);
+        IReadOnlyList<BillReviewDetails> StartReview(Guid extractionId, BillContext context, int actingUserId);
+        BillReviewDetails GetBillReview(Guid billReviewId);
+        BillReviewPage GetBillReviews(Guid documentReviewId, int page, int pageSize);
+        BillReviewDetails ConfirmReferences(BillReviewDetails review, int expectedVersion, int actingUserId);
     }
 
     public interface IReferenceResolver

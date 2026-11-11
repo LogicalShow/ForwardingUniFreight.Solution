@@ -12,12 +12,14 @@ namespace BillWorkflow.Common.Contracts
     public class BillReviewSummary
     {
         public Guid BillReviewId { get; set; }
+        public int BillIndex { get; set; }
+        public BillReviewStatus ReviewStatus { get; set; }
         public int Version { get; set; }
         public string BillOfLadingNumber { get; set; }
         public string ShipperName { get; set; }
         public string ConsigneeName { get; set; }
         public string PortOfLoading { get; set; }
         public string PortOfDischarge { get; set; }
-        public int ContainerCount { get; set; }
+        public int? ContainerCount { get; set; }
     }
 }

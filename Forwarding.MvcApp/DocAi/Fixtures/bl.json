@@ -1,0 +1,104 @@
+{
+  "contractVersion": "1.0",
+  "documentTypeCode": "BL",
+  "shippingLineCode": "DEMO",
+  "modelId": "demo",
+  "pageCount": 1,
+  "fields": {
+    "billOfLadingNumber": {
+      "value": "DEMO123",
+      "confidence": 0.95,
+      "page": 1
+    },
+    "shipperName": {
+      "value": "DEMO SHIPPER",
+      "confidence": 0.95,
+      "page": 1
+    },
+    "consigneeName": {
+      "value": "DEMO CONSIGNEE",
+      "confidence": 0.95,
+      "page": 1
+    },
+    "portOfLoading": {
+      "value": "ALEXANDRIA",
+      "confidence": 0.95,
+      "page": 1
+    },
+    "portOfDischarge": {
+      "value": "GENOA",
+      "confidence": 0.95,
+      "page": 1
+    },
+    "bookingNumber": {
+      "value": "DEMO-BOOKING",
+      "confidence": 0.95,
+      "page": 1
+    },
+    "shipperAddress": {
+      "value": "Shipper address",
+      "confidence": 0.95,
+      "page": 1
+    },
+    "consigneeAddress": {
+      "value": "Consignee address",
+      "confidence": 0.95,
+      "page": 1
+    },
+    "notifyParty": {
+      "value": "Notify party",
+      "confidence": 0.95,
+      "page": 1
+    },
+    "freightTerms": {
+      "value": "PREPAID",
+      "confidence": 0.95,
+      "page": 1
+    },
+    "hsCode": {
+      "value": "1234",
+      "confidence": 0.95,
+      "page": 1
+    },
+    "totalGrossWeightKg": {
+      "value": "1000",
+      "confidence": 0.95,
+      "page": 1
+    }
+  },
+  "containers": [
+    {
+      "containerNumber": {
+        "value": "QZXU3887957",
+        "confidence": 0.9,
+        "page": 1
+      },
+      "sealNumber": {
+        "value": "SEAL",
+        "confidence": 0.9,
+        "page": 1
+      },
+      "containerType": {
+        "value": "22G1",
+        "confidence": 0.9,
+        "page": 1
+      },
+      "packages": {
+        "value": "10",
+        "confidence": 0.9,
+        "page": 1
+      },
+      "grossWeightKg": {
+        "value": "1000",
+        "confidence": 0.9,
+        "page": 1
+      },
+      "measurementCbm": {
+        "value": "12",
+        "confidence": 0.9,
+        "page": 1
+      }
+    }
+  ],
+  "flags": []
+}

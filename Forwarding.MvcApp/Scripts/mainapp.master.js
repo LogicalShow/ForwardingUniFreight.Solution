@@ -16,7 +16,7 @@
 //mytable.getElementsByTagName("tr")[i].getElementsByTagName("td")[j].getAttribute("class")
 
 debugger;
-var version = 17.9;
+var version = 18.4; // DocAi: AI Usage button + modal in the Houses tab (the edit view changed)
 var listVehicleTracking = '[]';
 var glbVersion = 14; //20200210 2300 ForwPublish w FlexiUpload Fix
 var TRCK_WorkingOnDrivers = 1;

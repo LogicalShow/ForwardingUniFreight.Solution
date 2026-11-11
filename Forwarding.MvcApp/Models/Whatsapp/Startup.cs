@@ -16,6 +16,10 @@ namespace Forwarding.MvcApp.Models.Whatsapp
 
             app.UseHangfireServer();
             app.UseHangfireDashboard("/hangfire");
+
+            // DocAi: send due documents, refresh submitted ones, delete old file copies, purge old results.
+            // Does nothing while DocAi:Enabled is false.
+            RecurringJob.AddOrUpdate("docai-maintenance", () => Forwarding.MvcApp.DocAi.DocAiClient.RunMaintenance(), "*/5 * * * *");
         }
     }
 }

@@ -2,7 +2,12 @@ namespace BillWorkflow.Common.Validation
 {
     internal static class BillWorkflowCodes
     {
-        public const string BillsRequired = "BILLS_REQUIRED";
+        public const string ExtractionNotReady = "EXTRACTION_NOT_READY";
+        public const string UnsupportedDocumentType = "UNSUPPORTED_DOCUMENT_TYPE";
+        public const string NoBillsToReview = "NO_BILLS_TO_REVIEW";
+        public const string ReviewNotStarted = "REVIEW_NOT_STARTED";
+        public const string BillTooLarge = "BILL_TOO_LARGE";
+        public const string UnidentifiedBill = "UNIDENTIFIED_BILL";
         public const string BillFieldsNeedCorrection = "BILL_FIELDS_NEED_CORRECTION";
         public const string ReferencesAlreadyConfirmed = "REFERENCES_ALREADY_CONFIRMED";
         public const string BillReviewIdRequired = "BILL_REVIEW_ID_REQUIRED";
@@ -17,11 +22,9 @@ namespace BillWorkflow.Common.Validation
         public const string CustomerNotAvailable = "CUSTOMER_NOT_AVAILABLE";
         public const string DocumentReviewFailed = "DOCUMENT_REVIEW_FAILED";
         public const string DocumentReviewNotFound = "DOCUMENT_REVIEW_NOT_FOUND";
-        public const string DocumentReviewProfileChanged = "DOCUMENT_REVIEW_PROFILE_CHANGED";
         public const string DuplicateBillField = "DUPLICATE_BILL_FIELD";
         public const string DuplicateReferenceRole = "DUPLICATE_REFERENCE_ROLE";
         public const string InvalidBillJson = "INVALID_BILL_JSON";
-        public const string InvalidBillList = "INVALID_BILL_LIST";
         public const string InvalidBillReviewId = "INVALID_BILL_REVIEW_ID";
         public const string InvalidBillReviewPage = "INVALID_BILL_REVIEW_PAGE";
         public const string InvalidBillShape = "INVALID_BILL_SHAPE";

@@ -8,6 +8,7 @@ namespace BillWorkflow.Common.Contracts
     {
         public Guid DocumentReviewId { get; set; }
         public Guid BillReviewId { get; set; }
+        public int BillIndex { get; set; }
         public int Version { get; set; }
         public BillReviewStatus ReviewStatus { get; set; }
         public BillOfLading Bill { get; set; }
@@ -28,7 +29,6 @@ namespace BillWorkflow.Common.Contracts
             }
         }
 
-        internal string SourceProfile { get; set; }
         internal BillContext Context { get; set; }
         internal List<ReferenceResolution> ReferenceResolutions { get; set; }
         internal bool RememberAlias { get; set; }

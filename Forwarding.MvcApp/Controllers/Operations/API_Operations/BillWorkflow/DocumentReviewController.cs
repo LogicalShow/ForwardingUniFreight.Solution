@@ -1,13 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using BillWorkflow.Common.Contracts;
 using BillWorkflow.Common.Services;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using WebMatrix.WebData;
 using BillWorkflow.Common.Validation;
 using Forwarding.MvcApp.Models.Operations.Operations.BillWorkflow;
@@ -35,14 +32,11 @@ namespace Forwarding.MvcApp.Controllers.Operations.API_Operations.BillWorkflow
         [HttpPost]
         public HttpResponseMessage CreateDocumentReview([FromBody] CreateDocumentReviewRequest request)
         {
-            if (!ModelState.IsValid || request == null || request.MasterOperationID <= 0 ||
-                request.Bills == null || request.Bills.Type == JTokenType.Null)
+            if (!ModelState.IsValid || request == null || request.AIDocumentExtractionID == Guid.Empty)
                 return CreateErrorResponse(HttpStatusCode.BadRequest, BillWorkflowCodes.InvalidDocumentReviewRequest,
                     BillWorkflowMessages.DocumentReviewRequestRequired);
-            var summary = service.CreateDocumentReview(
-                request.MasterOperationID.ToString(CultureInfo.InvariantCulture),
-                request.Bills.ToString(Formatting.None));
-            return CreateSuccessResponse(HttpStatusCode.Created, summary);
+            var summary = service.CreateDocumentReview(request.AIDocumentExtractionID);
+            return CreateSuccessResponse(HttpStatusCode.OK, summary);
         }
 
         [HttpGet]
@@ -128,9 +122,7 @@ namespace Forwarding.MvcApp.Controllers.Operations.API_Operations.BillWorkflow
 
     public class CreateDocumentReviewRequest
     {
-        public long MasterOperationID { get; set; }
-        [JsonConverter(typeof(RawBillPayloadConverter))]
-        public JToken Bills { get; set; }
+        public Guid AIDocumentExtractionID { get; set; }
     }
 
     public class GetBillReviewsRequest
@@ -175,35 +167,4 @@ namespace Forwarding.MvcApp.Controllers.Operations.API_Operations.BillWorkflow
         public int PageSize { get; set; }
     }
 
-    // Preserve source dates and decimal precision before the adapter reads the payload.
-    public class RawBillPayloadConverter : JsonConverter
-    {
-        public override bool CanConvert(Type objectType) { return objectType == typeof(JToken); }
-        public override bool CanWrite { get { return false; } }
-
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-        {
-            var dates = reader.DateParseHandling;
-            var floats = reader.FloatParseHandling;
-            try
-            {
-                reader.DateParseHandling = DateParseHandling.None;
-                reader.FloatParseHandling = FloatParseHandling.Decimal;
-                return JToken.ReadFrom(reader, new JsonLoadSettings
-                {
-                    DuplicatePropertyNameHandling = DuplicatePropertyNameHandling.Error
-                });
-            }
-            finally
-            {
-                reader.DateParseHandling = dates;
-                reader.FloatParseHandling = floats;
-            }
-        }
-
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            throw new NotSupportedException();
-        }
-    }
 }

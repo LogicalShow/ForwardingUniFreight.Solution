@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Globalization;
 using BillWorkflow.Common.Abstractions;
 using BillWorkflow.Common.Contracts;
 using BillWorkflow.Common.Exceptions;
@@ -16,7 +17,8 @@ namespace BillWorkflow.Common.Services
 
         // Identity is fixed for this request's service; permissions are checked on each operation.
         private readonly int userId;
-        private readonly IBillExtractionAdapter<IReadOnlyList<BillReview>> adapter;
+        private readonly string blType;
+        private readonly string manifestType;
         private readonly IBillContextProvider contexts;
         private readonly IBillLookupPolicy lookupPolicy;
         private readonly IBillWorkflowStore reviewStore;
@@ -25,18 +27,20 @@ namespace BillWorkflow.Common.Services
 
         public DocumentReviewService(
             int userId,
-            IBillExtractionAdapter<IReadOnlyList<BillReview>> adapter,
+            string blType,
+            string manifestType,
             IBillContextProvider contexts,
             IBillLookupPolicy lookupPolicy,
             IBillWorkflowStore reviewStore,
             IReferenceResolver customerResolver,
             ICustomerDirectory customers)
         {
-            if (adapter == null || contexts == null || lookupPolicy == null || reviewStore == null ||
+            if (string.IsNullOrWhiteSpace(blType) || string.IsNullOrWhiteSpace(manifestType) || contexts == null || lookupPolicy == null || reviewStore == null ||
                 customerResolver == null || customers == null)
                 throw new ArgumentNullException(BillWorkflowMessages.ServiceDependenciesRequired);
             this.userId = userId;
-            this.adapter = adapter;
+            this.blType = blType;
+            this.manifestType = manifestType;
             this.contexts = contexts;
             this.lookupPolicy = lookupPolicy;
             this.reviewStore = reviewStore;
@@ -44,12 +48,28 @@ namespace BillWorkflow.Common.Services
             this.customers = customers;
         }
 
-        public DocumentReviewSummary CreateDocumentReview(string parentReference, string extractionJson)
+        public DocumentReviewSummary CreateDocumentReview(Guid extractionId)
         {
-            var documentReview = BuildDocumentReview(parentReference, extractionJson);
-            // Intake saves the adapted source. Business review runs when a bill is opened.
-            reviewStore.Save(documentReview, userId);
-            return CreateSummary(documentReview);
+            RequireActor();
+            if (extractionId == Guid.Empty)
+                throw new DocumentReviewException(DocumentReviewFailure.InvalidInput,
+                    BillWorkflowCodes.InvalidDocumentReviewRequest, BillWorkflowMessages.DocumentReviewRequestRequired);
+            var extraction = reviewStore.GetExtraction(extractionId);
+            if (extraction == null)
+                throw new DocumentReviewException(DocumentReviewFailure.NotFound,
+                    BillWorkflowCodes.DocumentReviewNotFound, BillWorkflowMessages.DocumentReviewNotFound);
+            if (extraction.ExtractionStatus != "Completed" || extraction.BillsStatus != "Ready")
+                throw new DocumentReviewException(DocumentReviewFailure.Conflict,
+                    BillWorkflowCodes.ExtractionNotReady, BillWorkflowMessages.ExtractionNotReady);
+            if (extraction.ResultType != blType && extraction.ResultType != manifestType)
+                throw new DocumentReviewException(DocumentReviewFailure.Conflict,
+                    BillWorkflowCodes.UnsupportedDocumentType, BillWorkflowMessages.UnsupportedDocumentType);
+            if (extraction.EntityName != "Operation" || !extraction.EntityID.HasValue || extraction.EntityID.Value <= 0)
+                throw new DocumentReviewException(DocumentReviewFailure.InvalidInput,
+                    BillWorkflowCodes.MasterOperationRequired, BillWorkflowMessages.MasterOperationRequired);
+            var context = contexts.Load(extraction.EntityID.Value.ToString(CultureInfo.InvariantCulture), userId);
+            var bills = reviewStore.StartReview(extraction.ID, context, userId);
+            return CreateSummary(extraction.ID, bills);
         }
 
         public BillReviewDetails GetBillReview(Guid billReviewId)
@@ -67,12 +87,13 @@ namespace BillWorkflow.Common.Services
                     BillWorkflowCodes.InvalidBillReviewPage,
                     string.Format(BillWorkflowMessages.BillReviewsRequestRequired, MaximumBillPageSize));
 
-            var result = reviewStore.GetBillReviews(documentReviewId, page, pageSize, userId);
+            var result = reviewStore.GetBillReviews(documentReviewId, page, pageSize);
             if (result == null)
                 throw new DocumentReviewException(DocumentReviewFailure.NotFound,
                     BillWorkflowCodes.DocumentReviewNotFound, BillWorkflowMessages.DocumentReviewNotFound);
 
-            ValidateDocumentContext(result.SourceProfile, result.Context);
+            ValidateCurrentContext(result.Context);
+            if (!result.ReviewStarted) ThrowReviewNotStarted();
             foreach (var bill in result.Items)
                 ApplyReviewIssues(bill);
             return result;
@@ -80,6 +101,7 @@ namespace BillWorkflow.Common.Services
 
         private void ApplyReviewIssues(BillReviewDetails data)
         {
+            if (data.Bill == null) return;
             var requirements = lookupPolicy.GetRequirements(data.Bill, data.Context);
             data.Issues = GetReviewIssues(data.Issues, requirements, data.ReferenceResolutions);
         }
@@ -92,6 +114,7 @@ namespace BillWorkflow.Common.Services
 
             var data = LoadBillReview(billReviewId);
             ValidateBillReviewVersion(data.Version, expectedVersion);
+            RequireReadableBill(data);
             var requirements = lookupPolicy.GetRequirements(data.Bill, data.Context).ToList();
             var index = requirements.FindIndex(item => item.Role == role);
             if (index < 0)
@@ -134,6 +157,7 @@ namespace BillWorkflow.Common.Services
 
             var data = LoadBillReview(billReviewId);
             ValidateBillReviewVersion(data.Version, expectedVersion);
+            RequireReadableBill(data);
             if (data.ReviewStatus == BillReviewStatus.ReferencesConfirmed)
                 throw new DocumentReviewException(DocumentReviewFailure.Conflict,
                     BillWorkflowCodes.ReferencesAlreadyConfirmed, BillWorkflowMessages.ReferencesAlreadyConfirmed);
@@ -279,59 +303,45 @@ namespace BillWorkflow.Common.Services
                 throw new DocumentReviewException(DocumentReviewFailure.InvalidInput,
                     BillWorkflowCodes.BillReviewIdRequired, BillWorkflowMessages.BillReviewIdRequired);
 
-            var data = reviewStore.GetBillReview(billReviewId, userId);
+            var data = reviewStore.GetBillReview(billReviewId);
             if (data == null)
                 throw new DocumentReviewException(DocumentReviewFailure.NotFound,
                     BillWorkflowCodes.BillReviewNotFound, BillWorkflowMessages.BillReviewNotFound);
-            ValidateDocumentContext(data.SourceProfile, data.Context);
+            ValidateCurrentContext(data.Context);
+            if (data.ReviewStatus == BillReviewStatus.NotStarted) ThrowReviewNotStarted();
             return data;
         }
 
-        private void ValidateDocumentContext(string sourceProfile, BillContext context)
+        private static void ThrowReviewNotStarted()
         {
-            ValidateCurrentContext(context);
-            if (sourceProfile != adapter.ProfileCode)
+            throw new DocumentReviewException(DocumentReviewFailure.Conflict,
+                BillWorkflowCodes.ReviewNotStarted, BillWorkflowMessages.ReviewNotStarted);
+        }
+
+        private static void RequireReadableBill(BillReviewDetails data)
+        {
+            if (data.Bill == null)
                 throw new DocumentReviewException(DocumentReviewFailure.Conflict,
-                    BillWorkflowCodes.DocumentReviewProfileChanged, BillWorkflowMessages.DocumentReviewProfileChanged);
+                    BillWorkflowCodes.BillReviewNotReady, BillWorkflowMessages.BillReviewNotReady, data.Issues);
         }
 
-        private DocumentReview BuildDocumentReview(string parentReference, string extractionJson)
-        {
-            RequireActor();
-            var context = contexts.Load(parentReference, userId);
-            var items = adapter.Read(extractionJson);
-            var documentReview = new DocumentReview
-            {
-                DocumentReviewId = Guid.NewGuid(),
-                CreatedAt = DateTime.Now,
-                SourceProfile = adapter.ProfileCode,
-                Context = context,
-                BillReviews = items.ToList()
-            };
-
-            foreach (var billReview in documentReview.BillReviews)
-            {
-                billReview.BillReviewId = Guid.NewGuid();
-                billReview.Version = 1;
-            }
-            return documentReview;
-        }
-
-        private static DocumentReviewSummary CreateSummary(DocumentReview documentReview)
+        private static DocumentReviewSummary CreateSummary(Guid extractionId, IReadOnlyList<BillReviewDetails> bills)
         {
             return new DocumentReviewSummary
             {
-                DocumentReviewId = documentReview.DocumentReviewId,
-                BillReviews = documentReview.BillReviews.Select(item => new BillReviewSummary
+                DocumentReviewId = extractionId,
+                BillReviews = bills.Select(item => new BillReviewSummary
                 {
                     BillReviewId = item.BillReviewId,
+                    BillIndex = item.BillIndex,
+                    ReviewStatus = item.ReviewStatus,
                     Version = item.Version,
-                    BillOfLadingNumber = item.Bill.BillOfLadingNumber,
-                    ShipperName = item.Bill.ShipperName,
-                    ConsigneeName = item.Bill.ConsigneeName,
-                    PortOfLoading = item.Bill.PortOfLoading,
-                    PortOfDischarge = item.Bill.PortOfDischarge,
-                    ContainerCount = item.Bill.Containers.Count
+                    BillOfLadingNumber = item.Bill == null ? null : item.Bill.BillOfLadingNumber,
+                    ShipperName = item.Bill == null ? null : item.Bill.ShipperName,
+                    ConsigneeName = item.Bill == null ? null : item.Bill.ConsigneeName,
+                    PortOfLoading = item.Bill == null ? null : item.Bill.PortOfLoading,
+                    PortOfDischarge = item.Bill == null ? null : item.Bill.PortOfDischarge,
+                    ContainerCount = item.Bill == null ? (int?)null : item.Bill.Containers.Count
                 }).ToList()
             };
         }
@@ -341,6 +351,7 @@ namespace BillWorkflow.Common.Services
         {
             ValidateCustomerSearch(searchText, page, pageSize);
             var billReview = LoadBillReview(billReviewId);
+            RequireReadableBill(billReview);
             var requirements = lookupPolicy.GetRequirements(billReview.Bill, billReview.Context);
             var customerRequirement = GetCustomerRequirement(requirements);
             var result = customers.Search(searchText.Trim(), page, pageSize, customerRequirement.SourceParty,
@@ -355,6 +366,7 @@ namespace BillWorkflow.Common.Services
                 throw new DocumentReviewException(DocumentReviewFailure.InvalidInput,
                     BillWorkflowCodes.InvalidConfirmedBillRequest, BillWorkflowMessages.ConfirmedBillRequestRequired);
             var billReview = LoadBillReview(billReviewId);
+            RequireReadableBill(billReview);
             ValidateBillReviewVersion(billReview.Version, expectedVersion);
             ValidateReferencesConfirmedState(billReview);
             ValidateReferenceConfirmation(billReview);
@@ -369,7 +381,6 @@ namespace BillWorkflow.Common.Services
                 DocumentReviewId = billReview.DocumentReviewId,
                 BillReviewId = billReview.BillReviewId,
                 Version = billReview.Version,
-                SourceProfile = billReview.SourceProfile,
                 Context = billReview.Context,
                 Bill = billReview.Bill,
                 ReferenceResolutions = billReview.ReferenceResolutions.Where(result => IsReferenceConfirmed(result) &&
@@ -481,8 +492,9 @@ namespace BillWorkflow.Common.Services
 
         private void ValidateCurrentContext(BillContext context)
         {
-            // Authorize against current operation permissions, not just the stored owner.
+            // Authorize against the current user's operation permissions.
             var current = contexts.Load(context.ParentReference, userId);
+            if (context.Version == null) return; // Permission is still checked before REVIEW_NOT_STARTED.
             if (current.Version != context.Version || current.Direction != context.Direction)
                 throw new DocumentReviewException(DocumentReviewFailure.Conflict,
                     BillWorkflowCodes.MasterContextChanged, BillWorkflowMessages.MasterContextChanged);

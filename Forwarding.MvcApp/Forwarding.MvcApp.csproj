@@ -736,6 +736,19 @@
     <Compile Include="Controllers\Operations\API_Operations\BillWorkflow\DocumentReviewController.cs" />
     <Compile Include="Controllers\Operations\API_Operations\ContainerPackagesController.cs" />
     <Compile Include="Controllers\Operations\API_Operations\DocsInController.cs" />
+    <Compile Include="Controllers\DocAi\DocAiController.cs" />
+    <Compile Include="Controllers\DocAi\DocAiWebhookController.cs" />
+    <Compile Include="DocAi\DocAiResult.cs" />
+    <Compile Include="DocAi\DocAiBillProjector.cs" />
+    <Compile Include="DocAi\DocAiBillView.cs" />
+    <Compile Include="DocAi\AiDocumentsStore.cs" />
+    <Compile Include="DocAi\DocAiClient.cs" />
+    <Compile Include="DocAi\DocAiJsonScanner.cs" />
+    <Compile Include="DocAi\DocAiSettings.cs" />
+    <Compile Include="DocAi\Json.cs" />
+    <Compile Include="DocAi\DocAiInputException.cs" />
+    <Compile Include="DocAi\DocAiDemo.cs" />
+    <Compile Include="DocAi\DocAiSignature.cs" />
     <Compile Include="Controllers\Operations\API_Operations\InvoicesController.cs" />
     <Compile Include="Controllers\Operations\API_Operations\OperationTrackingController.cs" />
     <Compile Include="Controllers\Operations\API_Operations\OperationVehicleController.cs" />
@@ -1347,7 +1360,6 @@
     <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Contracts\BillWorkflowEnumConverter.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Contracts\CustomerLookupPage.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Contracts\CustomerRecord.cs" />
-    <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Contracts\DocumentReview.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Contracts\DocumentReviewSummary.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Contracts\ReferenceMatchResult.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Contracts\ReferenceResolution.cs" />
@@ -2781,6 +2793,9 @@
     <Content Include="Scripts\MasterData\BanksAccountsAndTreasuries\BankAccount.js" />
     <Content Include="Scripts\MasterData\BanksAccountsAndTreasuries\Treasury.js" />
     <Content Include="Scripts\Operations\Operations\DocsIn.js" />
+    <Content Include="DocAi\Fixtures\bl.json" />
+    <Content Include="DocAi\Fixtures\manifest-test-A.json" />
+    <Content Include="Scripts\DocAi\DocAiExtract.js" />
     <Content Include="Scripts\Operations\Operations\DocsOut.js" />
     <Content Include="Scripts\Operations\Operations\Invoices.js" />
     <Content Include="Scripts\Operations\Operations\Master.js" />
@@ -3972,15 +3987,7 @@
     <Content Include="Views\Administration\Settings\_LinkeUserWithAccounts.cshtml" />
     <Content Include="Views\MasterData\Others\_ModalVessels.cshtml" />
     <Content Include="Views\PS\PS_Reports\_PS_PurchasingOrdersNewFollowUP.cshtml" />
-    <None Include="Models\Operations\Operations\BillWorkflow\Integration\Sql\CreateBillWorkflowTables.sql" />
-    <None Include="Models\Operations\Operations\BillWorkflow\Postman\BillWorkflow.postman_collection.json" />
-    <None Include="Models\Operations\Operations\BillWorkflow\Postman\README.md" />
-    <None Include="Models\Operations\Operations\BillWorkflow\Postman\UniFreight.Local.postman_environment.json" />
-    <None Include="Models\Operations\Operations\BillWorkflow\README.md" />
-    <None Include="Models\Operations\Operations\BillWorkflow\Samples\bill-workflow.http" />
-    <None Include="Models\Operations\Operations\BillWorkflow\Samples\phase1-bills.json" />
-    <None Include="Models\Operations\Operations\BillWorkflow\Samples\phase1-three-bills.json" />
-    <None Include="Models\Operations\Operations\BillWorkflow\Samples\README.md" />
+    <None Include="DocAi\Sql\CreateAIDocumentTables.sql" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -4179,6 +4186,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Operations\_OperationsEdit.cshtml" />
+    <Content Include="Views\DocAi\_ExtractWithAiModal.cshtml" />
+    <Content Include="Views\DocAi\_AiUsageModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\MasterData\Partners\_ModalPartners.cshtml" />

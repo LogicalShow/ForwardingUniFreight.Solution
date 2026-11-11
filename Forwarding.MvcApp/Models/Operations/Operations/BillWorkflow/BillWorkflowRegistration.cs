@@ -1,4 +1,5 @@
 using System.Configuration;
+using Forwarding.MvcApp.DocAi;
 using System.Web.Http;
 using BillWorkflow.Common.Extraction;
 using BillWorkflow.Common.Services;
@@ -47,10 +48,11 @@ namespace Forwarding.MvcApp.Models.Operations.Operations.BillWorkflow
             var customers = new CustomerDirectory(connectionString);
             return new DocumentReviewService(
                 userId,
-                new BillOfLadingJsonAdapter(),
+                DocAiResult.BlType,
+                DocAiResult.ManifestType,
                 new BillContextProvider(connectionString),
                 new BillLookupPolicy(),
-                new BillWorkflowStore(connectionString),
+                new BillWorkflowStore(connectionString, DocAiSettings.IsDemo, new BillOfLadingJsonAdapter()),
                 new CustomerResolver(customers),
                 customers);
         }

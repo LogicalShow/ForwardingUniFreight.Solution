@@ -380,3 +380,7 @@ Forwarding.MvcApp/bin/*
 !Forwarding.MvcApp/bin/ICSharpCode.SharpZipLib.dll
 !Forwarding.MvcApp/bin/RestSharp.dll
 !Forwarding.MvcApp/bin/Forwarding.MvcApp.dll.config
+
+# DocAi: the secrets file and the kit's copies of uploaded documents never go to source control
+Forwarding.MvcApp/App_Data/docai.secrets.config
+Forwarding.MvcApp/App_Data/DocAi/

@@ -14,7 +14,7 @@ namespace BillWorkflow.Common.Contracts
         public int TotalCount { get; set; }
         public List<BillReviewDetails> Items { get; set; }
 
-        internal string SourceProfile { get; set; }
+        internal bool ReviewStarted { get; set; }
         internal BillContext Context { get; set; }
     }
 }

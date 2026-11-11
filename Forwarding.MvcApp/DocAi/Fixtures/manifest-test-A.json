@@ -1,0 +1,542 @@
+{
+  "contractVersion": "1.0",
+  "documentTypeCode": "MANIFEST",
+  "shippingLineCode": null,
+  "modelId": "manifest-v1",
+  "pageCount": 2,
+  "header": {
+    "carrierName": {
+      "value": "KESTREL SHIPPING CO.",
+      "confidence": 0.875,
+      "page": 1
+    },
+    "vesselName": {
+      "value": "M/V KESTREL LANTERN",
+      "confidence": 0.852,
+      "page": 1
+    },
+    "voyageNumber": {
+      "value": "V.053W",
+      "confidence": 0.884,
+      "page": 1
+    },
+    "portOfLoading": {
+      "value": "DAMIETTA (EGDAM)",
+      "confidence": 0.776,
+      "page": 1
+    },
+    "portOfDischarge": {
+      "value": "GENOA (ITGOA)",
+      "confidence": 0.82,
+      "page": 1
+    },
+    "manifestDate": {
+      "value": "2026-12-03",
+      "confidence": 0.956,
+      "page": 1
+    }
+  },
+  "billsOfLading": [
+    {
+      "fields": {
+        "billOfLadingNumber": {
+          "value": "KSC26050001",
+          "confidence": 0.608,
+          "page": 1
+        },
+        "shipperName": {
+          "value": "DELTA GOURMET",
+          "confidence": 0.625,
+          "page": 1
+        },
+        "consigneeName": {
+          "value": "Nile Crest Produce",
+          "confidence": 0.882,
+          "page": 1
+        },
+        "notifyParty": {
+          "value": "Amber Harvest Foods S.r.l.",
+          "confidence": 0.869,
+          "page": 1
+        }
+      },
+      "containers": [
+        {
+          "containerNumber": {
+            "value": "QZXU3887957",
+            "confidence": 0.965,
+            "page": 1
+          },
+          "sealNumber": {
+            "value": "LS10299071",
+            "confidence": 0.968,
+            "page": 1
+          },
+          "containerType": {
+            "value": "22G1",
+            "confidence": 0.965,
+            "page": 1
+          },
+          "packages": {
+            "value": "1134",
+            "confidence": 0.966,
+            "page": 1
+          },
+          "grossWeight": {
+            "value": "19632.0",
+            "confidence": 0.968,
+            "page": 1
+          },
+          "description": {
+            "value": "1,134 BAGS COMBED COTTON YARN NE 30/1",
+            "confidence": 0.917,
+            "page": 1
+          },
+          "associationMethod": "position"
+        },
+        {
+          "containerNumber": {
+            "value": "ZQXU3570921",
+            "confidence": 0.966,
+            "page": 1
+          },
+          "sealNumber": {
+            "value": "LS85022312",
+            "confidence": 0.967,
+            "page": 1
+          },
+          "containerType": {
+            "value": "45G1",
+            "confidence": 0.962,
+            "page": 1
+          },
+          "packages": {
+            "value": "1220",
+            "confidence": 0.967,
+            "page": 1
+          },
+          "grossWeight": {
+            "value": "25204.0",
+            "confidence": 0.972,
+            "page": 1
+          },
+          "description": {
+            "value": "1,220 BAGS COMBED COTTON YARN NE 30/1",
+            "confidence": 0.947,
+            "page": 1
+          },
+          "associationMethod": "position"
+        }
+      ]
+    },
+    {
+      "fields": {
+        "billOfLadingNumber": {
+          "value": "KSC26050002",
+          "confidence": 0.929,
+          "page": 1
+        },
+        "shipperName": {
+          "value": "CEDAR AGRO EXPORTS S.A.E.",
+          "confidence": 0.886,
+          "page": 1
+        },
+        "consigneeName": {
+          "value": "Silver Textile Trading S.r.l.",
+          "confidence": 0.86,
+          "page": 1
+        },
+        "notifyParty": {
+          "value": "Lotus Stone Works S.r.l.",
+          "confidence": 0.785,
+          "page": 1
+        },
+        "bookingNumber": {
+          "value": "BK52260091",
+          "confidence": 0.731,
+          "page": 1
+        },
+        "freightTerms": {
+          "value": "COLLECT",
+          "confidence": 0.956,
+          "page": 1
+        }
+      },
+      "containers": [
+        {
+          "containerNumber": {
+            "value": "XZVU8755573",
+            "confidence": 0.968,
+            "page": 1
+          },
+          "sealNumber": {
+            "value": "LS36450476",
+            "confidence": 0.966,
+            "page": 1
+          },
+          "containerType": {
+            "value": "22G1",
+            "confidence": 0.964,
+            "page": 1
+          },
+          "packages": {
+            "value": "26",
+            "confidence": 0.971,
+            "page": 1
+          },
+          "grossWeight": {
+            "value": "18484.0",
+            "confidence": 0.97,
+            "page": 1
+          },
+          "description": {
+            "value": "26 BUNDLES WHITE MARBLE SLABS POLISHED 2CM",
+            "confidence": 0.911,
+            "page": 1
+          },
+          "associationMethod": "position"
+        },
+        {
+          "containerNumber": {
+            "value": "QJVU8773685",
+            "confidence": 0.955,
+            "page": 1
+          },
+          "sealNumber": {
+            "value": "LS38985119",
+            "confidence": 0.957,
+            "page": 1
+          },
+          "containerType": {
+            "value": "45G1",
+            "confidence": 0.951,
+            "page": 1
+          },
+          "packages": {
+            "value": "19",
+            "confidence": 0.968,
+            "page": 1
+          },
+          "grossWeight": {
+            "value": "27044.0",
+            "confidence": 0.963,
+            "page": 1
+          },
+          "description": {
+            "value": "19 BUNDLES WHITE MARBLE SLABS POLISHED 2CM",
+            "confidence": 0.932,
+            "page": 1
+          },
+          "associationMethod": "position"
+        },
+        {
+          "containerNumber": {
+            "value": "QZXU4361360",
+            "confidence": 0.956,
+            "page": 1
+          },
+          "sealNumber": {
+            "value": "LS90179161",
+            "confidence": 0.963,
+            "page": 1
+          },
+          "containerType": {
+            "value": "22G1",
+            "confidence": 0.951,
+            "page": 1
+          },
+          "packages": {
+            "value": "33",
+            "confidence": 0.963,
+            "page": 1
+          },
+          "grossWeight": {
+            "value": "18567.0",
+            "confidence": 0.962,
+            "page": 1
+          },
+          "description": {
+            "value": "33 BUNDLES WHITE MARBLE SLABS POLISHED 2CM",
+            "confidence": 0.93,
+            "page": 1
+          },
+          "associationMethod": "position"
+        },
+        {
+          "containerNumber": {
+            "value": "ZQXU1331208",
+            "confidence": 0.961,
+            "page": 1
+          },
+          "sealNumber": {
+            "value": "LS20534951",
+            "confidence": 0.969,
+            "page": 1
+          },
+          "containerType": {
+            "value": "45G1",
+            "confidence": 0.958,
+            "page": 1
+          },
+          "packages": {
+            "value": "25",
+            "confidence": 0.97,
+            "page": 1
+          },
+          "grossWeight": {
+            "value": "21193.0",
+            "confidence": 0.965,
+            "page": 1
+          },
+          "description": {
+            "value": "25 BUNDLES WHITE MARBLE SLABS POLISHED 2CM",
+            "confidence": 0.951,
+            "page": 1
+          },
+          "associationMethod": "position"
+        }
+      ]
+    },
+    {
+      "fields": {
+        "billOfLadingNumber": {
+          "value": "KSC26050003",
+          "confidence": 0.864,
+          "page": 2
+        },
+        "shipperName": {
+          "value": "CORAL GOURMET IMPORTS S.A.E.",
+          "confidence": 0.895,
+          "page": 2
+        },
+        "consigneeName": {
+          "value": "Atlas Produce Logistics S.r.l.",
+          "confidence": 0.497,
+          "page": 2
+        },
+        "notifyParty": {
+          "value": "Olive Harvest Foods S.r.l.",
+          "confidence": 0.817,
+          "page": 2
+        },
+        "bookingNumber": {
+          "value": "BK53260091",
+          "confidence": 0.952,
+          "page": 2
+        },
+        "freightTerms": {
+          "value": "PREPAID",
+          "confidence": 0.953,
+          "page": 2
+        }
+      },
+      "containers": [
+        {
+          "containerNumber": {
+            "value": "XZVU4130166",
+            "confidence": 0.966,
+            "page": 2
+          },
+          "sealNumber": {
+            "value": "LS90967344",
+            "confidence": 0.969,
+            "page": 2
+          },
+          "containerType": {
+            "value": "22G1",
+            "confidence": 0.964,
+            "page": 2
+          },
+          "packages": {
+            "value": "1561",
+            "confidence": 0.967,
+            "page": 2
+          },
+          "grossWeight": {
+            "value": "23914.0",
+            "confidence": 0.973,
+            "page": 2
+          },
+          "description": {
+            "value": "1,561 BAGS UREA 46% GRANULAR",
+            "confidence": 0.911,
+            "page": 2
+          },
+          "associationMethod": "position"
+        },
+        {
+          "containerNumber": {
+            "value": "QJVU6856688",
+            "confidence": 0.961,
+            "page": 2
+          },
+          "sealNumber": {
+            "value": "LS60624238",
+            "confidence": 0.967,
+            "page": 2
+          },
+          "containerType": {
+            "value": "45G1",
+            "confidence": 0.963,
+            "page": 2
+          },
+          "packages": {
+            "value": "935",
+            "confidence": 0.972,
+            "page": 2
+          },
+          "grossWeight": {
+            "value": "24041.0",
+            "confidence": 0.971,
+            "page": 2
+          },
+          "description": {
+            "value": "935 BAGS UREA 46% GRANULAR",
+            "confidence": 0.928,
+            "page": 2
+          },
+          "associationMethod": "position"
+        },
+        {
+          "containerNumber": {
+            "value": "QZXU5770698",
+            "confidence": 0.966,
+            "page": 2
+          },
+          "sealNumber": {
+            "value": "LS63479202",
+            "confidence": 0.973,
+            "page": 2
+          },
+          "containerType": {
+            "value": "22G1",
+            "confidence": 0.967,
+            "page": 2
+          },
+          "packages": {
+            "value": "1537",
+            "confidence": 0.967,
+            "page": 2
+          },
+          "grossWeight": {
+            "value": "19768.0",
+            "confidence": 0.974,
+            "page": 2
+          },
+          "description": {
+            "value": "1,537 BAGS UREA 46% GRANULAR",
+            "confidence": 0.943,
+            "page": 2
+          },
+          "associationMethod": "position"
+        }
+      ]
+    }
+  ],
+  "unidentifiedBillsOfLading": [
+    {
+      "sourceIndex": 1,
+      "fields": {
+        "shipperName": {
+          "value": "IMPORTS S.A.E.",
+          "confidence": 0.538,
+          "page": 1
+        },
+        "consigneeName": {
+          "value": "Logistics S.r.l.",
+          "confidence": 0.628,
+          "page": 1
+        },
+        "bookingNumber": {
+          "value": "BK51260091",
+          "confidence": 0.717,
+          "page": 1
+        },
+        "freightTerms": {
+          "value": "PREPAID",
+          "confidence": 0.954,
+          "page": 1
+        }
+      }
+    }
+  ],
+  "unassignedContainers": [],
+  "flags": [
+    {
+      "field": "unidentifiedBillsOfLading[0]",
+      "reason": "BL_ROW_DROPPED"
+    },
+    {
+      "field": "billsOfLading[0].containers[0]",
+      "reason": "ASSOCIATION_BY_POSITION"
+    },
+    {
+      "field": "billsOfLading[0].containers[1]",
+      "reason": "ASSOCIATION_BY_POSITION"
+    },
+    {
+      "field": "billsOfLading[1].containers[0]",
+      "reason": "ASSOCIATION_BY_POSITION"
+    },
+    {
+      "field": "billsOfLading[1].containers[1]",
+      "reason": "ASSOCIATION_BY_POSITION"
+    },
+    {
+      "field": "billsOfLading[1].containers[2]",
+      "reason": "ASSOCIATION_BY_POSITION"
+    },
+    {
+      "field": "billsOfLading[1].containers[3]",
+      "reason": "ASSOCIATION_BY_POSITION"
+    },
+    {
+      "field": "billsOfLading[2].containers[0]",
+      "reason": "ASSOCIATION_BY_POSITION"
+    },
+    {
+      "field": "billsOfLading[2].containers[1]",
+      "reason": "ASSOCIATION_BY_POSITION"
+    },
+    {
+      "field": "billsOfLading[2].containers[2]",
+      "reason": "ASSOCIATION_BY_POSITION"
+    },
+    {
+      "field": "header.portOfLoading",
+      "reason": "LOW_CONFIDENCE"
+    },
+    {
+      "field": "billsOfLading[0].fields.billOfLadingNumber",
+      "reason": "LOW_CONFIDENCE"
+    },
+    {
+      "field": "billsOfLading[0].fields.shipperName",
+      "reason": "LOW_CONFIDENCE"
+    },
+    {
+      "field": "billsOfLading[1].fields.notifyParty",
+      "reason": "LOW_CONFIDENCE"
+    },
+    {
+      "field": "billsOfLading[1].fields.bookingNumber",
+      "reason": "LOW_CONFIDENCE"
+    },
+    {
+      "field": "billsOfLading[2].fields.consigneeName",
+      "reason": "LOW_CONFIDENCE"
+    },
+    {
+      "field": "unidentifiedBillsOfLading[0].fields.shipperName",
+      "reason": "LOW_CONFIDENCE"
+    },
+    {
+      "field": "unidentifiedBillsOfLading[0].fields.consigneeName",
+      "reason": "LOW_CONFIDENCE"
+    },
+    {
+      "field": "unidentifiedBillsOfLading[0].fields.bookingNumber",
+      "reason": "LOW_CONFIDENCE"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+﻿@if (Forwarding.MvcApp.DocAi.DocAiSettings.Enabled)
+{
+    <div class="modal fade" id="DocAiUsageModal" tabindex="-1" role="dialog" aria-labelledby="docAiUsageTitle" data-backdrop="false"
+         data-support-name="@Forwarding.MvcApp.DocAi.DocAiSettings.SupportName"
+         data-support-email="@System.Configuration.ConfigurationManager.AppSettings["DocAi:SupportEmail"]"
+         data-support-phone="@System.Configuration.ConfigurationManager.AppSettings["DocAi:SupportPhone"]"
+         data-support-url="@System.Configuration.ConfigurationManager.AppSettings["DocAi:SupportUrl"]">
+        <div class="modal-dialog modal-lg"><div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+                <h3 id="docAiUsageTitle"></h3>
+                <span id="docAiUsageAsOf"></span>
+                <button id="docAiUsageRefresh" type="button" class="btn btn-default btn-sm" onclick="DocAiUsage_Refresh();"></button>
+            </div>
+            <div id="docAiUsageBody" class="modal-body" aria-live="polite"></div>
+        </div></div>
+    </div>
+}

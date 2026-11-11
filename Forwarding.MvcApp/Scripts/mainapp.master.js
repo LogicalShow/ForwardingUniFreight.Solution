@@ -16,7 +16,7 @@
 //mytable.getElementsByTagName("tr")[i].getElementsByTagName("td")[j].getAttribute("class")
 
 debugger;
-var version = 17.9;
+var version = 21.0; // DocAi: 8 loading messages, centered with a spinner (the DocAi scripts changed)
 var listVehicleTracking = '[]';
 var glbVersion = 14; //20200210 2300 ForwPublish w FlexiUpload Fix
 var TRCK_WorkingOnDrivers = 1;

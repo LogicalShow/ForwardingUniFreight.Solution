@@ -859,6 +859,9 @@ function OperationsEdit_Initialize(pOperationID, evlMessage = "") {
         //$.getScript(strServerURL + '/Scripts/Operations/Operations/Receivables.js');//sherif: to load the js file of the appended partial view
         if (OVMas) $.getScript(strServerURL + '/Scripts/Operations/Operations/Master.js' + '?version=' + version);//sherif: to load the js file of the appended partial view
         if (OVShi || OVPac) $.getScript(strServerURL + '/Scripts/Operations/Operations/Shipments.js' + '?version=' + version);//sherif: to load the js file of the appended partial view
+        if (OVShi || OVPac) $.getScript(strServerURL + '/Scripts/DocAi/DocAiDemoData.js' + '?version=' + version);//DocAi: UI-only sample data until the DocAi backend is added
+        if (OVShi || OVPac) $.getScript(strServerURL + '/Scripts/DocAi/DocAiExtract.js' + '?version=' + version);
+        if (OVShi || OVPac) $.getScript(strServerURL + '/Scripts/DocAi/DocAiReview.js' + '?version=' + version);//DocAi: review flow for several bills of lading//DocAi: "Extract with AI" in the Houses tab
         if (OVACID) $.getScript(strServerURL + '/Scripts/Operations/Operations/ACIDDetails.js' + '?version=' + version);//sherif: to load the js file of the appended partial view
         if (OVNotif) $.getScript(strServerURL + '/Scripts/LocalEmails/LocalEmails.js' + '?version=' + version);//sherif: to load the js file of the appended partial view
         if (OVRou && OERou) $.getScript(strServerURL + '/Scripts/MasterData/Partners/MAWBStockSelect.js' + '?version=' + version);//sherif: to load the js file of the appended partial view

@@ -106,3 +106,29 @@ th {
 .float-right {
     float: left !important;
 }
+
+/*DocAi ("Extract with AI" and "AI Usage" dialogs): flip the dialogs' own left/right rules*/
+#DocAiExtractModal .docai-totals {
+    border-left: 0 !important;
+    border-right: 3px solid currentColor !important;
+}
+
+#DocAiExtractModal .docai-review-ids > div + div {
+    margin-left: 0 !important;
+    margin-right: 16px !important;
+}
+
+#DocAiExtractModal .docai-review-pager {
+    float: right !important;
+    margin-left: 0 !important;
+    margin-right: 12px !important;
+}
+
+#DocAiUsageModal .docai-usage-big, #DocAiUsageModal .docai-usage-dot {
+    margin-right: 0 !important;
+    margin-left: 6px !important;
+}
+
+#DocAiUsageModal .docai-usage-table th, #DocAiUsageModal .docai-usage-table td {
+    text-align: center !important;
+}

@@ -1,0 +1,71 @@
+﻿@* "Extract with AI" dialog of the Houses tab (Scripts/DocAi/DocAiExtract.js). Rendered only while DocAi:Enabled is true. *@
+@if (Forwarding.MvcApp.DocAi.DocAiSettings.Enabled)
+{
+    <div class="modal fade" id="DocAiExtractModal" tabindex="-1" data-keyboard="true" data-backdrop="false" role="dialog" aria-labelledby="DocAiExtractModalLabel" aria-hidden="true">
+        <div class="modal-dialog modalwidth-80">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3 class="m-b-none" id="DocAiExtractModalLabel">
+                        @Forwarding.MvcApp.App_Resources.App_Resources.DocAi_ExtractWithAI
+                        @if (Forwarding.MvcApp.DocAi.DocAiSettings.IsDemo)
+                        {
+                            <span class="label label-warning" title="@Forwarding.MvcApp.App_Resources.App_Resources.DocAi_DemoTooltip">@Forwarding.MvcApp.App_Resources.App_Resources.DocAi_Demo</span>
+                        }
+                    </h3>
+                </div>
+                <div class="modal-body">
+                    <div id="docAiExtractUsageBanner" aria-live="polite"></div>
+                    <div id="docAiQuotaContact"></div>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <label id="lblDocAiChooseFile" for="fileDocAi" class="btn btn-default btn-sm m-b-none"><i class="fa fa-upload"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.DocAi_UploadFile</label>
+                                </span>
+                                <input id="txtDocAiFileName" type="text" class="form-control input-sm" readonly placeholder="@Forwarding.MvcApp.App_Resources.App_Resources.DocAi_NoFileChosen" />
+                            </div>
+                            <input id="fileDocAi" type="file" class="hide" accept=".pdf" onchange="DocAiExtract_FileChosen(this);" />
+                        </div>
+                        <div class="col-sm-4">
+                            <button id="btnDocAiRemove" type="button" class="btn btn-link btn-sm hide" title="@Forwarding.MvcApp.App_Resources.App_Resources.DocAi_RemoveFile" onclick="DocAiExtract_Remove();"><i class="fa fa-trash-o fa-lg"></i></button>
+                        </div>
+                    </div>
+                    <p id="pDocAiStatus" aria-live="polite" class="m-t-sm m-b-sm text-muted">&nbsp;</p>
+                    <div id="divDocAiDetails" data-label-shipperName="@Forwarding.MvcApp.App_Resources.App_Resources.Shipper" data-label-consigneeName="@Forwarding.MvcApp.App_Resources.App_Resources.Consignee"></div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>
+                    <button id="btnDocAiRead" type="button" class="btn btn-primary btn-sm" disabled onclick="DocAiExtract_Read();"
+                            data-label-read="@Forwarding.MvcApp.App_Resources.App_Resources.DocAi_Read" data-label-reading="@Forwarding.MvcApp.App_Resources.App_Resources.DocAi_Reading"><i class="fa fa-magic"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.DocAi_Read</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+        #DocAiExtractModal .docai-table-scroll { max-height:45vh; overflow:auto; }
+        #DocAiExtractModal .docai-table-scroll th { position:sticky; top:0; background:#f5f5f5; z-index:1; white-space:nowrap; }
+        #DocAiExtractModal .docai-value { max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+        #DocAiExtractModal .docai-manifest .panel { padding:10px; }
+        #DocAiExtractModal .docai-detail-header { overflow:auto; background:#f5f5f5; }
+        #DocAiExtractModal .docai-flags { overflow-wrap:anywhere; }
+        #DocAiExtractModal .docai-totals { padding:8px 10px; border-left:3px solid currentColor; white-space:pre-wrap; overflow-wrap:anywhere; }
+        #DocAiExtractModal .docai-field { margin-bottom:10px; }
+        #DocAiExtractModal .docai-field [readonly] { background:#eee; cursor:text; }
+        #DocAiExtractModal .docai-field textarea { min-height:80px; }
+        #DocAiExtractModal .docai-field-note { display:block; white-space:pre-wrap; overflow-wrap:anywhere; }
+        #DocAiExtractModal .docai-field-note[hidden], #DocAiExtractModal .docai-manifest [hidden] { display:none; }
+        #DocAiExtractModal [data-field-path*="Number"] { unicode-bidi:isolate; }
+        #DocAiExtractModal .docai-info:focus, #DocAiExtractModal .docai-bill:focus { outline:2px solid #357ebd; }
+        #DocAiExtractModal .docai-review-value { overflow-wrap:anywhere; }
+        #DocAiExtractModal .docai-review-low { cursor:help; }
+        #DocAiExtractModal .docai-review-ids { margin:0; }
+        #DocAiExtractModal .docai-review-ids > div { width:auto; padding:0; }
+        #DocAiExtractModal .docai-review-ids > div + div { margin-left:16px; }
+        #DocAiExtractModal .docai-review-footer { border-top:1px solid #eee; padding-top:10px; }
+        #DocAiExtractModal .docai-review-pager { float:left; margin-left:12px; }
+        #DocAiExtractModal .docai-review-pager .pagination { margin:0; }
+        #DocAiExtractModal .docai-review-search { max-width:500px; }
+    </style>
+}

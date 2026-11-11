@@ -2838,6 +2838,14 @@
                                     <button id="btn-AddShipment" class="btn btn-warning btn-sm m-t-n-xs hide" data-toggle="modal" data-target="#" onclick="Shipments_ClearAllControls();"><i class="fa fa-plus"></i>&nbsp;Add House</button>
                                     <button id="btn-DeleteShipments" type="button" class="float-right btn btn-sm btn-danger m-t-n-xs hide" onclick="Shipments_DeleteList();"><i class="fa fa-trash-o"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.Delete</button>
                                     <input id="btnAddFromExcel-Houses" type="file" style="display:inline;" title="Import Items from Excel 97-2003" class="btn-lightblue btn-sm  " onchange="Houses_onFileSelected(event, id);" />
+                                    @if (Forwarding.MvcApp.DocAi.DocAiSettings.Enabled)
+                                    {
+                                        <button id="btnDocAiExtract" type="button" class="btn btn-primary btn-sm m-t-n-xs" title="@Forwarding.MvcApp.App_Resources.App_Resources.DocAi_ExtractTooltip" data-default-title="@Forwarding.MvcApp.App_Resources.App_Resources.DocAi_ExtractTooltip" onclick="DocAiExtract_Open();"><i class="fa fa-magic"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.DocAi_ExtractWithAI</button>
+                                        <button id="btnDocAiUsage" type="button" class="btn btn-default btn-sm m-t-n-xs" onclick="DocAiUsage_Open();"><i class="fa fa-pie-chart"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.DocAi_AIUsage</button>
+                                        <small id="docAiUsageNote" aria-live="polite"></small>
+                                    }
+                                    @Html.Partial("~/Views/DocAi/_ExtractWithAiModal.cshtml")
+                                    @Html.Partial("~/Views/DocAi/_AiUsageModal.cshtml")
                                     <br /> <br />
                                     <div id="divAvailableShipments" class="col-sm-6 m-l-n m-t-n-sm hide">
                                         <section class="panel panel-default">

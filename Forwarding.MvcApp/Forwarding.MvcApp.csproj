@@ -2140,6 +2140,7 @@
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="DocAi\DocAiSettings.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Content Include="bin\ar\Forwarding.MvcApp.resources.dll" />
     <Content Include="bin\CrystalDecisions.CrystalReports.Engine.dll" />
@@ -2760,6 +2761,9 @@
     <Content Include="Scripts\Operations\Operations\Receivables.js" />
     <Content Include="Scripts\Operations\Operations\Routings.js" />
     <Content Include="Scripts\Operations\Operations\Shipments.js" />
+    <Content Include="Scripts\DocAi\DocAiExtract.js" />
+    <Content Include="Scripts\DocAi\DocAiDemoData.js" />
+    <Content Include="Scripts\DocAi\DocAiReview.js" />
     <Content Include="Scripts\PlugIns\MostaaTextArea.js" />
     <Content Include="Scripts\PricingModule\PricingTab\Pricing.js" />
     <Content Include="Scripts\PricingModule\PricingTab\PricingSettings.js" />
@@ -4138,6 +4142,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Operations\_OperationsEdit.cshtml" />
+    <Content Include="Views\DocAi\_ExtractWithAiModal.cshtml" />
+    <Content Include="Views\DocAi\_AiUsageModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\MasterData\Partners\_ModalPartners.cshtml" />

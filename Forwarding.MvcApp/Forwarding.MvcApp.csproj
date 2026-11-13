@@ -2807,6 +2807,7 @@
     <Content Include="Scripts\Operations\Operations\Receivables.js" />
     <Content Include="Scripts\Operations\Operations\Routings.js" />
     <Content Include="Scripts\Operations\Operations\Shipments.js" />
+    <Content Include="Scripts\DocAi\DocAiReview.js" />
     <Content Include="Scripts\PlugIns\MostaaTextArea.js" />
     <Content Include="Scripts\PricingModule\PricingTab\Pricing.js" />
     <Content Include="Scripts\PricingModule\PricingTab\PricingSettings.js" />

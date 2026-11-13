@@ -1,4 +1,4 @@
-﻿
+
 //pChargeTypeName.replace(/\s/g, "").replace(/\//g, '').replace(/\\/g, ''); //remove spaces,slashes,backslashes
 //pChargeTypeNameWithOnlyCharsAndNos = pChargeTypeName.replace(/[^\w]/g,'');
 //pDescriptionOfGoods.replace(/\n/g, "<br/>"); //to show all enters coming from DB i.e. convert \n to <br>
@@ -16,7 +16,7 @@
 //mytable.getElementsByTagName("tr")[i].getElementsByTagName("td")[j].getAttribute("class")
 
 debugger;
-var version = 18.4; // DocAi: AI Usage button + modal in the Houses tab (the edit view changed)
+var version = 21.4; // DocAi: no technical delivery text in the dialog
 var listVehicleTracking = '[]';
 var glbVersion = 14; //20200210 2300 ForwPublish w FlexiUpload Fix
 var TRCK_WorkingOnDrivers = 1;

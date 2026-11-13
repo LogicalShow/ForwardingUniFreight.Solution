@@ -6762,4 +6762,37 @@
   <data name="WebSite_3PLReceiveManage" xml:space="preserve">
     <value>هنا يمكنك إدارة استلام الأصناف الخاصة بك في المخزن ........</value>
   </data>
+  <data name="DocAi_AIUsage" xml:space="preserve">
+    <value>استخدام الذكاء الاصطناعي</value>
+  </data>
+  <data name="DocAi_Demo" xml:space="preserve">
+    <value>تجريبي</value>
+  </data>
+  <data name="DocAi_DemoTooltip" xml:space="preserve">
+    <value>قيم تجريبية: لا يتم استدعاء خدمة الذكاء الاصطناعي</value>
+  </data>
+  <data name="DocAi_ExtractTooltip" xml:space="preserve">
+    <value>قراءة بيانات بوليصة الشحن من مستند</value>
+  </data>
+  <data name="DocAi_ExtractWithAI" xml:space="preserve">
+    <value>استخراج بالذكاء الاصطناعي</value>
+  </data>
+  <data name="DocAi_NoFileChosen" xml:space="preserve">
+    <value>لم يتم اختيار ملف</value>
+  </data>
+  <data name="DocAi_Read" xml:space="preserve">
+    <value>قراءة</value>
+  </data>
+  <data name="DocAi_Reading" xml:space="preserve">
+    <value>جارٍ القراءة...</value>
+  </data>
+  <data name="DocAi_Refresh" xml:space="preserve">
+    <value>تحديث</value>
+  </data>
+  <data name="DocAi_RemoveFile" xml:space="preserve">
+    <value>حذف الملف</value>
+  </data>
+  <data name="DocAi_UploadFile" xml:space="preserve">
+    <value>رفع ملف</value>
+  </data>
 </root>

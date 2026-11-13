@@ -95,7 +95,7 @@ namespace Forwarding.MvcApp.Controllers.DocAi
             return Reply(HttpStatusCode.OK, Describe(RefreshIfRunning(doc, pOperationID)));
         }
 
-        // Records the selected file and sends it immediately. The same file read again on the same
+        // Records the selected file and queues sending after durable storage. The same file read again on the same
         // operation answers with its existing document — nothing is sent or billed twice.
         [HttpPost]
         public HttpResponseMessage Read()
@@ -163,9 +163,12 @@ namespace Forwarding.MvcApp.Controllers.DocAi
                     operationId,
                     WebSecurity.CurrentUserId,
                     clientRequestId: intentId);
-                DocAiClient.SendPending(localId); // a Pending row: send it now
                 AiDocumentView doc = FindDocument(operationId, localId);
-                return Reply(HttpStatusCode.OK, Describe(RefreshIfRunning(doc, operationId, localId)));
+                // Capture the durable state before background work; Read never waits for a remote send or refresh.
+                if (doc != null) doc.LocalId = localId; // preserve an alias's submission context, as Status does
+                object description = Describe(doc);
+                DocAiClient.QueueSendPending(localId);
+                return Reply(HttpStatusCode.OK, description);
             }
             catch (SqlException exception) when (exception.Number == 50003)
             {
@@ -183,8 +186,7 @@ namespace Forwarding.MvcApp.Controllers.DocAi
             }
         }
 
-        // Polled by the dialog every few seconds while a document is being read. It never sends: only Read and the
-        // recurring job send, so polling can't use up a document's tries.
+        // Polled by the dialog while reading; due sends use the same background claim path as Read.
         [HttpGet]
         public HttpResponseMessage Status(long pOperationID, Guid pLocalId)
         {
@@ -200,6 +202,7 @@ namespace Forwarding.MvcApp.Controllers.DocAi
                 return NotFoundReply();
             }
 
+            if (doc.Status == "Pending") DocAiClient.QueueSendPending(doc.LocalId);
             return Reply(HttpStatusCode.OK, Describe(RefreshIfRunning(doc, pOperationID, pLocalId)));
         }
 
@@ -262,6 +265,9 @@ namespace Forwarding.MvcApp.Controllers.DocAi
                 localId = document.LocalId,
                 fileName = document.OriginalFileName,
                 state = display.State,
+                sendState = document.Status == "Pending" ? "waiting to send" : "sent",
+                nextSubmitAt = document.NextSubmitAt.HasValue
+                    ? document.NextSubmitAt.Value.ToString("yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture) : null,
                 errorCode = document.ErrorCode,
                 quota = QuotaDetails(document),
                 errorMessage = display.Message,
@@ -294,21 +300,7 @@ namespace Forwarding.MvcApp.Controllers.DocAi
                     state = "reading";
                     break;
                 default: // Pending
-                    if (document.ErrorCode != null)
-                    {
-                        state = "failed"; // a send that will be tried again
-                        message = PendingMessage(document);
-                    }
-                    else if (document.CreatedAt < DateTime.Now.AddMinutes(-2))
-                    {
-                        state = "failed";
-                        message = "The document has not been sent yet. Try Read again later.";
-                    }
-                    else
-                    {
-                        state = "reading";
-                    }
-
+                    state = "reading";
                     break;
             }
 

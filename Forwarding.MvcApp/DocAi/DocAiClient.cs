@@ -148,6 +148,62 @@ namespace Forwarding.MvcApp.DocAi
 
         // Claims and sends one Pending row. A second caller (a repeated Read, the recurring job) finds the row
         // claimed and does nothing; a row waiting for its Retry-After is not claimed either.
+        public static void QueueSendPending(Guid localId)
+        {
+            if (!DocAiSettings.Enabled || Paused) return;
+            try
+            {
+                HostingEnvironment.QueueBackgroundWorkItem(token =>
+                {
+                    if (token.IsCancellationRequested) return;
+                    try { SendPending(localId); }
+                    catch (Exception) { Trace.TraceWarning("DocAi.BackgroundSendFailed"); }
+                });
+            }
+            catch (Exception) { Trace.TraceWarning("DocAi.BackgroundSendQueueFailed"); }
+            // The saved Pending row remains eligible for the recurring dispatcher if queuing fails.
+        }
+
+        // Hangfire owns the clock; ASP.NET tracks each transfer without blocking the clock on a 120 s outage.
+        public sealed class PendingSendProcess : Hangfire.Server.IBackgroundProcess
+        {
+            public void Execute(Hangfire.Server.BackgroundProcessContext context)
+            {
+                try { DispatchPendingSends(QueueClaimedSend); }
+                catch (Exception) { Trace.TraceWarning("DocAi.PendingDispatchFailed"); }
+                context.Wait(TimeSpan.FromSeconds(15));
+            }
+        }
+
+        internal static void DispatchPendingSends(Action<ClaimedRow> dispatch)
+        {
+            if (!DocAiSettings.Enabled) return;
+            for (int i = 0; i < 50 && !Paused; i++)
+            {
+                ClaimedRow row = AiDocumentsStore.ClaimNextPendingDue(DocAiSettings.IsDemo);
+                if (row == null) break;
+                try { dispatch(row); }
+                catch
+                {
+                    AiDocumentsStore.Release(row);
+                    throw;
+                }
+            }
+        }
+
+        private static void QueueClaimedSend(ClaimedRow row)
+        {
+            HostingEnvironment.QueueBackgroundWorkItem(async token =>
+            {
+                try
+                {
+                    if (!token.IsCancellationRequested) await SendAsync(row).ConfigureAwait(false);
+                }
+                catch (Exception) { Trace.TraceWarning("DocAi.BackgroundSendFailed"); }
+                finally { AiDocumentsStore.Release(row); }
+            });
+        }
+
         public static void SendPending(Guid localId)
         {
             if (!DocAiSettings.Enabled || Paused)
@@ -156,7 +212,7 @@ namespace Forwarding.MvcApp.DocAi
             }
 
             localId = AiDocumentsStore.ResolveLocalId(localId, DocAiSettings.IsDemo);
-            ClaimedRow row = AiDocumentsStore.Claim(localId, DocAiSettings.IsDemo);
+            ClaimedRow row = AiDocumentsStore.ClaimPending(localId, DocAiSettings.IsDemo);
             if (row == null)
             {
                 return;
@@ -171,8 +227,7 @@ namespace Forwarding.MvcApp.DocAi
             Run(() => SendAsync(row));
         }
 
-        // For a screen that shows the document: asks DocAi for the outcome of a Submitted row. It never sends — only
-        // SendPending (the user's Read) and the recurring job do — so a screen that polls can't use up a row's tries.
+        // Refresh claims enforce the shared five-second minimum across tabs, including after an HTTP error.
         public static void Refresh(Guid localId)
         {
             if (!DocAiSettings.Enabled || !DocAiSettings.RemotePolling)
@@ -383,9 +438,18 @@ namespace Forwarding.MvcApp.DocAi
         private static async Task SendAsync(ClaimedRow row)
         {
             // Every send path checks the pause and immediately releases a row claimed during that pause.
-            if (Paused || (!DocAiSettings.IsDemo && !TenantMatches()))
+            if (Paused)
             {
                 AiDocumentsStore.Release(row);
+                return;
+            }
+
+            bool unavailable;
+            if (!DocAiSettings.IsDemo && !TenantMatches(out unavailable))
+            {
+                if (unavailable)
+                    AiDocumentsStore.MarkSendFailed(row, false, true, "NETWORK", "DocAi could not be reached.", null);
+                else AiDocumentsStore.Release(row);
                 return;
             }
 
@@ -509,7 +573,19 @@ namespace Forwarding.MvcApp.DocAi
                 string runStatus = Json.Str(reply, "status");
                 if (runStatus == "Completed" || runStatus == "Failed")
                 {
-                    await RefreshAsync(row).ConfigureAwait(false); // a final answer: fetch it at once
+                    // MarkSubmitted released the send lease. Acquire a refresh lease as tabs do, including
+                    // for a terminal reply with RemotePolling Off. Never bypass the shared five-second gate.
+                    ClaimedRow refresh = AiDocumentsStore.Claim(row.LocalId, false);
+                    if (refresh == null)
+                    {
+                        await Task.Delay(TimeSpan.FromSeconds(5)).ConfigureAwait(false);
+                        refresh = AiDocumentsStore.Claim(row.LocalId, false);
+                    }
+                    if (refresh != null)
+                    {
+                        if (refresh.Status == "Submitted") await RefreshAsync(refresh).ConfigureAwait(false);
+                        else AiDocumentsStore.Release(refresh);
+                    }
                 }
 
                 return;
@@ -623,8 +699,9 @@ namespace Forwarding.MvcApp.DocAi
         // The catalog's whole consumerCode must equal dbo.DocAiIdentity.ConsumerCode for this product.
         // Checked lazily; a network error or missing/invalid identity is retried on the next send. A mismatch
         // keeps the kit off until the application pool recycles, so a copied API key cannot bill another company.
-        private static bool TenantMatches()
+        private static bool TenantMatches(out bool unavailable)
         {
+            unavailable = false;
             int state = Volatile.Read(ref _tenantChecked);
             if (state != 0)
             {
@@ -648,6 +725,7 @@ namespace Forwarding.MvcApp.DocAi
 
                     if (!response.IsSuccessStatusCode)
                     {
+                        unavailable = status == 408 || status == 429 || status >= 500;
                         return false; // try again next time
                     }
 
@@ -660,6 +738,7 @@ namespace Forwarding.MvcApp.DocAi
             catch (Exception exception) when (exception is HttpRequestException
                 || exception is OperationCanceledException)
             {
+                unavailable = true;
                 return false;
             }
         }

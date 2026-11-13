@@ -5938,6 +5938,105 @@ namespace Forwarding.MvcApp.App_Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AI Usage.
+        /// </summary>
+        public static string DocAi_AIUsage {
+            get {
+                return ResourceManager.GetString("DocAi_AIUsage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DEMO.
+        /// </summary>
+        public static string DocAi_Demo {
+            get {
+                return ResourceManager.GetString("DocAi_Demo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sample values: the DocAi service is not called.
+        /// </summary>
+        public static string DocAi_DemoTooltip {
+            get {
+                return ResourceManager.GetString("DocAi_DemoTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read the B/L data from a document.
+        /// </summary>
+        public static string DocAi_ExtractTooltip {
+            get {
+                return ResourceManager.GetString("DocAi_ExtractTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Extract with AI.
+        /// </summary>
+        public static string DocAi_ExtractWithAI {
+            get {
+                return ResourceManager.GetString("DocAi_ExtractWithAI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No file chosen.
+        /// </summary>
+        public static string DocAi_NoFileChosen {
+            get {
+                return ResourceManager.GetString("DocAi_NoFileChosen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read.
+        /// </summary>
+        public static string DocAi_Read {
+            get {
+                return ResourceManager.GetString("DocAi_Read", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reading....
+        /// </summary>
+        public static string DocAi_Reading {
+            get {
+                return ResourceManager.GetString("DocAi_Reading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Refresh.
+        /// </summary>
+        public static string DocAi_Refresh {
+            get {
+                return ResourceManager.GetString("DocAi_Refresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove the file.
+        /// </summary>
+        public static string DocAi_RemoveFile {
+            get {
+                return ResourceManager.GetString("DocAi_RemoveFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload File.
+        /// </summary>
+        public static string DocAi_UploadFile {
+            get {
+                return ResourceManager.GetString("DocAi_UploadFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File In.
         /// </summary>
         public static string DocIn {

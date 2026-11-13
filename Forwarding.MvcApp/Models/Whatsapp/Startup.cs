@@ -14,10 +14,12 @@ namespace Forwarding.MvcApp.Models.Whatsapp
             GlobalConfiguration.Configuration
                 .UseSqlServerStorage(System.Configuration.ConfigurationManager.ConnectionStrings["ConnectionString"].ToString());
 
-            app.UseHangfireServer();
+            app.UseHangfireServer(new Hangfire.Server.IBackgroundProcess[] {
+                new Forwarding.MvcApp.DocAi.DocAiClient.PendingSendProcess()
+            });
             app.UseHangfireDashboard("/hangfire");
 
-            // DocAi: send due documents, refresh submitted ones, delete old file copies, purge old results.
+            // DocAi: 15-second Pending dispatcher above; five-minute maintenance also refreshes older submissions.
             // Does nothing while DocAi:Enabled is false.
             RecurringJob.AddOrUpdate("docai-maintenance", () => Forwarding.MvcApp.DocAi.DocAiClient.RunMaintenance(), "*/5 * * * *");
         }

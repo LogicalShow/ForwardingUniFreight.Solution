@@ -8389,4 +8389,37 @@
   <data name="PS_PurchasingOrdersNewFollowUPManage" xml:space="preserve">
     <value>Purchasing Orders Follow Up</value>
   </data>
+  <data name="DocAi_AIUsage" xml:space="preserve">
+    <value>AI Usage</value>
+  </data>
+  <data name="DocAi_Demo" xml:space="preserve">
+    <value>DEMO</value>
+  </data>
+  <data name="DocAi_DemoTooltip" xml:space="preserve">
+    <value>Sample values: the DocAi service is not called</value>
+  </data>
+  <data name="DocAi_ExtractTooltip" xml:space="preserve">
+    <value>Read the B/L data from a document</value>
+  </data>
+  <data name="DocAi_ExtractWithAI" xml:space="preserve">
+    <value>Extract with AI</value>
+  </data>
+  <data name="DocAi_NoFileChosen" xml:space="preserve">
+    <value>No file chosen</value>
+  </data>
+  <data name="DocAi_Read" xml:space="preserve">
+    <value>Read</value>
+  </data>
+  <data name="DocAi_Reading" xml:space="preserve">
+    <value>Reading...</value>
+  </data>
+  <data name="DocAi_Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="DocAi_RemoveFile" xml:space="preserve">
+    <value>Remove the file</value>
+  </data>
+  <data name="DocAi_UploadFile" xml:space="preserve">
+    <value>Upload File</value>
+  </data>
 </root>

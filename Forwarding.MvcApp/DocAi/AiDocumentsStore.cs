@@ -247,6 +247,16 @@ COMMIT TRANSACTION;";
             return ClaimRow(null, isDemo, DocAiSettings.RemotePolling);
         }
 
+        public static ClaimedRow ClaimNextPendingDue(bool isDemo)
+        {
+            return ClaimRow(null, isDemo, false);
+        }
+
+        public static ClaimedRow ClaimPending(Guid localId, bool isDemo)
+        {
+            return ClaimRow(localId, isDemo, false);
+        }
+
         private static ClaimedRow ClaimRow(Guid? localId, bool isDemo, bool remotePolling = true)
         {
             const string sql = @"
@@ -256,11 +266,12 @@ SET LastCheckedAt = GETDATE(), ClaimToken = @claimToken
 OUTPUT inserted.ID, inserted.ExtractionStatus, inserted.RemoteJobId, inserted.RemoteRunNo, inserted.ClaimToken,
        inserted.StoredFileName, inserted.RequestedDocumentTypeCode, inserted.RequestedShippingLineCode, inserted.Reprocess
 WHERE (@localId IS NULL OR ID = @localId) AND IsDemo = @isDemo
-  AND (   (ExtractionStatus = 'Pending'   AND (@localId IS NOT NULL OR CreatedAt < DATEADD(minute, -1, GETDATE()))
-                                AND (NextSubmitAt IS NULL OR NextSubmitAt <= GETDATE()))
-       OR (@remotePolling = 1 AND ExtractionStatus = 'Submitted' AND (@localId IS NOT NULL OR SubmittedAt < DATEADD(minute, -10, GETDATE()))))
+  AND (   (ExtractionStatus = 'Pending' AND (NextSubmitAt IS NULL OR NextSubmitAt <= GETDATE()))
+       OR (@remotePolling = 1 AND ExtractionStatus = 'Submitted'
+           AND (LastCheckedAt IS NULL OR LastCheckedAt <= DATEADD(second, -5, GETDATE()))
+           AND (@localId IS NOT NULL OR SubmittedAt < DATEADD(minute, -10, GETDATE()))))
   AND (   LastCheckedAt IS NULL OR LastCheckedAt < DATEADD(minute, -3, GETDATE())
-       OR (@localId IS NOT NULL AND ClaimToken IS NULL));";
+       OR ClaimToken IS NULL);";
             return Execute(sql, command =>
             {
                 Add(command, "@isDemo", SqlDbType.Bit, isDemo);
@@ -339,8 +350,10 @@ SET SubmitAttempts = SubmitAttempts + @countsAsAttempt,
     ErrorCode      = CASE WHEN @permanent = 0 AND SubmitAttempts + @countsAsAttempt >= 10 THEN 'SUBMIT_EXHAUSTED'
                           ELSE @errorCode END,
     ErrorMessage   = @errorMessage,
-    NextSubmitAt   = CASE WHEN @retryAfterSeconds IS NULL THEN NULL
-                          ELSE DATEADD(second, @retryAfterSeconds, GETDATE()) END,
+    NextSubmitAt   = CASE WHEN @permanent = 1 OR SubmitAttempts + @countsAsAttempt >= 10 THEN NULL
+                         ELSE DATEADD(second, COALESCE(@retryAfterSeconds,
+                             CASE SubmitAttempts WHEN 0 THEN 15 WHEN 1 THEN 30 WHEN 2 THEN 60
+                                 WHEN 3 THEN 120 ELSE 300 END), GETDATE()) END,
     CompletedAt    = CASE WHEN @permanent = 1 OR SubmitAttempts + @countsAsAttempt >= 10 THEN GETDATE() END,
     ClaimToken     = NULL
 WHERE ID = @localId AND ExtractionStatus = 'Pending' AND ClaimToken = @claimToken;";

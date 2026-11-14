@@ -3988,7 +3988,6 @@
     <Content Include="Views\Administration\Settings\_LinkeUserWithAccounts.cshtml" />
     <Content Include="Views\MasterData\Others\_ModalVessels.cshtml" />
     <Content Include="Views\PS\PS_Reports\_PS_PurchasingOrdersNewFollowUP.cshtml" />
-    <None Include="DocAi\Sql\CreateAIDocumentTables.sql" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -164,6 +164,43 @@ namespace Forwarding.MvcApp.DocAi
             // The saved Pending row remains eligible for the recurring dispatcher if queuing fails.
         }
 
+        // One attempt only. Local cancellation has already committed before this is queued.
+        public static void QueueCancel(Guid localId)
+        {
+            if (!DocAiSettings.Enabled || DocAiSettings.IsDemo) return;
+            try
+            {
+                HostingEnvironment.QueueBackgroundWorkItem(async token =>
+                {
+                    if (!token.IsCancellationRequested) await CancelRemote(localId).ConfigureAwait(false);
+                });
+            }
+            catch (Exception) { Trace.TraceWarning("DocAi.CancelQueueFailed"); }
+        }
+
+        private static async Task CancelRemote(Guid localId)
+        {
+            if (DocAiSettings.IsDemo) return;
+            try
+            {
+                using (var request = V2Request(HttpMethod.Post, "api/v2/jobs/cancel?requestId=" + localId, true))
+                using (var budget = new CancellationTokenSource(TimeSpan.FromSeconds(10)))
+                using (var response = await Http.Value.SendAsync(request, budget.Token).ConfigureAwait(false))
+                {
+                    // Every remote outcome is advisory. Never log response bodies or identifiers.
+                    string outcome = "Unavailable";
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var envelope = Json.ReadObject(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        string value = Json.Str(Json.Obj(envelope, "Value"), "Outcome");
+                        if (value == "Cancelled" || value == "Cancelling" || value == "Continuing" || value == "Finished") outcome = value;
+                    }
+                    Trace.TraceInformation("DocAi.CancelResponse HTTP {0} outcome {1}", (int)response.StatusCode, outcome);
+                }
+            }
+            catch (Exception) { Trace.TraceWarning("DocAi.CancelFailed"); }
+        }
+
         // Hangfire owns the clock; ASP.NET tracks each transfer without blocking the clock on a 120 s outage.
         public sealed class PendingSendProcess : Hangfire.Server.IBackgroundProcess
         {
@@ -558,13 +595,19 @@ namespace Forwarding.MvcApp.DocAi
                 Guid jobId = Guid.Parse(Json.Str(reply, "jobId"));
                 short runNo = short.Parse(Json.Str(reply, "runNo"), CultureInfo.InvariantCulture);
                 short pages;
-                AiDocumentsStore.MarkSubmitted(
+                bool cancelled = AiDocumentsStore.MarkSubmitted(
                     row,
                     jobId,
                     runNo,
                     short.TryParse(Json.Str(reply, "pageCount"), out pages) ? pages : (short?)null,
                     Json.Str(reply, "rereadSkipped") == "QUOTA_EXHAUSTED" ? null : Json.Str(reply, "runReason"),
                     SubmissionChanges(reply));
+                if (cancelled)
+                {
+                    // The submit reached the service after local cancellation (possibly after its 404).
+                    await CancelRemote(row.LocalId).ConfigureAwait(false);
+                    return;
+                }
                 if (AiDocumentsStore.ResolveLocalId(row.LocalId, false) != row.LocalId)
                 {
                     return;

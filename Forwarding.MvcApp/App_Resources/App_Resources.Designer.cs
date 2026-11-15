@@ -2601,6 +2601,10 @@ namespace Forwarding.MvcApp.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
+        public static string DocAi_CancelWarning {
+            get { return ResourceManager.GetString("DocAi_CancelWarning", resourceCulture); }
+        }
+
         public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);

@@ -6780,6 +6780,9 @@
   <data name="DocAi_NoFileChosen" xml:space="preserve">
     <value>لم يتم اختيار ملف</value>
   </data>
+  <data name="DocAi_CancelWarning" xml:space="preserve">
+    <value>هل تريد إيقاف الانتظار لهذا المستند؟ إذا كانت قراءة الذكاء الاصطناعي قد بدأت بالفعل، فسيتم احتساب صفحاته وستكتمل القراءة. وعند رفع الملف نفسه مرة أخرى ستظهر تلك النتيجة دون خصم إضافي.</value>
+  </data>
   <data name="DocAi_Read" xml:space="preserve">
     <value>قراءة</value>
   </data>

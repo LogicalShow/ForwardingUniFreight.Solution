@@ -69,17 +69,20 @@ SELECT TOP (1) @owner = d.ID
 FROM dbo.AIDocumentExtraction d JOIN dbo.AIDocumentExtraction source ON source.ID = @localId
 WHERE d.RemoteJobId = @remoteJobId AND d.RemoteRunNo = @runNo
   AND d.IsDemo = source.IsDemo AND d.SupersededByExtractionID IS NULL
+  AND d.ExtractionStatus <> 'Cancelled'
   AND (d.EntityName = source.EntityName OR (d.EntityName IS NULL AND source.EntityName IS NULL))
   AND (d.EntityID = source.EntityID OR (d.EntityID IS NULL AND source.EntityID IS NULL))
 ORDER BY d.CreatedAt, d.ID;
 IF @owner IS NOT NULL AND @owner <> @localId
+   AND EXISTS (SELECT 1 FROM dbo.AIDocumentExtraction WHERE ID = @localId AND ExtractionStatus IN ('Pending', 'Submitted'))
 BEGIN
     UPDATE dbo.AIDocumentExtraction SET SupersededByExtractionID = @owner, ExtractionStatus = 'Failed',
         ErrorCode = 'DUPLICATE', CompletedAt = GETDATE(), ClaimToken = NULL
     WHERE ID = @localId AND SupersededByExtractionID IS NULL
       AND ExtractionStatus IN ('Pending', 'Submitted');
     SET @bindingCount = @bindingCount + @@ROWCOUNT;
-    UPDATE dbo.AIDocumentExtraction SET SupersededByExtractionID = @owner WHERE SupersededByExtractionID = @localId;
+    UPDATE dbo.AIDocumentExtraction SET SupersededByExtractionID = @owner
+    WHERE SupersededByExtractionID = @localId AND ExtractionStatus <> 'Cancelled';
     SET @bindingCount = @bindingCount + @@ROWCOUNT;
 END
 ";
@@ -123,7 +126,7 @@ WHERE FileSha256 = @fileSha256 AND RequestedDocumentTypeCode = @documentTypeCode
   AND (RequestedShippingLineCode = @shippingLineCode OR (RequestedShippingLineCode IS NULL AND @shippingLineCode IS NULL))
   AND (EntityName = @entityName OR (EntityName IS NULL AND @entityName IS NULL))
   AND (EntityID   = @entityId   OR (EntityID   IS NULL AND @entityId   IS NULL))
-  AND ((@isDemo = 1 AND ExtractionStatus <> 'Failed' AND ResultPurgedAt IS NULL)
+  AND ((@isDemo = 1 AND ExtractionStatus NOT IN ('Failed', 'Cancelled') AND ResultPurgedAt IS NULL)
        OR (@isDemo = 0 AND ExtractionStatus IN ('Pending', 'Submitted')))
   AND SupersededByExtractionID IS NULL AND IsDemo = @isDemo
 ORDER BY CreatedAt DESC, ID DESC;";
@@ -286,7 +289,7 @@ WHERE (@localId IS NULL OR ID = @localId) AND IsDemo = @isDemo
         }
 
         // Binds the run, or retains a hidden alias so an outstanding Read/Status resolves to stored history.
-        public static void MarkSubmitted(
+        public static bool MarkSubmitted(
             ClaimedRow row,
             Guid remoteJobId,
             short runNo,
@@ -313,9 +316,12 @@ WHERE ID = @localId AND ExtractionStatus = 'Pending' AND ClaimToken = @claimToke
   AND SupersededByExtractionID IS NULL;
 -- A skipped re-read belongs to this submission even when it aliases an older result.
 UPDATE dbo.AIDocumentExtraction SET ChangesJson = @changesJson
-WHERE ID = @localId AND SupersededByExtractionID IS NOT NULL AND @rereadSkipped = 1;
+WHERE ID = @localId AND SupersededByExtractionID IS NOT NULL AND @rereadSkipped = 1
+  AND ExtractionStatus <> 'Cancelled';
+SELECT CASE WHEN EXISTS (SELECT 1 FROM dbo.AIDocumentExtraction
+    WHERE ID = @localId AND ExtractionStatus = 'Cancelled') THEN 1 ELSE 0 END;
 COMMIT TRANSACTION;";
-            Execute(sql, command =>
+            bool cancelled = Execute(sql, command =>
             {
                 Add(command, "@localId", SqlDbType.UniqueIdentifier, row.LocalId);
                 Add(command, "@claimToken", SqlDbType.UniqueIdentifier, row.ClaimToken);
@@ -327,10 +333,11 @@ COMMIT TRANSACTION;";
                 bool rereadSkipped = !string.IsNullOrEmpty(changesJson)
                     && Json.Str(Json.ReadObject(changesJson), "rereadSkipped") == "QUOTA_EXHAUSTED";
                 Add(command, "@rereadSkipped", SqlDbType.Bit, rereadSkipped);
-                return command.ExecuteNonQuery();
+                return Convert.ToInt32(command.ExecuteScalar(), CultureInfo.InvariantCulture) == 1;
             });
             row.RemoteJobId = remoteJobId;
             row.RemoteRunNo = runNo;
+            return cancelled;
         }
 
         // Records a send failure after DocAiClient has classified the response.
@@ -477,12 +484,31 @@ SELECT @bindingCount + @outcomeCount;";
         public static void Release(ClaimedRow row)
         {
             const string sql = "UPDATE dbo.AIDocumentExtraction SET ClaimToken = NULL "
-                + "WHERE ID = @localId AND ClaimToken = @claimToken;";
+                + "WHERE ID = @localId AND ClaimToken = @claimToken AND ExtractionStatus IN ('Pending', 'Submitted');";
             Execute(sql, command =>
             {
                 Add(command, "@localId", SqlDbType.UniqueIdentifier, row.LocalId);
                 Add(command, "@claimToken", SqlDbType.UniqueIdentifier, row.ClaimToken);
                 return command.ExecuteNonQuery();
+            });
+        }
+
+        // The operation/type/mode scope matches the dialog's Status lookup; never follows an alias here.
+        public static bool Cancel(Guid localId, string entityName, long entityId, bool isDemo)
+        {
+            const string sql = @"
+UPDATE dbo.AIDocumentExtraction
+SET ExtractionStatus = 'Cancelled', ErrorCode = 'CANCELLED', CompletedAt = GETDATE(), NextSubmitAt = NULL
+WHERE ID = @localId AND EntityName = @entityName AND EntityID = @entityId AND IsDemo = @isDemo
+  AND RequestedDocumentTypeCode IN ('BL', 'AUTO') AND SupersededByExtractionID IS NULL
+  AND ExtractionStatus IN ('Pending', 'Submitted');";
+            return Execute(sql, command =>
+            {
+                Add(command, "@localId", SqlDbType.UniqueIdentifier, localId);
+                Add(command, "@entityName", SqlDbType.VarChar, entityName, 50);
+                Add(command, "@entityId", SqlDbType.BigInt, entityId);
+                Add(command, "@isDemo", SqlDbType.Bit, isDemo);
+                return command.ExecuteNonQuery() == 1;
             });
         }
 

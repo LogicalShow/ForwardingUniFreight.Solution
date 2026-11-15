@@ -37,6 +37,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-link btn-sm" data-dismiss="modal" aria-hidden="true">@Forwarding.MvcApp.App_Resources.App_Resources.Close</button>
+                    <button id="btnDocAiCancel" type="button" class="btn btn-default btn-sm hide" onclick="DocAiExtract_Cancel();"
+                            data-confirm="@Forwarding.MvcApp.App_Resources.App_Resources.DocAi_CancelWarning">@Forwarding.MvcApp.App_Resources.App_Resources.Cancel</button>
                     <button id="btnDocAiRead" type="button" class="btn btn-primary btn-sm" disabled onclick="DocAiExtract_Read();"
                             data-label-read="@Forwarding.MvcApp.App_Resources.App_Resources.DocAi_Read" data-label-reading="@Forwarding.MvcApp.App_Resources.App_Resources.DocAi_Reading"><i class="fa fa-magic"></i>&nbsp;@Forwarding.MvcApp.App_Resources.App_Resources.DocAi_Read</button>
                 </div>

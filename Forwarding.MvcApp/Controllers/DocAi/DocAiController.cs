@@ -206,6 +206,19 @@ namespace Forwarding.MvcApp.Controllers.DocAi
             return Reply(HttpStatusCode.OK, Describe(RefreshIfRunning(doc, pOperationID, pLocalId)));
         }
 
+        // Same authorization and operation lookup as Status. No remote I/O on the request thread.
+        [HttpPost]
+        public HttpResponseMessage Cancel(long pOperationID, Guid pLocalId)
+        {
+            if (!DocAiSettings.Enabled) return NotFoundReply();
+            AiDocumentView doc = FindDocument(pOperationID, pLocalId);
+            if (doc == null) return NotFoundReply();
+            // Status resolves aliases to their owner. Cancel that same scoped operation row.
+            if (AiDocumentsStore.Cancel(doc.LocalId, EntityName, pOperationID, DocAiSettings.IsDemo))
+                DocAiClient.QueueCancel(doc.LocalId);
+            return Reply(HttpStatusCode.OK, Describe(FindDocument(pOperationID, pLocalId)));
+        }
+
         private static AiDocumentView FindDocument(long operationId, Guid? requestedId)
         {
             return AiDocumentsStore.Get(EntityName, operationId, DocumentType, requestedId, DocAiSettings.IsDemo, true);
@@ -291,6 +304,9 @@ namespace Forwarding.MvcApp.Controllers.DocAi
             {
                 case "Completed":
                     state = "done";
+                    break;
+                case "Cancelled":
+                    state = "cancelled";
                     break;
                 case "Failed":
                     state = "failed";

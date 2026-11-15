@@ -8422,4 +8422,7 @@
   <data name="DocAi_UploadFile" xml:space="preserve">
     <value>Upload File</value>
   </data>
+  <data name="DocAi_CancelWarning" xml:space="preserve">
+    <value>Stop waiting for this document? If AI reading has already started, its pages are counted and the reading will finish. Uploading the same file again will show that result without another charge.</value>
+  </data>
 </root>

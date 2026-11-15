@@ -8,6 +8,7 @@ var DocAiExtract_Generation = 0;
 var DocAiExtract_State = "empty";
 var DocAiExtract_Doc = null;            // what the server last said about the document (DocAiController.Describe)
 var DocAiExtract_PollTimer = null;
+var DocAiExtract_WaitTimer = null;
 var DocAiExtract_PollStarted = 0;
 var DocAiExtract_PollActive = false;
 var DocAiExtract_PollRequest = null;
@@ -88,6 +89,29 @@ function DocAiExtract_Remove() {
     DocAiExtract_Render("empty");
 }
 
+var DocAiExtract_Cancelling = false;
+function DocAiExtract_CanCancel() {
+    var doc = DocAiExtract_Doc;
+    if (DocAiExtract_State != "reading" || !doc || !doc.localId || DocAiExtract_Uploading) return false;
+    if (doc.sendState == "waiting to send") return !!doc.nextSubmitAt;
+    return DocAiExtract_PollActive && new Date().getTime() - DocAiExtract_PollStarted >= 180000;
+}
+function DocAiExtract_Cancel() {
+    if (DocAiExtract_Cancelling || !DocAiExtract_CanCancel()) return;
+    var localId = DocAiExtract_Doc.localId, generation = DocAiExtract_Generation;
+    swal({ title: "Cancel", text: $("#btnDocAiCancel").attr("data-confirm"), type: "warning", showCancelButton: true }, function (confirmed) {
+        if (!confirmed || generation != DocAiExtract_Generation || DocAiExtract_Cancelling) return;
+        DocAiExtract_Cancelling = true;
+        $("#btnDocAiCancel").prop("disabled", true);
+        $.ajax({ type: "POST", url: strServerURL + "/api/DocAi/Cancel?" + $.param({ pOperationID: $("#hOperationID").val(), pLocalId: localId }),
+            dataType: "json",
+            success: function () { if (generation == DocAiExtract_Generation) DocAiExtract_Remove(); },
+            error: function () { if (generation == DocAiExtract_Generation) swal("Sorry", "Could not stop waiting. Please try again."); },
+            complete: function () { DocAiExtract_Cancelling = false; $("#btnDocAiCancel").prop("disabled", false); }
+        });
+    });
+}
+
 function DocAiExtract_Read() {
     if (DocAiExtract_Uploading) return;
     DocAiExtract_Generation++;
@@ -120,6 +144,7 @@ function DocAiExtract_Read() {
 
 // One answer of the server: draw it, and keep polling while the document is being read.
 function DocAiExtract_Show(pDoc) {
+    if (pDoc.state == "cancelled") { DocAiExtract_Remove(); return; }
     if (pDoc.state == "done" && pDoc.resultType != "bill-of-lading.v1" && pDoc.resultType != "cargo-manifest.v1")
         pDoc = { state: "failed", localId: pDoc.localId, fileName: pDoc.fileName };
     if (pDoc.errorCode == "QUOTA_EXHAUSTED") DocAiExtract_IntentId = null; // next Read is a new submission after renewal
@@ -155,6 +180,11 @@ function DocAiExtract_StartPolling() {
         DocAiExtract_PollActive = true;
         DocAiExtract_PollGeneration = DocAiExtract_Generation;
         DocAiExtract_PollStarted = new Date().getTime();
+        var generation = DocAiExtract_Generation;
+        DocAiExtract_WaitTimer = setTimeout(function () {
+            DocAiExtract_WaitTimer = null;
+            if (generation == DocAiExtract_Generation && DocAiExtract_State == "reading") DocAiExtract_ShowReadingStatus();
+        }, 180000);
     }
     DocAiExtract_SchedulePoll();
 }
@@ -173,6 +203,8 @@ function DocAiExtract_SchedulePoll() {
 }
 
 function DocAiExtract_StopPolling() {
+    if (DocAiExtract_WaitTimer != null) clearTimeout(DocAiExtract_WaitTimer);
+    DocAiExtract_WaitTimer = null;
     DocAiExtract_PollActive = false;
     if (DocAiExtract_PollTimer != null) clearTimeout(DocAiExtract_PollTimer);
     DocAiExtract_PollTimer = null;
@@ -239,6 +271,7 @@ function DocAiExtract_StartLoadingMessages() {
 
 // The current loading message, centered in the dialog with a spinner (the same icon as the Reading... button).
 function DocAiExtract_ShowReadingStatus() {
+    $("#btnDocAiCancel").toggleClass("hide", !DocAiExtract_CanCancel());
     var status = document.getElementById("pDocAiStatus");
     if (!status) return;
     status.className = "m-t m-b text-muted text-center";
@@ -270,6 +303,7 @@ function DocAiExtract_FailureMessage(doc) {
     debugger;
     var code = doc && doc.errorCode != null ? String(doc.errorCode) : "";
     switch (code) {
+        case "CANCELLED": return "";
         case "QUOTA_EXHAUSTED": return DocAiUsage_QuotaText(doc);
         case "UNCLASSIFIED": return "This file is not a bill of lading or a cargo manifest.";
         case "TOO_MANY_PAGES":
@@ -288,6 +322,7 @@ function DocAiExtract_Render(pState) {
     var wasReading = DocAiExtract_State == "reading";
     DocAiExtract_State = pState;
     var reading = pState == "reading";
+    $("#btnDocAiCancel").toggleClass("hide", !DocAiExtract_CanCancel());
     if (reading && !wasReading) DocAiExtract_StartLoadingMessages();   // polling re-renders "reading": keep the current message
     else if (!reading) DocAiExtract_StopLoadingMessages();
     var hasFile = $("#txtDocAiFileName").val() != "";

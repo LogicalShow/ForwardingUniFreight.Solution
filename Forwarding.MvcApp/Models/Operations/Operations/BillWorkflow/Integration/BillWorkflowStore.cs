@@ -71,7 +71,7 @@ WHERE requested.ID = @DocumentReviewId AND requested.IsDemo = @IsDemo AND d.IsDe
                     // Serialize starts for this extraction; confirmed bill rows are never reinitialised.
                     command.CommandText = @"
 SELECT ID FROM dbo.AIDocumentExtraction WITH (UPDLOCK, HOLDLOCK)
-WHERE ID = @DocumentReviewId AND IsDemo = @IsDemo;";
+WHERE ID = @DocumentReviewId AND IsDemo = @IsDemo AND ExtractionStatus <> 'Cancelled';";
                     if (command.ExecuteScalar() == null)
                         throw new DocumentReviewException(DocumentReviewFailure.NotFound,
                             BillWorkflowCodes.DocumentReviewNotFound, BillWorkflowMessages.DocumentReviewNotFound);
@@ -87,7 +87,7 @@ WHERE ID = @DocumentReviewId AND IsDemo = @IsDemo;";
                     command.CommandText = @"
 UPDATE dbo.AIDocumentExtraction
 SET ReviewContextJson = @ContextJson, ReviewOwnerUserID = COALESCE(ReviewOwnerUserID, @UserId)
-WHERE ID = @DocumentReviewId AND IsDemo = @IsDemo;";
+WHERE ID = @DocumentReviewId AND IsDemo = @IsDemo AND ExtractionStatus <> 'Cancelled';";
                     command.ExecuteNonQuery();
                     foreach (var bill in bills.Where(item => item.ReviewStatus == BillReviewStatus.NotStarted))
                     {
@@ -98,7 +98,8 @@ WHERE ID = @DocumentReviewId AND IsDemo = @IsDemo;";
 UPDATE dbo.AIDocumentBills
 SET ReviewStatus = 1, ReferenceResolutionsJson = '[]', IssuesJson = @Issues,
     UpdatedBy = @UserId, UpdatedAt = @UpdatedAt
-WHERE ID = @BillReviewId AND AIDocumentExtractionID = @DocumentReviewId AND ReviewStatus = 0;";
+WHERE ID = @BillReviewId AND AIDocumentExtractionID = @DocumentReviewId AND ReviewStatus = 0
+  AND EXISTS (SELECT 1 FROM dbo.AIDocumentExtraction WHERE ID = @DocumentReviewId AND ExtractionStatus <> 'Cancelled');";
                             update.Parameters.Add("@BillReviewId", SqlDbType.UniqueIdentifier).Value = bill.BillReviewId;
                             update.Parameters.Add("@DocumentReviewId", SqlDbType.UniqueIdentifier).Value = extractionId;
                             update.Parameters.Add("@Issues", SqlDbType.NVarChar, -1).Value = JsonConvert.SerializeObject(bill.Issues);
@@ -239,7 +240,7 @@ OUTPUT d.ID AS DocumentReviewId, d.EntityID, d.ReviewContextJson,
 FROM dbo.AIDocumentBills b
 JOIN dbo.AIDocumentExtraction d ON d.ID = b.AIDocumentExtractionID
 WHERE b.ID = @BillReviewId AND b.AIDocumentExtractionID = @DocumentReviewId
-  AND b.Version = @ExpectedVersion AND b.ReviewStatus = 1 AND d.IsDemo = @IsDemo;";
+  AND b.Version = @ExpectedVersion AND b.ReviewStatus = 1 AND d.IsDemo = @IsDemo AND d.ExtractionStatus <> 'Cancelled';";
                 AddDocumentParameters(command, review.DocumentReviewId);
                 command.Parameters.Add("@BillReviewId", SqlDbType.UniqueIdentifier).Value = review.BillReviewId;
                 command.Parameters.Add("@ExpectedVersion", SqlDbType.Int).Value = expectedVersion;

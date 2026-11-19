@@ -12,6 +12,10 @@ namespace Forwarding.MvcApp.Models.Operations.Operations.BillWorkflow
         public static void RegisterRoutes(HttpConfiguration configuration)
         {
             configuration.Routes.MapHttpRoute(
+                name: "BillWorkflow_SubmitReferenceStep",
+                routeTemplate: "api/DocumentReview/SubmitReferenceStep",
+                defaults: new { controller = "DocumentReview", action = "SubmitReferenceStep" });
+            configuration.Routes.MapHttpRoute(
                 name: "BillWorkflow_ConfirmReferences",
                 routeTemplate: "api/DocumentReview/ConfirmReferences",
                 defaults: new { controller = "DocumentReview", action = "ConfirmReferences" });
@@ -32,6 +36,10 @@ namespace Forwarding.MvcApp.Models.Operations.Operations.BillWorkflow
                 routeTemplate: "api/DocumentReview/SearchCustomers",
                 defaults: new { controller = "DocumentReview", action = "SearchCustomers" });
             configuration.Routes.MapHttpRoute(
+                name: "BillWorkflow_SearchPorts",
+                routeTemplate: "api/DocumentReview/SearchPorts",
+                defaults: new { controller = "DocumentReview", action = "SearchPorts" });
+            configuration.Routes.MapHttpRoute(
                 name: "BillWorkflow_GetBillReviews",
                 routeTemplate: "api/DocumentReview/GetBillReviews",
                 defaults: new { controller = "DocumentReview", action = "GetBillReviews" });
@@ -46,6 +54,7 @@ namespace Forwarding.MvcApp.Models.Operations.Operations.BillWorkflow
         {
             var connectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
             var customers = new CustomerDirectory(connectionString);
+            var ports = new PortDirectory(connectionString);
             return new DocumentReviewService(
                 userId,
                 DocAiResult.BlType,
@@ -54,7 +63,9 @@ namespace Forwarding.MvcApp.Models.Operations.Operations.BillWorkflow
                 new BillLookupPolicy(),
                 new BillWorkflowStore(connectionString, DocAiSettings.IsDemo, new BillOfLadingJsonAdapter()),
                 new CustomerResolver(customers),
-                customers);
+                customers,
+                new PortResolver(ports),
+                ports);
         }
     }
 }

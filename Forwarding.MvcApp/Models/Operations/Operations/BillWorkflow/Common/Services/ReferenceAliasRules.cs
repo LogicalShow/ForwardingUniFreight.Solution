@@ -3,7 +3,7 @@ using System.Text;
 
 namespace BillWorkflow.Common.Services
 {
-    public static class CustomerAliasRules
+    public static class ReferenceAliasRules
     {
         public static string Normalize(string value)
         {

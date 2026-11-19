@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -8,6 +7,7 @@ using BillWorkflow.Common.Services;
 using WebMatrix.WebData;
 using BillWorkflow.Common.Validation;
 using Forwarding.MvcApp.Models.Operations.Operations.BillWorkflow;
+using System.Net.Http.Headers;
 
 namespace Forwarding.MvcApp.Controllers.Operations.API_Operations.BillWorkflow
 {
@@ -47,7 +47,7 @@ namespace Forwarding.MvcApp.Controllers.Operations.API_Operations.BillWorkflow
                     BillWorkflowMessages.BillReviewIdInvalid);
             var details = service.GetBillReview(billReviewId);
             var response = CreateSuccessResponse(HttpStatusCode.OK, details);
-            response.Headers.CacheControl = new System.Net.Http.Headers.CacheControlHeaderValue { NoStore = true };
+            response.Headers.CacheControl = new CacheControlHeaderValue { NoStore = true };
             return response;
         }
 
@@ -59,7 +59,7 @@ namespace Forwarding.MvcApp.Controllers.Operations.API_Operations.BillWorkflow
                     string.Format(BillWorkflowMessages.BillReviewsRequestRequired, DocumentReviewService.MaximumBillPageSize));
             var page = service.GetBillReviews(request.DocumentReviewId, request.Page, request.PageSize);
             var response = CreateSuccessResponse(HttpStatusCode.OK, page);
-            response.Headers.CacheControl = new System.Net.Http.Headers.CacheControlHeaderValue { NoStore = true };
+            response.Headers.CacheControl = new CacheControlHeaderValue { NoStore = true };
             return response;
         }
 
@@ -73,7 +73,21 @@ namespace Forwarding.MvcApp.Controllers.Operations.API_Operations.BillWorkflow
             var result = service.ResolveReferences(request.BillReviewId, request.ExpectedVersion,
                 request.Role);
             var response = CreateSuccessResponse(HttpStatusCode.OK, result);
-            response.Headers.CacheControl = new System.Net.Http.Headers.CacheControlHeaderValue { NoStore = true };
+            response.Headers.CacheControl = new CacheControlHeaderValue { NoStore = true };
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage SubmitReferenceStep([FromBody] SubmitReferenceStepRequest request)
+        {
+            if (!ModelState.IsValid || request == null || request.BillReviewId == Guid.Empty ||
+                request.ExpectedVersion <= 0 || string.IsNullOrWhiteSpace(request.Role) || request.Id <= 0)
+                return CreateErrorResponse(HttpStatusCode.BadRequest, BillWorkflowCodes.InvalidSubmitReferenceStepRequest,
+                    BillWorkflowMessages.SubmitReferenceStepRequestRequired);
+            var result = service.SubmitReferenceStep(request.BillReviewId, request.ExpectedVersion,
+                new BillReferenceSelection { Role = request.Role, Id = request.Id, ResolutionMethod = request.ResolutionMethod });
+            var response = CreateSuccessResponse(HttpStatusCode.OK, result);
+            response.Headers.CacheControl = new CacheControlHeaderValue { NoStore = true };
             return response;
         }
 
@@ -81,13 +95,13 @@ namespace Forwarding.MvcApp.Controllers.Operations.API_Operations.BillWorkflow
         public HttpResponseMessage ConfirmReferences([FromBody] ConfirmReferencesRequest request)
         {
             if (!ModelState.IsValid || request == null || request.BillReviewId == Guid.Empty ||
-                request.ExpectedVersion <= 0 || request.ReferenceSelections == null)
+                request.ExpectedVersion <= 0)
                 return CreateErrorResponse(HttpStatusCode.BadRequest, BillWorkflowCodes.InvalidReferenceConfirmationRequest,
                     BillWorkflowMessages.ConfirmationRequestRequired);
             var result = service.ConfirmReferences(request.BillReviewId, request.ExpectedVersion,
-                request.ReferenceSelections, request.RememberAlias ?? true);
+                request.RememberAlias ?? true);
             var response = CreateSuccessResponse(HttpStatusCode.OK, result);
-            response.Headers.CacheControl = new System.Net.Http.Headers.CacheControlHeaderValue { NoStore = true };
+            response.Headers.CacheControl = new CacheControlHeaderValue { NoStore = true };
             return response;
         }
 
@@ -95,11 +109,21 @@ namespace Forwarding.MvcApp.Controllers.Operations.API_Operations.BillWorkflow
         public HttpResponseMessage SearchCustomers([FromBody] SearchBillCustomersRequest request)
         {
             if (!ModelState.IsValid || request == null || request.BillReviewId == Guid.Empty)
-                return CreateErrorResponse(HttpStatusCode.BadRequest, BillWorkflowCodes.InvalidCustomerSearch,
-                    BillWorkflowMessages.CustomerSearchRequestRequired);
+                return CreateErrorResponse(HttpStatusCode.BadRequest, BillWorkflowCodes.InvalidReferenceSearch,
+                    BillWorkflowMessages.InvalidReferenceSearch);
             var customers = service.SearchCustomers(request.BillReviewId, request.SearchText,
                 request.Page, request.PageSize);
             return CreateSuccessResponse(HttpStatusCode.OK, customers);
+        }
+
+        [HttpPost]
+        public HttpResponseMessage SearchPorts([FromBody] SearchBillPortsRequest request)
+        {
+            if (!ModelState.IsValid || request == null || request.BillReviewId == Guid.Empty)
+                return CreateErrorResponse(HttpStatusCode.BadRequest, BillWorkflowCodes.InvalidReferenceSearch,
+                    BillWorkflowMessages.InvalidReferenceSearch);
+            var ports = service.SearchPorts(request.BillReviewId, request.SearchText, request.Page, request.PageSize);
+            return CreateSuccessResponse(HttpStatusCode.OK, ports);
         }
 
         private HttpResponseMessage CreateSuccessResponse<T>(HttpStatusCode status, T data)
@@ -142,8 +166,22 @@ namespace Forwarding.MvcApp.Controllers.Operations.API_Operations.BillWorkflow
     {
         public Guid BillReviewId { get; set; }
         public int ExpectedVersion { get; set; }
-        public List<BillReferenceSelection> ReferenceSelections { get; set; }
+        // Aliases are learned only at final confirmation, never while saving progress.
         public bool? RememberAlias { get; set; }
+    }
+
+    public class SubmitReferenceStepRequest
+    {
+        public SubmitReferenceStepRequest()
+        {
+            ResolutionMethod = ResolutionMethod.ManualSelection;
+        }
+
+        public Guid BillReviewId { get; set; }
+        public int ExpectedVersion { get; set; }
+        public string Role { get; set; }
+        public int Id { get; set; }
+        public ResolutionMethod ResolutionMethod { get; set; }
     }
 
     public class ResolveBillReferenceRequest
@@ -156,6 +194,20 @@ namespace Forwarding.MvcApp.Controllers.Operations.API_Operations.BillWorkflow
     public class SearchBillCustomersRequest
     {
         public SearchBillCustomersRequest()
+        {
+            Page = 1;
+            PageSize = 20;
+        }
+
+        public Guid BillReviewId { get; set; }
+        public string SearchText { get; set; }
+        public int Page { get; set; }
+        public int PageSize { get; set; }
+    }
+
+    public class SearchBillPortsRequest
+    {
+        public SearchBillPortsRequest()
         {
             Page = 1;
             PageSize = 20;

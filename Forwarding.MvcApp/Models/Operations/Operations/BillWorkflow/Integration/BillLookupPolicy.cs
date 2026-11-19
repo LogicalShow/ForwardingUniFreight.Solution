@@ -39,8 +39,25 @@ namespace Forwarding.MvcApp.Models.Operations.Operations.BillWorkflow.Integratio
                     SourceField = field,
                     SearchValue = value == null ? null : value.Trim(),
                     IsRequired = true
+                },
+                new BillLookupRequirement
+                {
+                    Role = "PortOfLoading",
+                    ResolverKey = "Port",
+                    SourceField = "PortOfLoading",
+                    SearchValue = bill.PortOfLoading?.Trim(),
+                    IsRequired = true
+                },
+                new BillLookupRequirement
+                {
+                    Role = "PortOfDischarge",
+                    ResolverKey = "Port",
+                    SourceField = "PortOfDischarge",
+                    SearchValue = bill.PortOfDischarge?.Trim(),
+                    IsRequired = true
                 }
             };
         }
+
     }
 }

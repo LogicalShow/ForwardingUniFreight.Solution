@@ -11,7 +11,7 @@ namespace BillWorkflow.Common.Services
 {
     public class CustomerResolver : IReferenceResolver
     {
-        public const int MaximumNameLength = 500;
+        public const int MaximumSearchLength = 500;
         public const decimal MinimumSuggestionScore = 75m;
         private const int MaximumSuggestions = 3;
         private const decimal MinimumWordSimilarity = 80m;
@@ -39,7 +39,7 @@ namespace BillWorkflow.Common.Services
 
             var result = new ReferenceMatchResult();
             var name = requirement.SearchValue;
-            if (!HasUsableName(name))
+            if (!HasSearchValue(name))
                 return result;
 
             // This query checks the complete eligible scope before any fuzzy candidate limit.
@@ -65,13 +65,13 @@ namespace BillWorkflow.Common.Services
             return result;
         }
 
-        public static bool HasUsableName(string name)
+        public static bool HasSearchValue(string name)
         {
-            return !string.IsNullOrWhiteSpace(name) && name.Length <= MaximumNameLength && name.Any(char.IsLetterOrDigit);
+            return !string.IsNullOrWhiteSpace(name) && name.Length <= MaximumSearchLength && name.Any(char.IsLetterOrDigit);
         }
 
         // Shared by retrieval and ranking; original names and strict exact matching stay unchanged.
-        public static List<string> GetMeaningfulWords(string name)
+        public static List<string> GetSearchWords(string name)
         {
             return NormalizeForSuggestions(name).Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries)
                 .Where(word => !IsGenericCompanyWord(word)).Distinct().ToList();
@@ -96,7 +96,7 @@ namespace BillWorkflow.Common.Services
         private bool IsAliasMatch(string name, CustomerRecord customer)
         {
             return !string.IsNullOrEmpty(customer.MatchedAlias) &&
-                CustomerAliasRules.Normalize(name) == CustomerAliasRules.Normalize(customer.MatchedAlias);
+                ReferenceAliasRules.Normalize(name) == ReferenceAliasRules.Normalize(customer.MatchedAlias);
         }
 
         private bool IsStrictExact(string left, string right)
@@ -146,8 +146,8 @@ namespace BillWorkflow.Common.Services
             if (first.Length == 0 || second.Length == 0) return 0;
             if (first == second) return 100;
 
-            var firstWords = GetMeaningfulWords(first);
-            var secondWords = GetMeaningfulWords(second);
+            var firstWords = GetSearchWords(first);
+            var secondWords = GetSearchWords(second);
             if (firstWords.Count == 0 || secondWords.Count == 0) return 0;
 
             var meaningfulNameScore = CalculateEditSimilarity(string.Join(" ", firstWords), string.Join(" ", secondWords));

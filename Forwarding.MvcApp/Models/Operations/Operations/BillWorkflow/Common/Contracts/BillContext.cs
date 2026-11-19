@@ -5,5 +5,7 @@ namespace BillWorkflow.Common.Contracts
         public string ParentReference { get; set; }
         public string Direction { get; set; }
         public string Version { get; set; }
+        public int? VesselID { get; set; }
+        public string VesselName { get; set; }
     }
 }

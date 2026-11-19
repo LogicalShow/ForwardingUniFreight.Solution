@@ -82,9 +82,12 @@ WHERE f.UserID = @UserID AND f.FormID = 29 AND f.CanView = 1
         {
             using (var command = connection.CreateCommand())
             {
+                // The enforced VesselID foreign key guarantees existence; join for its display name.
                 command.CommandText = @"
-SELECT o.ID, o.MasterOperationID, o.BLType, o.DirectionType, o.ModificationDate
+SELECT o.ID, o.MasterOperationID, o.BLType, o.DirectionType, o.ModificationDate,
+       NULLIF(o.VesselID, 0) AS VesselID, v.Name AS VesselName
 FROM dbo.Operations o
+LEFT JOIN dbo.Vessels v ON v.ID = o.VesselID
 LEFT JOIN dbo.Users creator ON creator.ID = o.CreatorUserID
 LEFT JOIN dbo.Users salesman ON salesman.ID = o.SalesmanID
 LEFT JOIN dbo.Users operatorUser ON operatorUser.ID = o.OperationManID
@@ -116,6 +119,8 @@ WHERE o.ID = @MasterID";
                             Convert.ToInt32(reader["BLType"], CultureInfo.InvariantCulture),
                         DirectionType = reader["DirectionType"] == DBNull.Value ? 0 :
                             Convert.ToInt32(reader["DirectionType"], CultureInfo.InvariantCulture),
+                        VesselID = ReadNullableInt(reader, "VesselID"),
+                        VesselName = reader["VesselName"] as string,
                         ModifiedTicks = reader["ModificationDate"] == DBNull.Value ? 0 :
                             Convert.ToDateTime(reader["ModificationDate"], CultureInfo.InvariantCulture).Ticks
                     };
@@ -134,14 +139,25 @@ WHERE o.ID = @MasterID";
                     BillWorkflowCodes.UnsupportedDirection, BillWorkflowMessages.UnsupportedDirection);
         }
 
+        private static int? ReadNullableInt(SqlDataReader reader, string column)
+        {
+            return reader[column] == DBNull.Value ? (int?)null :
+                Convert.ToInt32(reader[column], CultureInfo.InvariantCulture);
+        }
+
         private BillContext BuildBillContext(MasterOperationData operation)
         {
             return new BillContext
             {
                 ParentReference = operation.Id.ToString(CultureInfo.InvariantCulture),
                 Direction = operation.DirectionType == 1 ? "Import" : "Export",
+                VesselID = operation.VesselID,
+                VesselName = operation.VesselName,
+                // Protect inherited IDs even when another legacy writer changes VesselID
+                // without changing ModificationDate. Reopening review refreshes this stamp.
                 Version = string.Format(CultureInfo.InvariantCulture,
-                    "{0}:{1}:{2}", operation.Id, operation.DirectionType, operation.ModifiedTicks)
+                    "{0}:{1}:{2}:{3}", operation.Id, operation.DirectionType, operation.ModifiedTicks,
+                    operation.VesselID.GetValueOrDefault())
             };
         }
 
@@ -159,6 +175,8 @@ WHERE o.ID = @MasterID";
             public int BLType { get; set; }
             public int DirectionType { get; set; }
             public long ModifiedTicks { get; set; }
+            public int? VesselID { get; set; }
+            public string VesselName { get; set; }
         }
     }
 }

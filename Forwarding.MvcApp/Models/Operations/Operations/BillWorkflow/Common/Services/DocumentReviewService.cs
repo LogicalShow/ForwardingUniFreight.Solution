@@ -11,11 +11,10 @@ namespace BillWorkflow.Common.Services
 {
     public class DocumentReviewService
     {
+        public const int MaximumSearchTextLength = 500;
         public const int MaximumSearchPage = 10000;
         public const int MaximumSearchPageSize = 50;
         public const int MaximumBillPageSize = 10;
-
-        // Identity is fixed for this request's service; permissions are checked on each operation.
         private readonly int userId;
         private readonly string blType;
         private readonly string manifestType;
@@ -24,6 +23,8 @@ namespace BillWorkflow.Common.Services
         private readonly IBillWorkflowStore reviewStore;
         private readonly IReferenceResolver customerResolver;
         private readonly ICustomerDirectory customers;
+        private readonly IReferenceResolver portResolver;
+        private readonly IPortDirectory ports;
 
         public DocumentReviewService(
             int userId,
@@ -33,10 +34,12 @@ namespace BillWorkflow.Common.Services
             IBillLookupPolicy lookupPolicy,
             IBillWorkflowStore reviewStore,
             IReferenceResolver customerResolver,
-            ICustomerDirectory customers)
+            ICustomerDirectory customers,
+            IReferenceResolver portResolver,
+            IPortDirectory ports)
         {
             if (string.IsNullOrWhiteSpace(blType) || string.IsNullOrWhiteSpace(manifestType) || contexts == null || lookupPolicy == null || reviewStore == null ||
-                customerResolver == null || customers == null)
+                customerResolver == null || customers == null || portResolver == null || ports == null)
                 throw new ArgumentNullException(BillWorkflowMessages.ServiceDependenciesRequired);
             this.userId = userId;
             this.blType = blType;
@@ -46,6 +49,8 @@ namespace BillWorkflow.Common.Services
             this.reviewStore = reviewStore;
             this.customerResolver = customerResolver;
             this.customers = customers;
+            this.portResolver = portResolver;
+            this.ports = ports;
         }
 
         public DocumentReviewSummary CreateDocumentReview(Guid extractionId)
@@ -75,7 +80,7 @@ namespace BillWorkflow.Common.Services
         public BillReviewDetails GetBillReview(Guid billReviewId)
         {
             var data = LoadBillReview(billReviewId);
-            ApplyReviewIssues(data);
+            PrepareReviewDetails(data);
             return data;
         }
 
@@ -92,18 +97,14 @@ namespace BillWorkflow.Common.Services
                 throw new DocumentReviewException(DocumentReviewFailure.NotFound,
                     BillWorkflowCodes.DocumentReviewNotFound, BillWorkflowMessages.DocumentReviewNotFound);
 
-            ValidateCurrentContext(result.Context);
+            result.Context = ValidateCurrentContext(result.Context);
             if (!result.ReviewStarted) ThrowReviewNotStarted();
             foreach (var bill in result.Items)
-                ApplyReviewIssues(bill);
+            {
+                bill.Context = result.Context;
+                PrepareReviewDetails(bill);
+            }
             return result;
-        }
-
-        private void ApplyReviewIssues(BillReviewDetails data)
-        {
-            if (data.Bill == null) return;
-            var requirements = lookupPolicy.GetRequirements(data.Bill, data.Context);
-            data.Issues = GetReviewIssues(data.Issues, requirements, data.ReferenceResolutions);
         }
 
         public BillReferenceResolution ResolveReferences(Guid billReviewId, int expectedVersion, string role)
@@ -114,19 +115,14 @@ namespace BillWorkflow.Common.Services
 
             var data = LoadBillReview(billReviewId);
             ValidateBillReviewVersion(data.Version, expectedVersion);
-            RequireReadableBill(data);
-            var requirements = lookupPolicy.GetRequirements(data.Bill, data.Context).ToList();
-            var index = requirements.FindIndex(item => item.Role == role);
-            if (index < 0)
+            RequireBillReadyForReferences(data);
+            var requirements = GetRequirements(data);
+            var requirement = requirements.FirstOrDefault(item => item.Role == role);
+            if (requirement == null)
                 throw new DocumentReviewException(DocumentReviewFailure.InvalidInput,
                     BillWorkflowCodes.ReferenceRoleNotAvailable, BillWorkflowMessages.ReferenceRoleNotEnabled);
 
-            var requirement = requirements[index];
-            // Add another resolver here when its role is enabled by the lookup policy.
-            if (requirement.ResolverKey != "Customer")
-                throw new DocumentReviewException(DocumentReviewFailure.InvalidInput,
-                    BillWorkflowCodes.ReferenceResolverNotAvailable, BillWorkflowMessages.ReferenceResolverNotAvailable);
-            var result = customerResolver.Resolve(requirement, data.Context, userId);
+            var result = GetResolver(requirement).Resolve(requirement, data.Context, userId);
             ValidateCurrentContext(data.Context);
 
             return new BillReferenceResolution
@@ -141,188 +137,196 @@ namespace BillWorkflow.Common.Services
                 Candidates = result.Candidates.Select(candidate => new ReferenceOption
                 {
                     Id = candidate.Id,
+                    Code = candidate.Code,
                     Name = candidate.Name,
                     LocalName = candidate.LocalName
-                }).ToList(),
-                NextRole = index + 1 < requirements.Count ? requirements[index + 1].Role : null
+                }).ToList()
             };
         }
 
-        public BillReviewDetails ConfirmReferences(Guid billReviewId, int expectedVersion,
-            IReadOnlyList<BillReferenceSelection> referenceSelections, bool rememberAlias = true)
+        public CustomerLookupPage SearchCustomers(Guid billReviewId, string searchText,
+            int page, int pageSize)
         {
-            if (billReviewId == Guid.Empty || expectedVersion <= 0 || referenceSelections == null)
+            ValidateReferenceSearch(searchText, page, pageSize);
+            var billReview = LoadBillReview(billReviewId);
+            RequireBillReadyForReferences(billReview);
+            var requirements = GetRequirements(billReview);
+            var customerRequirement = GetCustomerRequirement(requirements);
+            var result = customers.Search(searchText.Trim(), page, pageSize, customerRequirement.SourceParty,
+                billReview.Context, userId);
+            ValidateCurrentContext(billReview.Context);
+            return result;
+        }
+
+        public PortLookupPage SearchPorts(Guid billReviewId, string searchText, int page, int pageSize)
+        {
+            ValidateReferenceSearch(searchText, page, pageSize);
+            var review = LoadBillReview(billReviewId);
+            RequireBillReadyForReferences(review);
+            var result = ports.Search(searchText.Trim(), page, pageSize, review.Context, userId);
+            ValidateCurrentContext(review.Context);
+            return result;
+        }
+
+        public SubmitReferenceStepResult SubmitReferenceStep(Guid billReviewId, int expectedVersion, BillReferenceSelection selection)
+        {
+            var saved = SaveReference(billReviewId, expectedVersion, selection);
+            return ResolveNextReference(saved);
+        }
+
+        public BillReviewDetails ConfirmReferences(Guid billReviewId, int expectedVersion, bool rememberAlias = true)
+        {
+            if (billReviewId == Guid.Empty || expectedVersion <= 0)
                 throw new DocumentReviewException(DocumentReviewFailure.InvalidInput,
                     BillWorkflowCodes.InvalidReferenceConfirmationRequest, BillWorkflowMessages.ConfirmationRequestRequired);
-
             var data = LoadBillReview(billReviewId);
             ValidateBillReviewVersion(data.Version, expectedVersion);
             RequireReadableBill(data);
-            if (data.ReviewStatus == BillReviewStatus.ReferencesConfirmed)
-                throw new DocumentReviewException(DocumentReviewFailure.Conflict,
-                    BillWorkflowCodes.ReferencesAlreadyConfirmed, BillWorkflowMessages.ReferencesAlreadyConfirmed);
-
-            var requirements = lookupPolicy.GetRequirements(data.Bill, data.Context).ToList();
-            ValidateReferenceSelections(referenceSelections, requirements);
-            var selections = referenceSelections.ToList();
+            RequireEditableReview(data);
+            PrepareReviewDetails(data);
+            var requirements = GetRequirements(data);
             var referenceIssues = new List<ValidationIssue>();
-            var resolutions = new List<ReferenceResolution>();
             foreach (var requirement in requirements)
-            {
-                var selectionIndex = selections.FindIndex(item => item.Role == requirement.Role);
-                referenceIssues.AddRange(GetReferenceSelectionIssues(requirement, selectionIndex >= 0));
-                if (selectionIndex < 0)
-                    continue;
-                if (requirement.ResolverKey != "Customer")
-                    throw new DocumentReviewException(DocumentReviewFailure.InvalidInput,
-                        BillWorkflowCodes.ReferenceResolverNotAvailable, BillWorkflowMessages.ReferenceValidatorNotAvailable);
-
-                var customer = customers.GetById(selections[selectionIndex].Id, requirement.SourceParty, data.Context, userId);
-                referenceIssues.AddRange(GetCustomerSelectionIssues(customer, selectionIndex));
-                if (customer == null)
-                    continue;
-
-                var method = selections[selectionIndex].ResolutionMethod;
-                ValidateCustomerResolutionMethod(requirement, data.Context, customer.Id, method);
-                resolutions.Add(CreateCustomerResolution(requirement, customer, method));
-            }
+                referenceIssues.AddRange(GetReferenceSelectionIssues(requirement,
+                    FindResolution(data.ReferenceResolutions, requirement) != null));
             var issues = GetConfirmationIssues(data.Issues, referenceIssues);
             if (issues.Count > 0)
                 throw new DocumentReviewException(DocumentReviewFailure.Conflict, BillWorkflowCodes.BillReviewNotReady,
                     BillWorkflowMessages.BillReviewNotReady, issues);
 
-            data.ReferenceResolutions = resolutions;
             data.RememberAlias = rememberAlias;
             data.Issues = issues;
             ValidateCurrentContext(data.Context);
-            return reviewStore.ConfirmReferences(data, expectedVersion, userId);
+            var confirmed = reviewStore.ConfirmReferences(data, expectedVersion, userId);
+            confirmed.Context = data.Context;
+            PrepareReviewDetails(confirmed);
+            return confirmed;
         }
 
-        private static List<ValidationIssue> GetReferenceSelectionIssues(BillLookupRequirement requirement,
-            bool hasSelection)
+        public ConfirmedBill GetConfirmedBill(Guid billReviewId, int expectedVersion)
         {
-            var issues = new List<ValidationIssue>();
-            if (!hasSelection && requirement.IsRequired)
-                issues.Add(new ValidationIssue
-                {
-                    Code = BillWorkflowCodes.ReferenceRequired, FieldPath = "ReferenceSelections",
-                    Message = string.Format(BillWorkflowMessages.ReferenceRequired, requirement.Role)
-                });
-            return issues;
-        }
-
-        private static List<ValidationIssue> GetCustomerSelectionIssues(CustomerRecord customer, int selectionIndex)
-        {
-            var issues = new List<ValidationIssue>();
-            if (customer == null)
-                issues.Add(new ValidationIssue
-                {
-                    Code = BillWorkflowCodes.CustomerNotAvailable, FieldPath = "ReferenceSelections[" + selectionIndex + "].Id",
-                    Message = BillWorkflowMessages.CustomerNotAvailable
-                });
-            return issues;
-        }
-
-        private static List<ValidationIssue> GetConfirmationIssues(IEnumerable<ValidationIssue> billIssues,
-            IEnumerable<ValidationIssue> referenceIssues)
-        {
-            var issues = billIssues.Where(issue => issue.Code != BillWorkflowCodes.CustomerNameRequired).ToList();
-            issues.AddRange(referenceIssues);
-            return issues;
-        }
-
-        private static void ValidateReferenceSelections(IReadOnlyList<BillReferenceSelection> selections,
-            List<BillLookupRequirement> requirements)
-        {
-            var roles = new HashSet<string>(StringComparer.Ordinal);
-            var issues = new List<ValidationIssue>();
-            for (var index = 0; index < selections.Count; index++)
-            {
-                var item = selections[index];
-                var field = "ReferenceSelections[" + index + "]";
-                if (item == null || string.IsNullOrWhiteSpace(item.Role) || item.Id <= 0)
-                    issues.Add(new ValidationIssue { Code = BillWorkflowCodes.InvalidReferenceSelection, FieldPath = field,
-                        Message = BillWorkflowMessages.ReferenceSelectionRequired });
-                else if (!roles.Add(item.Role))
-                    issues.Add(new ValidationIssue { Code = BillWorkflowCodes.DuplicateReferenceRole, FieldPath = field + ".Role",
-                        Message = BillWorkflowMessages.DuplicateReferenceRole });
-                else if (!requirements.Any(requirement => requirement.Role == item.Role))
-                    issues.Add(new ValidationIssue { Code = BillWorkflowCodes.ReferenceRoleNotAvailable, FieldPath = field + ".Role",
-                        Message = BillWorkflowMessages.ReferenceRoleNotAvailable });
-                else if (!Enum.IsDefined(typeof(ResolutionMethod), item.ResolutionMethod))
-                    issues.Add(new ValidationIssue { Code = BillWorkflowCodes.InvalidResolutionMethod, FieldPath = field + ".ResolutionMethod",
-                        Message = BillWorkflowMessages.InvalidResolutionMethod });
-            }
-            if (issues.Count > 0)
-                throw new DocumentReviewException(DocumentReviewFailure.InvalidInput, BillWorkflowCodes.InvalidReferenceSelections,
-                    BillWorkflowMessages.InvalidReferenceSelections, issues);
-        }
-
-        private void ValidateCustomerResolutionMethod(BillLookupRequirement requirement, BillContext context,
-            int customerId, ResolutionMethod method)
-        {
-            if (!Enum.IsDefined(typeof(ResolutionMethod), method))
+            if (billReviewId == Guid.Empty || expectedVersion <= 0)
                 throw new DocumentReviewException(DocumentReviewFailure.InvalidInput,
-                    BillWorkflowCodes.InvalidResolutionMethod, BillWorkflowMessages.InvalidResolutionMethod);
-            if (method == ResolutionMethod.ManualSelection) return;
+                    BillWorkflowCodes.InvalidConfirmedBillRequest, BillWorkflowMessages.ConfirmedBillRequestRequired);
+            var billReview = LoadBillReview(billReviewId);
+            RequireReadableBill(billReview);
+            ValidateBillReviewVersion(billReview.Version, expectedVersion);
+            ValidateReferencesConfirmedState(billReview);
+            ValidateReferenceConfirmation(billReview);
 
-            // This verifies consistency with current matching, not a historical UI click or saved search snapshot.
-            var current = customerResolver.Resolve(requirement, context, userId);
-            bool valid;
-            if (method == ResolutionMethod.SuggestedSelection)
-                valid = current.Match == null &&
-                    current.Candidates.Any(candidate => candidate.Id == customerId);
-            else
-                valid = current.Match != null && current.Match.Id == customerId &&
-                    current.ResolutionMethod == method;
-            if (!valid)
-                throw new DocumentReviewException(DocumentReviewFailure.Conflict, BillWorkflowCodes.ReferenceResolutionChanged,
-                    BillWorkflowMessages.ReferenceResolutionChanged);
-        }
-
-        private ReferenceResolution CreateCustomerResolution(BillLookupRequirement requirement, CustomerRecord customer,
-            ResolutionMethod method)
-        {
-            return new ReferenceResolution
+            // Eligibility checks can take time. Reload before handing the approved version to Phase 3.
+            billReview = LoadBillReview(billReviewId);
+            ValidateBillReviewVersion(billReview.Version, expectedVersion);
+            ValidateReferencesConfirmedState(billReview);
+            var requirements = GetRequirements(billReview);
+            return new ConfirmedBill
             {
-                Reference = new BillReferenceSummary(requirement.Role, customer.Id, customer.Name),
-                ResolverKey = requirement.ResolverKey,
-                SourceParty = requirement.SourceParty,
-                SourceField = requirement.SourceField,
-                SearchValue = requirement.SearchValue,
-                ResolutionMethod = method,
-                ConfirmedBy = userId,
-                ConfirmedAt = DateTime.Now
+                DocumentReviewId = billReview.DocumentReviewId,
+                BillReviewId = billReview.BillReviewId,
+                Version = billReview.Version,
+                Context = billReview.Context,
+                Bill = billReview.Bill,
+                ReferenceResolutions = billReview.ReferenceResolutions.Where(result => IsReferenceConfirmed(result) &&
+                    requirements.Any(requirement => MatchesRequirement(result, requirement))).ToList(),
+                CompletedBy = billReview.CompletedBy.Value,
+                CompletedAt = billReview.CompletedAt.Value
             };
         }
 
-        private BillReviewDetails LoadBillReview(Guid billReviewId)
+        private void PrepareReviewDetails(BillReviewDetails data)
         {
-            RequireActor();
-            if (billReviewId == Guid.Empty)
+            if (data.Bill == null) return;
+            var requirements = GetRequirements(data);
+            var stored = data.ReferenceResolutions ?? new List<ReferenceResolution>();
+            var valid = new List<ReferenceResolution>();
+            var issues = new List<ValidationIssue>();
+            foreach (var requirement in requirements)
+            {
+                var matches = stored.Where(result => result != null && result.Reference != null &&
+                    result.Reference.Role == requirement.Role).ToList();
+                if (matches.Count == 0) continue;
+                var saved = matches[0];
+                ReferenceOption selected = null;
+                if (matches.Count == 1 && IsReferenceConfirmed(saved) && MatchesRequirement(saved, requirement))
+                    selected = GetSelectedReference(requirement, saved.Reference.Id.Value, data.Context);
+                if (selected == null)
+                {
+                    issues.Add(new ValidationIssue
+                    {
+                        Code = BillWorkflowCodes.SavedReferenceNotAvailable,
+                        FieldPath = "ResolvedReferences." + requirement.Role,
+                        Message = string.Format(BillWorkflowMessages.SavedReferenceNotAvailable, requirement.Role)
+                    });
+                    continue;
+                }
+                saved.Reference = new BillReferenceSummary(requirement.Role, selected.Id, selected.Name);
+                valid.Add(saved);
+            }
+            data.ReferenceResolutions = valid;
+            data.Issues = GetReviewIssues(data.Issues, requirements, valid);
+            data.Issues.AddRange(issues);
+            SetReferenceProgress(data, requirements);
+        }
+
+        private BillReviewDetails SaveReference(Guid billReviewId, int expectedVersion, BillReferenceSelection selection)
+        {
+            if (billReviewId == Guid.Empty || expectedVersion <= 0 || selection == null)
                 throw new DocumentReviewException(DocumentReviewFailure.InvalidInput,
-                    BillWorkflowCodes.BillReviewIdRequired, BillWorkflowMessages.BillReviewIdRequired);
+                    BillWorkflowCodes.InvalidSubmitReferenceStepRequest, BillWorkflowMessages.SubmitReferenceStepRequestRequired);
+            var data = LoadBillReview(billReviewId);
+            ValidateBillReviewVersion(data.Version, expectedVersion);
+            RequireReadableBill(data);
+            RequireEditableReview(data);
+            RequireNoBlockingBillIssues(data);
+            var requirements = GetRequirements(data);
+            var requirement = ValidateReferenceSelection(selection, requirements);
+            var selected = GetSelectedReference(requirement, selection.Id, data.Context);
+            var issues = GetSelectionIssues(requirement, selected);
+            if (issues.Count > 0)
+                throw new DocumentReviewException(DocumentReviewFailure.Conflict, BillWorkflowCodes.BillReviewNotReady,
+                    BillWorkflowMessages.BillReviewNotReady, issues);
+            ValidateResolutionMethod(requirement, data.Context, selected.Id, selection.ResolutionMethod);
 
-            var data = reviewStore.GetBillReview(billReviewId);
-            if (data == null)
-                throw new DocumentReviewException(DocumentReviewFailure.NotFound,
-                    BillWorkflowCodes.BillReviewNotFound, BillWorkflowMessages.BillReviewNotFound);
             ValidateCurrentContext(data.Context);
-            if (data.ReviewStatus == BillReviewStatus.NotStarted) ThrowReviewNotStarted();
-            return data;
+            var update = new BillReferenceUpdate
+            {
+                BillReviewId = data.BillReviewId,
+                ReferenceResolution = CreateResolution(requirement, selected, selection.ResolutionMethod)
+            };
+            var saved = reviewStore.SaveReference(update, expectedVersion, userId);
+            saved.Context = data.Context;
+            SetReferenceProgress(saved, requirements);
+            return saved;
         }
 
-        private static void ThrowReviewNotStarted()
+        private SubmitReferenceStepResult ResolveNextReference(BillReviewDetails saved)
         {
-            throw new DocumentReviewException(DocumentReviewFailure.Conflict,
-                BillWorkflowCodes.ReviewNotStarted, BillWorkflowMessages.ReviewNotStarted);
+            return new SubmitReferenceStepResult
+            {
+                Progress = CreateProgress(saved),
+                NextResolution = saved.NextRole == null ? null :
+                    ResolveReferences(saved.BillReviewId, saved.Version, saved.NextRole)
+            };
         }
 
-        private static void RequireReadableBill(BillReviewDetails data)
+        private static void SetReferenceProgress(BillReviewDetails review, List<BillLookupRequirement> requirements)
         {
-            if (data.Bill == null)
-                throw new DocumentReviewException(DocumentReviewFailure.Conflict,
-                    BillWorkflowCodes.BillReviewNotReady, BillWorkflowMessages.BillReviewNotReady, data.Issues);
+            review.ReferenceRoles = requirements.Select(requirement => requirement.Role).ToList().AsReadOnly();
+            var references = review.ResolvedReferences;
+            var next = review.ReviewStatus == BillReviewStatus.ReferencesConfirmed ? null :
+                requirements.FirstOrDefault(requirement => requirement.IsRequired &&
+                    !references.Any(reference => reference.Role == requirement.Role));
+            review.NextRole = next == null ? null : next.Role;
+        }
+
+        private static BillReviewProgress CreateProgress(BillReviewDetails saved)
+        {
+            return new BillReviewProgress
+            {
+                BillReviewId = saved.BillReviewId, Version = saved.Version, ReviewStatus = saved.ReviewStatus,
+                ReferenceRoles = saved.ReferenceRoles, ResolvedReferences = saved.ResolvedReferences,
+                NextRole = saved.NextRole
+            };
         }
 
         private static DocumentReviewSummary CreateSummary(Guid extractionId, IReadOnlyList<BillReviewDetails> bills)
@@ -346,53 +350,176 @@ namespace BillWorkflow.Common.Services
             };
         }
 
-        public CustomerLookupPage SearchCustomers(Guid billReviewId, string searchText,
-            int page, int pageSize)
+        // Reference requirements, matching and selection validation.
+        private List<BillLookupRequirement> GetRequirements(BillReviewDetails review)
         {
-            ValidateCustomerSearch(searchText, page, pageSize);
-            var billReview = LoadBillReview(billReviewId);
-            RequireReadableBill(billReview);
-            var requirements = lookupPolicy.GetRequirements(billReview.Bill, billReview.Context);
-            var customerRequirement = GetCustomerRequirement(requirements);
-            var result = customers.Search(searchText.Trim(), page, pageSize, customerRequirement.SourceParty,
-                billReview.Context, userId);
-            ValidateCurrentContext(billReview.Context);
-            return result;
+            return lookupPolicy.GetRequirements(review.Bill, review.Context).ToList();
         }
 
-        public ConfirmedBill GetConfirmedBill(Guid billReviewId, int expectedVersion)
+        private static BillLookupRequirement GetCustomerRequirement(IEnumerable<BillLookupRequirement> requirements)
         {
-            if (billReviewId == Guid.Empty || expectedVersion <= 0)
+            var customerRequirement = requirements.SingleOrDefault(requirement => requirement.Role == "Customer");
+            if (customerRequirement == null || customerRequirement.ResolverKey != "Customer" ||
+                (customerRequirement.SourceParty != "Shipper" && customerRequirement.SourceParty != "Consignee"))
                 throw new DocumentReviewException(DocumentReviewFailure.InvalidInput,
-                    BillWorkflowCodes.InvalidConfirmedBillRequest, BillWorkflowMessages.ConfirmedBillRequestRequired);
-            var billReview = LoadBillReview(billReviewId);
-            RequireReadableBill(billReview);
-            ValidateBillReviewVersion(billReview.Version, expectedVersion);
-            ValidateReferencesConfirmedState(billReview);
-            ValidateReferenceConfirmation(billReview);
+                    BillWorkflowCodes.CustomerLookupRequired, BillWorkflowMessages.CustomerLookupRequired);
+            return customerRequirement;
+        }
 
-            // Eligibility checks can take time. Reload before handing the approved version to Phase 3.
-            billReview = LoadBillReview(billReviewId);
-            ValidateBillReviewVersion(billReview.Version, expectedVersion);
-            ValidateReferencesConfirmedState(billReview);
-            var requirements = lookupPolicy.GetRequirements(billReview.Bill, billReview.Context);
-            return new ConfirmedBill
+        private IReferenceResolver GetResolver(BillLookupRequirement requirement)
+        {
+            if (requirement.ResolverKey == "Customer") return customerResolver;
+            if (requirement.ResolverKey == "Port") return portResolver;
+            throw new DocumentReviewException(DocumentReviewFailure.InvalidInput,
+                BillWorkflowCodes.ReferenceResolverNotAvailable, BillWorkflowMessages.ReferenceResolverNotAvailable);
+        }
+
+        private ReferenceOption GetSelectedReference(BillLookupRequirement requirement, int id, BillContext context)
+        {
+            if (requirement.ResolverKey == "Customer")
             {
-                DocumentReviewId = billReview.DocumentReviewId,
-                BillReviewId = billReview.BillReviewId,
-                Version = billReview.Version,
-                Context = billReview.Context,
-                Bill = billReview.Bill,
-                ReferenceResolutions = billReview.ReferenceResolutions.Where(result => IsReferenceConfirmed(result) &&
-                    requirements.Any(requirement => MatchesRequirement(result, requirement))).ToList(),
-                CompletedBy = billReview.CompletedBy.Value,
-                CompletedAt = billReview.CompletedAt.Value
+                var customer = customers.GetById(id, requirement.SourceParty, context, userId);
+                return customer == null ? null : new ReferenceOption
+                {
+                    Id = customer.Id, Name = customer.Name, LocalName = customer.LocalName
+                };
+            }
+            if (requirement.ResolverKey == "Port")
+            {
+                var port = ports.GetById(id, context, userId);
+                return port == null ? null : new ReferenceOption
+                {
+                    Id = port.Id, Code = port.Code, Name = port.Name, LocalName = port.LocalName
+                };
+            }
+            throw new DocumentReviewException(DocumentReviewFailure.InvalidInput,
+                BillWorkflowCodes.ReferenceResolverNotAvailable, BillWorkflowMessages.ReferenceValidatorNotAvailable);
+        }
+
+        private ReferenceResolution CreateResolution(BillLookupRequirement requirement, ReferenceOption selected,
+            ResolutionMethod method)
+        {
+            return new ReferenceResolution
+            {
+                Reference = new BillReferenceSummary(requirement.Role, selected.Id, selected.Name),
+                ResolverKey = requirement.ResolverKey,
+                SourceParty = requirement.SourceParty,
+                SourceField = requirement.SourceField,
+                SearchValue = requirement.SearchValue,
+                ResolutionMethod = method,
+                ConfirmedBy = userId,
+                ConfirmedAt = DateTime.Now
             };
+        }
+
+        private static BillLookupRequirement ValidateReferenceSelection(BillReferenceSelection selection,
+            List<BillLookupRequirement> requirements)
+        {
+            if (string.IsNullOrWhiteSpace(selection.Role) || selection.Id <= 0)
+                throw new DocumentReviewException(DocumentReviewFailure.InvalidInput,
+                    BillWorkflowCodes.InvalidReferenceSelection, BillWorkflowMessages.ReferenceSelectionRequired);
+            if (!Enum.IsDefined(typeof(ResolutionMethod), selection.ResolutionMethod))
+                throw new DocumentReviewException(DocumentReviewFailure.InvalidInput,
+                    BillWorkflowCodes.InvalidResolutionMethod, BillWorkflowMessages.InvalidResolutionMethod);
+            var requirement = requirements.SingleOrDefault(item => item.Role == selection.Role);
+            if (requirement == null)
+                throw new DocumentReviewException(DocumentReviewFailure.InvalidInput,
+                    BillWorkflowCodes.ReferenceRoleNotAvailable, BillWorkflowMessages.ReferenceRoleNotAvailable);
+            return requirement;
+        }
+
+        private void ValidateResolutionMethod(BillLookupRequirement requirement, BillContext context,
+            int referenceId, ResolutionMethod method)
+        {
+            if (method == ResolutionMethod.ManualSelection) return;
+
+            // This verifies consistency with current matching, not a historical UI click or saved search snapshot.
+            var current = GetResolver(requirement).Resolve(requirement, context, userId);
+            bool valid;
+            if (method == ResolutionMethod.SuggestedSelection)
+                valid = current.Match == null &&
+                    current.Candidates.Any(candidate => candidate.Id == referenceId);
+            else
+                valid = current.Match != null && current.Match.Id == referenceId &&
+                    current.ResolutionMethod == method;
+            if (!valid)
+                throw new DocumentReviewException(DocumentReviewFailure.Conflict, BillWorkflowCodes.ReferenceResolutionChanged,
+                    BillWorkflowMessages.ReferenceResolutionChanged);
+        }
+
+        private static List<ValidationIssue> GetSelectionIssues(BillLookupRequirement requirement,
+            ReferenceOption selected)
+        {
+            var issues = new List<ValidationIssue>();
+            if (selected == null)
+                issues.Add(new ValidationIssue
+                {
+                    Code = requirement.ResolverKey == "Customer" ? BillWorkflowCodes.CustomerNotAvailable : BillWorkflowCodes.PortNotAvailable,
+                    FieldPath = "Id",
+                    Message = requirement.ResolverKey == "Customer" ? BillWorkflowMessages.CustomerNotAvailable : BillWorkflowMessages.PortNotAvailable
+                });
+            return issues;
+        }
+
+        private static List<ValidationIssue> GetReferenceSelectionIssues(BillLookupRequirement requirement,
+            bool hasSelection)
+        {
+            var issues = new List<ValidationIssue>();
+            if (!hasSelection && requirement.IsRequired)
+                issues.Add(new ValidationIssue
+                {
+                    Code = BillWorkflowCodes.ReferenceRequired, FieldPath = "ResolvedReferences." + requirement.Role,
+                    Message = string.Format(BillWorkflowMessages.ReferenceRequired, requirement.Role)
+                });
+            return issues;
+        }
+
+        private static List<ValidationIssue> GetReviewIssues(IEnumerable<ValidationIssue> storedIssues,
+            IEnumerable<BillLookupRequirement> requirements, IEnumerable<ReferenceResolution> resolutions)
+        {
+            var issues = storedIssues.Where(issue => issue.Code != BillWorkflowCodes.ReferenceSearchValueMissing &&
+                issue.Code != BillWorkflowCodes.SavedReferenceNotAvailable).ToList();
+            foreach (var requirement in requirements)
+            {
+                if (!requirement.IsRequired || IsReferenceConfirmed(FindResolution(resolutions, requirement))) continue;
+
+                bool hasSearchValue;
+                string displayName;
+                if (requirement.ResolverKey == "Customer")
+                {
+                    hasSearchValue = CustomerResolver.HasSearchValue(requirement.SearchValue);
+                    displayName = requirement.SourceParty.ToLowerInvariant();
+                }
+                else if (requirement.ResolverKey == "Port")
+                {
+                    hasSearchValue = PortResolver.HasSearchValue(requirement.SearchValue);
+                    displayName = requirement.Role == "PortOfLoading" ? "loading port" : "discharge port";
+                }
+                else continue;
+
+                if (!hasSearchValue)
+                    issues.Add(new ValidationIssue
+                    {
+                        Code = BillWorkflowCodes.ReferenceSearchValueMissing,
+                        FieldPath = requirement.SourceField,
+                        Message = string.Format(BillWorkflowMessages.ReferenceSearchValueMissing,
+                            displayName, requirement.ResolverKey.ToLowerInvariant())
+                    });
+            }
+            return issues;
+        }
+
+        private static List<ValidationIssue> GetConfirmationIssues(IEnumerable<ValidationIssue> billIssues,
+            IEnumerable<ValidationIssue> referenceIssues)
+        {
+            var issues = billIssues.Where(issue => issue.Code != BillWorkflowCodes.ReferenceSearchValueMissing).ToList();
+            issues.AddRange(referenceIssues);
+            return issues;
         }
 
         private void ValidateReferenceConfirmation(BillReviewDetails billReview)
         {
-            var requirements = lookupPolicy.GetRequirements(billReview.Bill, billReview.Context);
+            var requirements = GetRequirements(billReview);
             billReview.Issues = GetReviewIssues(billReview.Issues, requirements, billReview.ReferenceResolutions);
             if (billReview.Issues.Count > 0)
                 throw new DocumentReviewException(DocumentReviewFailure.Conflict,
@@ -409,12 +536,10 @@ namespace BillWorkflow.Common.Services
                             BillWorkflowCodes.RequiredReferencesNotConfirmed, string.Format(BillWorkflowMessages.RequiredReferencesNotConfirmed, requirement.Role));
                     continue;
                 }
-                if (requirement.ResolverKey != "Customer")
-                    throw new DocumentReviewException(DocumentReviewFailure.InvalidInput,
-                        BillWorkflowCodes.UnsupportedReferenceConfirmation, string.Format(BillWorkflowMessages.UnsupportedReferenceConfirmation, requirement.ResolverKey));
-                if (customers.GetById(result.Reference.Id.Value, requirement.SourceParty, billReview.Context, userId) == null)
+                if (GetSelectedReference(requirement, result.Reference.Id.Value, billReview.Context) == null)
                     throw new DocumentReviewException(DocumentReviewFailure.NotFound,
-                        BillWorkflowCodes.CustomerNotAvailable, string.Format(BillWorkflowMessages.SelectedCustomerNotAvailable, requirement.Role));
+                        requirement.ResolverKey == "Customer" ? BillWorkflowCodes.CustomerNotAvailable : BillWorkflowCodes.PortNotAvailable,
+                        requirement.ResolverKey == "Customer" ? string.Format(BillWorkflowMessages.SelectedCustomerNotAvailable, requirement.Role) : BillWorkflowMessages.PortNotAvailable);
             }
         }
 
@@ -429,14 +554,13 @@ namespace BillWorkflow.Common.Services
         private static bool IsReferenceConfirmed(ReferenceResolution result)
         {
             return result != null && result.Reference != null && result.Reference.Id > 0 &&
-                (result.ResolutionMethod == ResolutionMethod.AutomaticExactMatch || result.ResolutionMethod == ResolutionMethod.ManualSelection ||
-                 result.ResolutionMethod == ResolutionMethod.SuggestedSelection ||
-                 result.ResolutionMethod == ResolutionMethod.AutomaticAliasMatch);
+                result.ResolutionMethod.HasValue && Enum.IsDefined(typeof(ResolutionMethod), result.ResolutionMethod.Value);
         }
 
         private static bool MatchesRequirement(ReferenceResolution result, BillLookupRequirement requirement)
         {
-            return result.Reference.Role == requirement.Role && result.ResolverKey == requirement.ResolverKey &&
+            return result != null && result.Reference != null &&
+                result.Reference.Role == requirement.Role && result.ResolverKey == requirement.ResolverKey &&
                 result.SourceParty == requirement.SourceParty && result.SourceField == requirement.SourceField &&
                 string.Equals(result.SearchValue, requirement.SearchValue, StringComparison.Ordinal);
         }
@@ -446,23 +570,72 @@ namespace BillWorkflow.Common.Services
             return resolutions.SingleOrDefault(result => MatchesRequirement(result, requirement));
         }
 
-        private static List<ValidationIssue> GetReviewIssues(IEnumerable<ValidationIssue> storedIssues,
-            IEnumerable<BillLookupRequirement> requirements, IEnumerable<ReferenceResolution> resolutions)
+        private BillReviewDetails LoadBillReview(Guid billReviewId)
         {
-            // A name is an input for matching, not an additional requirement once a valid CustomerID is accepted.
-            var issues = storedIssues.Where(issue => issue.Code != BillWorkflowCodes.CustomerNameRequired).ToList();
-            foreach (var requirement in requirements)
-            {
-                if (requirement.Role == "Customer" && requirement.IsRequired &&
-                    !CustomerResolver.HasUsableName(requirement.SearchValue) && !IsReferenceConfirmed(FindResolution(resolutions, requirement)))
-                    issues.Add(new ValidationIssue
-                    {
-                        Code = BillWorkflowCodes.CustomerNameRequired,
-                        FieldPath = requirement.SourceField,
-                        Message = string.Format(BillWorkflowMessages.CustomerNameRequired, requirement.SourceParty.ToLowerInvariant())
-                    });
-            }
-            return issues;
+            RequireActor();
+            if (billReviewId == Guid.Empty)
+                throw new DocumentReviewException(DocumentReviewFailure.InvalidInput,
+                    BillWorkflowCodes.BillReviewIdRequired, BillWorkflowMessages.BillReviewIdRequired);
+
+            var data = reviewStore.GetBillReview(billReviewId);
+            if (data == null)
+                throw new DocumentReviewException(DocumentReviewFailure.NotFound,
+                    BillWorkflowCodes.BillReviewNotFound, BillWorkflowMessages.BillReviewNotFound);
+            data.Context = ValidateCurrentContext(data.Context);
+            if (data.ReviewStatus == BillReviewStatus.NotStarted) ThrowReviewNotStarted();
+            return data;
+        }
+
+        private BillContext ValidateCurrentContext(BillContext context)
+        {
+            var current = contexts.Load(context.ParentReference, userId);
+            if (context.Version == null) return current;
+            if (current.Version != context.Version || current.Direction != context.Direction)
+                throw new DocumentReviewException(DocumentReviewFailure.Conflict,
+                    BillWorkflowCodes.MasterContextChanged, BillWorkflowMessages.MasterContextChanged);
+            return current;
+        }
+
+        private void RequireActor()
+        {
+            if (userId <= 0)
+                throw new DocumentReviewException(DocumentReviewFailure.Forbidden,
+                    BillWorkflowCodes.UserRequired, BillWorkflowMessages.UserRequired);
+        }
+
+        private static void ThrowReviewNotStarted()
+        {
+            throw new DocumentReviewException(DocumentReviewFailure.Conflict,
+                BillWorkflowCodes.ReviewNotStarted, BillWorkflowMessages.ReviewNotStarted);
+        }
+
+        private static void RequireReadableBill(BillReviewDetails data)
+        {
+            if (data.Bill == null)
+                throw new DocumentReviewException(DocumentReviewFailure.Conflict,
+                    BillWorkflowCodes.BillReviewNotReady, BillWorkflowMessages.BillReviewNotReady, data.Issues);
+        }
+
+        private static void RequireEditableReview(BillReviewDetails data)
+        {
+            if (data.ReviewStatus == BillReviewStatus.ReferencesConfirmed)
+                throw new DocumentReviewException(DocumentReviewFailure.Conflict,
+                    BillWorkflowCodes.ReferencesAlreadyConfirmed, BillWorkflowMessages.ReferencesAlreadyConfirmed);
+        }
+
+        private static void RequireBillReadyForReferences(BillReviewDetails data)
+        {
+            RequireReadableBill(data);
+            RequireNoBlockingBillIssues(data);
+        }
+
+        private static void RequireNoBlockingBillIssues(BillReviewDetails data)
+        {
+            var blockingIssues = data.Issues.Where(issue => issue.Code != BillWorkflowCodes.ReferenceSearchValueMissing &&
+                issue.Code != BillWorkflowCodes.SavedReferenceNotAvailable).ToList();
+            if (blockingIssues.Count > 0)
+                throw new DocumentReviewException(DocumentReviewFailure.Conflict,
+                    BillWorkflowCodes.BillFieldsNeedCorrection, BillWorkflowMessages.BillIssuesBlockReferences, blockingIssues);
         }
 
         private static void ValidateBillReviewVersion(int version, int expectedVersion)
@@ -472,39 +645,14 @@ namespace BillWorkflow.Common.Services
                     BillWorkflowCodes.BillReviewVersionChanged, BillWorkflowMessages.BillReviewVersionChanged);
         }
 
-        private static BillLookupRequirement GetCustomerRequirement(IEnumerable<BillLookupRequirement> requirements)
+        private static void ValidateReferenceSearch(string searchText, int page, int pageSize)
         {
-            var customerRequirement = requirements.SingleOrDefault(requirement => requirement.Role == "Customer");
-            if (customerRequirement == null || customerRequirement.ResolverKey != "Customer" ||
-                (customerRequirement.SourceParty != "Shipper" && customerRequirement.SourceParty != "Consignee"))
-                throw new DocumentReviewException(DocumentReviewFailure.InvalidInput,
-                    BillWorkflowCodes.CustomerLookupRequired, BillWorkflowMessages.CustomerLookupRequired);
-            return customerRequirement;
-        }
-
-        private static void ValidateCustomerSearch(string searchText, int page, int pageSize)
-        {
-            if (!CustomerResolver.HasUsableName(searchText) || page < 1 || page > MaximumSearchPage ||
+            if (string.IsNullOrWhiteSpace(searchText) || searchText.Length > MaximumSearchTextLength ||
+                !searchText.Any(char.IsLetterOrDigit) || page < 1 || page > MaximumSearchPage ||
                 pageSize < 1 || pageSize > MaximumSearchPageSize)
                 throw new DocumentReviewException(DocumentReviewFailure.InvalidInput,
-                    BillWorkflowCodes.InvalidCustomerSearch, BillWorkflowMessages.InvalidCustomerSearch);
+                    BillWorkflowCodes.InvalidReferenceSearch, BillWorkflowMessages.InvalidReferenceSearch);
         }
 
-        private void ValidateCurrentContext(BillContext context)
-        {
-            // Authorize against the current user's operation permissions.
-            var current = contexts.Load(context.ParentReference, userId);
-            if (context.Version == null) return; // Permission is still checked before REVIEW_NOT_STARTED.
-            if (current.Version != context.Version || current.Direction != context.Direction)
-                throw new DocumentReviewException(DocumentReviewFailure.Conflict,
-                    BillWorkflowCodes.MasterContextChanged, BillWorkflowMessages.MasterContextChanged);
-        }
-
-        private void RequireActor()
-        {
-            if (userId <= 0)
-                throw new DocumentReviewException(DocumentReviewFailure.Forbidden,
-                    BillWorkflowCodes.UserRequired, BillWorkflowMessages.UserRequired);
-        }
     }
 }

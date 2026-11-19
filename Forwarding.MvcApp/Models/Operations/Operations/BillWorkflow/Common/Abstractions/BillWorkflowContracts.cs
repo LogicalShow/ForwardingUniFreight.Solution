@@ -25,6 +25,7 @@ namespace BillWorkflow.Common.Abstractions
         IReadOnlyList<BillReviewDetails> StartReview(Guid extractionId, BillContext context, int actingUserId);
         BillReviewDetails GetBillReview(Guid billReviewId);
         BillReviewPage GetBillReviews(Guid documentReviewId, int page, int pageSize);
+        BillReviewDetails SaveReference(BillReferenceUpdate update, int expectedVersion, int actingUserId);
         BillReviewDetails ConfirmReferences(BillReviewDetails review, int expectedVersion, int actingUserId);
     }
 
@@ -42,5 +43,13 @@ namespace BillWorkflow.Common.Abstractions
         CustomerLookupPage Search(string searchText, int page, int pageSize, string sourceParty,
             BillContext context, int actingUserId);
         CustomerRecord GetById(int customerId, string sourceParty, BillContext context, int actingUserId);
+    }
+
+    public interface IPortDirectory
+    {
+        IReadOnlyList<PortRecord> FindExactMatches(string value, BillContext context, int actingUserId);
+        PortSearchResult FindCandidates(string value, BillContext context, int actingUserId);
+        PortLookupPage Search(string searchText, int page, int pageSize, BillContext context, int actingUserId);
+        PortRecord GetById(int portId, BillContext context, int actingUserId);
     }
 }

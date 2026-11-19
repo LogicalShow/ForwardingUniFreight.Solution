@@ -34,12 +34,12 @@ namespace BillWorkflow.Common.Contracts
         public ResolutionMethod? ResolutionMethod { get; set; }
         public ReferenceOption Match { get; set; }
         public List<ReferenceOption> Candidates { get; set; }
-        public string NextRole { get; set; }
     }
 
     public class ReferenceOption
     {
         public int Id { get; set; }
+        public string Code { get; set; }
         public string Name { get; set; }
         public string LocalName { get; set; }
     }

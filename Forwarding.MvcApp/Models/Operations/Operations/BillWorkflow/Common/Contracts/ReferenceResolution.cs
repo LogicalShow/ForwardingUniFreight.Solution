@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 
 namespace BillWorkflow.Common.Contracts
 {
+    // Describes how the ID was obtained.
     [JsonConverter(typeof(BillWorkflowEnumConverter))]
     public enum ResolutionMethod
     {

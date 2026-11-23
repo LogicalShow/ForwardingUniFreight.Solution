@@ -12,7 +12,6 @@ namespace BillWorkflow.Common.Services
 {
     public class PortResolver : IReferenceResolver
     {
-        public const int MaximumSearchLength = 500;
         public const decimal MinimumSuggestionScore = 75m;
         private const int MaximumSuggestions = 3;
         private readonly IPortDirectory ports;
@@ -27,15 +26,14 @@ namespace BillWorkflow.Common.Services
         {
             if (requirement == null || context == null)
                 throw new ArgumentNullException(BillWorkflowMessages.LookupInputsRequired);
-            if (requirement.ResolverKey != "Port" ||
-                (requirement.Role != "PortOfLoading" && requirement.Role != "PortOfDischarge"))
+            if (requirement.ResolverKey != "Port")
                 throw new DocumentReviewException(DocumentReviewFailure.InvalidInput,
                     BillWorkflowCodes.UnsupportedPortLookup, BillWorkflowMessages.UnsupportedPortLookup);
 
             var result = new ReferenceMatchResult();
             var value = requirement.SearchValue;
             // A missing scanned value still allows the user to select an eligible ID manually.
-            if (!HasSearchValue(value)) return result;
+            if (!ReferenceSearchRules.HasSearchValue(value)) return result;
 
             var exact = ports.FindExactMatches(value.Trim(), context, actingUserId)
                 .GroupBy(port => port.Id).Select(group => group.First()).ToList();
@@ -61,11 +59,6 @@ namespace BillWorkflow.Common.Services
             // Approximate names are suggestions only. Never fuzzy-match a port code into an accepted ID.
             result.Candidates = RankCandidates(value, exact.Concat(search.Ports), true);
             return result;
-        }
-
-        public static bool HasSearchValue(string value)
-        {
-            return !string.IsNullOrWhiteSpace(value) && value.Length <= MaximumSearchLength && value.Any(char.IsLetterOrDigit);
         }
 
         // Shared by candidate retrieval and ranking; customer company-word rules do not apply to ports.

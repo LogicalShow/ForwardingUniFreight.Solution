@@ -17,6 +17,7 @@ namespace BillWorkflow.Common.Contracts
     {
         public Guid BillReviewId { get; set; }
         public int Version { get; set; }
+        public string LookupKey { get; set; }
         public string Role { get; set; }
         public string SourceParty { get; set; }
         // Saved bill value used for matching, before normalization.

@@ -8,8 +8,8 @@ namespace BillWorkflow.Common.Contracts
         public Guid BillReviewId { get; set; }
         public int Version { get; set; }
         public BillReviewStatus ReviewStatus { get; set; }
-        public IReadOnlyList<string> ReferenceRoles { get; set; }
+        public IReadOnlyList<BillReferenceLookup> ReferenceLookups { get; set; }
         public IReadOnlyList<ResolvedReference> ResolvedReferences { get; set; }
-        public string NextRole { get; set; }
+        public string NextLookupKey { get; set; }
     }
 }

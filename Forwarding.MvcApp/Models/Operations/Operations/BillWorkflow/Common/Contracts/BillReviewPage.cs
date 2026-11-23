@@ -13,8 +13,5 @@ namespace BillWorkflow.Common.Contracts
         public int PageSize { get; set; }
         public int TotalCount { get; set; }
         public List<BillReviewDetails> Items { get; set; }
-
-        internal bool ReviewStarted { get; set; }
-        internal BillContext Context { get; set; }
     }
 }

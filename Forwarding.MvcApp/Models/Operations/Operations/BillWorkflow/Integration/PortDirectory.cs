@@ -26,7 +26,7 @@ namespace Forwarding.MvcApp.Models.Operations.Operations.BillWorkflow.Integratio
 
         public IReadOnlyList<PortRecord> FindExactMatches(string value, BillContext context, int actingUserId)
         {
-            ValidateSearch(value, 1, 1);
+            ReferenceSearchRules.ValidateSearch(value, 1, 1);
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -51,9 +51,9 @@ OUTER APPLY (SELECT TOP (1) pa.Alias FROM dbo.PortAliases pa
  WHERE pa.PortID = p.ID AND pa.IsActive = 1 AND pa.AliasHash = @AliasHash
    AND pa.NormalizedAlias = @NormalizedAlias ORDER BY pa.ID) a
 WHERE " + eligibility + " ORDER BY p.ID;";
-                    command.Parameters.Add("@Value", SqlDbType.NVarChar, PortResolver.MaximumSearchLength).Value = value.Trim();
+                    command.Parameters.Add("@Value", SqlDbType.NVarChar, ReferenceSearchRules.MaximumSearchTextLength).Value = value.Trim();
                     var normalizedAlias = ReferenceAliasRules.Normalize(value);
-                    command.Parameters.Add("@NormalizedAlias", SqlDbType.NVarChar, PortResolver.MaximumSearchLength).Value = normalizedAlias;
+                    command.Parameters.Add("@NormalizedAlias", SqlDbType.NVarChar, ReferenceSearchRules.MaximumSearchTextLength).Value = normalizedAlias;
                     command.Parameters.Add("@AliasHash", SqlDbType.Binary, 32).Value = ReferenceAliasRules.GetHash(normalizedAlias);
                     return ReadPorts(command, true);
                 }
@@ -62,7 +62,7 @@ WHERE " + eligibility + " ORDER BY p.ID;";
 
         public PortSearchResult FindCandidates(string value, BillContext context, int actingUserId)
         {
-            ValidateSearch(value, 1, 1);
+            ReferenceSearchRules.ValidateSearch(value, 1, 1);
             var words = PortResolver.GetSearchWords(value).Where(word => word.Length >= 3)
                 .OrderByDescending(word => word.Length).Take(4).ToList();
             if (words.Count == 0) return new PortSearchResult();
@@ -96,7 +96,7 @@ WHERE " + eligibility + " ORDER BY p.ID;";
 
         public PortLookupPage Search(string searchText, int page, int pageSize, BillContext context, int actingUserId)
         {
-            ValidateSearch(searchText, page, pageSize);
+            ReferenceSearchRules.ValidateSearch(searchText, page, pageSize);
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -113,7 +113,7 @@ SELECT ID, Code, Name, LocalName, CountryID FROM
  p.Name COLLATE Latin1_General_100_CI_AS LIKE @Text ESCAPE N'~' OR
  p.LocalName COLLATE Latin1_General_100_CI_AS LIKE @Text ESCAPE N'~')
 ) AS Matches WHERE RowNumber > @Skip AND RowNumber <= @LastRow ORDER BY RowNumber;";
-                    command.Parameters.Add("@Text", SqlDbType.NVarChar, PortResolver.MaximumSearchLength * 2 + 2)
+                    command.Parameters.Add("@Text", SqlDbType.NVarChar, ReferenceSearchRules.MaximumSearchTextLength * 2 + 2)
                         .Value = "%" + EscapeSearchText(searchText.Trim()) + "%";
                     var skip = (page - 1) * pageSize;
                     command.Parameters.Add("@Skip", SqlDbType.Int).Value = skip;
@@ -176,7 +176,7 @@ WHERE o.ID = @MasterID AND u.ID = @UserID AND ISNULL(u.IsInactive, 0) = 0;";
 
         private static string AddNameLikeCondition(SqlCommand command, string parameter, string value)
         {
-            command.Parameters.Add(parameter, SqlDbType.NVarChar, PortResolver.MaximumSearchLength * 2 + 2)
+            command.Parameters.Add(parameter, SqlDbType.NVarChar, ReferenceSearchRules.MaximumSearchTextLength * 2 + 2)
                 .Value = "%" + EscapeSearchText(value) + "%";
             return "(p.Name COLLATE Latin1_General_100_CI_AS LIKE " + parameter + " ESCAPE N'~' OR " +
                 "p.LocalName COLLATE Latin1_General_100_CI_AS LIKE " + parameter + " ESCAPE N'~')";
@@ -185,14 +185,6 @@ WHERE o.ID = @MasterID AND u.ID = @UserID AND ISNULL(u.IsInactive, 0) = 0;";
         private static string EscapeSearchText(string value)
         {
             return value.Replace("~", "~~").Replace("%", "~%").Replace("_", "~_").Replace("[", "~[");
-        }
-
-        private static void ValidateSearch(string text, int page, int pageSize)
-        {
-            if (!PortResolver.HasSearchValue(text) || page < 1 || page > DocumentReviewService.MaximumSearchPage ||
-                pageSize < 1 || pageSize > DocumentReviewService.MaximumSearchPageSize)
-                throw new DocumentReviewException(DocumentReviewFailure.InvalidInput,
-                    BillWorkflowCodes.InvalidReferenceSearch, BillWorkflowMessages.InvalidReferenceSearch);
         }
 
         private static List<PortRecord> ReadPorts(SqlCommand command, bool readAlias = false)

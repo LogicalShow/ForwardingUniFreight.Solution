@@ -67,11 +67,11 @@ namespace Forwarding.MvcApp.Controllers.Operations.API_Operations.BillWorkflow
         public HttpResponseMessage ResolveReferences([FromBody] ResolveBillReferenceRequest request)
         {
             if (!ModelState.IsValid || request == null || request.BillReviewId == Guid.Empty ||
-                request.ExpectedVersion <= 0 || string.IsNullOrWhiteSpace(request.Role))
+                request.ExpectedVersion <= 0 || string.IsNullOrWhiteSpace(request.LookupKey))
                 return CreateErrorResponse(HttpStatusCode.BadRequest, BillWorkflowCodes.InvalidReferenceResolutionRequest,
                     BillWorkflowMessages.ReferenceResolutionRequestRequired);
             var result = service.ResolveReferences(request.BillReviewId, request.ExpectedVersion,
-                request.Role);
+                request.LookupKey);
             var response = CreateSuccessResponse(HttpStatusCode.OK, result);
             response.Headers.CacheControl = new CacheControlHeaderValue { NoStore = true };
             return response;
@@ -81,11 +81,11 @@ namespace Forwarding.MvcApp.Controllers.Operations.API_Operations.BillWorkflow
         public HttpResponseMessage SubmitReferenceStep([FromBody] SubmitReferenceStepRequest request)
         {
             if (!ModelState.IsValid || request == null || request.BillReviewId == Guid.Empty ||
-                request.ExpectedVersion <= 0 || string.IsNullOrWhiteSpace(request.Role) || request.Id <= 0)
+                request.ExpectedVersion <= 0 || string.IsNullOrWhiteSpace(request.LookupKey) || request.Id <= 0)
                 return CreateErrorResponse(HttpStatusCode.BadRequest, BillWorkflowCodes.InvalidSubmitReferenceStepRequest,
                     BillWorkflowMessages.SubmitReferenceStepRequestRequired);
             var result = service.SubmitReferenceStep(request.BillReviewId, request.ExpectedVersion,
-                new BillReferenceSelection { Role = request.Role, Id = request.Id, ResolutionMethod = request.ResolutionMethod });
+                new BillReferenceSelection { LookupKey = request.LookupKey, Id = request.Id, ResolutionMethod = request.ResolutionMethod });
             var response = CreateSuccessResponse(HttpStatusCode.OK, result);
             response.Headers.CacheControl = new CacheControlHeaderValue { NoStore = true };
             return response;
@@ -179,7 +179,7 @@ namespace Forwarding.MvcApp.Controllers.Operations.API_Operations.BillWorkflow
 
         public Guid BillReviewId { get; set; }
         public int ExpectedVersion { get; set; }
-        public string Role { get; set; }
+        public string LookupKey { get; set; }
         public int Id { get; set; }
         public ResolutionMethod ResolutionMethod { get; set; }
     }
@@ -188,7 +188,7 @@ namespace Forwarding.MvcApp.Controllers.Operations.API_Operations.BillWorkflow
     {
         public Guid BillReviewId { get; set; }
         public int ExpectedVersion { get; set; }
-        public string Role { get; set; }
+        public string LookupKey { get; set; }
     }
 
     public class SearchBillCustomersRequest

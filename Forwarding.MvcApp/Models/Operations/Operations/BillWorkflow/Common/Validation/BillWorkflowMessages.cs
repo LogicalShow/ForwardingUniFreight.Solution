@@ -25,9 +25,10 @@ namespace BillWorkflow.Common.Validation
         public const string BillUnreadable = "The bill could not be read.";
         public const string ConfirmedBillRequestRequired = "Supply a bill review ID and positive confirmed version.";
         public const string ConfirmationRequestRequired = "Supply BillReviewId and a positive ExpectedVersion. Save the required reference selections before confirming.";
-        public const string SubmitReferenceStepRequestRequired = "Supply BillReviewId, a positive ExpectedVersion, Role, a positive Id and a supported ResolutionMethod.";
+        public const string SubmitReferenceStepRequestRequired = "Supply BillReviewId, a positive ExpectedVersion, LookupKey, a positive Id and a supported ResolutionMethod.";
         public const string ValidatedProgressRequired = "BillReviewId, one validated reference, acting user and expected version are required.";
         public const string SavedReferenceNotAvailable = "The saved {0} selection is no longer eligible or its scanned source changed. Select it again.";
+        public const string SavedReferencesChanged = "The saved reference selections no longer match this bill's lookup requirements. Review them before confirming.";
         public const string ConnectionRequired = "The host database connection is required.";
         public const string ControllerDependenciesRequired = "DocumentReview dependencies must be supplied.";
         public const string CustomerAccessRequired = "An active user and accessible master context are required.";
@@ -46,6 +47,7 @@ namespace BillWorkflow.Common.Validation
         public const string InvalidFieldValue = "The extracted value does not match the field's expected type.";
         public const string InvalidResolutionMethod = "Supply a supported resolution method.";
         public const string LookupInputsRequired = "A lookup requirement and context are required.";
+        public const string LookupRequirementsInvalid = "Each lookup requires a unique key, a role, a resolver key and a display name.";
         public const string MasterContextChanged = "The master context changed. Start the review of this document again.";
         public const string MasterIdRequired = "A positive existing master-operation ID is required.";
         public const string MasterNotFound = "The master operation was not found or is not accessible.";
@@ -55,25 +57,22 @@ namespace BillWorkflow.Common.Validation
         public const string PortNotAvailable = "Choose an active port eligible for this operation's transport type.";
         public const string PortIdRequired = "A positive port ID is required.";
         public const string PortAliasConflict = "This port alias has another active mapping or a disabled mapping. Confirm with RememberAlias=false or review the port aliases.";
-        public const string UnsupportedPortLookup = "Supply a loading-port or discharge-port requirement.";
+        public const string UnsupportedPortLookup = "Supply a port lookup requirement.";
         public const string UnsupportedTransportType = "Port lookup requires an ocean, air or inland operation.";
         public const string ReferenceRequired = "Select the required {0} ID.";
         public const string ReferenceResolutionChanged = "The selected ID or resolution method no longer agrees with matching. Resolve again before confirming it.";
-        public const string ReferenceResolutionRequestRequired = "Supply BillReviewId, a positive ExpectedVersion and Role.";
+        public const string ReferenceResolutionRequestRequired = "Supply BillReviewId, a positive ExpectedVersion and LookupKey.";
         public const string ReferenceResolverNotAvailable = "The requested reference resolver is not available yet.";
-        public const string ReferenceRoleNotAvailable = "This role is not enabled for the bill.";
-        public const string ReferenceRoleNotEnabled = "The requested role is not enabled for this bill.";
+        public const string ReferenceLookupNotAvailable = "The requested lookup is not enabled for this bill.";
         public const string ReferenceSearchValueMissing = "The scanned {0} name is missing or unusable for matching. Select an eligible {1} ID.";
-        public const string ReferenceSelectionRequired = "Supply a reference Role and positive Id.";
-        public const string ReferenceValidatorNotAvailable = "The requested reference validator is not available yet.";
+        public const string ReferenceSelectionRequired = "Supply a reference LookupKey and positive Id.";
         public const string RequiredReferencesNotConfirmed = "Confirm the required {0} ID before continuing.";
-        public const string SelectedCustomerNotAvailable = "The selected {0} customer is no longer available for this bill.";
         public const string ServiceDependenciesRequired = "Document review dependencies must be supplied.";
         public const string StoredContextInvalid = "Invalid stored review context.";
         public const string UnsupportedReferenceConfirmation = "Confirmation cannot validate the {0} reference yet.";
         public const string UnsupportedCustomerLookup = "Supply a shipper or consignee customer requirement.";
         public const string UnsupportedDirection = "Stage 1 supports import and export master operations.";
         public const string UserRequired = "An authenticated application user is required.";
-        public const string ValidatedConfirmationRequired = "A validated review, references, acting user and expected version are required.";
+        public const string ValidatedConfirmationRequired = "BillReviewId, acting user and expected version are required.";
     }
 }

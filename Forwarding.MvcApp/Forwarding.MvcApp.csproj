@@ -1352,6 +1352,8 @@
     <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Contracts\BillContext.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Contracts\BillLookupRequirement.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Contracts\BillOfLading.cs" />
+    <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Contracts\BillReferenceConfirmation.cs" />
+    <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Contracts\BillReferenceLookup.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Contracts\BillReferenceResolution.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Contracts\BillReferenceSelection.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Contracts\BillReferenceUpdate.cs" />
@@ -1360,6 +1362,8 @@
     <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Contracts\BillReviewDetails.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Contracts\BillReviewProgress.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Contracts\BillReviewPage.cs" />
+    <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Contracts\BillReviewState.cs" />
+    <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Contracts\BillReviewValidation.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Contracts\BillWorkflowEnumConverter.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Contracts\CustomerLookupPage.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Contracts\CustomerRecord.cs" />
@@ -1373,10 +1377,13 @@
     <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Extraction\BillOfLadingJsonAdapter.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Services\ReferenceAliasRules.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Services\CustomerResolver.cs" />
+    <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Services\CustomerReferenceHandler.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Services\DocumentReviewService.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Services\PortResolver.cs" />
+    <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Services\PortReferenceHandler.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Validation\BillWorkflowCodes.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Validation\BillWorkflowMessages.cs" />
+    <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Validation\ReferenceSearchRules.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Integration\BillContextProvider.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Integration\BillLookupPolicy.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Integration\BillWorkflowStore.cs" />

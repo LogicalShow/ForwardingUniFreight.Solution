@@ -22,16 +22,24 @@ namespace BillWorkflow.Common.Abstractions
     public interface IBillWorkflowStore
     {
         StoredExtraction GetExtraction(Guid extractionId);
-        IReadOnlyList<BillReviewDetails> StartReview(Guid extractionId, BillContext context, int actingUserId);
-        BillReviewDetails GetBillReview(Guid billReviewId);
-        BillReviewPage GetBillReviews(Guid documentReviewId, int page, int pageSize);
-        BillReviewDetails SaveReference(BillReferenceUpdate update, int expectedVersion, int actingUserId);
-        BillReviewDetails ConfirmReferences(BillReviewDetails review, int expectedVersion, int actingUserId);
+        IReadOnlyList<BillReviewState> StartReview(Guid extractionId, BillContext context, int actingUserId);
+        BillReviewState GetBillReview(Guid billReviewId);
+        BillReviewStatePage GetBillReviews(Guid documentReviewId, int page, int pageSize);
+        BillReviewState SaveReference(BillReferenceUpdate update, int expectedVersion, int actingUserId);
+        BillReviewState ConfirmReferences(BillReferenceConfirmation confirmation, int expectedVersion, int actingUserId);
     }
 
     public interface IReferenceResolver
     {
         ReferenceMatchResult Resolve(BillLookupRequirement requirement, BillContext context, int actingUserId);
+    }
+
+    public interface IReferenceHandler
+    {
+        string ResolverKey { get; }
+        ReferenceMatchResult Resolve(BillLookupRequirement requirement, BillContext context, int userId);
+        ReferenceOption GetById(int id, BillLookupRequirement requirement, BillContext context, int userId);
+        ValidationIssue CreateNotAvailableIssue(BillLookupRequirement requirement);
     }
 
     public interface ICustomerDirectory

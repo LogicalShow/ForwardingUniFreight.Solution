@@ -58,7 +58,7 @@ WHERE requested.ID = @DocumentReviewId AND requested.IsDemo = @IsDemo AND d.IsDe
             }
         }
 
-        public IReadOnlyList<BillReviewDetails> StartReview(Guid extractionId, BillContext context, int actingUserId)
+        public IReadOnlyList<BillReviewState> StartReview(Guid extractionId, BillContext context, int actingUserId)
         {
             using (var connection = new SqlConnection(connectionString))
             {
@@ -121,7 +121,7 @@ d.ID AS DocumentReviewId, d.EntityID, d.ReviewContextJson,
 b.ID AS BillReviewId, b.BillIndex, b.Version, b.ReviewStatus, b.BillJson, b.BillWithConfidenceJson,
 b.ReferenceResolutionsJson, b.IssuesJson, b.CompletedBy, b.CompletedAt";
 
-        private List<BillReviewDetails> ReadDocumentBills(SqlConnection connection, SqlTransaction transaction,
+        private List<BillReviewState> ReadDocumentBills(SqlConnection connection, SqlTransaction transaction,
             Guid extractionId, BillContext context)
         {
             using (var command = connection.CreateCommand())
@@ -133,11 +133,11 @@ JOIN dbo.AIDocumentExtraction d ON d.ID = b.AIDocumentExtractionID
 WHERE d.ID = @DocumentReviewId AND d.IsDemo = @IsDemo
 ORDER BY b.BillIndex;";
                 AddDocumentParameters(command, extractionId);
-                var bills = new List<BillReviewDetails>();
+                var bills = new List<BillReviewState>();
                 using (var reader = command.ExecuteReader())
                     while (reader.Read())
                     {
-                        var bill = ReadBillReviewDetails(reader);
+                        var bill = ReadBillReviewState(reader);
                         bill.Context = context;
                         bills.Add(bill);
                     }
@@ -145,7 +145,7 @@ ORDER BY b.BillIndex;";
             }
         }
 
-        public BillReviewDetails GetBillReview(Guid billReviewId)
+        public BillReviewState GetBillReview(Guid billReviewId)
         {
             using (var connection = new SqlConnection(connectionString))
             using (var command = connection.CreateCommand())
@@ -158,11 +158,11 @@ WHERE b.ID = @BillReviewId AND d.IsDemo = @IsDemo;";
                 command.Parameters.Add("@IsDemo", SqlDbType.Bit).Value = isDemo;
                 connection.Open();
                 using (var reader = command.ExecuteReader())
-                    return reader.Read() ? ReadBillReviewDetails(reader) : null;
+                    return reader.Read() ? ReadBillReviewState(reader) : null;
             }
         }
 
-        public BillReviewPage GetBillReviews(Guid documentReviewId, int page, int pageSize)
+        public BillReviewStatePage GetBillReviews(Guid documentReviewId, int page, int pageSize)
         {
             if (page < 1 || pageSize < 1 || pageSize > DocumentReviewService.MaximumBillPageSize)
                 throw new ArgumentException(string.Format(BillWorkflowMessages.BillReviewsRequestRequired,
@@ -190,23 +190,24 @@ OFFSET @Skip ROWS FETCH NEXT @PageSize ROWS ONLY;";
                 using (var reader = command.ExecuteReader())
                 {
                     if (!reader.Read()) return null;
-                    var result = new BillReviewPage
+                    var result = new BillReviewStatePage
                     {
                         Page = page, PageSize = pageSize, TotalCount = (int)reader["TotalCount"],
                         Context = ReadContext(reader), ReviewStarted = reader["ReviewContextJson"] != DBNull.Value
                     };
                     reader.NextResult();
-                    while (reader.Read()) result.Items.Add(ReadBillReviewDetails(reader));
+                    while (reader.Read()) result.Items.Add(ReadBillReviewState(reader));
                     return result;
                 }
             }
         }
 
-        public BillReviewDetails SaveReference(BillReferenceUpdate update, int expectedVersion, int actingUserId)
+        public BillReviewState SaveReference(BillReferenceUpdate update, int expectedVersion, int actingUserId)
         {
             if (update == null || update.BillReviewId == Guid.Empty ||
                 expectedVersion <= 0 || actingUserId <= 0 || update.ReferenceResolution == null ||
                 update.ReferenceResolution.Reference == null || update.ReferenceResolution.Reference.Id.GetValueOrDefault() <= 0 ||
+                string.IsNullOrWhiteSpace(update.ReferenceResolution.Reference.LookupKey) ||
                 string.IsNullOrWhiteSpace(update.ReferenceResolution.Reference.Role))
                 throw new ArgumentException(BillWorkflowMessages.ValidatedProgressRequired);
             using (var connection = new SqlConnection(connectionString))
@@ -215,8 +216,9 @@ OFFSET @Skip ROWS FETCH NEXT @PageSize ROWS ONLY;";
                 using (var transaction = connection.BeginTransaction(IsolationLevel.ReadCommitted))
                 {
                     var references = LoadSavedReferences(connection, transaction, update, expectedVersion);
-                    var role = update.ReferenceResolution.Reference.Role;
-                    references.RemoveAll(result => result != null && result.Reference != null && result.Reference.Role == role);
+                    var lookupKey = update.ReferenceResolution.Reference.LookupKey;
+                    references.RemoveAll(result => result != null && result.Reference != null &&
+                        result.Reference.LookupKey == lookupKey);
                     references.Add(update.ReferenceResolution);
                     var saved = UpdateReferenceProgress(connection, transaction, update, references, expectedVersion, actingUserId);
                     transaction.Commit();
@@ -248,7 +250,7 @@ WHERE b.ID = @BillReviewId
             }
         }
 
-        private BillReviewDetails UpdateReferenceProgress(SqlConnection connection, SqlTransaction transaction,
+        private BillReviewState UpdateReferenceProgress(SqlConnection connection, SqlTransaction transaction,
             BillReferenceUpdate update, List<ReferenceResolution> references, int expectedVersion, int actingUserId)
         {
             using (var command = connection.CreateCommand())
@@ -274,27 +276,26 @@ WHERE b.ID = @BillReviewId
                 command.Parameters.Add("@References", SqlDbType.NVarChar, -1).Value = JsonConvert.SerializeObject(references);
                 command.Parameters.Add("@UpdatedAt", SqlDbType.DateTime2).Value = DateTime.Now;
                 using (var reader = command.ExecuteReader())
-                    if (reader.Read()) return ReadBillReviewDetails(reader);
+                    if (reader.Read()) return ReadBillReviewState(reader);
                 throw CreateBillUpdateException(connection, update.BillReviewId, transaction);
             }
         }
 
-        public BillReviewDetails ConfirmReferences(BillReviewDetails review, int expectedVersion, int actingUserId)
+        public BillReviewState ConfirmReferences(BillReferenceConfirmation confirmation, int expectedVersion, int actingUserId)
         {
-            if (review == null || review.DocumentReviewId == Guid.Empty || review.BillReviewId == Guid.Empty ||
-                expectedVersion <= 0 || actingUserId <= 0 || review.ReferenceResolutions == null ||
-                review.Issues == null || review.Issues.Count != 0)
+            if (confirmation == null || confirmation.BillReviewId == Guid.Empty ||
+                expectedVersion <= 0 || actingUserId <= 0)
                 throw new ArgumentException(BillWorkflowMessages.ValidatedConfirmationRequired);
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
                 using (var transaction = connection.BeginTransaction(IsolationLevel.ReadCommitted))
                 {
-                    var confirmed = SaveConfirmedReferences(connection, transaction, review, expectedVersion, actingUserId);
-                    if (!isDemo && review.RememberAlias)
+                    var confirmed = UpdateReferenceConfirmation(connection, transaction, confirmation, expectedVersion, actingUserId);
+                    if (!isDemo && confirmation.RememberAlias)
                     {
-                        RememberCustomerAlias(connection, transaction, review, actingUserId);
-                        RememberPortAliases(connection, transaction, review, actingUserId);
+                        RememberCustomerAlias(connection, transaction, confirmed, actingUserId);
+                        RememberPortAliases(connection, transaction, confirmed, actingUserId);
                     }
                     transaction.Commit();
                     return confirmed;
@@ -302,16 +303,15 @@ WHERE b.ID = @BillReviewId
             }
         }
 
-        private BillReviewDetails SaveConfirmedReferences(SqlConnection connection, SqlTransaction transaction,
-            BillReviewDetails review, int expectedVersion, int actingUserId)
+        private BillReviewState UpdateReferenceConfirmation(SqlConnection connection, SqlTransaction transaction,
+            BillReferenceConfirmation confirmation, int expectedVersion, int actingUserId)
         {
             using (var command = connection.CreateCommand())
             {
                 command.Transaction = transaction;
                 command.CommandText = @"
 UPDATE b
-SET ReferenceResolutionsJson = @References, IssuesJson = @Issues,
-    ReviewStatus = 2, CompletedBy = @UserId, CompletedAt = @UpdatedAt,
+SET IssuesJson = '[]', ReviewStatus = 2, CompletedBy = @UserId, CompletedAt = @UpdatedAt,
     UpdatedBy = @UserId, UpdatedAt = @UpdatedAt, Version = b.Version + 1
 OUTPUT d.ID AS DocumentReviewId, d.EntityID, d.ReviewContextJson,
        inserted.ID AS BillReviewId, inserted.BillIndex, inserted.Version, inserted.ReviewStatus,
@@ -319,33 +319,31 @@ OUTPUT d.ID AS DocumentReviewId, d.EntityID, d.ReviewContextJson,
        inserted.IssuesJson, inserted.CompletedBy, inserted.CompletedAt
 FROM dbo.AIDocumentBills b
 JOIN dbo.AIDocumentExtraction d ON d.ID = b.AIDocumentExtractionID
-WHERE b.ID = @BillReviewId AND b.AIDocumentExtractionID = @DocumentReviewId
+WHERE b.ID = @BillReviewId
   AND b.Version = @ExpectedVersion AND b.ReviewStatus = 1 AND d.IsDemo = @IsDemo AND d.ExtractionStatus <> 'Cancelled';";
-                AddDocumentParameters(command, review.DocumentReviewId);
-                command.Parameters.Add("@BillReviewId", SqlDbType.UniqueIdentifier).Value = review.BillReviewId;
+                command.Parameters.Add("@IsDemo", SqlDbType.Bit).Value = isDemo;
+                command.Parameters.Add("@BillReviewId", SqlDbType.UniqueIdentifier).Value = confirmation.BillReviewId;
                 command.Parameters.Add("@ExpectedVersion", SqlDbType.Int).Value = expectedVersion;
                 command.Parameters.Add("@UserId", SqlDbType.Int).Value = actingUserId;
-                command.Parameters.Add("@References", SqlDbType.NVarChar, -1).Value = JsonConvert.SerializeObject(review.ReferenceResolutions);
-                command.Parameters.Add("@Issues", SqlDbType.NVarChar, -1).Value = JsonConvert.SerializeObject(review.Issues);
                 command.Parameters.Add("@UpdatedAt", SqlDbType.DateTime2).Value = DateTime.Now;
                 using (var reader = command.ExecuteReader())
-                    if (reader.Read()) return ReadBillReviewDetails(reader);
-                throw CreateUpdateException(connection, review.DocumentReviewId, review.BillReviewId, transaction);
+                    if (reader.Read()) return ReadBillReviewState(reader);
+                throw CreateBillUpdateException(connection, confirmation.BillReviewId, transaction);
             }
         }
 
         private static void RememberCustomerAlias(SqlConnection connection, SqlTransaction transaction,
-            BillReviewDetails review, int actingUserId)
+            BillReviewState confirmed, int actingUserId)
         {
-            var resolution = review.ReferenceResolutions.Single(result => result.Reference.Role == "Customer");
-            if (!CustomerResolver.HasSearchValue(resolution.SearchValue)) return;
+            var resolution = confirmed.ReferenceResolutions.Single(result => result.Reference.Role == "Customer");
+            if (!ReferenceSearchRules.HasSearchValue(resolution.SearchValue)) return;
             var normalized = ReferenceAliasRules.Normalize(resolution.SearchValue);
             var customerId = resolution.Reference.Id.Value;
             using (var command = connection.CreateCommand())
             {
                 command.Transaction = transaction;
                 command.Parameters.Add("@AliasHash", SqlDbType.Binary, 32).Value = ReferenceAliasRules.GetHash(normalized);
-                command.Parameters.Add("@NormalizedAlias", SqlDbType.NVarChar, CustomerResolver.MaximumSearchLength).Value = normalized;
+                command.Parameters.Add("@NormalizedAlias", SqlDbType.NVarChar, ReferenceSearchRules.MaximumSearchTextLength).Value = normalized;
                 // Serialize writes for the same alias across different bill reviews before checking/inserting it.
                 command.CommandText = @"
 SELECT CustomerID, IsActive, NormalizedAlias
@@ -367,9 +365,9 @@ WHERE AliasHash = @AliasHash;";
                 }
                 if (exists) return;
                 command.Parameters.Add("@CustomerID", SqlDbType.Int).Value = customerId;
-                command.Parameters.Add("@Alias", SqlDbType.NVarChar, CustomerResolver.MaximumSearchLength).Value = resolution.SearchValue;
+                command.Parameters.Add("@Alias", SqlDbType.NVarChar, ReferenceSearchRules.MaximumSearchTextLength).Value = resolution.SearchValue;
                 command.Parameters.Add("@ActingUserID", SqlDbType.Int).Value = actingUserId;
-                command.Parameters.Add("@BillReviewID", SqlDbType.UniqueIdentifier).Value = review.BillReviewId;
+                command.Parameters.Add("@BillReviewID", SqlDbType.UniqueIdentifier).Value = confirmed.BillReviewId;
                 command.Parameters.Add("@CreatedAt", SqlDbType.DateTime2).Value = DateTime.Now;
                 command.CommandText = @"
 INSERT dbo.CustomerAliases (CustomerID, Alias, NormalizedAlias, AliasHash, CreatedBy, CreatedAt, SourceAIDocumentBillID)
@@ -379,14 +377,14 @@ VALUES (@CustomerID, @Alias, @NormalizedAlias, @AliasHash, @ActingUserID, @Creat
         }
 
         private static void RememberPortAliases(SqlConnection connection, SqlTransaction transaction,
-            BillReviewDetails review, int actingUserId)
+            BillReviewState confirmed, int actingUserId)
         {
             // Both roles share PortAliases. Take locks in a consistent order across bill confirmations.
-            var resolutions = review.ReferenceResolutions.Where(result => result.ResolverKey == "Port" &&
-                PortResolver.HasSearchValue(result.SearchValue))
+            var resolutions = confirmed.ReferenceResolutions.Where(result => result.ResolverKey == "Port" &&
+                ReferenceSearchRules.HasSearchValue(result.SearchValue))
                 .OrderBy(result => ReferenceAliasRules.Normalize(result.SearchValue), StringComparer.Ordinal);
             foreach (var resolution in resolutions)
-                RememberPortAlias(connection, transaction, resolution, review.BillReviewId, actingUserId);
+                RememberPortAlias(connection, transaction, resolution, confirmed.BillReviewId, actingUserId);
         }
 
         private static void RememberPortAlias(SqlConnection connection, SqlTransaction transaction,
@@ -398,7 +396,7 @@ VALUES (@CustomerID, @Alias, @NormalizedAlias, @AliasHash, @ActingUserID, @Creat
             {
                 command.Transaction = transaction;
                 command.Parameters.Add("@AliasHash", SqlDbType.Binary, 32).Value = ReferenceAliasRules.GetHash(normalized);
-                command.Parameters.Add("@NormalizedAlias", SqlDbType.NVarChar, PortResolver.MaximumSearchLength).Value = normalized;
+                command.Parameters.Add("@NormalizedAlias", SqlDbType.NVarChar, ReferenceSearchRules.MaximumSearchTextLength).Value = normalized;
                 // Match the customer pattern: serialize alias writes and reject conflicting/disabled mappings.
                 command.CommandText = @"
 SELECT PortID, IsActive, NormalizedAlias
@@ -420,7 +418,7 @@ WHERE AliasHash = @AliasHash;";
                 }
                 if (exists) return;
                 command.Parameters.Add("@PortID", SqlDbType.Int).Value = portId;
-                command.Parameters.Add("@Alias", SqlDbType.NVarChar, PortResolver.MaximumSearchLength).Value = resolution.SearchValue;
+                command.Parameters.Add("@Alias", SqlDbType.NVarChar, ReferenceSearchRules.MaximumSearchTextLength).Value = resolution.SearchValue;
                 command.Parameters.Add("@ActingUserID", SqlDbType.Int).Value = actingUserId;
                 command.Parameters.Add("@BillReviewID", SqlDbType.UniqueIdentifier).Value = billReviewId;
                 command.Parameters.Add("@CreatedAt", SqlDbType.DateTime2).Value = DateTime.Now;
@@ -451,11 +449,11 @@ VALUES (@PortID, @Alias, @NormalizedAlias, @AliasHash, @ActingUserID, @CreatedAt
             };
         }
 
-        private BillReviewDetails ReadBillReviewDetails(SqlDataReader reader)
+        private BillReviewState ReadBillReviewState(SqlDataReader reader)
         {
             var parsed = adapter.ReadStoredBill((string)reader["BillJson"], (string)reader["BillWithConfidenceJson"]);
             var status = (BillReviewStatus)(int)reader["ReviewStatus"];
-            return new BillReviewDetails
+            return new BillReviewState
             {
                 DocumentReviewId = (Guid)reader["DocumentReviewId"], BillReviewId = (Guid)reader["BillReviewId"],
                 BillIndex = (int)reader["BillIndex"], Version = (int)reader["Version"], ReviewStatus = status,
@@ -487,32 +485,6 @@ WHERE b.ID = @BillReviewId AND d.IsDemo = @IsDemo;";
                 if (command.ExecuteScalar() == null)
                     return new DocumentReviewException(DocumentReviewFailure.NotFound,
                         BillWorkflowCodes.BillReviewNotFound, BillWorkflowMessages.BillReviewNotFound);
-            }
-            return new DocumentReviewException(DocumentReviewFailure.Conflict,
-                BillWorkflowCodes.BillReviewVersionChanged, BillWorkflowMessages.BillReviewVersionChanged);
-        }
-
-        private DocumentReviewException CreateUpdateException(SqlConnection connection, Guid documentReviewId,
-            Guid billReviewId, SqlTransaction transaction)
-        {
-            using (var command = connection.CreateCommand())
-            {
-                command.Transaction = transaction;
-                command.CommandText = @"
-SELECT b.ID FROM dbo.AIDocumentExtraction d
-LEFT JOIN dbo.AIDocumentBills b ON b.AIDocumentExtractionID = d.ID AND b.ID = @BillReviewId
-WHERE d.ID = @DocumentReviewId AND d.IsDemo = @IsDemo;";
-                AddDocumentParameters(command, documentReviewId);
-                command.Parameters.Add("@BillReviewId", SqlDbType.UniqueIdentifier).Value = billReviewId;
-                using (var reader = command.ExecuteReader())
-                {
-                    if (!reader.Read())
-                        return new DocumentReviewException(DocumentReviewFailure.NotFound,
-                            BillWorkflowCodes.DocumentReviewNotFound, BillWorkflowMessages.DocumentReviewNotFound);
-                    if (reader.IsDBNull(0))
-                        return new DocumentReviewException(DocumentReviewFailure.NotFound,
-                            BillWorkflowCodes.BillReviewNotFound, BillWorkflowMessages.BillReviewNotInDocument);
-                }
             }
             return new DocumentReviewException(DocumentReviewFailure.Conflict,
                 BillWorkflowCodes.BillReviewVersionChanged, BillWorkflowMessages.BillReviewVersionChanged);

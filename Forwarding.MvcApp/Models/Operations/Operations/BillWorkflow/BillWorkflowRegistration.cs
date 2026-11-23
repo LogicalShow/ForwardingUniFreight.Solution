@@ -3,6 +3,7 @@ using Forwarding.MvcApp.DocAi;
 using System.Web.Http;
 using BillWorkflow.Common.Extraction;
 using BillWorkflow.Common.Services;
+using BillWorkflow.Common.Abstractions;
 using Forwarding.MvcApp.Models.Operations.Operations.BillWorkflow.Integration;
 
 namespace Forwarding.MvcApp.Models.Operations.Operations.BillWorkflow
@@ -62,10 +63,13 @@ namespace Forwarding.MvcApp.Models.Operations.Operations.BillWorkflow
                 new BillContextProvider(connectionString),
                 new BillLookupPolicy(),
                 new BillWorkflowStore(connectionString, DocAiSettings.IsDemo, new BillOfLadingJsonAdapter()),
-                new CustomerResolver(customers),
                 customers,
-                new PortResolver(ports),
-                ports);
+                ports,
+                new IReferenceHandler[]
+                {
+                    new CustomerReferenceHandler(new CustomerResolver(customers), customers),
+                    new PortReferenceHandler(new PortResolver(ports), ports)
+                });
         }
     }
 }

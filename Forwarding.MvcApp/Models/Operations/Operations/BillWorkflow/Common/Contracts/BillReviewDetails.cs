@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace BillWorkflow.Common.Contracts
 {
@@ -13,33 +12,17 @@ namespace BillWorkflow.Common.Contracts
         public BillReviewStatus ReviewStatus { get; set; }
         public BillOfLading Bill { get; set; }
         public List<ValidationIssue> Issues { get; set; }
-        public IReadOnlyList<string> ReferenceRoles { get; internal set; }
-        public string NextRole { get; internal set; }
-
-        // Saved decisions for scanned bill fields; operation context is kept separately.
-        public IReadOnlyList<ResolvedReference> ResolvedReferences
-        {
-            get
-            {
-                return (ReferenceResolutions ?? new List<ReferenceResolution>())
-                    .Where(result => result != null && result.Reference != null && result.Reference.Id > 0)
-                    .Select(result => new ResolvedReference(result.Reference.Role, result.Reference.Id.Value,
-                        result.Reference.Name, result.ResolutionMethod, result.SearchValue, result.SourceParty)).ToList().AsReadOnly();
-            }
-        }
-
-        internal BillContext Context { get; set; }
-        internal List<ReferenceResolution> ReferenceResolutions { get; set; }
-        internal bool RememberAlias { get; set; }
-        internal int? CompletedBy { get; set; }
-        internal DateTime? CompletedAt { get; set; }
+        public IReadOnlyList<BillReferenceLookup> ReferenceLookups { get; internal set; }
+        public string NextLookupKey { get; internal set; }
+        public IReadOnlyList<ResolvedReference> ResolvedReferences { get; internal set; }
     }
 
     public class ResolvedReference
     {
-        public ResolvedReference(string role, int id, string name, ResolutionMethod? resolutionMethod,
+        public ResolvedReference(string lookupKey, string role, int id, string name, ResolutionMethod? resolutionMethod,
             string searchValue, string sourceParty)
         {
+            LookupKey = lookupKey;
             Role = role;
             Id = id;
             Name = name;
@@ -48,6 +31,7 @@ namespace BillWorkflow.Common.Contracts
             SourceParty = sourceParty;
         }
 
+        public string LookupKey { get; private set; }
         public string Role { get; private set; }
         public int Id { get; private set; }
         public string Name { get; private set; }

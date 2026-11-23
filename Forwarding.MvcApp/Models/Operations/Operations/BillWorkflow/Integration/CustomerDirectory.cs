@@ -52,10 +52,10 @@ OUTER APPLY (SELECT TOP (1) ca.Alias FROM dbo.CustomerAliases ca
 WHERE " +
                         BuildEligibilityFilter(command, scope, sourceParty) + @"
  ORDER BY c.ID;";
-                    command.Parameters.Add("@Name", SqlDbType.NVarChar, CustomerResolver.MaximumSearchLength)
+                    command.Parameters.Add("@Name", SqlDbType.NVarChar, ReferenceSearchRules.MaximumSearchTextLength)
                         .Value = name.Trim(' ');
                     var normalizedAlias = ReferenceAliasRules.Normalize(name);
-                    command.Parameters.Add("@NormalizedAlias", SqlDbType.NVarChar, CustomerResolver.MaximumSearchLength).Value = normalizedAlias;
+                    command.Parameters.Add("@NormalizedAlias", SqlDbType.NVarChar, ReferenceSearchRules.MaximumSearchTextLength).Value = normalizedAlias;
                     command.Parameters.Add("@AliasHash", SqlDbType.Binary, 32).Value = ReferenceAliasRules.GetHash(normalizedAlias);
                     return ReadCustomers(command, true);
                 }
@@ -110,11 +110,7 @@ WHERE " +
         public CustomerLookupPage Search(string searchText, int page, int pageSize, string sourceParty,
             BillContext context, int actingUserId)
         {
-            if (!CustomerResolver.HasSearchValue(searchText) ||
-                page < 1 || page > DocumentReviewService.MaximumSearchPage ||
-                pageSize < 1 || pageSize > DocumentReviewService.MaximumSearchPageSize)
-                throw new DocumentReviewException(DocumentReviewFailure.InvalidInput,
-                    BillWorkflowCodes.InvalidReferenceSearch, BillWorkflowMessages.InvalidReferenceSearch);
+            ReferenceSearchRules.ValidateSearch(searchText, page, pageSize);
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
@@ -133,7 +129,7 @@ SELECT ID, Name, LocalName FROM
 WHERE RowNumber > @Skip AND RowNumber <= @LastRow
 ORDER BY RowNumber;";
                     command.Parameters.Add("@SearchText", SqlDbType.NVarChar,
-                        CustomerResolver.MaximumSearchLength * 2 + 2).Value = "%" + EscapeSearchText(searchText.Trim()) + "%";
+                        ReferenceSearchRules.MaximumSearchTextLength * 2 + 2).Value = "%" + EscapeSearchText(searchText.Trim()) + "%";
                     var skip = (page - 1) * pageSize;
                     command.Parameters.Add("@Skip", SqlDbType.Int).Value = skip;
                     // One extra row tells the caller whether another page exists, without COUNT(*).
@@ -252,7 +248,7 @@ WHERE u.ID = @UserID AND ISNULL(u.IsInactive, 0) = 0 AND o.ID = @MasterID;";
         private string AddNameLikeCondition(SqlCommand command, string parameter, string word)
         {
             // Words/fragments contain letters and numbers only, so LIKE metacharacters cannot enter here.
-            command.Parameters.Add(parameter, SqlDbType.NVarChar, CustomerResolver.MaximumSearchLength + 2)
+            command.Parameters.Add(parameter, SqlDbType.NVarChar, ReferenceSearchRules.MaximumSearchTextLength + 2)
                 .Value = "%" + word + "%";
             return "(c.Name COLLATE Latin1_General_100_CI_AS LIKE " + parameter +
                 " OR c.LocalName COLLATE Latin1_General_100_CI_AS LIKE " + parameter + ")";

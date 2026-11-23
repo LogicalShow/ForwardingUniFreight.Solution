@@ -50,7 +50,7 @@ namespace BillWorkflow.Common.Validation
         public const string ReferenceRequired = "REFERENCE_REQUIRED";
         public const string ReferenceResolutionChanged = "REFERENCE_RESOLUTION_CHANGED";
         public const string ReferenceResolverNotAvailable = "REFERENCE_RESOLVER_NOT_AVAILABLE";
-        public const string ReferenceRoleNotAvailable = "REFERENCE_ROLE_NOT_AVAILABLE";
+        public const string ReferenceLookupNotAvailable = "REFERENCE_LOOKUP_NOT_AVAILABLE";
         public const string ReferenceSearchValueMissing = "REFERENCE_SEARCH_VALUE_MISSING";
         public const string RequiredReferencesNotConfirmed = "REQUIRED_REFERENCES_NOT_CONFIRMED";
         public const string SavedReferenceNotAvailable = "SAVED_REFERENCE_NOT_AVAILABLE";

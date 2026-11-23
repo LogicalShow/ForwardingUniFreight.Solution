@@ -11,7 +11,6 @@ namespace BillWorkflow.Common.Services
 {
     public class CustomerResolver : IReferenceResolver
     {
-        public const int MaximumSearchLength = 500;
         public const decimal MinimumSuggestionScore = 75m;
         private const int MaximumSuggestions = 3;
         private const decimal MinimumWordSimilarity = 80m;
@@ -39,7 +38,7 @@ namespace BillWorkflow.Common.Services
 
             var result = new ReferenceMatchResult();
             var name = requirement.SearchValue;
-            if (!HasSearchValue(name))
+            if (!ReferenceSearchRules.HasSearchValue(name))
                 return result;
 
             // This query checks the complete eligible scope before any fuzzy candidate limit.
@@ -63,11 +62,6 @@ namespace BillWorkflow.Common.Services
             result.CandidateSearchLimited = search.IsLimited;
             result.Candidates = RankCandidates(name, exact.Concat(search.Customers), true);
             return result;
-        }
-
-        public static bool HasSearchValue(string name)
-        {
-            return !string.IsNullOrWhiteSpace(name) && name.Length <= MaximumSearchLength && name.Any(char.IsLetterOrDigit);
         }
 
         // Shared by retrieval and ranking; original names and strict exact matching stay unchanged.

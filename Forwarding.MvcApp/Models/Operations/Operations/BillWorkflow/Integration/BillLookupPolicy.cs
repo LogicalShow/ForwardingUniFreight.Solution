@@ -33,8 +33,10 @@ namespace Forwarding.MvcApp.Models.Operations.Operations.BillWorkflow.Integratio
             {
                 new BillLookupRequirement
                 {
+                    LookupKey = "Customer",
                     Role = "Customer",
                     ResolverKey = "Customer",
+                    DisplayName = party.ToLowerInvariant(),
                     SourceParty = party,
                     SourceField = field,
                     SearchValue = value == null ? null : value.Trim(),
@@ -42,16 +44,20 @@ namespace Forwarding.MvcApp.Models.Operations.Operations.BillWorkflow.Integratio
                 },
                 new BillLookupRequirement
                 {
+                    LookupKey = "PortOfLoading",
                     Role = "PortOfLoading",
                     ResolverKey = "Port",
+                    DisplayName = "loading port",
                     SourceField = "PortOfLoading",
                     SearchValue = bill.PortOfLoading?.Trim(),
                     IsRequired = true
                 },
                 new BillLookupRequirement
                 {
+                    LookupKey = "PortOfDischarge",
                     Role = "PortOfDischarge",
                     ResolverKey = "Port",
+                    DisplayName = "discharge port",
                     SourceField = "PortOfDischarge",
                     SearchValue = bill.PortOfDischarge?.Trim(),
                     IsRequired = true

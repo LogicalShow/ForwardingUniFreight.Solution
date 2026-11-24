@@ -10,7 +10,8 @@ namespace BillWorkflow.Common.Contracts
     {
         NotStarted = 0,
         InReview = 1,
-        ReferencesConfirmed = 2
+        ReferencesConfirmed = 2,
+        Completed = 3
     }
 
     public class StoredBillReadResult
@@ -38,7 +39,7 @@ namespace BillWorkflow.Common.Contracts
         public BillContext Context { get; set; }
         public BillOfLading Bill { get; set; }
         public List<ReferenceResolution> ReferenceResolutions { get; set; }
-        public int CompletedBy { get; set; }
-        public DateTime CompletedAt { get; set; }
+        public int ReferencesConfirmedBy { get; set; }
+        public DateTime ReferencesConfirmedAt { get; set; }
     }
 }

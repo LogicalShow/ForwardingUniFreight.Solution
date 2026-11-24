@@ -134,18 +134,26 @@ SELECT ID, Code, Name, LocalName, CountryID FROM
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                var eligibility = LoadEligibility(connection, context, actingUserId);
-                using (var command = connection.CreateCommand())
-                {
-                    command.CommandText = "SELECT p.ID, p.Code, p.Name, p.LocalName, p.CountryID FROM dbo.Ports p WHERE " +
-                        eligibility + " AND p.ID = @PortID;";
-                    command.Parameters.Add("@PortID", SqlDbType.Int).Value = portId;
-                    return ReadPorts(command).SingleOrDefault();
-                }
+                return GetById(portId, context, actingUserId, connection, null);
             }
         }
 
-        private static string LoadEligibility(SqlConnection connection, BillContext context, int actingUserId)
+        internal PortRecord GetById(int portId, BillContext context, int actingUserId,
+            SqlConnection connection, SqlTransaction transaction)
+        {
+            var eligibility = LoadEligibility(connection, context, actingUserId, transaction);
+            using (var command = connection.CreateCommand())
+            {
+                command.Transaction = transaction;
+                command.CommandText = "SELECT p.ID, p.Code, p.Name, p.LocalName, p.CountryID FROM dbo.Ports p WHERE " +
+                    eligibility + " AND p.ID = @PortID;";
+                command.Parameters.Add("@PortID", SqlDbType.Int).Value = portId;
+                return ReadPorts(command).SingleOrDefault();
+            }
+        }
+
+        private static string LoadEligibility(SqlConnection connection, BillContext context, int actingUserId,
+            SqlTransaction transaction = null)
         {
             long masterId;
             if (context == null || !long.TryParse(context.ParentReference, NumberStyles.None,
@@ -155,6 +163,7 @@ SELECT ID, Code, Name, LocalName, CountryID FROM
             int transportType;
             using (var command = connection.CreateCommand())
             {
+                command.Transaction = transaction;
                 // The service authorizes the operation. Match its existing port selector's transport filter.
                 command.CommandText = @"SELECT o.TransportType FROM dbo.Operations o CROSS JOIN dbo.Users u
 WHERE o.ID = @MasterID AND u.ID = @UserID AND ISNULL(u.IsInactive, 0) = 0;";

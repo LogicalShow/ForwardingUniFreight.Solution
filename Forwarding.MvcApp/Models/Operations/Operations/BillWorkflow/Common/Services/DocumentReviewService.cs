@@ -47,7 +47,7 @@ namespace BillWorkflow.Common.Services
             referenceHandlers = handlers.ToDictionary(handler => handler.ResolverKey, StringComparer.Ordinal);
         }
 
-        public DocumentReviewSummary CreateDocumentReview(Guid extractionId)
+        public DocumentReviewSummary GetDocumentReview(Guid extractionId)
         {
             RequireActor();
             if (extractionId == Guid.Empty)
@@ -93,7 +93,8 @@ namespace BillWorkflow.Common.Services
                 throw new DocumentReviewException(DocumentReviewFailure.NotFound,
                     BillWorkflowCodes.DocumentReviewNotFound, BillWorkflowMessages.DocumentReviewNotFound);
 
-            var context = ValidateCurrentContext(result.Context);
+            var context = result.Items.Count > 0 && result.Items.All(item => item.ReviewStatus == BillReviewStatus.Completed)
+                ? contexts.Load(result.Context.ParentReference, userId) : ValidateCurrentContext(result.Context);
             if (!result.ReviewStarted) ThrowReviewNotStarted();
             var items = new List<BillReviewDetails>();
             foreach (var bill in result.Items)
@@ -147,7 +148,7 @@ namespace BillWorkflow.Common.Services
             };
         }
 
-        public CustomerLookupPage SearchCustomers(Guid billReviewId, string searchText,
+        public CustomerLookupPage SearchCustomers(Guid billReviewId, string lookupKey, string searchText,
             int page, int pageSize)
         {
             ReferenceSearchRules.ValidateSearch(searchText, page, pageSize);
@@ -155,7 +156,7 @@ namespace BillWorkflow.Common.Services
             var billReview = LoadBillReview(billReviewId, out context);
             RequireBillReadyForReferences(billReview);
             var requirements = GetRequirements(billReview, context);
-            var customerRequirement = GetCustomerRequirement(requirements);
+            var customerRequirement = GetCustomerRequirement(requirements, lookupKey);
             var result = customers.Search(searchText.Trim(), page, pageSize, customerRequirement.SourceParty,
                 context, userId);
             ValidateCurrentContext(context);
@@ -246,8 +247,8 @@ namespace BillWorkflow.Common.Services
                 Bill = billReview.Bill,
                 ReferenceResolutions = billReview.ReferenceResolutions.Where(result => IsReferenceConfirmed(result) &&
                     requirements.Any(requirement => MatchesRequirement(result, requirement))).ToList(),
-                CompletedBy = billReview.CompletedBy.Value,
-                CompletedAt = billReview.CompletedAt.Value
+                ReferencesConfirmedBy = billReview.ReferencesConfirmedBy.Value,
+                ReferencesConfirmedAt = billReview.ReferencesConfirmedAt.Value
             };
         }
 
@@ -255,6 +256,10 @@ namespace BillWorkflow.Common.Services
             List<BillLookupRequirement> requirements)
         {
             var stored = data.ReferenceResolutions ?? new List<ReferenceResolution>();
+            // An inserted bill is a historical result; later master-data edits do not
+            // remove its accepted selections or send it back into reference resolution.
+            if (data.ReviewStatus == BillReviewStatus.Completed)
+                return new BillReviewValidation { ValidReferences = stored, Issues = data.Issues };
             var valid = new List<ReferenceResolution>();
             var issues = new List<ValidationIssue>();
             foreach (var requirement in requirements)
@@ -340,7 +345,7 @@ namespace BillWorkflow.Common.Services
                 .Select(result => new ResolvedReference(result.Reference.LookupKey, result.Reference.Role,
                     result.Reference.Id.Value, result.Reference.Name, result.ResolutionMethod,
                     result.SearchValue, result.SourceParty)).ToList().AsReadOnly();
-            var next = review.ReviewStatus == BillReviewStatus.ReferencesConfirmed ? null :
+            var next = review.ReviewStatus >= BillReviewStatus.ReferencesConfirmed ? null :
                 requirements.FirstOrDefault(requirement => requirement.IsRequired &&
                     !references.Any(reference => reference.LookupKey == requirement.LookupKey));
             return new BillReviewProgress
@@ -362,6 +367,7 @@ namespace BillWorkflow.Common.Services
             {
                 DocumentReviewId = state.DocumentReviewId, BillReviewId = state.BillReviewId,
                 BillIndex = state.BillIndex, Version = state.Version, ReviewStatus = state.ReviewStatus,
+                CreatedOperationID = state.CreatedOperationID,
                 Bill = state.Bill, Issues = validation.Issues,
                 ReferenceLookups = progress.ReferenceLookups, ResolvedReferences = progress.ResolvedReferences,
                 NextLookupKey = progress.NextLookupKey
@@ -403,9 +409,10 @@ namespace BillWorkflow.Common.Services
             return requirements;
         }
 
-        private static BillLookupRequirement GetCustomerRequirement(IEnumerable<BillLookupRequirement> requirements)
+        private static BillLookupRequirement GetCustomerRequirement(IEnumerable<BillLookupRequirement> requirements,
+            string lookupKey)
         {
-            var customerRequirement = requirements.SingleOrDefault(requirement => requirement.Role == "Customer");
+            var customerRequirement = requirements.SingleOrDefault(requirement => requirement.LookupKey == lookupKey);
             if (customerRequirement == null || customerRequirement.ResolverKey != "Customer" ||
                 (customerRequirement.SourceParty != "Shipper" && customerRequirement.SourceParty != "Consignee"))
                 throw new DocumentReviewException(DocumentReviewFailure.InvalidInput,
@@ -546,7 +553,7 @@ namespace BillWorkflow.Common.Services
         private static void ValidateReferencesConfirmedState(BillReviewState billReview)
         {
             if (billReview.ReviewStatus != BillReviewStatus.ReferencesConfirmed ||
-                !billReview.CompletedBy.HasValue || !billReview.CompletedAt.HasValue)
+                !billReview.ReferencesConfirmedBy.HasValue || !billReview.ReferencesConfirmedAt.HasValue)
                 throw new DocumentReviewException(DocumentReviewFailure.Conflict,
                     BillWorkflowCodes.ReferencesNotConfirmed, BillWorkflowMessages.ReferencesNotConfirmed);
         }
@@ -582,7 +589,8 @@ namespace BillWorkflow.Common.Services
             if (data == null)
                 throw new DocumentReviewException(DocumentReviewFailure.NotFound,
                     BillWorkflowCodes.BillReviewNotFound, BillWorkflowMessages.BillReviewNotFound);
-            context = ValidateCurrentContext(data.Context);
+            context = data.ReviewStatus == BillReviewStatus.Completed
+                ? contexts.Load(data.Context.ParentReference, userId) : ValidateCurrentContext(data.Context);
             if (data.ReviewStatus == BillReviewStatus.NotStarted) ThrowReviewNotStarted();
             return data;
         }
@@ -619,7 +627,7 @@ namespace BillWorkflow.Common.Services
 
         private static void RequireEditableReview(BillReviewState data)
         {
-            if (data.ReviewStatus == BillReviewStatus.ReferencesConfirmed)
+            if (data.ReviewStatus >= BillReviewStatus.ReferencesConfirmed)
                 throw new DocumentReviewException(DocumentReviewFailure.Conflict,
                     BillWorkflowCodes.ReferencesAlreadyConfirmed, BillWorkflowMessages.ReferencesAlreadyConfirmed);
         }

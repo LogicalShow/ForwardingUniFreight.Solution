@@ -119,7 +119,8 @@ WHERE ID = @BillReviewId AND AIDocumentExtractionID = @DocumentReviewId AND Revi
         private const string BillColumns = @"
 d.ID AS DocumentReviewId, d.EntityID, d.ReviewContextJson,
 b.ID AS BillReviewId, b.BillIndex, b.Version, b.ReviewStatus, b.BillJson, b.BillWithConfidenceJson,
-b.ReferenceResolutionsJson, b.IssuesJson, b.CompletedBy, b.CompletedAt";
+b.ReferenceResolutionsJson, b.IssuesJson, b.ReferencesConfirmedBy, b.ReferencesConfirmedAt,
+b.CompletedBy, b.CompletedAt, b.OperationID AS CreatedOperationID";
 
         private List<BillReviewState> ReadDocumentBills(SqlConnection connection, SqlTransaction transaction,
             Guid extractionId, BillContext context)
@@ -264,7 +265,8 @@ SET ReferenceResolutionsJson = @References, UpdatedBy = @UserId, UpdatedAt = @Up
 OUTPUT d.ID AS DocumentReviewId, d.EntityID, d.ReviewContextJson,
        inserted.ID AS BillReviewId, inserted.BillIndex, inserted.Version, inserted.ReviewStatus,
        inserted.BillJson, inserted.BillWithConfidenceJson, inserted.ReferenceResolutionsJson,
-       inserted.IssuesJson, inserted.CompletedBy, inserted.CompletedAt
+       inserted.IssuesJson, inserted.ReferencesConfirmedBy, inserted.ReferencesConfirmedAt,
+       inserted.CompletedBy, inserted.CompletedAt, inserted.OperationID AS CreatedOperationID
 FROM dbo.AIDocumentBills b
 JOIN dbo.AIDocumentExtraction d ON d.ID = b.AIDocumentExtractionID
 WHERE b.ID = @BillReviewId
@@ -294,7 +296,7 @@ WHERE b.ID = @BillReviewId
                     var confirmed = UpdateReferenceConfirmation(connection, transaction, confirmation, expectedVersion, actingUserId);
                     if (!isDemo && confirmation.RememberAlias)
                     {
-                        RememberCustomerAlias(connection, transaction, confirmed, actingUserId);
+                        RememberCustomerAliases(connection, transaction, confirmed, actingUserId);
                         RememberPortAliases(connection, transaction, confirmed, actingUserId);
                     }
                     transaction.Commit();
@@ -311,12 +313,13 @@ WHERE b.ID = @BillReviewId
                 command.Transaction = transaction;
                 command.CommandText = @"
 UPDATE b
-SET IssuesJson = '[]', ReviewStatus = 2, CompletedBy = @UserId, CompletedAt = @UpdatedAt,
+SET IssuesJson = '[]', ReviewStatus = 2, ReferencesConfirmedBy = @UserId, ReferencesConfirmedAt = @UpdatedAt,
     UpdatedBy = @UserId, UpdatedAt = @UpdatedAt, Version = b.Version + 1
 OUTPUT d.ID AS DocumentReviewId, d.EntityID, d.ReviewContextJson,
        inserted.ID AS BillReviewId, inserted.BillIndex, inserted.Version, inserted.ReviewStatus,
        inserted.BillJson, inserted.BillWithConfidenceJson, inserted.ReferenceResolutionsJson,
-       inserted.IssuesJson, inserted.CompletedBy, inserted.CompletedAt
+       inserted.IssuesJson, inserted.ReferencesConfirmedBy, inserted.ReferencesConfirmedAt,
+       inserted.CompletedBy, inserted.CompletedAt, inserted.OperationID AS CreatedOperationID
 FROM dbo.AIDocumentBills b
 JOIN dbo.AIDocumentExtraction d ON d.ID = b.AIDocumentExtractionID
 WHERE b.ID = @BillReviewId
@@ -332,11 +335,19 @@ WHERE b.ID = @BillReviewId
             }
         }
 
-        private static void RememberCustomerAlias(SqlConnection connection, SqlTransaction transaction,
+        private static void RememberCustomerAliases(SqlConnection connection, SqlTransaction transaction,
             BillReviewState confirmed, int actingUserId)
         {
-            var resolution = confirmed.ReferenceResolutions.Single(result => result.Reference.Role == "Customer");
-            if (!ReferenceSearchRules.HasSearchValue(resolution.SearchValue)) return;
+            var resolutions = confirmed.ReferenceResolutions.Where(result => result.ResolverKey == "Customer" &&
+                ReferenceSearchRules.HasSearchValue(result.SearchValue))
+                .OrderBy(result => ReferenceAliasRules.Normalize(result.SearchValue), StringComparer.Ordinal);
+            foreach (var resolution in resolutions)
+                RememberCustomerAlias(connection, transaction, resolution, confirmed.BillReviewId, actingUserId);
+        }
+
+        private static void RememberCustomerAlias(SqlConnection connection, SqlTransaction transaction,
+            ReferenceResolution resolution, Guid billReviewId, int actingUserId)
+        {
             var normalized = ReferenceAliasRules.Normalize(resolution.SearchValue);
             var customerId = resolution.Reference.Id.Value;
             using (var command = connection.CreateCommand())
@@ -367,7 +378,7 @@ WHERE AliasHash = @AliasHash;";
                 command.Parameters.Add("@CustomerID", SqlDbType.Int).Value = customerId;
                 command.Parameters.Add("@Alias", SqlDbType.NVarChar, ReferenceSearchRules.MaximumSearchTextLength).Value = resolution.SearchValue;
                 command.Parameters.Add("@ActingUserID", SqlDbType.Int).Value = actingUserId;
-                command.Parameters.Add("@BillReviewID", SqlDbType.UniqueIdentifier).Value = confirmed.BillReviewId;
+                command.Parameters.Add("@BillReviewID", SqlDbType.UniqueIdentifier).Value = billReviewId;
                 command.Parameters.Add("@CreatedAt", SqlDbType.DateTime2).Value = DateTime.Now;
                 command.CommandText = @"
 INSERT dbo.CustomerAliases (CustomerID, Alias, NormalizedAlias, AliasHash, CreatedBy, CreatedAt, SourceAIDocumentBillID)
@@ -457,11 +468,15 @@ VALUES (@PortID, @Alias, @NormalizedAlias, @AliasHash, @ActingUserID, @CreatedAt
             {
                 DocumentReviewId = (Guid)reader["DocumentReviewId"], BillReviewId = (Guid)reader["BillReviewId"],
                 BillIndex = (int)reader["BillIndex"], Version = (int)reader["Version"], ReviewStatus = status,
+                CreatedOperationID = reader["CreatedOperationID"] == DBNull.Value ? (long?)null : (long)reader["CreatedOperationID"],
                 Context = ReadContext(reader), Bill = parsed.Bill,
                 Issues = status == BillReviewStatus.NotStarted ? parsed.Issues :
                     JsonConvert.DeserializeObject<List<ValidationIssue>>((string)reader["IssuesJson"]),
                 ReferenceResolutions = status == BillReviewStatus.NotStarted ? new List<ReferenceResolution>() :
                     JsonConvert.DeserializeObject<List<ReferenceResolution>>((string)reader["ReferenceResolutionsJson"]),
+                ReferencesConfirmedBy = reader["ReferencesConfirmedBy"] == DBNull.Value ? (int?)null : (int)reader["ReferencesConfirmedBy"],
+                ReferencesConfirmedAt = reader["ReferencesConfirmedAt"] == DBNull.Value ? (DateTime?)null :
+                    DateTime.SpecifyKind((DateTime)reader["ReferencesConfirmedAt"], DateTimeKind.Local),
                 CompletedBy = reader["CompletedBy"] == DBNull.Value ? (int?)null : (int)reader["CompletedBy"],
                 CompletedAt = reader["CompletedAt"] == DBNull.Value ? (DateTime?)null :
                     DateTime.SpecifyKind((DateTime)reader["CompletedAt"], DateTimeKind.Local)

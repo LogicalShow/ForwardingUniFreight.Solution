@@ -10,10 +10,13 @@ namespace BillWorkflow.Common.Contracts
         public int BillIndex { get; set; }
         public int Version { get; set; }
         public BillReviewStatus ReviewStatus { get; set; }
+        public long? CreatedOperationID { get; set; }
         public BillOfLading Bill { get; set; }
         public List<ValidationIssue> Issues { get; set; }
         public BillContext Context { get; set; }
         public List<ReferenceResolution> ReferenceResolutions { get; set; }
+        public int? ReferencesConfirmedBy { get; set; }
+        public DateTime? ReferencesConfirmedAt { get; set; }
         public int? CompletedBy { get; set; }
         public DateTime? CompletedAt { get; set; }
     }

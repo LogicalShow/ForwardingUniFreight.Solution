@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Configuration;
 using Forwarding.MvcApp.DocAi;
 using System.Web.Http;
@@ -13,6 +15,10 @@ namespace Forwarding.MvcApp.Models.Operations.Operations.BillWorkflow
         public static void RegisterRoutes(HttpConfiguration configuration)
         {
             configuration.Routes.MapHttpRoute(
+                name: "BillWorkflow_CompleteBill",
+                routeTemplate: "api/DocumentReview/CompleteBill",
+                defaults: new { controller = "DocumentReview", action = "CompleteBill" });
+            configuration.Routes.MapHttpRoute(
                 name: "BillWorkflow_SubmitReferenceStep",
                 routeTemplate: "api/DocumentReview/SubmitReferenceStep",
                 defaults: new { controller = "DocumentReview", action = "SubmitReferenceStep" });
@@ -25,9 +31,9 @@ namespace Forwarding.MvcApp.Models.Operations.Operations.BillWorkflow
                 routeTemplate: "api/DocumentReview/ResolveReferences",
                 defaults: new { controller = "DocumentReview", action = "ResolveReferences" });
             configuration.Routes.MapHttpRoute(
-                name: "BillWorkflow_CreateDocumentReview",
-                routeTemplate: "api/DocumentReview/CreateDocumentReview",
-                defaults: new { controller = "DocumentReview", action = "CreateDocumentReview" });
+                name: "BillWorkflow_GetDocumentReview",
+                routeTemplate: "api/DocumentReview/GetDocumentReview",
+                defaults: new { controller = "DocumentReview", action = "GetDocumentReview" });
             configuration.Routes.MapHttpRoute(
                 name: "BillWorkflow_GetBillReview",
                 routeTemplate: "api/DocumentReview/GetBillReview/{billReviewId}",
@@ -70,6 +76,32 @@ namespace Forwarding.MvcApp.Models.Operations.Operations.BillWorkflow
                     new CustomerReferenceHandler(new CustomerResolver(customers), customers),
                     new PortReferenceHandler(new PortResolver(ports), ports)
                 });
+        }
+
+        public static BillWriteService CreateBillWriteService(int userId)
+        {
+            var connectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+            return new BillWriteService(userId, CreateService(userId), CreateBillWritePreparationService(userId),
+                new BillWriteStore(connectionString, DocAiSettings.IsDemo, CreateTemporaryContainerTypes(connectionString)));
+        }
+
+        public static BillWritePreparationService CreateBillWritePreparationService(int userId)
+        {
+            var connectionString = ConfigurationManager.ConnectionStrings["ConnectionString"].ConnectionString;
+            return new BillWritePreparationService(userId, CreateService(userId),
+                new BillContextProvider(connectionString), new PortDirectory(connectionString),
+                CreateTemporaryContainerTypes(connectionString));
+        }
+
+        private static TemporaryContainerTypeProvider CreateTemporaryContainerTypes(string connectionString)
+        {
+            var containerTypeIds = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase)
+            {
+                { "40HC", 9 },
+                { "40'HC", 9 }
+            };
+
+            return new TemporaryContainerTypeProvider(connectionString, containerTypeIds);
         }
     }
 }

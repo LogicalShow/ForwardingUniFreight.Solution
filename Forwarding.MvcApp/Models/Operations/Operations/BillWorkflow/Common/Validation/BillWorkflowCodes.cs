@@ -15,6 +15,26 @@ namespace BillWorkflow.Common.Validation
         public const string BillReviewNotFound = "BILL_REVIEW_NOT_FOUND";
         public const string BillReviewNotReady = "BILL_REVIEW_NOT_READY";
         public const string BillReviewVersionChanged = "BILL_REVIEW_VERSION_CHANGED";
+        public const string BillWriteSourcesNotReady = "BILL_WRITE_SOURCES_NOT_READY";
+        public const string BillWriteTransportNotSupported = "BILL_WRITE_TRANSPORT_NOT_SUPPORTED";
+        public const string BillWriteValidationFailed = "BILL_WRITE_VALIDATION_FAILED";
+        public const string InvalidBillCompletionRequest = "INVALID_BILL_COMPLETION_REQUEST";
+        public const string OperationsInsertAccessRequired = "OPERATIONS_INSERT_ACCESS_REQUIRED";
+        public const string DuplicateHouseBill = "DUPLICATE_HOUSE_BILL";
+        public const string MasterContainerDuplicated = "MASTER_CONTAINER_DUPLICATED";
+        public const string MasterContainerTypeConflict = "MASTER_CONTAINER_TYPE_CONFLICT";
+        public const string BillCompletionNotFound = "BILL_COMPLETION_NOT_FOUND";
+        public const string BillWriteSourcesRequired = "BILL_WRITE_SOURCES_REQUIRED";
+        public const string BillWriteFieldRequired = "BILL_WRITE_FIELD_REQUIRED";
+        public const string BillWriteTextTooLong = "BILL_WRITE_TEXT_TOO_LONG";
+        public const string BillWriteAmountOutOfRange = "BILL_WRITE_AMOUNT_OUT_OF_RANGE";
+        public const string BillWritePackagesOutOfRange = "BILL_WRITE_PACKAGES_OUT_OF_RANGE";
+        public const string BillWriteDateOutOfRange = "BILL_WRITE_DATE_OUT_OF_RANGE";
+        public const string BillWriteShipmentTypeRequired = "BILL_WRITE_SHIPMENT_TYPE_REQUIRED";
+        public const string BillWritePortCountryRequired = "BILL_WRITE_PORT_COUNTRY_REQUIRED";
+        public const string DuplicateBillContainer = "DUPLICATE_BILL_CONTAINER";
+        public const string ContainerTypeAssignmentsInvalid = "CONTAINER_TYPE_ASSIGNMENTS_INVALID";
+        public const string ContainerTypeNotAvailable = "CONTAINER_TYPE_NOT_AVAILABLE";
         public const string CustomerAccessRequired = "CUSTOMER_ACCESS_REQUIRED";
         public const string CustomerAliasConflict = "CUSTOMER_ALIAS_CONFLICT";
         public const string CustomerLookupRequired = "CUSTOMER_LOOKUP_REQUIRED";
@@ -56,6 +76,7 @@ namespace BillWorkflow.Common.Validation
         public const string SavedReferenceNotAvailable = "SAVED_REFERENCE_NOT_AVAILABLE";
         public const string UnsupportedReferenceConfirmation = "UNSUPPORTED_REFERENCE_CONFIRMATION";
         public const string UnsupportedCustomerLookup = "UNSUPPORTED_CUSTOMER_LOOKUP";
+        public const string TemporaryContainerTypeNotSupported = "TEMPORARY_CONTAINER_TYPE_NOT_SUPPORTED";
         public const string UnsupportedDirection = "UNSUPPORTED_DIRECTION";
         public const string UserRequired = "USER_REQUIRED";
     }

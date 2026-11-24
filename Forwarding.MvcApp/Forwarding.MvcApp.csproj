@@ -1386,9 +1386,19 @@
     <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Validation\ReferenceSearchRules.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Integration\BillContextProvider.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Integration\BillLookupPolicy.cs" />
+    <Compile Include="Models\Operations\Operations\BillWorkflow\Integration\MasterOperationContext.cs" />
+    <Compile Include="Models\Operations\Operations\BillWorkflow\Integration\BillWritePreparationService.cs" />
+    <Compile Include="Models\Operations\Operations\BillWorkflow\Integration\BillWriteSources.cs" />
+    <Compile Include="Models\Operations\Operations\BillWorkflow\Integration\BillWriteSet.cs" />
+    <Compile Include="Models\Operations\Operations\BillWorkflow\Integration\BillWriteValidator.cs" />
+    <Compile Include="Models\Operations\Operations\BillWorkflow\Integration\BillWriteSetBuilder.cs" />
+    <Compile Include="Models\Operations\Operations\BillWorkflow\Integration\BillWriteService.cs" />
+    <Compile Include="Models\Operations\Operations\BillWorkflow\Integration\BillWriteStore.cs" />
+    <Compile Include="Models\Operations\Operations\BillWorkflow\Common\Contracts\BillCompletionResult.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Integration\BillWorkflowStore.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Integration\CustomerDirectory.cs" />
     <Compile Include="Models\Operations\Operations\BillWorkflow\Integration\PortDirectory.cs" />
+    <Compile Include="Models\Operations\Operations\BillWorkflow\Integration\TemporaryContainerTypeProvider.cs" />
     <Compile Include="Models\Operations\Operations\Customized\CheckContainerNumber.cs" />
     <Compile Include="Models\Operations\Operations\Customized\InvoiceQRCode.cs" />
     <Compile Include="Models\Operations\Operations\Customized\OperationHouse.cs" />
@@ -4003,6 +4013,7 @@
     <Content Include="Views\MasterData\Others\_ModalVessels.cshtml" />
     <Content Include="Views\PS\PS_Reports\_PS_PurchasingOrdersNewFollowUP.cshtml" />
     <None Include="Models\Operations\Operations\BillWorkflow\Sql\CreatePortAliases.sql" />
+    <None Include="Models\Operations\Operations\BillWorkflow\Sql\AddBillCompletion.sql" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

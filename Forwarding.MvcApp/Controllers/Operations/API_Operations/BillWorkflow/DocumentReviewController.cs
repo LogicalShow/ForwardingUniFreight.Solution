@@ -8,6 +8,7 @@ using WebMatrix.WebData;
 using BillWorkflow.Common.Validation;
 using Forwarding.MvcApp.Models.Operations.Operations.BillWorkflow;
 using System.Net.Http.Headers;
+using Forwarding.MvcApp.Models.Operations.Operations.BillWorkflow.Integration;
 
 namespace Forwarding.MvcApp.Controllers.Operations.API_Operations.BillWorkflow
 {
@@ -16,26 +17,41 @@ namespace Forwarding.MvcApp.Controllers.Operations.API_Operations.BillWorkflow
     public class DocumentReviewController : ApiController
     {
         private readonly DocumentReviewService service;
+        private readonly BillWriteService writeService;
 
         public DocumentReviewController()
-            : this(BillWorkflowRegistration.CreateService(WebSecurity.CurrentUserId))
+            : this(BillWorkflowRegistration.CreateService(WebSecurity.CurrentUserId),
+                BillWorkflowRegistration.CreateBillWriteService(WebSecurity.CurrentUserId))
         {
         }
 
-        public DocumentReviewController(DocumentReviewService service)
+        public DocumentReviewController(DocumentReviewService service, BillWriteService writeService)
         {
-            if (service == null)
+            if (service == null || writeService == null)
                 throw new ArgumentNullException(BillWorkflowMessages.ControllerDependenciesRequired);
             this.service = service;
+            this.writeService = writeService;
         }
 
         [HttpPost]
-        public HttpResponseMessage CreateDocumentReview([FromBody] CreateDocumentReviewRequest request)
+        public HttpResponseMessage CompleteBill([FromBody] CompleteBillRequest request)
+        {
+            if (!ModelState.IsValid || request == null || request.BillReviewId == Guid.Empty || request.ExpectedVersion <= 0)
+                return CreateErrorResponse(HttpStatusCode.BadRequest, BillWorkflowCodes.InvalidBillCompletionRequest,
+                    BillWorkflowMessages.InvalidBillCompletionRequest);
+            var result = writeService.CompleteBill(request.BillReviewId, request.ExpectedVersion);
+            var response = CreateSuccessResponse(HttpStatusCode.OK, result);
+            response.Headers.CacheControl = new CacheControlHeaderValue { NoStore = true };
+            return response;
+        }
+
+        [HttpPost]
+        public HttpResponseMessage GetDocumentReview([FromBody] GetDocumentReviewRequest request)
         {
             if (!ModelState.IsValid || request == null || request.AIDocumentExtractionID == Guid.Empty)
                 return CreateErrorResponse(HttpStatusCode.BadRequest, BillWorkflowCodes.InvalidDocumentReviewRequest,
                     BillWorkflowMessages.DocumentReviewRequestRequired);
-            var summary = service.CreateDocumentReview(request.AIDocumentExtractionID);
+            var summary = service.GetDocumentReview(request.AIDocumentExtractionID);
             return CreateSuccessResponse(HttpStatusCode.OK, summary);
         }
 
@@ -111,7 +127,10 @@ namespace Forwarding.MvcApp.Controllers.Operations.API_Operations.BillWorkflow
             if (!ModelState.IsValid || request == null || request.BillReviewId == Guid.Empty)
                 return CreateErrorResponse(HttpStatusCode.BadRequest, BillWorkflowCodes.InvalidReferenceSearch,
                     BillWorkflowMessages.InvalidReferenceSearch);
-            var customers = service.SearchCustomers(request.BillReviewId, request.SearchText,
+            if (string.IsNullOrWhiteSpace(request.LookupKey))
+                return CreateErrorResponse(HttpStatusCode.BadRequest, BillWorkflowCodes.CustomerLookupRequired,
+                    BillWorkflowMessages.CustomerLookupRequired);
+            var customers = service.SearchCustomers(request.BillReviewId, request.LookupKey, request.SearchText,
                 request.Page, request.PageSize);
             return CreateSuccessResponse(HttpStatusCode.OK, customers);
         }
@@ -144,7 +163,13 @@ namespace Forwarding.MvcApp.Controllers.Operations.API_Operations.BillWorkflow
         }
     }
 
-    public class CreateDocumentReviewRequest
+    public class CompleteBillRequest
+    {
+        public Guid BillReviewId { get; set; }
+        public int ExpectedVersion { get; set; }
+    }
+
+    public class GetDocumentReviewRequest
     {
         public Guid AIDocumentExtractionID { get; set; }
     }
@@ -200,6 +225,7 @@ namespace Forwarding.MvcApp.Controllers.Operations.API_Operations.BillWorkflow
         }
 
         public Guid BillReviewId { get; set; }
+        public string LookupKey { get; set; }
         public string SearchText { get; set; }
         public int Page { get; set; }
         public int PageSize { get; set; }

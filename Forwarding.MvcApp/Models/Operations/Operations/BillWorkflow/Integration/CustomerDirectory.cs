@@ -152,14 +152,21 @@ ORDER BY RowNumber;";
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                var scope = LoadSearchScope(connection, context, actingUserId);
-                using (var command = connection.CreateCommand())
-                {
-                    command.CommandText = "SELECT c.ID, c.Name, c.LocalName FROM dbo.Customers c WHERE " +
-                        BuildEligibilityFilter(command, scope, sourceParty) + " AND c.ID = @CustomerID;";
-                    command.Parameters.Add("@CustomerID", SqlDbType.Int).Value = customerId;
-                    return ReadCustomers(command).SingleOrDefault();
-                }
+                return GetById(customerId, sourceParty, context, actingUserId, connection, null);
+            }
+        }
+
+        internal CustomerRecord GetById(int customerId, string sourceParty, BillContext context, int actingUserId,
+            SqlConnection connection, SqlTransaction transaction)
+        {
+            var scope = LoadSearchScope(connection, context, actingUserId, transaction);
+            using (var command = connection.CreateCommand())
+            {
+                command.Transaction = transaction;
+                command.CommandText = "SELECT c.ID, c.Name, c.LocalName FROM dbo.Customers c WHERE " +
+                    BuildEligibilityFilter(command, scope, sourceParty) + " AND c.ID = @CustomerID;";
+                command.Parameters.Add("@CustomerID", SqlDbType.Int).Value = customerId;
+                return ReadCustomers(command).SingleOrDefault();
             }
         }
 
@@ -169,7 +176,8 @@ ORDER BY RowNumber;";
             return value.Replace("~", "~~").Replace("%", "~%").Replace("_", "~_").Replace("[", "~[");
         }
 
-        private CustomerSearchScope LoadSearchScope(SqlConnection connection, BillContext context, int actingUserId)
+        private CustomerSearchScope LoadSearchScope(SqlConnection connection, BillContext context, int actingUserId,
+            SqlTransaction transaction = null)
         {
             long masterId;
             if (context == null || !long.TryParse(context.ParentReference, NumberStyles.None,
@@ -178,6 +186,7 @@ ORDER BY RowNumber;";
                     BillWorkflowCodes.InvalidCustomerScope, BillWorkflowMessages.InvalidCustomerScope);
             using (var command = connection.CreateCommand())
             {
+                command.Transaction = transaction;
                 command.CommandText = @"
 SELECT u.IsHideOthersRecords, u.IsSalesman, o.SalesmanID,
        (SELECT TOP (1) UnEditableCompanyName FROM dbo.Defaults ORDER BY ID) AS Company

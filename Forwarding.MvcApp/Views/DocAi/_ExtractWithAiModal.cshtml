@@ -25,7 +25,7 @@
                                 </span>
                                 <input id="txtDocAiFileName" type="text" class="form-control input-sm" readonly placeholder="@Forwarding.MvcApp.App_Resources.App_Resources.DocAi_NoFileChosen" />
                             </div>
-                            <input id="fileDocAi" type="file" class="hide" accept=".pdf" onchange="DocAiExtract_FileChosen(this);" />
+                            <input id="fileDocAi" type="file" class="hide" accept=".pdf,.jpg,.jpeg,.png,.tif,.tiff" onchange="DocAiExtract_FileChosen(this);" />
                         </div>
                         <div class="col-sm-4">
                             <button id="btnDocAiRemove" type="button" class="btn btn-link btn-sm hide" title="@Forwarding.MvcApp.App_Resources.App_Resources.DocAi_RemoveFile" onclick="DocAiExtract_Remove();"><i class="fa fa-trash-o fa-lg"></i></button>

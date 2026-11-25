@@ -588,8 +588,21 @@ COMMIT TRANSACTION;";
         public static object[] Recent(bool isDemo)
         {
             const string sql = @"
-SELECT TOP (20) d.OriginalFileName, d.PageCount, u.Name AS CreatorName, d.CreatedAt, d.ExtractionStatus
+SELECT TOP (20) d.OriginalFileName, d.PageCount, u.Name AS CreatorName, d.CreatedAt, d.ExtractionStatus,
+       CAST(CASE WHEN d.ExtractionStatus = 'Failed' AND d.ErrorCode = 'DUPLICATE' AND d.SupersededByExtractionID IS NOT NULL THEN 1 ELSE 0 END AS bit) AS IsDuplicate,
+       o.ExtractionStatus AS OwnerStatus, o.PageCount AS OwnerPageCount,
+       CAST(CASE WHEN d.SupersededByExtractionID IS NULL AND d.RemoteJobId IS NOT NULL AND EXISTS (
+            SELECT 1 FROM dbo.AIDocumentExtraction e
+            WHERE e.RemoteJobId = d.RemoteJobId AND e.RemoteRunNo = d.RemoteRunNo AND e.IsDemo = d.IsDemo
+              AND e.ID <> d.ID AND e.SupersededByExtractionID IS NULL AND e.ExtractionStatus <> 'Cancelled'
+              AND (e.CreatedAt < d.CreatedAt OR (e.CreatedAt = d.CreatedAt AND e.ID < d.ID)))
+            THEN 1 ELSE 0 END AS bit) AS IsShared
 FROM dbo.AIDocumentExtraction d LEFT JOIN dbo.Users u ON u.ID = d.CreatedByUserID
+LEFT JOIN dbo.AIDocumentExtraction o ON o.ID = d.SupersededByExtractionID
+    AND d.ExtractionStatus = 'Failed' AND d.ErrorCode = 'DUPLICATE'
+    AND o.IsDemo = d.IsDemo AND o.SupersededByExtractionID IS NULL
+    AND (o.EntityName = d.EntityName OR (o.EntityName IS NULL AND d.EntityName IS NULL))
+    AND (o.EntityID = d.EntityID OR (o.EntityID IS NULL AND d.EntityID IS NULL))
 WHERE d.IsDemo = @isDemo
 ORDER BY d.CreatedAt DESC, d.ID DESC;";
             return Execute(sql, command =>
@@ -900,7 +913,11 @@ ORDER BY CreatedAt, ID;";
                 pages = reader.IsDBNull(1) ? (short?)null : reader.GetInt16(1),
                 user = reader.IsDBNull(2) ? null : reader.GetString(2),
                 createdAt = reader.GetDateTime(3).ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture),
-                status = reader.GetString(4)
+                status = reader.GetString(4),
+                isDuplicate = reader.GetBoolean(5),
+                ownerStatus = reader.IsDBNull(6) ? null : reader.GetString(6),
+                ownerPages = reader.IsDBNull(7) ? (short?)null : reader.GetInt16(7),
+                isShared = reader.GetBoolean(8)
             };
         }
 

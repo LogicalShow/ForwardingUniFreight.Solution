@@ -89,11 +89,11 @@ namespace Forwarding.MvcApp.DocAi
                 shippingLine = null; // empty: the service detects it
             }
 
-            if (documentType == "AUTO" && (extension != "pdf" || shippingLine != null))
+            if (documentType == "AUTO" && shippingLine != null)
             {
                 throw new DocAiInputException(
-                    "AUTO_PDF_REQUIRED",
-                    "Automatic detection needs a PDF with no shipping line.");
+                    "AUTO_LINE_NOT_ALLOWED",
+                    "Automatic detection takes no shipping line.");
             }
 
             byte[] hash;

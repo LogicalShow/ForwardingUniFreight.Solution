@@ -1,5 +1,5 @@
 ﻿// "Extract with AI" dialog of the Houses tab (Views/DocAi/_ExtractWithAiModal.cshtml, Controllers/DocAi/DocAiController.cs).
-// Choose a PDF -> AUTO -> review the extracted bills and confirm customer references.
+// Choose a PDF, JPEG, PNG or TIFF -> AUTO -> review the extracted bills and confirm customer references.
 // States: empty | chosen | reading | done | failed.
 
 var DocAiExtract_IntentId = null;
@@ -63,8 +63,8 @@ function DocAiExtract_FileChosen(pInput) {
     DocAiExtract_IntentId = DocAiExtract_NewIntentId();
     DocAiExtract_Generation++;
     var extension = file.name.split(".").pop().toLowerCase();
-    if ($.inArray(extension, ["pdf"]) < 0) {
-        swal("Sorry", "Choose a PDF bill of lading or cargo manifest.");
+    if ($.inArray(extension, ["pdf", "jpg", "jpeg", "png", "tif", "tiff"]) < 0) {
+        swal("Sorry", "Choose a PDF, JPEG, PNG or TIFF bill of lading or cargo manifest.");
         DocAiExtract_ClearFile();
         return;
     }
@@ -420,6 +420,10 @@ var DocAiUsage_Text = {
     months: "Monthly usage", monthColumns: ["Month", "Documents", "Pages"],
     recent: "Recent documents", recentColumns: ["File", "Pages", "User", "Date", "Status"],
     recentUnavailable: "Recent documents are currently unavailable.", empty: "No documents yet.",
+    reusedDone: "Already read", reusedRunning: "Already reading", reusedFailed: "Duplicate \u00b7 original failed",
+    reusedCancelled: "Duplicate \u00b7 original cancelled", reusedUnknown: "Duplicate", reusedPages: "{0} \u00b7 no charge",
+    reusedTitle: "Same file already read for this operation \u2014 no extra pages charged.",
+    sharedTitle: "Same file already read in another operation \u2014 result reused, no extra pages charged.",
     previousTitle: "Read the B/L data from a document"
 };
 function DocAiUsage_Format(key, values) {
@@ -523,6 +527,51 @@ function DocAiUsage_StatusLabel(status) {
     var kind = /complete|done|success/i.test(status) ? "success" : /fail|error/i.test(status) ? "danger" : "default";
     return DocAiExtract_Node("span", status == null ? "?" : status, "label label-" + kind);
 }
+function DocAiUsage_RecentStatus(d) {
+    if (d.isDuplicate === true) {
+        var text, kind = "default";
+        switch (d.ownerStatus) {
+            case "Completed": text = DocAiUsage_Text.reusedDone; kind = "info"; break;
+            case "Pending":
+            case "Submitted": text = DocAiUsage_Text.reusedRunning; kind = "info"; break;
+            case "Failed": text = DocAiUsage_Text.reusedFailed; break;
+            case "Cancelled": text = DocAiUsage_Text.reusedCancelled; break;
+            default: text = DocAiUsage_Text.reusedUnknown; break;
+        }
+        var badge = DocAiExtract_Node("span", text, "label label-" + kind);
+        badge.setAttribute("title", DocAiUsage_Text.reusedTitle);
+        return badge;
+    }
+    if (d.isShared !== true) return DocAiUsage_StatusLabel(d.status);
+    var sharedBadge;
+    switch (d.status) {
+        case "Completed":
+            sharedBadge = DocAiExtract_Node("span", DocAiUsage_Text.reusedDone, "label label-info");
+            break;
+        case "Pending":
+        case "Submitted":
+            sharedBadge = DocAiExtract_Node("span", DocAiUsage_Text.reusedRunning, "label label-info");
+            break;
+        case "Failed":
+            sharedBadge = DocAiUsage_StatusLabel(d.status);
+            break;
+        default:
+            return DocAiUsage_StatusLabel(d.status);
+    }
+    sharedBadge.setAttribute("title", DocAiUsage_Text.sharedTitle);
+    return sharedBadge;
+}
+function DocAiUsage_RecentPages(d) {
+    if (d.isDuplicate === true) {
+        return d.ownerStatus === "Completed" && d.ownerPages != null
+            ? DocAiUsage_Format("reusedPages", [DocAiUsage_Number(d.ownerPages)]) : "\u2014";
+    }
+    if (d.isShared === true && (d.status === "Completed" || d.status === "Pending"
+        || d.status === "Submitted" || d.status === "Failed")) {
+        return d.pages != null ? DocAiUsage_Format("reusedPages", [DocAiUsage_Number(d.pages)]) : "\u2014";
+    }
+    return d.pages;
+}
 // parts: [value, extra progress-bar class, label]; the theme's grey bar background stands for what is left.
 function DocAiUsage_Bar(className, parts, total) {
     var bar = DocAiExtract_Node("div", null, className);
@@ -591,7 +640,7 @@ function DocAiUsage_Element(u) {
     root.appendChild(DocAiExtract_Node("h4", DocAiUsage_Text.recent, "font-bold m-t-lg"));
     if (!u.recentDocuments) root.appendChild(DocAiExtract_Node("p", DocAiUsage_Text.recentUnavailable));
     else if (!u.recentDocuments.length) root.appendChild(DocAiExtract_Node("p", DocAiUsage_Text.empty));
-    else root.appendChild(DocAiUsage_Table(DocAiUsage_Text.recentColumns, u.recentDocuments.map(function (d) { return [d.fileName, d.pages, d.user, DocAiUsage_DocDate(d.createdAt), DocAiUsage_StatusLabel(d.status)]; })));
+    else root.appendChild(DocAiUsage_Table(DocAiUsage_Text.recentColumns, u.recentDocuments.map(function (d) { return [d.fileName, DocAiUsage_RecentPages(d), d.user, DocAiUsage_DocDate(d.createdAt), DocAiUsage_RecentStatus(d)]; })));
     return root;
 }
 var DocAiUsage_RefreshGeneration = 0;

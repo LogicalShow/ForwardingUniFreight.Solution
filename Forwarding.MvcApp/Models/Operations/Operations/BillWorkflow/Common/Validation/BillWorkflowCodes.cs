@@ -76,7 +76,6 @@ namespace BillWorkflow.Common.Validation
         public const string SavedReferenceNotAvailable = "SAVED_REFERENCE_NOT_AVAILABLE";
         public const string UnsupportedReferenceConfirmation = "UNSUPPORTED_REFERENCE_CONFIRMATION";
         public const string UnsupportedCustomerLookup = "UNSUPPORTED_CUSTOMER_LOOKUP";
-        public const string TemporaryContainerTypeNotSupported = "TEMPORARY_CONTAINER_TYPE_NOT_SUPPORTED";
         public const string UnsupportedDirection = "UNSUPPORTED_DIRECTION";
         public const string UserRequired = "USER_REQUIRED";
     }

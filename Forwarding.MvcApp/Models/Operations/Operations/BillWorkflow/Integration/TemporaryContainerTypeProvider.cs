@@ -4,32 +4,27 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
-using System.Linq;
 using BillWorkflow.Common.Contracts;
 using BillWorkflow.Common.Exceptions;
 using BillWorkflow.Common.Validation;
 
 namespace Forwarding.MvcApp.Models.Operations.Operations.BillWorkflow.Integration
 {
-    // First-cycle source only. Later, Phase 2 decisions will supply the same index-to-ID assignments.
+    // First-cycle source only: ignore scanned type text and use one configured ID.
+    // Later, Phase 2 decisions will supply the same index-to-ID assignments.
     public class TemporaryContainerTypeProvider
     {
         private readonly string connectionString;
-        private readonly Dictionary<string, int> mappings;
+        private readonly int containerTypeId;
 
-        public TemporaryContainerTypeProvider(string connectionString, IDictionary<string, int> mappings)
+        public TemporaryContainerTypeProvider(string connectionString, int containerTypeId)
         {
             if (string.IsNullOrWhiteSpace(connectionString))
                 throw new ArgumentException(BillWorkflowMessages.ConnectionRequired);
-            if (mappings == null) throw new ArgumentNullException("mappings");
+            if (containerTypeId <= 0)
+                throw new ArgumentOutOfRangeException("containerTypeId", BillWorkflowMessages.TemporaryContainerTypeIdRequired);
             this.connectionString = connectionString;
-            this.mappings = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
-            foreach (var mapping in mappings)
-            {
-                if (string.IsNullOrWhiteSpace(mapping.Key) || mapping.Value <= 0)
-                    throw new ArgumentException(BillWorkflowMessages.TemporaryContainerMappingsInvalid);
-                this.mappings.Add(mapping.Key.Trim(), mapping.Value);
-            }
+            this.containerTypeId = containerTypeId;
         }
 
         public IReadOnlyDictionary<int, int> GetContainerTypeIds(IReadOnlyList<Container> containers)
@@ -47,80 +42,40 @@ namespace Forwarding.MvcApp.Models.Operations.Operations.BillWorkflow.Integratio
             if (containers == null) throw new ArgumentNullException("containers");
             var assignments = new Dictionary<int, int>();
             var issues = new List<ValidationIssue>();
+            // Check once, including when called inside the writer's transaction.
+            var typeAvailable = containers.Count == 0 || IsContainerTypeAvailable(connection, transaction);
             for (int index = 0; index < containers.Count; index++)
             {
-                var container = containers[index];
-                var type = container == null ? null : container.Type;
-                int typeId;
-                if (string.IsNullOrWhiteSpace(type) || !mappings.TryGetValue(type.Trim(), out typeId))
-                {
-                    issues.Add(CreateIssue(index, BillWorkflowCodes.TemporaryContainerTypeNotSupported,
-                        BillWorkflowMessages.TemporaryContainerTypeNotSupported));
-                    continue;
-                }
-                assignments.Add(index, typeId);
+                if (typeAvailable)
+                    assignments.Add(index, containerTypeId);
+                else
+                    issues.Add(CreateIssue(index));
             }
-            RequireNoIssues(issues);
-            if (assignments.Count == 0) return new ReadOnlyDictionary<int, int>(assignments);
-
-            // Recheck master data on every preparation. Repeated containers share one ID read.
-            var types = new Dictionary<int, ContainerTypeRecord>();
-            foreach (var typeId in assignments.Values.Distinct())
-                types.Add(typeId, LoadContainerType(connection, typeId, transaction));
-            foreach (var assignment in assignments)
-            {
-                var type = types[assignment.Value];
-                var scannedType = containers[assignment.Key].Type.Trim();
-                if (type == null || type.IsInactive ||
-                    (!string.Equals(scannedType, type.Code, StringComparison.OrdinalIgnoreCase) &&
-                     !string.Equals(scannedType, type.Name, StringComparison.OrdinalIgnoreCase)))
-                    issues.Add(CreateIssue(assignment.Key, BillWorkflowCodes.ContainerTypeNotAvailable,
-                        BillWorkflowMessages.ContainerTypeNotAvailable));
-            }
-            RequireNoIssues(issues);
+            if (issues.Count > 0)
+                throw new DocumentReviewException(DocumentReviewFailure.Conflict,
+                    BillWorkflowCodes.BillWriteSourcesNotReady, BillWorkflowMessages.BillWriteSourcesNotReady, issues);
             return new ReadOnlyDictionary<int, int>(assignments);
         }
 
-        private static ContainerTypeRecord LoadContainerType(SqlConnection connection, int typeId, SqlTransaction transaction)
+        private bool IsContainerTypeAvailable(SqlConnection connection, SqlTransaction transaction)
         {
             using (var command = connection.CreateCommand())
             {
                 command.Transaction = transaction;
-                command.CommandText = "SELECT Code, Name, IsInactive FROM dbo.ContainerTypes WHERE ID = @ID;";
-                command.Parameters.Add("@ID", SqlDbType.Int).Value = typeId;
-                using (var reader = command.ExecuteReader())
-                {
-                    if (!reader.Read()) return null;
-                    return new ContainerTypeRecord
-                    {
-                        Code = reader["Code"] as string, Name = reader["Name"] as string,
-                        IsInactive = reader["IsInactive"] != DBNull.Value && (bool)reader["IsInactive"]
-                    };
-                }
+                command.CommandText = "SELECT ID FROM dbo.ContainerTypes WHERE ID = @ID AND ISNULL(IsInactive, 0) = 0;";
+                command.Parameters.Add("@ID", SqlDbType.Int).Value = containerTypeId;
+                return command.ExecuteScalar() != null;
             }
         }
 
-        private static ValidationIssue CreateIssue(int index, string code, string message)
+        private static ValidationIssue CreateIssue(int index)
         {
             return new ValidationIssue
             {
-                Code = code, FieldPath = "Containers[" + index.ToString(CultureInfo.InvariantCulture) + "].Type",
-                Message = message
+                Code = BillWorkflowCodes.ContainerTypeNotAvailable,
+                FieldPath = "Containers[" + index.ToString(CultureInfo.InvariantCulture) + "].Type",
+                Message = BillWorkflowMessages.ContainerTypeNotAvailable
             };
-        }
-
-        private static void RequireNoIssues(List<ValidationIssue> issues)
-        {
-            if (issues.Count > 0)
-                throw new DocumentReviewException(DocumentReviewFailure.Conflict,
-                    BillWorkflowCodes.BillWriteSourcesNotReady, BillWorkflowMessages.BillWriteSourcesNotReady, issues);
-        }
-
-        private class ContainerTypeRecord
-        {
-            public string Code { get; set; }
-            public string Name { get; set; }
-            public bool IsInactive { get; set; }
         }
     }
 }

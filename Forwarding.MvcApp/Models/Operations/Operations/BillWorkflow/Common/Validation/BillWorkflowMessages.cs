@@ -40,7 +40,7 @@ namespace BillWorkflow.Common.Validation
         public const string BillWritePortCountryRequired = "The selected port must have a country for the operation's port-country fields.";
         public const string DuplicateBillContainer = "The same container number appears more than once in this bill.";
         public const string ContainerTypeAssignmentsInvalid = "Container-type assignments must refer to positions in this bill's Containers list.";
-        public const string ContainerTypeNotAvailable = "The configured container type is missing, inactive, or does not match this scanned type.";
+        public const string ContainerTypeNotAvailable = "The assigned container type ID must exist and be active.";
         public const string BillShapeRequired = "Each item must be a BillOfLading object.";
         public const string BillUnreadable = "The bill could not be read.";
         public const string ConfirmedBillRequestRequired = "Supply a bill review ID and positive confirmed version.";
@@ -91,8 +91,7 @@ namespace BillWorkflow.Common.Validation
         public const string StoredContextInvalid = "Invalid stored review context.";
         public const string UnsupportedReferenceConfirmation = "Confirmation cannot validate the {0} reference yet.";
         public const string UnsupportedCustomerLookup = "Supply a shipper or consignee customer requirement.";
-        public const string TemporaryContainerMappingsInvalid = "Temporary container mappings require non-empty type values and positive IDs.";
-        public const string TemporaryContainerTypeNotSupported = "No temporary mapping is configured for this scanned container type.";
+        public const string TemporaryContainerTypeIdRequired = "A positive temporary container type ID is required.";
         public const string UnsupportedDirection = "Stage 1 supports import and export master operations.";
         public const string UserRequired = "An authenticated application user is required.";
         public const string ValidatedConfirmationRequired = "BillReviewId, acting user and expected version are required.";
